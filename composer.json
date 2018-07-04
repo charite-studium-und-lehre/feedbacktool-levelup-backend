@@ -21,6 +21,7 @@
     "symfony/lts": "^4@dev",
     "symfony/maker-bundle": "^1.0",
     "symfony/monolog-bundle": "^3.0",
+    "symfony/orm-pack": "^1.0",
     "symfony/profiler-pack": "^1.0",
     "symfony/requirements-checker": "^1.0",
     "symfony/templating": "^4.0",

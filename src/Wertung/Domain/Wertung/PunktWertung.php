@@ -36,7 +36,7 @@ class PunktWertung extends AbstractWertung
      * @return Skala
      */
     public function getSkala(): Skala {
-        return ProzentSkala::create();
+        return PunktSkala::fromMaxPunktzahl($this->skala->getMaxPunktzahl());
     }
 
     public function getPunktzahl(): Punktzahl {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Kernel;
+use Common\Infrastructure\UserInterface\SymfonyKernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
 
-$kernel = new Kernel($env, $debug);
+$kernel = new SymfonyKernel($env, $debug);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
