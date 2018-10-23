@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-10-23T15:09:14+02:00
+
+====== GIT ======
+
+=== SSH ===
+Versionierung mit GIT
+git clone ssh://llp/data01/var/git/feedbacktool.git
+
