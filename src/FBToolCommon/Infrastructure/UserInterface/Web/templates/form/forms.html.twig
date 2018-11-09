@@ -1,0 +1,57 @@
+{% block lve_icd_widget %}
+    <script type="text/javascript" src="{{ asset('build/lveicd.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/ajax-submit-type.js') }}"></script>
+{% endblock %}
+
+{% block ajax_submit_widget %}
+    <script type="text/javascript" src="{{ asset('build/ajax-submit-type.js') }}"></script>
+{% endblock %}
+
+
+{% block select2_ajax_widget %}
+    <script type="text/javascript" src="{{ asset('build/select2-ajax-type.js') }}"></script>
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}
+            data-ajax-action="{{ path(ajaxRoute, actionParams) }}">
+
+        {# Falls Elemente ohne Ajax angezeigt werden sollen, oder das Element nicht nur zur Auswahl, sondern auch
+           zur Anzeige verwendet wird #}
+
+        {% for choice in selected_choices %}
+            <option value="{{ choice.value }}"
+                    {% if choice.attr %}{% with { attr: choice.attr } %}{{ block('attributes') }}{% endwith %}{% endif %}selected="selected">{{ choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain) }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block select2_widget %}
+    <script type="text/javascript" src="{{ asset('build/select2-type.js') }}"></script>
+    {{ block('choice_widget') }}
+{% endblock %}
+
+{% block select_tree %}
+    {% for key, entry in entries %}
+        {%- if entry is iterable -%}
+            <div token-type>
+                <div token-type-header>
+                    <span token-type-opener>{{ key }}</span>
+                </div>
+                <div token-type-details>
+                    {% set entries = entry %}
+                    {{ block('select_tree') }}
+                </div>
+            </div>
+        {%- else -%}
+            <div token-type-action data-entry-id="{{ key }}"
+                 {% if value == key %}class="selected"{% endif %}>{{ entry }}</div>
+        {%- endif -%}
+    {% endfor %}
+{% endblock %}
+
+
+{% block rich_textbox_widget %}
+    <script type="text/javascript" src="{{ asset('build/rich-textbox-type.js') }}"></script>
+    <div rich-textbox-type data-keys="{{ keys | json_encode }}" data-color="{{ color }}">
+        <div contenteditable="true">{{ value }}</div>
+        <input type="hidden" name="{{ full_name }}">
+    </div>
+{% endblock %}

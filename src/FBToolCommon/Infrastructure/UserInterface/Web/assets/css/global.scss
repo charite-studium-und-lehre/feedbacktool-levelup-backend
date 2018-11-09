@@ -1,0 +1,52 @@
+@import 'jqueryui-customization';
+@import 'select2-tweaks';
+@import 'token-type';
+@import 'lernziel';
+@import 'catalogue';
+@import 'verb-selection-type';
+
+* {
+  box-sizing: border-box;
+}
+
+.col-form-label {
+  font-weight: bold;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+div + p.no-entries {
+  display: none;
+}
+
+.rich-textbox {
+  border: 1px solid black;
+  padding: 5px 3px;
+}
+
+fieldset {
+  border: none;
+}
+
+.inputSmall {
+  width: 25% !important;
+}
+
+// customize some Bootstrap variables
+$brand-primary: darken(#428bca, 20%);
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+// the ~ allows you to reference things in node_modules
+
+@import '../../../../../../../node_modules/bootstrap/scss/functions';
+@import '../../../../../../../node_modules/bootstrap/scss/variables';
+@import '../../../../../../../node_modules/bootstrap/scss/mixins';
+
+@import '../../../../../../../node_modules/bootstrap/scss/forms';
+@import '../../../../../../../node_modules/bootstrap/scss/dropdown';
+@import '../../../../../../../node_modules/bootstrap/scss/button-group';
+@import '../../../../../../../node_modules/bootstrap/scss/close';
+@import '../../../../../../../node_modules/bootstrap/scss/buttons';
+@import '../../../../../../../node_modules/bootstrap/scss/alert';
+//@import '~bootstrap/scss/reboot';
+@import '../../../../../../../node_modules/bootstrap/scss/badge';

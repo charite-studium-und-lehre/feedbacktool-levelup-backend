@@ -1,0 +1,20 @@
+{% extends zendChecker.isInZendEnv ? "empty.html.twig" : "baseComplete.html.twig" %}
+
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{{ asset('build/main.js') }}"></script>
+    {% endblock %}
+    {% block stylesheets %}{% endblock %}
+
+    {% block flashes %}
+        {#how to display flash messages in Symfony#}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endblock %}

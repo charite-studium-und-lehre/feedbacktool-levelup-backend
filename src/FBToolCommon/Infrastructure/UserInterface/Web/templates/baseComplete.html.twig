@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block head %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <script type="text/javascript" src="{{ asset('build/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/vendor.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('build/global.css') }}"/>
+</head>
+<body class="tundra">
+<span style="font-size: xx-small">TODO: SYMFONY_TEMPLATE</span>
+{% block javascripts %}{% endblock %}
+{% block flashes %}{% endblock %}
+
+{% block body %}{% endblock %}
+</body>
+</html>
