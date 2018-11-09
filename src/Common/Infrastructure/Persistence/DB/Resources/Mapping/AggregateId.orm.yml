@@ -1,0 +1,5 @@
+Common\Domain\AggregateId:
+    type: embeddable
+    fields:
+        id:
+          type: integer

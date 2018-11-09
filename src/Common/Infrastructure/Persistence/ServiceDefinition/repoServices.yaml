@@ -1,0 +1,23 @@
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: true       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    Common-Application-AbstractEvent-StoredEventRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Common\Application\AbstractEvent\StoredEvent
+
+    Common\Application\AbstractEvent\StoredEventRepository:
+        class: 'Common\Infrastructure\Persistence\DB\DBStoredEventRepository'
+        arguments:
+          - "@Common-Application-AbstractEvent-StoredEventRepository-DoctrineRepo"
+          - "@doctrine.orm.entity_manager"
+

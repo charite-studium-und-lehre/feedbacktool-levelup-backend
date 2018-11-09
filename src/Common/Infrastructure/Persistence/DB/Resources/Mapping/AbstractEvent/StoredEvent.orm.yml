@@ -1,0 +1,33 @@
+Common\Application\AbstractEvent\StoredEvent:
+  type: entity
+  table: event
+
+  id:
+    id:
+      type: aggregateId
+  #            generator:
+  #                strategy: AUTO
+
+  fields:
+    occurredOn:
+      type: datetime_immutable
+      nullable: false
+    byUserId:
+      type: integer
+      nullable: true
+
+  embedded:
+    eventClass:
+      class: Common\Application\AbstractEvent\StoredEventClass
+      columnPrefix: false
+    eventBody:
+      class: Common\Application\AbstractEvent\StoredEventBody
+      columnPrefix: false
+
+  indexes:
+    occurredOn:
+      columns: occurredOn
+    byUserId:
+      columns: byUserId
+    eventClass:
+      columns: class
