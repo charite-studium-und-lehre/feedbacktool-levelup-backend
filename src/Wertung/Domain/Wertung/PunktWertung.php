@@ -9,13 +9,13 @@ use Wertung\Domain\Skala\Skala;
 class PunktWertung extends AbstractWertung
 {
     /** @var Punktzahl */
-    private $punktzahl;
+    protected $punktzahl;
     /** @var PunktSkala */
-    private $skala;
+    protected $skala;
 
     public static function fromPunktzahlUndSkala(Punktzahl $punktzahl, PunktSkala $skala, string $kommentar = NULL): PunktWertung {
         Assertion::nullOrString($kommentar);
-        $object = new self();
+        $object = new static();
         $object->punktzahl = $punktzahl;
         $object->skala = $skala;
         $object->kommentar = $kommentar;

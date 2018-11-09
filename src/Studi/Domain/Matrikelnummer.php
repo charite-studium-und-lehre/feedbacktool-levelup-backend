@@ -1,6 +1,6 @@
 <?php
 
-namespace Student\Domain;
+namespace Studi\Domain;
 
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;

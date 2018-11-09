@@ -10,10 +10,10 @@ class PunktSkala implements Skala
     /** @var Punktzahl */
     private $maxPunktzahl;
 
-    const INVALID_GROESSER_NULL = "Eine Punktskala muss eine maximale Punktzahl > 0 haben: ";
+    const INVALID_GROESSER_NULL = "Eine Punktskala darf keine negative maximale Punktzahl haben: ";
 
     public static function fromMaxPunktzahl(Punktzahl $maxPunktzahl) : PunktSkala {
-        Assertion::greaterThan($maxPunktzahl->getValue(), 0,
+        Assertion::greaterOrEqualThan($maxPunktzahl->getValue(), 0,
                                self::INVALID_GROESSER_NULL . $maxPunktzahl->getValue());
         $object = new self();
         $object->maxPunktzahl = $maxPunktzahl;

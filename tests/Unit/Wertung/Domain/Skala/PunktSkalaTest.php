@@ -17,12 +17,9 @@ class PunktSkalaTest extends TestCase
         $this->assertEquals($value, $punktSkala->getMaxPunktzahl()->getValue());
     }
 
-    public function testFromFloat_FalschNull() {
-        $value = 0;
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(PunktSkala::INVALID_GROESSER_NULL);
-
-        PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat($value));
+    public function testFromFloat_Null() {
+        $punktSkala = PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(0));
+        $this->assertEquals(0, $punktSkala->getMaxPunktzahl()->getValue());
     }
 
     public function testFromFloat_FalschNegativ() {

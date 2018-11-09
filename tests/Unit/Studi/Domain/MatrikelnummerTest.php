@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Student\Domain;
+namespace Tests\Unit\Studi\Domain;
 
 
 use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Student\Domain\Matrikelnummer;
+use Studi\Domain\Matrikelnummer;
 
 class MatrikelnummerTest extends TestCase
 {
