@@ -3,7 +3,7 @@
 namespace Wertung\Domain\Wertung;
 
 use Assert\Assertion;
-use Wertung\Domain\ProzentSkala;
+use Wertung\Domain\Skala\ProzentSkala;
 use Wertung\Domain\Skala\Skala;
 
 class ProzentWertung extends AbstractWertung

@@ -4,7 +4,7 @@ namespace Studi\Domain;
 
 use Common\Domain\DefaultEntityComparison;
 
-class Person
+class Studi
 {
     use DefaultEntityComparison;
 
