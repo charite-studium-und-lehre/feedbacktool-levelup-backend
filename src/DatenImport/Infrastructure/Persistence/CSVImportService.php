@@ -27,12 +27,14 @@ class CSVImportService
                         $antwortenEndeIndex = $headers[" f_".$i]+1;
                     }
                 }
-
                 //alle Organsysteme
                 for($j = $antwortenEndeIndex; $j < count($headers)-1; $j++){
                     $aktOrgansys = array_search($j, $headers);
-                    $PTMdataAsArray[$zeilenindex]['Organsysteme'][$aktOrgansys] = $data[$headers[$aktOrgansys]];
+                    $organsysteme[$aktOrgansys] = $data[$headers[$aktOrgansys]];
                 }
+                ksort($organsysteme);
+                $PTMdataAsArray[$zeilenindex]['Organsysteme']=$organsysteme;
+
                 $zeilenindex++;
             }
         }
