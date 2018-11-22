@@ -4,43 +4,52 @@ namespace Cluster\Domain;
 
 use Assert\Assertion;
 
-
-class ClusterArt
+class Cluster
 {
-    /** @var Wertungsitem */
-    private $wertungsitem;
 
-    public static function fromString(Wertungsitem $wertungsitem, string $kommentar = NULL): ClusterTag {
-        Assertion::nullOrString($kommentar);
+    const MIN_TAG_LAENGE = 2;
+
+    const MAX_TAG_LAENGE = 50;
+
+    const INVALID_ZU_KURZ = "Die Clusterbezeichnung muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten!";
+
+    const INVALID_ZU_LANG = "Die Clusterbezeichnung darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
+
+    /** @var Pruefungsformat */
+    private $clusterArt;
+
+    private $clusterBezeichnung;
+
+
+    public static function fromValues(Pruefungsformat $clusterArt, string $clusterBezeichnung): self {
+        Assertion::minLength($clusterBezeichnung, self::MIN_TAG_LAENGE, self::INVALID_ZU_KURZ);
+        Assertion::maxLength($clusterBezeichnung, self::MAX_TAG_LAENGE, self::INVALID_ZU_LANG);
+
+        if ($clusterBezeichnung != strip_tags($clusterBezeichnung)) {
+            throw new ClusterBezeichnungEnthaeltHTMLException();
+        }
 
         $object = new self();
-        $object->wertungsitem = $wertungsitem;
-        $object->kommentar = $kommentar;
+        $object->clusterBezeichnung = $clusterBezeichnung;
+        $object->clusterArt = $clusterArt;
 
         return $object;
     }
 
-    /**
-     * @see Wertung::getRelativeWertung()
-     * @return float
-     */
-    public function get(): float {
-        return $this->prozentzahl->getValue();
+    public function getClusterArt(){
+        return $this->clusterArt;
+    }
+    public function getClusterBezeichnung() {
+        return $this->clusterBezeichnung;
     }
 
-    /**
-     * @see Wertung::getSkala()
-     * @return Skala
-     */
-    public function getSkala(): Skala {
-        return ProzentSkala::create();
+    public function __toString() {
+        return $this->clusterBezeichnung;
     }
+}
 
-    /**
-     * @return Prozentzahl
-     */
-    public function getProzentzahl(): Prozentzahl {
-        return $this->prozentzahl;
-    }
+final class ClusterBezeichnungEnthaeltHTMLException extends \Exception
+{
+    protected $message = "Die Clusterbezeichnung darf keine HTML-Tags enthalten!";
 
 }

@@ -1,46 +1,42 @@
 <?php
 
-namespace Clustering\Domain\ClusterTag;
+namespace Cluster\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DefaultValueObjectComparison;
 
-
-class ClusterTag
+class ClusterArt
 {
-    /** @var Wertungsitem */
-    private $wertungsitem;
+    use DefaultValueObjectComparison;
 
-    public static function fromString(Wertungsitem $wertungsitem, string $kommentar = NULL): ClusterTag {
-        Assertion::nullOrString($kommentar);
+    const FACH_CLUSTER = 10;
+
+    const MODUL_CLUSTER = 20;
+
+    const LERNZIEL_CLUSTER = 30;
+
+    const CLUSTERART_KONSTANTEN = [
+        self::FACH_CLUSTER,
+        self::MODUL_CLUSTER,
+        self::LERNZIEL_CLUSTER,
+    ];
+
+    const INVALID_CLUSTERART = "Keine gültige Clusterart: ";
+
+    private $clusterart;
+
+    public static function fromInt(int $clusterart): self {
+
+        Assertion::inArray($clusterart, self::CLUSTERART_KONSTANTEN, self::INVALID_CLUSTERART . $clusterart);
 
         $object = new self();
-        $object->wertungsitem = $wertungsitem;
-        $object->kommentar = $kommentar;
+        $object->clusterart = $clusterart;
 
         return $object;
     }
 
-    /**
-     * @see Wertung::getRelativeWertung()
-     * @return float
-     */
-    public function get(): float {
-        return $this->prozentzahl->getValue();
-    }
+    public function getClusterArt() {
+        return $this->clusterart;
 
-    /**
-     * @see Wertung::getSkala()
-     * @return Skala
-     */
-    public function getSkala(): Skala {
-        return ProzentSkala::create();
     }
-
-    /**
-     * @return Prozentzahl
-     */
-    public function getProzentzahl(): Prozentzahl {
-        return $this->prozentzahl;
-    }
-
 }

@@ -4,31 +4,52 @@ namespace Tests\Unit\Cluster\Domain;
 
 
 use Assert\InvalidArgumentException;
+use Cluster\Domain\Cluster;
+use Cluster\Domain\ClusterBezeichnungEnthaeltHTMLException;
 use PHPUnit\Framework\TestCase;
-use Cluster\Domain\ClusterArt;
+use Cluster\Domain\Pruefungsformat;
 
-class ClusterArtTest extends TestCase
+class ClusterTest extends TestCase
 {
+    public function testFromValues() {
 
-    public function testFromInt() {
-        $clusterArt = ClusterArt::FACH_CLUSTER;
-        $object = ClusterArt::fromInt($clusterArt);
+        $art = Pruefungsformat::fromInt(Pruefungsformat::FACH_CLUSTER);
+        $object = Cluster::fromValues($art, "Anatomie");
 
-        $this->assertEquals($clusterArt, $object->getClusterArt());
+        $this->assertEquals($art, $object->getClusterArt());
+        $this->assertEquals("Anatomie", $object->getClusterBezeichnung());
     }
 
-    public function testFromIntFalsch() {
-        $clusterArt = ClusterArt::MODUL_CLUSTER;
-        $object = ClusterArt::fromInt(ClusterArt::LERNZIEL_CLUSTER);
+    public function testFromIntFalschUngueltigerTag() {
 
-        $this->assertNotEquals($clusterArt, $object->getClusterArt());
+        $this->expectException(ClusterBezeichnungEnthaeltHTMLException::class);
+
+        $art = Pruefungsformat::fromInt(Pruefungsformat::FACH_CLUSTER);
+        $clusterBezeichnung = "<Anatomie/>>";
+
+        Cluster::fromValues($art, $clusterBezeichnung);
     }
 
-    public function testFromIntFalschClusterUngueltig() {
-        $clusterArt = 123;
-        $this->expectExceptionMessage(ClusterArt::INVALID_CLUSTERART);
-        ClusterArt::fromInt($clusterArt);
+    public function testFromIntFalschUngueltigerTagZuKurz() {
 
+        $art = Pruefungsformat::fromInt(Pruefungsformat::LERNZIEL_CLUSTER);
+        $clusterBezeichnung = "A";
+        $this->expectExceptionMessage(Cluster::INVALID_ZU_KURZ);
+
+        Cluster::fromValues($art, $clusterBezeichnung);
     }
+
+    public function testFromIntFalschUngueltigerTagZuLang() {
+
+        $art = Pruefungsformat::fromInt(Pruefungsformat::MODUL_CLUSTER);
+        $clusterBezeichnung = "Diese Bezeichnung ist viieeeeeeeel zu lang und macht deshalb nicht wirklich Sinn für einen Tag!!!!";
+        $this->expectExceptionMessage(Cluster::INVALID_ZU_LANG);
+
+        Cluster::fromValues($art, $clusterBezeichnung);
+    }
+
+
+
+
 
 }

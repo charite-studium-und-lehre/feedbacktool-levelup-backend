@@ -1,9 +1,9 @@
 <?php
 
-namespace Cluster\Domain;
+namespace Pruefung\Domain;
 
 use Common\Domain\AggregateId;
 
-class ClusterId extends AggregateId
+class PruefungId extends AggregateId
 {
 }

@@ -1,46 +1,52 @@
 <?php
 
-namespace Clustering\Domain\ClusterTag;
+namespace Cluster\Domain;
 
-use Assert\Assertion;
-
+use Common\Domain\DefaultEntityComparison;
 
 class ClusterTag
 {
-    /** @var Wertungsitem */
-    private $wertungsitem;
+    use DefaultEntityComparison;
 
-    public static function fromString(Wertungsitem $wertungsitem, string $kommentar = NULL): ClusterTag {
-        Assertion::nullOrString($kommentar);
+    /** @var PruefungId */
+    private $id;
+
+    /** @var Cluster */
+    private $cluster;
+
+    /** @var String */
+    private $kommentar;
+
+
+    public static function create(
+        PruefungId $id,
+        Cluster $cluster,
+        String $kommentar = NULL
+    ): self {
 
         $object = new self();
-        $object->wertungsitem = $wertungsitem;
+        $object->id = $id;
+        $object->cluster = $cluster;
         $object->kommentar = $kommentar;
+
 
         return $object;
     }
 
-    /**
-     * @see Wertung::getRelativeWertung()
-     * @return float
-     */
-    public function get(): float {
-        return $this->prozentzahl->getValue();
+    public function getId(): PruefungId {
+        return PruefungId::fromInt($this->id->getValue());
     }
 
-    /**
-     * @see Wertung::getSkala()
-     * @return Skala
-     */
-    public function getSkala(): Skala {
-        return ProzentSkala::create();
+    public function getCluster(): Cluster {
+        return $this->cluster;
     }
 
-    /**
-     * @return Prozentzahl
-     */
-    public function getProzentzahl(): Prozentzahl {
-        return $this->prozentzahl;
+    public function getKommentar(){
+        return $this->kommentar;
+    }
+
+    public function setKommentar(String $kommentar) {
+        $this->kommentar = $kommentar;
     }
 
 }

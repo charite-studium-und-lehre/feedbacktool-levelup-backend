@@ -1,42 +1,40 @@
 <?php
 
-namespace Cluster\Domain;
+namespace Pruefung\Domain;
 
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;
 
-class ClusterArt
+class Pruefungsformat
 {
     use DefaultValueObjectComparison;
 
-    const FACH_CLUSTER = 10;
+    const MC_FORMAT = 10;
 
-    const MODUL_CLUSTER = 20;
+    const PTM_FORMAT = 20;
 
-    const LERNZIEL_CLUSTER = 30;
 
-    const CLUSTERART_KONSTANTEN = [
-        self::FACH_CLUSTER,
-        self::MODUL_CLUSTER,
-        self::LERNZIEL_CLUSTER,
+    const FORMAT_KONSTANTEN = [
+        self::MC_FORMAT,
+        self::PTM_FORMAT
     ];
 
-    const INVALID_CLUSTERART = "Keine gültige Clusterart: ";
+    const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Prüfungsformat: ";
 
-    private $clusterart;
+    private $pruefungsformat;
 
-    public static function fromInt(int $clusterart): self {
+    public static function fromInt(int $format): self {
 
-        Assertion::inArray($clusterart, self::CLUSTERART_KONSTANTEN, self::INVALID_CLUSTERART . $clusterart);
+        Assertion::inArray($format, self::FORMAT_KONSTANTEN, self::INVALID_PRUEFUNGSFORMAT . $format);
 
         $object = new self();
-        $object->clusterart = $clusterart;
+        $object->pruefungsformat = $format;
 
         return $object;
     }
 
-    public function getClusterArt() {
-        return $this->clusterart;
+    public function getPruefungsformat() {
+        return $this->pruefungsformat;
 
     }
 }
