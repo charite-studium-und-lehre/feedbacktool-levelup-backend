@@ -8,7 +8,7 @@ class ClusterTag
 {
     use DefaultEntityComparison;
 
-    /** @var PruefungId */
+    /** @var ClusterId */
     private $id;
 
     /** @var Cluster */
@@ -19,7 +19,7 @@ class ClusterTag
 
 
     public static function create(
-        PruefungId $id,
+        ClusterId $id,
         Cluster $cluster,
         String $kommentar = NULL
     ): self {
@@ -33,8 +33,8 @@ class ClusterTag
         return $object;
     }
 
-    public function getId(): PruefungId {
-        return PruefungId::fromInt($this->id->getValue());
+    public function getId(): ClusterId {
+        return ClusterId::fromInt($this->id->getValue());
     }
 
     public function getCluster(): Cluster {

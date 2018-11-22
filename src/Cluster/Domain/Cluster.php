@@ -15,13 +15,13 @@ class Cluster
 
     const INVALID_ZU_LANG = "Die Clusterbezeichnung darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
 
-    /** @var Pruefungsformat */
+    /** @var ClusterArt */
     private $clusterArt;
 
     private $clusterBezeichnung;
 
 
-    public static function fromValues(Pruefungsformat $clusterArt, string $clusterBezeichnung): self {
+    public static function fromValues(ClusterArt $clusterArt, string $clusterBezeichnung): self {
         Assertion::minLength($clusterBezeichnung, self::MIN_TAG_LAENGE, self::INVALID_ZU_KURZ);
         Assertion::maxLength($clusterBezeichnung, self::MAX_TAG_LAENGE, self::INVALID_ZU_LANG);
 

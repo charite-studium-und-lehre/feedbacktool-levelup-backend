@@ -21,20 +21,29 @@ class Pruefungsformat
 
     const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Prüfungsformat: ";
 
-    private $pruefungsformat;
+    private $format;
 
-    public static function fromInt(int $format): self {
+    private $kommentar;
+
+
+    public static function fromInt(int $format,  String $kommentar = NULL): self {
 
         Assertion::inArray($format, self::FORMAT_KONSTANTEN, self::INVALID_PRUEFUNGSFORMAT . $format);
 
         $object = new self();
-        $object->pruefungsformat = $format;
+        $object->format = $format;
+        $object->kommentar = $kommentar;
 
         return $object;
     }
 
-    public function getPruefungsformat() {
-        return $this->pruefungsformat;
+    public function getFormat() {
+        return $this->format;
 
     }
+
+    public function getKommentar(){
+        return $this->kommentar;
+    }
+
 }
