@@ -2,54 +2,51 @@
 
 namespace Cluster\Domain;
 
-use Assert\Assertion;
+use Common\Domain\DefaultEntityComparison;
 
-class Cluster
+class ClusterTag
 {
+    use DefaultEntityComparison;
 
-    const MIN_TAG_LAENGE = 2;
+    /** @var ClusterTagId */
+    private $id;
 
-    const MAX_TAG_LAENGE = 50;
+    /** @var Cluster */
+    private $cluster;
 
-    const INVALID_ZU_KURZ = "Die Clusterbezeichnung muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten!";
-
-    const INVALID_ZU_LANG = "Die Clusterbezeichnung darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
-
-    /** @var ClusterArt */
-    private $clusterArt;
-
-    private $clusterBezeichnung;
+    /** @var String */
+    private $kommentar;
 
 
-    public static function fromValues(ClusterArt $clusterArt, string $clusterBezeichnung): self {
-        Assertion::minLength($clusterBezeichnung, self::MIN_TAG_LAENGE, self::INVALID_ZU_KURZ);
-        Assertion::maxLength($clusterBezeichnung, self::MAX_TAG_LAENGE, self::INVALID_ZU_LANG);
-
-        if ($clusterBezeichnung != strip_tags($clusterBezeichnung)) {
-            throw new ClusterBezeichnungEnthaeltHTMLException();
-        }
+    public static function create(
+        ClusterId $id,
+        Cluster $cluster,
+        String $kommentar = NULL
+    ): self {
 
         $object = new self();
-        $object->clusterBezeichnung = $clusterBezeichnung;
-        $object->clusterArt = $clusterArt;
+        $object->id = $id;
+        $object->cluster = $cluster;
+        $object->kommentar = $kommentar;
+
 
         return $object;
     }
 
-    public function getClusterArt(){
-        return $this->clusterArt;
-    }
-    public function getClusterBezeichnung() {
-        return $this->clusterBezeichnung;
+    public function getId(): ClusterId {
+        return ClusterId::fromInt($this->id->getValue());
     }
 
-    public function __toString() {
-        return $this->clusterBezeichnung;
+    public function getCluster(): Cluster {
+        return $this->cluster;
     }
-}
 
-final class ClusterBezeichnungEnthaeltHTMLException extends \Exception
-{
-    protected $message = "Die Clusterbezeichnung darf keine HTML-Tags enthalten!";
+    public function getKommentar(){
+        return $this->kommentar;
+    }
+
+    public function setKommentar(String $kommentar) {
+        $this->kommentar = $kommentar;
+    }
 
 }
