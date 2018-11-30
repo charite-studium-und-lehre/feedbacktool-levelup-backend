@@ -5,7 +5,7 @@ namespace Cluster\Domain;
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;
 
-class ClusterTypTitel
+class ClusterTitel
 {
     use DefaultValueObjectComparison;
 
@@ -13,9 +13,9 @@ class ClusterTypTitel
 
     const MAX_TAG_LAENGE = 50;
 
-    const INVALID_ZU_KURZ = "Die Clusterbezeichnung muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten!";
+    const INVALID_ZU_KURZ = "Der Clustertitel muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten!";
 
-    const INVALID_ZU_LANG = "Die Clusterbezeichnung darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
+    const INVALID_ZU_LANG = "Der Clustertitel darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
 
 
     private $value;

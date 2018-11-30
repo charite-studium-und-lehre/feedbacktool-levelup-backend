@@ -2,28 +2,40 @@
 
 namespace Tests\Unit\Cluster\Domain;
 
-
-use Cluster\Domain\ClusterTypTitel;
-use Cluster\Domain\ClusterId;
 use Cluster\Domain\Cluster;
+use Cluster\Domain\ClusterId;
+use Cluster\Domain\ClusterTitel;
+use Cluster\Domain\ClusterTypId;
 use PHPUnit\Framework\TestCase;
-use Cluster\Domain\ClusterTyp;
 
-class ClusterTagTest extends TestCase
+class ClusterTest extends TestCase
 {
-    public function testCreate(){
-        $clusterArt = ClusterTyp::fromInt(ClusterTyp::FACH_CLUSTER);
-        $cluster = ClusterTypTitel::fromValues($clusterArt, "Klinische Fächer");
+    public function testCreate() {
+        [$clusterId, $clusterTypId, $clusterTitel] = $this->createValueObjects();
 
-        $clusterTagId = ClusterId::fromInt("12345");
-        $clusterTag = Cluster::create($clusterTagId, $cluster);
+        $cluster = Cluster::create($clusterId, $clusterTypId, $clusterTitel);
 
-        $this->assertEquals("12345", $clusterTag->getId());
-        $this->assertEquals("Klinische Fächer", $clusterTag->getCluster()->getClusterBezeichnung());
+        $this->assertTrue($cluster->getId()->equals($clusterId));
+        $this->assertTrue($cluster->getClusterTypId()->equals($clusterTypId));
+        $this->assertTrue($cluster->getTitel()->equals($clusterTitel));
     }
 
+    public function testCreateMitParent() {
+        [$clusterId, $clusterTypId, $clusterTitel] = $this->createValueObjects();
+        $parentId = ClusterId::fromInt(789);
 
+        $cluster = Cluster::create($clusterId, $clusterTypId, $clusterTitel, $parentId);
+        $this->assertTrue($cluster->getParentId()->equals($parentId));
+    }
 
-
+    /**
+     * @return array
+     */
+    private function createValueObjects(): array {
+        $clusterId = ClusterId::fromInt(123);
+        $clusterTypId = ClusterTypId::fromInt(456);
+        $clusterTitel = ClusterTitel::fromString("Klinische Fächer");
+        return array($clusterId, $clusterTypId, $clusterTitel);
+    }
 
 }

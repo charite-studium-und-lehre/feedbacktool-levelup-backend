@@ -2,34 +2,40 @@
 
 namespace Cluster\Domain;
 
-use Assert\Assertion;
-use Common\Domain\DefaultValueObjectComparison;
+use Common\Domain\DefaultEntityComparison;
 
-class ClusterArt
+class ClusterTyp
 {
-    use DefaultValueObjectComparison;
+    use DefaultEntityComparison;
 
-    /** @var ClusterArtId */
+    /** @var ClusterTypId */
     private $id;
 
-
+    /** @var ClusterTypTitel */
     private $titel;
 
+    /** @var ClusterTypId */
+    private $parentId;
 
-    const INVALID_CLUSTERART = "Keine gültige Clusterart: ";
-
-
-    public static function fromInt(): self {
-
+    public static function create(ClusterTypId $id, ClusterTypTitel $titel, ?ClusterTypId $parentId = NULL): self {
 
         $object = new self();
-        $object->clusterart = $clusterart;
+        $object->id = $id;
+        $object->titel = $titel;
+        $object->parentId = $parentId;
 
         return $object;
     }
 
-    public function getClusterArt() {
-        return $this->clusterart;
+    public function getTitel(): ClusterTypTitel {
+        return $this->titel;
+    }
 
+    public function getId(): ClusterTypId {
+        return $this->id;
+    }
+
+    public function getParentId(): ClusterTypId {
+        return $this->parentId;
     }
 }

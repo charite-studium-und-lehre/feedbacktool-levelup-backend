@@ -4,31 +4,33 @@ namespace Cluster\Domain;
 
 use Common\Domain\DefaultEntityComparison;
 
-class ClusterTag
+class Cluster
 {
     use DefaultEntityComparison;
 
-    /** @var ClusterTagId */
+    /** @var ClusterId */
     private $id;
 
-    /** @var Cluster */
-    private $cluster;
+    /** @var ClusterTypId */
+    private $clusterTypId;
 
-    /** @var String */
-    private $kommentar;
+    /** @var ClusterTitel */
+    private $titel;
 
+    /** @var */
+    private $parentId;
 
     public static function create(
         ClusterId $id,
-        Cluster $cluster,
-        String $kommentar = NULL
+        ClusterTypId $clusterTypId,
+        ClusterTitel $titel,
+        ?ClusterId $parentId = NULL
     ): self {
-
         $object = new self();
         $object->id = $id;
-        $object->cluster = $cluster;
-        $object->kommentar = $kommentar;
-
+        $object->titel = $titel;
+        $object->clusterTypId = $clusterTypId;
+        $object->parentId = $parentId;
 
         return $object;
     }
@@ -37,16 +39,17 @@ class ClusterTag
         return ClusterId::fromInt($this->id->getValue());
     }
 
-    public function getCluster(): Cluster {
-        return $this->cluster;
+    /** @return ClusterTypId */
+    public function getClusterTypId(): ClusterTypId {
+        return $this->clusterTypId;
     }
 
-    public function getKommentar(){
-        return $this->kommentar;
+    /** @return mixed */
+    public function getParentId() {
+        return $this->parentId;
     }
 
-    public function setKommentar(String $kommentar) {
-        $this->kommentar = $kommentar;
+    public function getTitel(): ClusterTitel {
+        return $this->titel;
     }
-
 }

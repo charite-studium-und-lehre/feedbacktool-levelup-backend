@@ -3,38 +3,39 @@
 namespace Pruefung\Domain;
 
 use Common\Domain\DefaultEntityComparison;
-use Common\Domain\HatEntityZeitstempel;
-use Common\Domain\HatEntityZeitstempelTrait;
 
-class Pruefung implements HatEntityZeitstempel
+class Pruefung
 {
-    use HatEntityZeitstempelTrait;
     use DefaultEntityComparison;
 
-    /** @var PruefungId */
+    /** @var PruefungsId */
     private $id;
 
-    /** @var Pruefungsformat */
+    /** @var PruefungsDatum */
+    private $datum;
+
+    /** @var PruefungsFormat */
     private $format;
 
-
-
-    public static function create(PruefungId $id, Pruefungsformat $format) {
-
+    public static function create(PruefungsId $id, PruefungsDatum $datum, PruefungsFormat $format): self {
 
         $object = new self();
         $object->id = $id;
+        $object->datum = $datum;
         $object->format = $format;
-        $object->erzeugeZeitstempel();
 
         return $object;
     }
 
-    public function getId(){
-        return PruefungId::fromInt($this->id->getValue());
+    public function getId() : PruefungsId {
+        return PruefungsId::fromInt($this->id->getValue());
     }
 
-    public function getPruefungsFormat(){
+    public function getDatum(): PruefungsDatum {
+        return $this->datum;
+    }
+
+    public function getFormat(): PruefungsFormat {
         return $this->format;
     }
 

@@ -4,21 +4,24 @@ namespace Tests\Unit\Pruefung\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Pruefung\Domain\Pruefung;
-use Pruefung\Domain\PruefungId;
-use Pruefung\Domain\Pruefungsformat;
+use Pruefung\Domain\PruefungsDatum;
+use Pruefung\Domain\PruefungsId;
+use Pruefung\Domain\PruefungsFormat;
 
 class PruefungTest extends TestCase
 {
 
     public function testCreate(){
 
-        $id = PruefungId::fromInt("12345");
-        $pruefungsformat = Pruefungsformat::fromInt(Pruefungsformat::MC_FORMAT);
+        $id = PruefungsId::fromInt("12345");
+        $pruefungsFormat = PruefungsFormat::fromConst(PruefungsFormat::MC);
+        $pruefungsDatum = PruefungsDatum::fromString("20.08.2018");
 
-        $pruefung = Pruefung::create($id, $pruefungsformat);
+        $pruefung = Pruefung::create($id, $pruefungsDatum, $pruefungsFormat);
 
         $this->assertEquals("12345", $pruefung->getId());
-        $this->assertEquals(Pruefungsformat::MC_FORMAT, $pruefung->getPruefungsFormat()->getFormat());
+        $this->assertEquals($pruefungsDatum, $pruefung->getDatum());
+        $this->assertEquals(PruefungsFormat::MC, $pruefung->getFormat()->getValue());
     }
 
 

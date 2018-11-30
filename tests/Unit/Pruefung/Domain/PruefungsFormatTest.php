@@ -5,7 +5,7 @@ namespace Tests\Unit\Pruefung\Domain;
 use PHPUnit\Framework\TestCase;
 use Pruefung\Domain\PruefungsFormat;
 
-class PruefungsformatTest extends TestCase
+class PruefungsFormatTest extends TestCase
 {
 
     public function testFromInt() {

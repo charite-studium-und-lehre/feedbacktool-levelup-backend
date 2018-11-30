@@ -4,6 +4,6 @@ namespace Pruefung\Domain;
 
 use Common\Domain\AggregateId;
 
-class PruefungId extends AggregateId
+class PruefungsId extends AggregateId
 {
 }

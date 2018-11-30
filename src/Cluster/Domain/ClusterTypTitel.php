@@ -3,53 +3,35 @@
 namespace Cluster\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DefaultValueObjectComparison;
 
-class Cluster
+class ClusterTypTitel
 {
+    use DefaultValueObjectComparison;
 
     const MIN_TAG_LAENGE = 2;
 
     const MAX_TAG_LAENGE = 50;
 
-    const INVALID_ZU_KURZ = "Die Clusterbezeichnung muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten!";
+    const INVALID_ZU_KURZ = "Der Clustertyptitel muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten!";
 
-    const INVALID_ZU_LANG = "Die Clusterbezeichnung darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
-
-    /** @var ClusterArt */
-    private $clusterArt;
-
-    private $clusterBezeichnung;
+    const INVALID_ZU_LANG = "Der Clustertyptitel darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten!";
 
 
-    public static function fromValues(ClusterArt $clusterArt, string $clusterBezeichnung): self {
-        Assertion::minLength($clusterBezeichnung, self::MIN_TAG_LAENGE, self::INVALID_ZU_KURZ);
-        Assertion::maxLength($clusterBezeichnung, self::MAX_TAG_LAENGE, self::INVALID_ZU_LANG);
+    private $value;
 
-        if ($clusterBezeichnung != strip_tags($clusterBezeichnung)) {
-            throw new ClusterBezeichnungEnthaeltHTMLException();
-        }
+
+    public static function fromString(string $value): self {
+        Assertion::minLength($value, self::MIN_TAG_LAENGE, self::INVALID_ZU_KURZ);
+        Assertion::maxLength($value, self::MAX_TAG_LAENGE, self::INVALID_ZU_LANG);
 
         $object = new self();
-        $object->clusterBezeichnung = $clusterBezeichnung;
-        $object->clusterArt = $clusterArt;
+        $object->value = $value;
 
         return $object;
     }
 
-    public function getClusterArt(){
-        return $this->clusterArt;
-    }
-    public function getClusterBezeichnung() {
-        return $this->clusterBezeichnung;
-    }
-
-    public function __toString() {
-        return $this->clusterBezeichnung;
+    public function getValue(): string {
+        return $this->value;
     }
 }
-
-//final class ClusterBezeichnungEnthaeltHTMLException extends \Exception
-//{
-//    protected $message = "Die Clusterbezeichnung darf keine HTML-Tags enthalten!";
-//
-//}

@@ -5,27 +5,27 @@ namespace Pruefung\Domain;
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;
 
-class Pruefungsformat
+class PruefungsFormat
 {
     use DefaultValueObjectComparison;
 
-    const MC_FORMAT = 10;
+    const MC = 10;
 
-    const PTM_FORMAT = 20;
+    const PTM = 20;
 
-    const OSCE_FORMAT = 30;
+    const OSCE = 30;
 
 
     const FORMAT_KONSTANTEN = [
-        self::MC_FORMAT,
-        self::PTM_FORMAT,
-        self::OSCE_FORMAT,
+        self::MC,
+        self::PTM,
+        self::OSCE,
     ];
 
     const FORMAT_TITEL = [
-        self::MC_FORMAT => "MC-Test",
-        self::PTM_FORMAT => "PTM",
-        self::OSCE_FORMAT => "Stationsprüfung",
+        self::MC   => "MC-Test",
+        self::PTM  => "PTM",
+        self::OSCE => "Stationsprüfung",
     ];
 
 
