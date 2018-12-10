@@ -17,17 +17,26 @@ class Pruefung
     /** @var PruefungsFormat */
     private $format;
 
-    public static function create(PruefungsId $id, PruefungsDatum $datum, PruefungsFormat $format): self {
+    /** @var ?Skala */
+    private $benotungsSkala;
+
+    public static function create(
+        PruefungsId $id,
+        PruefungsDatum $datum,
+        PruefungsFormat $format,
+        ?Skala $benotungsSakala = NULL
+    ): self {
 
         $object = new self();
         $object->id = $id;
         $object->datum = $datum;
         $object->format = $format;
+        $object->benotungsSkala = $benotungsSakala;
 
         return $object;
     }
 
-    public function getId() : PruefungsId {
+    public function getId(): PruefungsId {
         return PruefungsId::fromInt($this->id->getValue());
     }
 

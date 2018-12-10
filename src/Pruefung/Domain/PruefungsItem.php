@@ -1,22 +1,22 @@
 <?php
 
-namespace Wertung\Domain\Wertung;
+namespace Pruefung\Domain\Wertung;
 
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsId;
-use Wertung\Domain\WertungsItemId;
+use Pruefung\Domain\PruefungsItemId;
 
-class WertungsItem
+class PruefungsItem
 {
     use DefaultEntityComparison;
 
-    /** @var WertungsItemId */
+    /** @var PruefungsItemId */
     private $id;
 
     /** @var PruefungsId */
     private $pruefungsId;
 
-    public static function create(WertungsItemId $id, PruefungsId $pruefungsId): self {
+    public static function create(PruefungsItemId $id, PruefungsId $pruefungsId): self {
 
         $object = new self();
         $object->id = $id;
@@ -25,7 +25,7 @@ class WertungsItem
         return $object;
     }
 
-    public function getId(): WertungsItemId{
+    public function getId(): PruefungsItemId{
         return $this->id;
     }
 

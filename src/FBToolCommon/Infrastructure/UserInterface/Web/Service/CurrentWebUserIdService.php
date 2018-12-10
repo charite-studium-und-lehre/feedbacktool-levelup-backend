@@ -1,6 +1,6 @@
 <?php
 
-namespace LLPCommon\Infrastructure\UserInterface\Web\Service;
+namespace FBToolCommon\Infrastructure\UserInterface\Web\Service;
 
 use Common\Application\CurrentUserIdService;
 

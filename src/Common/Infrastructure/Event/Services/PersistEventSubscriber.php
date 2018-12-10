@@ -23,7 +23,7 @@ class PersistEventSubscriber implements DomainEventSubscriber
         $this->storedEventRepository = $storedEventRepository;
     }
 
-    public function handle(DomainEvent $domainEvent) {
+    public function handle(DomainEvent $domainEvent): void {
         $storedEvent = $this->eventPersister->createStoredEvent($domainEvent);
         $this->storedEventRepository->add($storedEvent);
         $this->storedEventRepository->flush();

@@ -4,8 +4,8 @@ namespace Common\Application\DomainEvent;
 
 interface DomainEventPublisher
 {
-    public function subscribe(DomainEventSubscriber $domainEventSubscriber);
+    public function subscribe(DomainEventSubscriber $domainEventSubscriber): void;
 
-    public function publish(DomainEvent $domainEvent);
+    public function publish(DomainEvent $domainEvent): void;
 
 }

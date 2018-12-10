@@ -9,4 +9,5 @@ interface CommandHandler
     /** return the command class name this handler can handle */
     public function canHandle(): string;
     public function handle(DomainCommand $command): void;
+    public function getAdditionalFiredEvents(): array;
 }

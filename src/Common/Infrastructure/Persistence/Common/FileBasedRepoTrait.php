@@ -19,7 +19,7 @@ trait FileBasedRepoTrait
         return new static(tempnam(sys_get_temp_dir(), static::class));
     }
 
-    public function getAll(): array {
+    public function all(): array {
         if ($this->persistedEntities === NULL) {
 
             if (!file_exists($this->filePath)) {

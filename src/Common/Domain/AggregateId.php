@@ -12,12 +12,13 @@ class AggregateId
 
     protected $id;
 
+    /** @return static */
     public static function fromInt(string $id) {
         Assertion::integerish($id, self::INVALID_ID . $id);
         Assertion::greaterThan($id, 0, self::INVALID_ID . $id);
 
         $object = new static();
-        $object->id = $id;
+        $object->id = (int) $id;
 
         return $object;
     }

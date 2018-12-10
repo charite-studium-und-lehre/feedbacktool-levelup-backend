@@ -2,10 +2,10 @@
 
 namespace Common\Infrastructure\Event\Services;
 
-use Common\Application\CurrentUserIdService;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventPublisher;
 use Common\Application\DomainEvent\DomainEventSubscriber;
+use Common\Domain\Services\CurrentUserIdService;
 
 class SimpleDomainEventPublisher implements DomainEventPublisher
 {
@@ -22,17 +22,17 @@ class SimpleDomainEventPublisher implements DomainEventPublisher
     public function __construct(iterable $domainEventSubscribers, CurrentUserIdService $currentUserIdService) {
         $this->currentUserIdService = $currentUserIdService;
 
-        foreach (iterator_to_array($domainEventSubscribers) as $domainEventSubscriber) {
+        foreach ($domainEventSubscribers as $domainEventSubscriber) {
             $this->subscribe($domainEventSubscriber);
         }
 
     }
 
-    public function subscribe(DomainEventSubscriber $domainEventSubscriber) {
+    public function subscribe(DomainEventSubscriber $domainEventSubscriber): void {
         $this->subscribers[] = $domainEventSubscriber;
     }
 
-    public function publish(DomainEvent $domainEvent) {
+    public function publish(DomainEvent $domainEvent): void {
         $domainEvent->setInitialValues($this->currentUserIdService->getUserId());
 
         foreach ($this->subscribers as $subscriber) {

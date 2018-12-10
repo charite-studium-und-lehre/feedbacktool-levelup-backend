@@ -8,7 +8,7 @@ class AbstractCommonRepository
 {
 
     public function add($entity): void {
-        $entities = $this->getAll();
+        $entities = $this->all();
         $entities[] = $entity;
         $this->persistEntities($entities);
     }
@@ -18,7 +18,7 @@ class AbstractCommonRepository
     }
 
     public function delete($entity): void {
-        $all = $this->getAll();
+        $all = $this->all();
         $newArray = [];
         foreach ($all as $object) {
             if (!$object->equals($entity)) {
@@ -29,7 +29,7 @@ class AbstractCommonRepository
     }
 
     public function abstractById($entityId) {
-        foreach ($this->getAll() as $entity) {
+        foreach ($this->all() as $entity) {
             if ($entity->getId()->equals($entityId)) {
                 return $entity;
             }
@@ -46,7 +46,7 @@ class AbstractCommonRepository
      * Flush all changed entities already known by Repository
      */
     public function flush(): void {
-        $this->persistEntities($this->getAll());
+        $this->persistEntities($this->all());
     }
 
 }

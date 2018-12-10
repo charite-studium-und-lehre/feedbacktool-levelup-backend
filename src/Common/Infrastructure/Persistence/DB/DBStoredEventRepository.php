@@ -25,7 +25,7 @@ final class DBStoredEventRepository implements StoredEventRepository
         $this->entityManager = $entityManager;
     }
 
-    public function getAll(): array {
+    public function all(): array {
         return $this->doctrineRepo->findAll();
     }
 

@@ -22,7 +22,7 @@ class ProzentWertung extends AbstractWertung
     }
 
     /**
-     * @see Wertung::getRelativeWertung()
+     * @see WertungsInterface::getRelativeWertung()
      * @return float
      */
     public function getRelativeWertung(): float {
@@ -30,7 +30,7 @@ class ProzentWertung extends AbstractWertung
     }
 
     /**
-     * @see Wertung::getSkala()
+     * @see WertungsInterface::getSkala()
      * @return Skala
      */
     public function getSkala(): Skala {

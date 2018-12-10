@@ -1,6 +1,6 @@
 <?php
 
-namespace LLPCommon\Infrastructure\UserInterface\Web\Controller;
+namespace FBToolCommon\Infrastructure\UserInterface\Web\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

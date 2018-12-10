@@ -13,4 +13,4 @@ services:
     # as action arguments even if you don't extend any base controller class
 
     FBToolCommon\:
-        resource: '%kernel.project_dir%/ddd/LLPCommon/*'
+        resource: '%kernel.project_dir%/ddd/DBToolCommon/*'

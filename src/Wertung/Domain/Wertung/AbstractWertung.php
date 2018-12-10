@@ -2,7 +2,7 @@
 
 namespace Wertung\Domain\Wertung;
 
-abstract class AbstractWertung implements Wertung
+abstract class AbstractWertung implements WertungsInterface
 {
     /** @var string */
     protected $kommentar;

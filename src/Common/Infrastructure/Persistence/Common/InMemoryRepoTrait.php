@@ -6,7 +6,7 @@ trait InMemoryRepoTrait
 {
     protected $persistedEntities = [];
 
-    public function getAll(): array {
+    public function all(): array {
         return $this->persistedEntities;
     }
 }

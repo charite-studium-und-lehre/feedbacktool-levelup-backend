@@ -6,7 +6,7 @@ use Assert\Assertion;
 
 class Prozentzahl
 {
-    const INVALID_WERT = "Prozentwertung muss zwischen 0 und 1 liegen: ";
+    const INVALID_WERT = "Eine Prozentwertung muss zwischen 0 und 1 liegen: ";
 
     /** @var float */
     private $prozentzahl;

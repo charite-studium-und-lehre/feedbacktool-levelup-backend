@@ -24,7 +24,7 @@ class PunktWertung extends AbstractWertung
     }
 
     /**
-     * @see Wertung::getRelativeWertung()
+     * @see WertungsInterface::getRelativeWertung()
      * @return float
      */
     public function getRelativeWertung(): float {
@@ -32,11 +32,11 @@ class PunktWertung extends AbstractWertung
     }
 
     /**
-     * @see Wertung::getSkala()
-     * @return Skala
+     * @see WertungsInterface::getSkala()
+     * @return PunktSkala
      */
     public function getSkala(): Skala {
-        return PunktSkala::fromMaxPunktzahl($this->skala->getMaxPunktzahl());
+        return $this->skala;
     }
 
     public function getPunktzahl(): Punktzahl {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Application;
+namespace Common\Domain\Services;
 
 interface CurrentUserIdService
 {

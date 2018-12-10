@@ -2,19 +2,21 @@
 
 namespace Common\Infrastructure\UserInterface\Web\Service;
 
-use LLPCommon\Infrastructure\UserInterface\Web\Service\LoggedInUserService;
+use Common\Domain\Services\CurrentUserIdService;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CSRFChecker
 {
     protected $csrfTokenManager;
-    /** @var LoggedInUserService  */
-    protected $loggedInUserService;
 
-    public function __construct(CsrfTokenManagerInterface $tokenGeneratorcsrfTokenManager, LoggedInUserService $loggedInUserService) {
+    /** @var CurrentUserIdService */
+    protected $currentUserIdService;
+
+    public function __construct(CsrfTokenManagerInterface $tokenGeneratorcsrfTokenManager, CurrentUserIdService
+    $currentUserIdService) {
         $this->csrfTokenManager = $tokenGeneratorcsrfTokenManager;
-        $this->loggedInUserService = $loggedInUserService;
+        $this->currentUserIdService = $currentUserIdService;
     }
 
     public function generateToken(string $intention) : string {
@@ -36,7 +38,7 @@ class CSRFChecker
     private function getTokenString($intention) {
         return $intention
             . "_"
-            . $this->loggedInUserService->getLoggedInPerson()->getId()->getValue();
+            . $this->currentUserIdService->getUserId();
     }
 
 

@@ -4,7 +4,7 @@ namespace Wertung\Domain\Wertung;
 
 use Wertung\Domain\Skala\Skala;
 
-interface Wertung
+interface WertungsInterface
 {
     public function getKommentar(): string;
     public function getRelativeWertung(): float;

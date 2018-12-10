@@ -11,5 +11,5 @@ namespace Common\Domain;
  *
  */
 interface DDDRepository {
-    public function getAll();
+    public function all();
 }

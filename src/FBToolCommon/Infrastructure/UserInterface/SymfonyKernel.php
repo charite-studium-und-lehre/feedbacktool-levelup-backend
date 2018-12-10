@@ -1,6 +1,6 @@
 <?php
 
-namespace LLPCommon\Infrastructure\UserInterface;
+namespace FBToolCommon\Infrastructure\UserInterface;
 
 use Common\Application\CommandHandler\CommandHandler;
 use Common\Application\DomainEvent\DomainEventSubscriber;

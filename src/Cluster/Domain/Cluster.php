@@ -2,9 +2,10 @@
 
 namespace Cluster\Domain;
 
+use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
 
-class Cluster
+class Cluster implements DDDEntity
 {
     use DefaultEntityComparison;
 
