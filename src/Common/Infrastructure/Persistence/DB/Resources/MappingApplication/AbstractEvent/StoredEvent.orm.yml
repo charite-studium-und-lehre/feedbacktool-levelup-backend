@@ -18,10 +18,10 @@ Common\Application\AbstractEvent\StoredEvent:
 
   embedded:
     eventClass:
-      class: Common\Application\AbstractEvent\StoredEventClass
+      class: StoredEventClass
       columnPrefix: false
     eventBody:
-      class: Common\Application\AbstractEvent\StoredEventBody
+      class: StoredEventBody
       columnPrefix: false
 
   indexes:

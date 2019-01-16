@@ -18,11 +18,6 @@ class StoredEvent implements DomainEvent
     /** @var StoredEventClass */
     private $eventClass;
 
-    /**
-     * @param string $eventClass
-     * @param \DateTimeImmutable $occurredOn
-     * @param string $eventBody
-     */
     public static function fromData(
         StoredEventId $id,
         StoredEventClass $eventClass,

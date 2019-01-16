@@ -9,8 +9,6 @@ trait FileBasedRepoTrait
      */
     protected $filePath;
 
-    protected $persistedEntities = NULL;
-
     public function __construct($filePath) {
         $this->filePath = $filePath;
     }

@@ -4,8 +4,11 @@ namespace Common\Infrastructure\Persistence\Common;
 
 use Common\Domain\AggregateId;
 
+/** @method all() array */
 class AbstractCommonRepository
 {
+
+    protected $persistedEntities = [];
 
     public function add($entity): void {
         $entities = $this->all();
@@ -39,7 +42,7 @@ class AbstractCommonRepository
     }
 
     public function abstractNextIdentity(): AggregateId {
-        return AggregateId::fromInt((int) random_int(1, PHP_INT_MAX));
+        return AggregateId::fromInt(random_int(1, PHP_INT_MAX));
     }
 
     /**

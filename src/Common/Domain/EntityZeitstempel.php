@@ -10,7 +10,7 @@ final class EntityZeitstempel
     /** @var \DateTimeImmutable */
     private $erzeugungsZeit;
 
-    /** @var \DateTimeImmutable */
+    /** @var \DateTimeImmutable|NULL */
     private $aenderungsZeit = NULL;
 
     public static function createErzeugungsZeitstempel(): EntityZeitstempel {

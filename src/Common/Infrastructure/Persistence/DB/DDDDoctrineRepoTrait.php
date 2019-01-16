@@ -10,7 +10,7 @@ trait DDDDoctrineRepoTrait
     use DoctrineAutoIncrementTrait;
     use DoctrineFlushTrait;
 
-    /** @var ServiceEntityRepository */
+    /** @var EntityRepository */
     protected $doctrineRepo;
 
     /** @var EntityManagerInterface */
@@ -38,7 +38,7 @@ trait DDDDoctrineRepoTrait
     }
 
     private function abstractNextIdentityAsInt(): int {
-        return $this->getAndIncreaseAutoIncrement($this->getTableNameOfRepo());
+        return $this->getAndIncreaseAutoIncrement();
     }
 
 }

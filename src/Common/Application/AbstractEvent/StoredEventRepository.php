@@ -10,6 +10,7 @@ interface StoredEventRepository extends FlushableRepository
 
     public function byId(StoredEventId $idstoredEventId): ?StoredEvent;
 
+    /** @return StoredEvent[] */
     public function all(): array;
 
     public function nextIdentity(): StoredEventId;

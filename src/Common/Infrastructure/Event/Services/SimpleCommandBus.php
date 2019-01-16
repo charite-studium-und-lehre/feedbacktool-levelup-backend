@@ -17,7 +17,7 @@ class SimpleCommandBus implements CommandBus
     private $domainEventPublisher;
 
     /**
-     * @var $allHandlers CommandHandler[]
+     * @param CommandHandler[] $allHandlers
      */
     public function __construct(iterable $allHandlers) {
 
@@ -32,7 +32,7 @@ class SimpleCommandBus implements CommandBus
      * Der DomainEventPublisher kann nicht im Konstruktur ünbergeben werden, weil es dann
      * eine zirkuläre Abhängigket mit ihm git. Deshalb wird er nachträglich übergeben.
      */
-    public function setDomainEventPublisher(DomainEventPublisher $domainEventPublisher) {
+    public function setDomainEventPublisher(DomainEventPublisher $domainEventPublisher) : void {
         $this->domainEventPublisher = $domainEventPublisher;
     }
 
@@ -50,7 +50,7 @@ class SimpleCommandBus implements CommandBus
         }
     }
 
-    private function publishEventFromCommand(DomainCommand $command) {
+    private function publishEventFromCommand(DomainCommand $command) : void {
         $event = call_user_func([get_parent_class($command), 'fromCommand'], $command);
         if ($event instanceof \Exception) {
             throw $event;
@@ -58,7 +58,7 @@ class SimpleCommandBus implements CommandBus
         $this->publishEvent($event);
     }
 
-    private function publishEvent(DomainEvent $event) {
+    private function publishEvent(DomainEvent $event) : void {
         $this->domainEventPublisher->publish($event);
     }
 }
