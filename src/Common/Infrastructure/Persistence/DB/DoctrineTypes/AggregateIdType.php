@@ -12,7 +12,7 @@ class AggregateIdType extends Type
     const AGGREGATE_ID_TYPE = 'aggregateId'; // modify to match your type name
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-        return "INTEGER AUTO_INCREMENT";
+        return "INTEGER";
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform) {

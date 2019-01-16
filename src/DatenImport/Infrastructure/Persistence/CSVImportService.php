@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DatenImport\Infrastructure\Persistence;
+namespace DatenImport\Infrastructure\Persistence;
 
 class CSVImportService
 {
@@ -20,6 +20,9 @@ class CSVImportService
                 $PTMdataAsArray[$zeilenindex]['SummeFalsch'] = $data[$headers[" all_f"]];
                 $PTMdataAsArray[$zeilenindex]['SummeWeissNicht'] = $data[$headers[" all_w"]];
 
+                $antwortenEndeIndex = 0;
+                $organsysteme = [];
+                
                 //alle einzelnen 200 Antworten
                 for($i = 1;  $i <=200; $i++){
                     $PTMdataAsArray[$zeilenindex]['AntwortenEinzeln'][" f_".$i] = $data[$headers[" f_".$i]];

@@ -1,6 +1,0 @@
-Lehrberechtigung\Domain\LehrberechtigungsTyp:
-    type: embeddable
-    fields:
-        typ:
-          type: integer
-          nullable: false

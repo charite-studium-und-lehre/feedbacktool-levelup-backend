@@ -9,21 +9,46 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
-        server_version: '5.7'
+        server_version: '8.0'
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci
 
         url: '%env(resolve:DATABASE_URL)%'
+
+        types:
+            aggregateId:
+                class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdType"
+            aggregateIdString:
+                class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
+        mapping_types:
+            aggregateId: integer
+            aggregateString: string
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
+#        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-#        mappings:
-#            App:
-#                is_bundle: false
-#                type: annotation
-#                dir: '%kernel.project_dir%/src/Entity'
-#                prefix: 'App\Entity'
-#                alias: App
+
+        mappings:
+            CommmonMapping:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "Common\\Domain"
+
+            AbstractEvent:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/MappingApplication/AbstractEvent"
+                prefix:               "Common\\Application\\AbstractEvent"
+
+            Cluster:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/Cluster/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "Cluster\\Domain"

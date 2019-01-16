@@ -1,6 +1,6 @@
 <?php
 
-namespace Pruefung\Domain\Wertung;
+namespace Pruefung\Domain;
 
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsId;

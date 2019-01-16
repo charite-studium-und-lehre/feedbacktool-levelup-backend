@@ -13,4 +13,4 @@ services:
     # as action arguments even if you don't extend any base controller class
 
     Common\:
-      resource: '%kernel.project_dir%/ddd/Common/*'
+      resource: '%kernel.project_dir%/src/Common/*'

@@ -13,13 +13,13 @@ use Tests\Integration\Common\DbRepoTestCase;
 
 final class ClusterRepositoryTest extends DbRepoTestCase
 {
-//    protected $dbRepoInterface = ClusterRepository::class;
+    protected $dbRepoInterface = ClusterRepository::class;
 
     public function getAllRepositories() {
 
         return [
             'file-based-cluster-repository' => [FileBasedSimpleClusterRepository::createTempFileRepo()],
-//            'db-repo'                                => [$this->dbRepo],
+            'db-repo'                                => [$this->dbRepo],
         ];
     }
 
@@ -46,12 +46,16 @@ final class ClusterRepositoryTest extends DbRepoTestCase
 
         $this->assertCount(2, $repo->all());
         $cluster2 = $repo->byId(ClusterId::fromInt(6));
-        $this->assertEquals(ClusterTitel::fromString("Chemie"), $cluster2->getClusterTypId());
+        $this->assertEquals(ClusterTitel::fromString("Chemie"), $cluster2->getTitel());
         $this->assertEquals(ClusterId::fromInt(5), $cluster2->getParentId());
         $this->assertEquals(ClusterTypId::fromInt(26), $cluster2->getClusterTypId());
 
     }
 
+    /**
+     * @test
+     * @dataProvider getAllRepositories
+     */
     public function testDelete(ClusterRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $this->assertCount(2, $repo->all());

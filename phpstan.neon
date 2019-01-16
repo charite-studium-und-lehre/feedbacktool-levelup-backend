@@ -1,0 +1,14 @@
+parameters:
+
+   paths:
+     - %currentWorkingDirectory%/src/
+
+   level: max
+
+   ignoreErrors:
+   		- '#Parameter .* of function call_user_func expects callable.*#'
+   		- '#Strict comparison using === between .* and object will always evaluate to false.#'
+   		- '#Parameter .* expects string, int given#'
+   		- '#Method .*DB.*Repository::byId() should return .*|null but returns object|null.#'
+   		- '#Parameter .* $serializedEventBody of static method Common\Application\AbstractEvent\StoredEventBody::fromString() expects string, string|false given.#'
+

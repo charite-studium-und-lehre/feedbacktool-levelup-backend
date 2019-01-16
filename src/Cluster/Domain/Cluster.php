@@ -18,7 +18,7 @@ class Cluster implements DDDEntity
     /** @var ClusterTitel */
     private $titel;
 
-    /** @var */
+    /** @var ClusterId */
     private $parentId;
 
     public static function create(

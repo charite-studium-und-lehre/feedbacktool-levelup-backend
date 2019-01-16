@@ -9,7 +9,7 @@ interface StudiRepository extends DDDRepository, FlushableRepository
 {
     public function add(Studi $object): void;
 
-    public function byId(StudiId $id): ?Person;
+    public function byId(StudiId $id): ?Studi;
 
     /** @return Studi[] */
     public function all(): array;

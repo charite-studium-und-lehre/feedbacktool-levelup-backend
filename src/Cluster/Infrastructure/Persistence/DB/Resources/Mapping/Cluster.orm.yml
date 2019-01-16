@@ -1,0 +1,23 @@
+Cluster\Domain\Cluster:
+  type: entity
+  table: cluster
+
+  id:
+    id:
+      type: aggregateId
+  #            generator:
+  #                strategy: AUTO
+
+  fields:
+    parentId:
+      type: aggregateId
+      nullable: true
+
+  embedded:
+    clusterTypId:
+      class: Common\Domain\AggregateId
+      columnPrefix: "clusterTyp_"
+    titel:
+      class: Cluster\Domain\ClusterTitel
+      columnPrefix: false
+

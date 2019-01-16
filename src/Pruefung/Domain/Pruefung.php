@@ -3,6 +3,7 @@
 namespace Pruefung\Domain;
 
 use Common\Domain\DefaultEntityComparison;
+use Wertung\Domain\Skala\Skala;
 
 class Pruefung
 {

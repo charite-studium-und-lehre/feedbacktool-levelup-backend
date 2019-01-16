@@ -18,7 +18,7 @@ class StudiPruefung
     /** @var PruefungsId */
     private $pruefungsId;
 
-    /** @var ?Wertung */
+    /** @var ?WertungsInterface */
     private $wertung;
 
     use DefaultEntityComparison;

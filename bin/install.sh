@@ -40,7 +40,6 @@ if [ "$LETZTES_COMPOSER_UPDATE" != "$AKTUELLES_DATUM" -a "$1" != "fast" -o "comp
 else
     ./composer.phar --ansi install
     RESULT_CODE=$?
-    echo "TEST $RESULT_CODE"
     if [ $RESULT_CODE -ne 0 ] ; then
         echo "Problem bei composer install festgestellt... Führe composer update aus."
         ./composer.phar --ansi update

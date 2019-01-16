@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phive xmlns="https://phar.io/phive">
+  <phar name="dephpend" version="^0.4.0" installed="0.4.0" location="./bin/tools/dephpend" copy="false"/>
+  <phar name="phpunit" version="^7.0" installed="7.5.2" location="./bin/tools/phpunit" copy="false"/>
+  <phar name="phpcpd" version="^4.0" installed="4.1.0" location="./bin/tools/phpcpd" copy="false"/>
+</phive>

@@ -2,8 +2,10 @@
 
 namespace Wertung\Domain;
 
+use Cluster\Domain\ClusterTitel;
 use Common\Domain\DDDEntity;
 use StudiPruefung\Domain\StudiPruefungsId;
+use Wertung\Domain\Wertung\WertungsInterface;
 
 class ItemWertung implements DDDEntity
 {
@@ -16,13 +18,13 @@ class ItemWertung implements DDDEntity
     /** @var ClusterTitel */
     private $titel;
 
-    /** @var Wertung */
+    /** @var WertungsInterface */
     private $wertung;
 
     public static function create(
         ItemWertungsId $id,
         StudiPruefungsId $studiPruefungsId,
-        Wertung $wertung
+        WertungsInterface $wertung
     ): self {
         $object = new self();
         $object->id = $id;
@@ -43,7 +45,7 @@ class ItemWertung implements DDDEntity
         return $this->titel;
     }
 
-    public function getWertung(): Wertung {
+    public function getWertung(): WertungsInterface {
         return $this->wertung;
     }
 
