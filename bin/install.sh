@@ -28,8 +28,25 @@ fi
 #sed -i 's/^        chmod/#        chmod/' ./vendor/ocramius/package-versions/src/PackageVersions/Installer.php
 
 # Composer
+if [ "$1" == "slow" ]; then
+    rm ./var/log/letztesComposerUpdate 2>/dev/null
+fi
+AKTUELLES_DATUM=`date +%d.%m.%Y`
+LETZTES_COMPOSER_UPDATE=`cat ./var/log/letztesComposerUpdate 2>/dev/null`
+if [ "$LETZTES_COMPOSER_UPDATE" != "$AKTUELLES_DATUM" -a "$1" != "fast" -o "composer.json" -nt "composer.lock" ]; then
+    echo $AKTUELLES_DATUM > ./var/log/letztesComposerUpdate
+    echo "Composer heute zum ersten mal aufgerufen; Composer-Update wird ausgeführt"
+    ./composer.phar --ansi update
+else
+    ./composer.phar --ansi install
+    RESULT_CODE=$?
+    echo "TEST $RESULT_CODE"
+    if [ $RESULT_CODE -ne 0 ] ; then
+        echo "Problem bei composer install festgestellt... Führe composer update aus."
+        ./composer.phar --ansi update
+    fi
+fi
 
-./composer.phar --ansi update $@
 ./bin/console cache:warmup
 
 # Encore

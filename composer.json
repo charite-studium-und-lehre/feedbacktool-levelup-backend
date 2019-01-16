@@ -18,22 +18,23 @@
     "symfony/form": "^4.0",
     "symfony/framework-bundle": "^4.0",
     "symfony/intl": "^4.0",
-    "symfony/lts": "^4@dev",
     "symfony/maker-bundle": "^1.0",
     "symfony/monolog-bundle": "^3.0",
     "symfony/orm-pack": "^1.0",
     "symfony/profiler-pack": "^1.0",
     "symfony/requirements-checker": "^1.0",
+    "symfony/security-csrf": "^4.1",
     "symfony/templating": "^4.0",
     "symfony/web-profiler-bundle": "^4.0",
     "symfony/web-server-bundle": "^4.0",
-    "symfony/yaml": "^4.0"
+    "symfony/yaml": "^4.0",
+    "doctrine/doctrine-migrations-bundle": "^2.0"
   },
 
   "require-dev": {
     "phpunit/phpunit": "^6.0",
-    "symfony/inflector" : "^4.0"
-
+    "symfony/inflector" : "^4.0",
+    "phpstan/phpstan": "^0.10.5"
   },
 
   "config": {
@@ -49,7 +50,8 @@
       "cache:clear": "symfony-cmd",
       "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
       "security-checker security:check": "script",
-      "requirements-checker": "script"
+      "requirements-checker": "script",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
     },
     "post-root-package-install": [
       "SymfonyStandard\\Composer::hookRootPackageInstall"
@@ -68,6 +70,12 @@
     "symfony": {
       "id": "01C0957RHS9VFRTTPZEKEE494C",
       "allow-contrib": false
+    }
+  },
+  "repositories": {
+    "packagist.org": {
+      "type": "composer",
+      "url": "https://packagist.org"
     }
   }
 }

@@ -1,3 +1,5 @@
+parameters:
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -7,10 +9,16 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
-    # makes classes available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
+    Cluster-Domain-ClusterRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Cluster\Domain\Cluster
 
-    Common\:
-      resource: '%kernel.project_dir%/src/Common/*'
+    Cluster\Domain\ClusterRepository:
+        class: 'Cluster\Infrastructure\Persistence\DB\DBClusterRepository'
+        arguments:
+          - "@Cluster-Domain-ClusterRepository-DoctrineRepo"
+          - "@doctrine.orm.entity_manager"
+        public: true
+

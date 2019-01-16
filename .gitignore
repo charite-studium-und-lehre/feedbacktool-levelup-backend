@@ -10,12 +10,12 @@
 # Email spool folder
 /app/spool/*
 
-# Cache, session files and logs (Symfony3)
+# Cache, session files and logs (Symfony)
 /var/cache/*
-/var/logs/*
+/var/log/*
 /var/sessions/*
 !var/cache/.gitkeep
-!var/logs/.gitkeep
+!var/log/.gitkeep
 !var/sessions/.gitkeep
 
 # Parameters
@@ -57,3 +57,10 @@ composer.lock
 /public/bundles/
 /var/
 ###< symfony/framework-bundle ###
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###

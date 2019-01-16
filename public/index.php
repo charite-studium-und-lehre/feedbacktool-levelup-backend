@@ -1,6 +1,6 @@
 <?php
 
-use Common\Infrastructure\UserInterface\SymfonyKernel;
+use FBToolCommon\Infrastructure\UserInterface\SymfonyKernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,0 +1,26 @@
+Lehrberechtigung\Domain\Lehrberechtigung:
+  type: entity
+  table: lehrberechtigung
+
+  id:
+    id:
+      type: aggregateId
+  #            generator:
+  #                strategy: AUTO
+
+  fields:
+    zeitsemester:
+      type: zeitsemester
+      nullable: true
+    lehrberechtigungsUmfang:
+      type: lehrberechtigungsUmfang
+      nullable: true
+      column: umfang_stundenzahl
+
+  embedded:
+    personId:
+      class: Common\Domain\AggregateId
+      columnPrefix: "person_"
+    lehrberechtigungsTyp:
+      class: LehrberechtigungsTyp
+      columnPrefix: false
