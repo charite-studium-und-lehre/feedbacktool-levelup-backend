@@ -1,0 +1,9 @@
+Cluster\Domain\ClusterZuordnung:
+  type: entity
+  table: cluster_zuordnung
+
+  id:
+    clusterId:
+      type: aggregateId
+    wertungsItemId:
+      type: aggregateId

@@ -7,7 +7,7 @@ use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTypTitel;
 use PHPUnit\Framework\TestCase;
 
-class ClusterTypTitelTest extends TestCase
+class ClusterTitelTest extends TestCase
 {
     public function testFromValues() {
 

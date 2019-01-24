@@ -6,7 +6,7 @@ use Cluster\Domain\ClusterBezeichnungEnthaeltHTMLException;
 use Cluster\Domain\ClusterTitel;
 use PHPUnit\Framework\TestCase;
 
-class ClusterTitelTest extends TestCase
+class ClusterTypTitelTest extends TestCase
 {
     public function testFromValues() {
 

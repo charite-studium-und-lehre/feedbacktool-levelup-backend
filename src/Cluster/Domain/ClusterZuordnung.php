@@ -15,6 +15,13 @@ class ClusterZuordnung
 
     use DefaultValueObjectComparison;
 
+    public static function byIds(ClusterId $clusterId, PruefungsItemId $pruefungsItemId) {
+        $object = new self();
+        $object->clusterId = $clusterId;
+        $object->wertungsItemId = $pruefungsItemId;
+        return $object;
+    }
+
     public function getClusterId(): ClusterId {
         return $this->clusterId;
     }

@@ -5,7 +5,7 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
+        public: true       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
@@ -22,3 +22,14 @@ services:
           - "@doctrine.orm.entity_manager"
         public: true
 
+    Cluster-Domain-ClusterZuordnung-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Cluster\Domain\ClusterZuordnung
+
+    Cluster\Domain\ClusterZuordnungsService:
+        class: Cluster\Infrastructure\Persistence\DB\DBClusterZuordnungsService
+        arguments:
+            - '@Cluster-Domain-ClusterZuordnung-DoctrineRepo'
+#            - "@doctrine.orm.entity_manager"
