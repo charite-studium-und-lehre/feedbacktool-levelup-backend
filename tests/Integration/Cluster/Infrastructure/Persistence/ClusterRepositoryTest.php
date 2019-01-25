@@ -66,9 +66,9 @@ final class ClusterRepositoryTest extends DbRepoTestCase
         $this->assertCount(0, $repo->all());
     }
 
-    protected function clearDatabase() {
-        // use $this->deleteIdsFromDB or $this->emptyRepository()
-        $this->emptyRepository();
+    protected function clearDatabase() : void {
+        // use $this->deleteIdsFromDB or $this->emptyRepositoryWithTruncate()
+        $this->emptyRepositoryWithTruncate();
     }
 
 

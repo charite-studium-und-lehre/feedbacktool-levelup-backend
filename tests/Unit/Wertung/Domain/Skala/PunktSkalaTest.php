@@ -1,7 +1,6 @@
 <?php
 
-namespace Tests\Unit\Wertung\Domain\Wertung;
-
+namespace Tests\Unit\Wertung\Domain\Skala;
 
 use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

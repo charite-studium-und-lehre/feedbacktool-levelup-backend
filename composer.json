@@ -1,7 +1,7 @@
 {
   "license": "proprietary",
   "autoload": {
-    "psr-4": { "DoctrineMigrations\\": "src/Migrations/", "": "src/" }
+    "psr-4": {"": "src/", "Tests\\": "tests"}
   },
   "autoload-dev": {
     "psr-4": { "Tests\\": "tests/" }

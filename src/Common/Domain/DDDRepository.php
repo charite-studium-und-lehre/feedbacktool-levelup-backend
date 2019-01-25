@@ -8,6 +8,7 @@ namespace Common\Domain;
  * @package Common\Domain
  * @method delete($object)
  * @method byId($objectId)
+ * @method flush() void
  *
  */
 interface DDDRepository {

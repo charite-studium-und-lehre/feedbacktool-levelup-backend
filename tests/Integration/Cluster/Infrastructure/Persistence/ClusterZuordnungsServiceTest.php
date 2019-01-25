@@ -109,9 +109,9 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
     }
 
 
-    protected function clearDatabase() {
+    protected function clearDatabase() : void {
         // use $this->deleteIdsFromDB or $this->emptyRepository()
-        $this->emptyRepository();
+        $this->emptyRepositoryWithTruncate();
     }
 
     /**

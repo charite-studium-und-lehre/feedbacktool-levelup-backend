@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Studi\Domain;
+namespace Tests\Unit\DatenImport\Domain;
 
 
 use DatenImport\Infrastructure\Persistence\CSVImportService;

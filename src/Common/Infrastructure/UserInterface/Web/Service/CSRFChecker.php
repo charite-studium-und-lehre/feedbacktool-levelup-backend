@@ -13,36 +13,33 @@ class CSRFChecker
     /** @var CurrentUserIdService */
     protected $currentUserIdService;
 
-    public function __construct(
-        CsrfTokenManagerInterface $tokenGeneratorcsrfTokenManager,
-        CurrentUserIdService $currentUserIdService
-    ) {
+    public function __construct(CsrfTokenManagerInterface $tokenGeneratorcsrfTokenManager, CurrentUserIdService
+    $currentUserIdService) {
         $this->csrfTokenManager = $tokenGeneratorcsrfTokenManager;
         $this->currentUserIdService = $currentUserIdService;
     }
 
-    public function generateToken(string $intention): string {
+    public function generateToken(string $intention) : string {
         $token = $this->generateTokenObject($intention);
-
         return $token->getValue();
     }
 
     public function checkToken(string $intention, string $tokenString) {
         $token = $this->generateTokenObject($intention);
-
         return $token->getValue() == $tokenString;
     }
 
-    private function generateTokenObject(string $intention): CsrfToken {
+    private function generateTokenObject(string $intention) : CsrfToken {
         $tokenId = $this->getTokenString($intention);
-
         return $this->csrfTokenManager->getToken($tokenId);
     }
+
 
     private function getTokenString($intention) {
         return $intention
             . "_"
             . $this->currentUserIdService->getUserId();
     }
+
 
 }
