@@ -52,3 +52,31 @@ doctrine:
                 type:                 yml
                 dir:                  "%kernel.project_dir%/src/Cluster/Infrastructure/Persistence/DB/Resources/Mapping"
                 prefix:               "Cluster\\Domain"
+
+            Pruefung:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "Pruefung\\Domain"
+
+#            Studi:
+#                is_bundle:            false
+#                mapping:              true
+#                type:                 yml
+#                dir:                  "%kernel.project_dir%/src/Studi/Infrastructure/Persistence/DB/Resources/Mapping"
+#                prefix:               "Studi\\Domain"
+#
+#            StudiPruefung:
+#                is_bundle:            false
+#                mapping:              true
+#                type:                 yml
+#                dir:                  "%kernel.project_dir%/src/StudiPruefung/Infrastructure/Persistence/DB/Resources/Mapping"
+#                prefix:               "StudiPruefung\\Domain"
+#
+#            Wertung:
+#                is_bundle:            false
+#                mapping:              true
+#                type:                 yml
+#                dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
+#                prefix:               "Wertung\\Domain"

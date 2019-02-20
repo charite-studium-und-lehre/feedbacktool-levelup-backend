@@ -3,8 +3,6 @@
 namespace Pruefung\Domain;
 
 use Common\Domain\DefaultEntityComparison;
-use Pruefung\Domain\PruefungsId;
-use Pruefung\Domain\PruefungsItemId;
 
 class PruefungsItem
 {
@@ -25,11 +23,11 @@ class PruefungsItem
         return $object;
     }
 
-    public function getId(): PruefungsItemId{
-        return $this->id;
+    public function getId(): PruefungsItemId {
+        return PruefungsItemId::fromInt($this->id);
     }
 
-    public function getPruefungsId(): PruefungsId{
-        return $this->pruefungsId;
+    public function getPruefungsId(): PruefungsId {
+        return PruefungsId::fromInt($this->pruefungsId);
     }
 }

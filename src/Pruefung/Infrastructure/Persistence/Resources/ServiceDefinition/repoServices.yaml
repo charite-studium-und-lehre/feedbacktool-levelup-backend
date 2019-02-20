@@ -1,0 +1,36 @@
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: true       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    Pruefung-Domain-PruefungsRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Pruefung\Domain\Pruefung
+
+    Pruefung\Domain\PruefungsRepository:
+        class: 'Pruefung\Infrastructure\Persistence\DB\DBPruefungsRepository'
+        arguments:
+          - "@Pruefung-Domain-PruefungsRepository-DoctrineRepo"
+          - "@doctrine.orm.entity_manager"
+        public: true
+
+    Pruefung-Domain-PruefungsItemRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Pruefung\Domain\PruefungsItem
+
+    Pruefung\Domain\PruefungsItemRepository:
+        class: 'Pruefung\Infrastructure\Persistence\DB\DBPruefungsItemRepository'
+        arguments:
+            - "@Pruefung-Domain-PruefungsItemRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true

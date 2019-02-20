@@ -26,11 +26,11 @@ final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository im
     }
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(\Pruefung\Domain\PruefungsItemId $wertungsItemId): array {
+    public function alleClusterVonPruefungsItem(\Pruefung\Domain\PruefungsItemId $pruefungsItemId): array {
         $resultArray = [];
         foreach ($this->all() as $aktuelleZuordnung) {
             /* @var $aktuelleZuordnung ClusterZuordnung */
-            if ($aktuelleZuordnung->getWertungsItemId()->equals($wertungsItemId)) {
+            if ($aktuelleZuordnung->getPruefungsItemId()->equals($pruefungsItemId)) {
                 $resultArray[] = $aktuelleZuordnung->getClusterId();
             }
         }
@@ -43,7 +43,7 @@ final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository im
         foreach ($this->all() as $aktuelleZuordnung) {
             /* @var $aktuelleZuordnung ClusterZuordnung */
             if ($aktuelleZuordnung->getClusterId()->equals($clusterId)) {
-                $resultArray[] = $aktuelleZuordnung->getWertungsItemId();
+                $resultArray[] = $aktuelleZuordnung->getPruefungsItemId();
             }
         }
         return $resultArray;

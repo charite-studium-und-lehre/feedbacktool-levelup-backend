@@ -39,10 +39,10 @@ final class DBClusterZuordnungsService implements ClusterZuordnungsService
     }
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(PruefungsItemId $wertungsItemId): array {
+    public function alleClusterVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
         return $this->doctrineRepo
             ->findBy(
-                ["wertungsItemId" => $wertungsItemId]
+                ["pruefungsItemId" => $pruefungsItemId]
             );
     }
 
@@ -57,7 +57,7 @@ final class DBClusterZuordnungsService implements ClusterZuordnungsService
     private function sucheAktuelleZuordnung(ClusterZuordnung $clusterZuordnung) : ?ClusterZuordnung {
         return $this->doctrineRepo->findOneBy(
             [
-                "wertungsItemId" => $clusterZuordnung->getWertungsItemId(),
+                "pruefungsItemId" => $clusterZuordnung->getPruefungsItemId(),
                 "clusterId"      => $clusterZuordnung->getClusterId()]
         );
     }

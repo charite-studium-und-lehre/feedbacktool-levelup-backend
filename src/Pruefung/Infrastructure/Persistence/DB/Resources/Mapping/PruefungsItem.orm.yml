@@ -1,0 +1,12 @@
+Pruefung\Domain\PruefungsItem:
+  type: entity
+  table: pruefung_item
+
+  id:
+    id:
+      type: aggregateId
+
+  fields:
+    pruefungsId:
+      type: aggregateId
+      column: pruefungsId

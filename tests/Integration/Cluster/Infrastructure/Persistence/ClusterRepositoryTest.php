@@ -2,7 +2,6 @@
 
 namespace Tests\Integration\Cluster\Infrastructure\Persistence;
 
-
 use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
@@ -18,8 +17,8 @@ final class ClusterRepositoryTest extends DbRepoTestCase
     public function getAllRepositories() {
 
         return [
-            'file-based-cluster-repository' => [FileBasedSimpleClusterRepository::createTempFileRepo()],
-            'db-repo'                                => [$this->dbRepo],
+            'file-based-repo' => [FileBasedSimpleClusterRepository::createTempFileRepo()],
+            'db-repo'         => [$this->dbRepo],
         ];
     }
 
@@ -32,7 +31,7 @@ final class ClusterRepositoryTest extends DbRepoTestCase
             ClusterId::fromInt(5),
             ClusterTypId::fromInt(25),
             ClusterTitel::fromString("Anatomie"),
-            null
+            NULL
         );
         $cluster2 = Cluster::create(
             ClusterId::fromInt(6),
@@ -66,11 +65,9 @@ final class ClusterRepositoryTest extends DbRepoTestCase
         $this->assertCount(0, $repo->all());
     }
 
-    protected function clearDatabase() : void {
+    protected function clearDatabase(): void {
         // use $this->deleteIdsFromDB or $this->emptyRepositoryWithTruncate()
         $this->emptyRepositoryWithTruncate();
     }
-
-
 
 }

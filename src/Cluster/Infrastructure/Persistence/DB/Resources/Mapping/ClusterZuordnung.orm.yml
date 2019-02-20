@@ -5,5 +5,5 @@ Cluster\Domain\ClusterZuordnung:
   id:
     clusterId:
       type: aggregateId
-    wertungsItemId:
+    pruefungsItemId:
       type: aggregateId

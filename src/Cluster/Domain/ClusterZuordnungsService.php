@@ -10,7 +10,7 @@ interface ClusterZuordnungsService extends FlushableRepository
     public function removeZuordnung(ClusterZuordnung $clusterZuordnung): void;
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(\Pruefung\Domain\PruefungsItemId $wertungsItemId) : array;
+    public function alleClusterVonPruefungsItem(\Pruefung\Domain\PruefungsItemId $pruefungsItemId) : array;
 
     /** @return \Pruefung\Domain\PruefungsItemId[] */
     public function allePruefungsItemsVonCluster(ClusterId $clusterId) : array;

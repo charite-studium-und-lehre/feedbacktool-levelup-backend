@@ -2,7 +2,7 @@
 
 namespace Wertung\Domain;
 
-use Cluster\Domain\ClusterTitel;
+
 use Common\Domain\DDDEntity;
 use StudiPruefung\Domain\StudiPruefungsId;
 use Wertung\Domain\Wertung\WertungsInterface;
@@ -14,9 +14,6 @@ class ItemWertung implements DDDEntity
 
     /** @var StudiPruefungsId */
     private $studiPruefungsId;
-
-    /** @var ClusterTitel */
-    private $titel;
 
     /** @var WertungsInterface */
     private $wertung;
@@ -39,10 +36,6 @@ class ItemWertung implements DDDEntity
 
     public function getStudiPruefungsId(): StudiPruefungsId {
         return $this->studiPruefungsId;
-    }
-
-    public function getTitel(): ClusterTitel {
-        return $this->titel;
     }
 
     public function getWertung(): WertungsInterface {

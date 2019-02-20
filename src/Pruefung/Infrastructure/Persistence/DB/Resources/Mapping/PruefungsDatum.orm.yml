@@ -1,0 +1,6 @@
+Pruefung\Domain\PruefungsDatum:
+    type: embeddable
+    fields:
+        value:
+          type: date_immutable
+          column: datum
