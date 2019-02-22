@@ -5,23 +5,23 @@ namespace Studi\Domain;
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class MatrikelHash
+final class StudiHash
 {
     use DefaultValueObjectComparison;
 
-    const MIN_LENGTH = 2;
-    const MAX_LENGTH = 30;
+    const MIN_LENGTH = 75;
+    const MAX_LENGTH = 100;
 
-    const UNGUELTIG = "Scheint kein Matrikel-Hash zu sein: ";
+    const UNGUELTIG = "Scheint kein Studi-Data-Hash zu sein: ";
 
     private $value;
 
 
     public static function fromString(string $value): self {
-        Assertion::String($value, self::UNGUELTIG);
-        Assertion::alnum($value, self::UNGUELTIG);
-        Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG);
-        Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG);
+        Assertion::String($value, self::UNGUELTIG . $value);
+//        Assertion::alnum($value, self::UNGUELTIG . $value);
+        Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG . $value);
+        Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG . $value);
 
         $object = new self();
         $object->value = $value;

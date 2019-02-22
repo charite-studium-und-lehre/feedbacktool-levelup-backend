@@ -6,27 +6,35 @@ use Common\Domain\DefaultEntityComparison;
 
 class Studi
 {
+    /** @var StudiHash */
+    private $studiHash;
+
+    /** @var LoginHash|null */
+    private $loginHash = NULL;
+
     use DefaultEntityComparison;
 
-    /** @var Vorname */
-    private $vorname;
-
-    /** @var Nachname */
-    private $nachname;
-
-    /** @var Email */
-    private $email;
-
-    /** @var MatrikelHash */
-    private $matrikelhash;
-
-    public static function fromValues(Vorname $vorname, Nachname $nachname, Email $email, MatrikelHash $matrikelHash) {
+    public static function fromStudiHash(StudiHash $studiHash) {
         $object = new self();
-        $object->vorname = $vorname;
-        $object->nachname = $nachname;
-        $object->email = $email;
-        $object->matrikelhash = $matrikelHash;
+        $object->studiHash = $studiHash;
+
         return $object;
+    }
+
+    public function getStudiHash(): StudiHash {
+        return $this->studiHash;
+    }
+
+    public function getLoginHash(): ?LoginHash {
+        return $this->loginHash;
+    }
+
+    public function setLoginHash(LoginHash $loginHash): void {
+        $this->loginHash = $loginHash;
+    }
+
+    public function removeLoginHash(): void {
+        $this->loginHash = NULL;
     }
 
 }

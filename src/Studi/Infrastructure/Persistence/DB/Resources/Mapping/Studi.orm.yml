@@ -1,0 +1,12 @@
+Studi\Domain\Studi:
+  type: entity
+  table: studi
+
+  id:
+    studiHash:
+      type: studiHash
+
+  embedded:
+    loginHash:
+      class: Studi\Domain\LoginHash
+      columnPrefix: false

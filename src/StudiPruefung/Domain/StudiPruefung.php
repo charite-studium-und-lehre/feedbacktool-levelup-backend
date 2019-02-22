@@ -4,7 +4,7 @@ namespace StudiPruefung\Domain;
 
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsId;
-use Studi\Domain\StudiId;
+use Studi\Domain\StudiHash;
 use Wertung\Domain\Wertung\WertungsInterface;
 
 class StudiPruefung
@@ -12,29 +12,19 @@ class StudiPruefung
     /** StudiPruefungsId */
     private $id;
 
-    /** @var StudiId */
-    private $studiId;
+    /** @var StudiHash */
+    private $StudiHash;
 
     /** @var PruefungsId */
     private $pruefungsId;
 
-    /** @var ?WertungsInterface */
-    private $wertung;
-
     use DefaultEntityComparison;
 
-    public static function fromValues(
-        StudiPruefungsId $id,
-        StudiId $studiId,
-        PruefungsId $pruefungsId,
-        WertungsInterface $wertung =
-        NULL
-    ) {
+    public static function fromValues(StudiPruefungsId $id, StudiHash $studiId, PruefungsId $pruefungsId) {
         $object = new self();
         $object->id = $id;
-        $object->studiId = $studiId;
+        $object->StudiHash = $studiId;
         $object->pruefungsId = $pruefungsId;
-        $object->wertung = $wertung;
 
         return $object;
     }
@@ -43,16 +33,12 @@ class StudiPruefung
         return $this->id;
     }
 
-    public function getStudiId(): StudiId {
-        return $this->studiId;
+    public function getStudiHash(): StudiHash {
+        return $this->StudiHash;
     }
 
     public function getPruefungsId(): PruefungsId {
         return $this->pruefungsId;
-    }
-
-    public function getWertung(): ?WertungsInterface {
-        return $this->wertung;
     }
 
 }

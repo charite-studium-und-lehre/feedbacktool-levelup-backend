@@ -20,8 +20,8 @@ final class DBPruefungsItemRepository implements PruefungsItemRepository
         $this->abstractAdd($pruefungsItem);
     }
 
-    public function byId(PruefungsItemId $pruefungsItemId): ?PruefungsItem {
-        return $this->abstractById($pruefungsItemId->getValue());
+    public function byId(PruefungsItemId $studiHash): ?PruefungsItem {
+        return $this->abstractById($studiHash->getValue());
     }
 
     public function nextIdentity(): PruefungsItemId {

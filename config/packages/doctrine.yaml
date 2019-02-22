@@ -22,9 +22,12 @@ doctrine:
                 class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdType"
             aggregateIdString:
                 class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
+            studiHash:
+                class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiHashType"
         mapping_types:
             aggregateId: integer
             aggregateString: string
+            studiHash: string
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
@@ -60,13 +63,13 @@ doctrine:
                 dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping"
                 prefix:               "Pruefung\\Domain"
 
-#            Studi:
-#                is_bundle:            false
-#                mapping:              true
-#                type:                 yml
-#                dir:                  "%kernel.project_dir%/src/Studi/Infrastructure/Persistence/DB/Resources/Mapping"
-#                prefix:               "Studi\\Domain"
-#
+            Studi:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/Studi/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "Studi\\Domain"
+
 #            StudiPruefung:
 #                is_bundle:            false
 #                mapping:              true

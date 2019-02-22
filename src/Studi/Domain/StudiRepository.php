@@ -9,12 +9,10 @@ interface StudiRepository extends DDDRepository, FlushableRepository
 {
     public function add(Studi $object): void;
 
-    public function byId(StudiId $id): ?Studi;
+    public function byHash(StudiHash $studiHash): ?Studi;
 
     /** @return Studi[] */
     public function all(): array;
 
     public function delete(Studi $object): void;
-
-    public function nextIdentity(): StudiId;
 }
