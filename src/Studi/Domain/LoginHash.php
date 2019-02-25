@@ -19,7 +19,9 @@ final class LoginHash
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);
-//        Assertion::alnum($value, self::UNGUELTIG . $value);
+        Assertion::startsWith($value, "$");
+        Assertion::false(strstr($value, "'"), self::UNGUELTIG);
+        Assertion::false(strstr($value, '"'), self::UNGUELTIG);
         Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG . $value);
         Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG . $value);
 

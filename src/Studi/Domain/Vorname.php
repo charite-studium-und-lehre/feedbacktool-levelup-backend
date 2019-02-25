@@ -20,7 +20,7 @@ final class Vorname
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG);
-        Assertion::alnum($value, self::UNGUELTIG);
+        Assertion::eq(trim($value), $value, self::UNGUELTIG);
         Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG_ZU_KURZ);
         Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG_ZU_LANG);
 

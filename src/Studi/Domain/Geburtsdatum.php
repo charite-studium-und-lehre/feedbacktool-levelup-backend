@@ -15,6 +15,7 @@ final class Geburtsdatum
     const UNGUELTIG_JAHR = "Das Geburtsjahr liegt nicht zwischen " . self::MIN_JAHR . " und " . self::MAX_JAHR . ":";
     const DATUMS_FORMAT = "d.m.Y";
 
+    /** @var \DateTimeImmutable */
     private $value;
 
     public static function fromDateTimeImmutable(\DateTimeImmutable $date): self {
@@ -28,18 +29,18 @@ final class Geburtsdatum
     }
 
     public static function fromStringDeutsch(string $dateString): self {
-        Assertion::date($dateString, self::DATUMS_FORMAT);
+        Assertion::date($dateString, self::DATUMS_FORMAT, self::UNGUELTIG);
         return self::fromDateTimeImmutable(
             \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT, $dateString)
         );
     }
 
-    public function getValue() {
+    public function getValue() : \DateTimeImmutable {
         return $this->value;
     }
 
-    public function __toString() {
-        return $this->value;
+    public function __toString() : string {
+        return $this->value->format(self::DATUMS_FORMAT);
     }
 
 }

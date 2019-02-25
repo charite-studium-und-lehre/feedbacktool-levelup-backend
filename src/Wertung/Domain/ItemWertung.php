@@ -25,6 +25,7 @@ class ItemWertung implements DDDEntity
     ): self {
         $object = new self();
         $object->id = $id;
+        $object->studiPruefungsId = $studiPruefungsId;
         $object->wertung = $wertung;
 
         return $object;

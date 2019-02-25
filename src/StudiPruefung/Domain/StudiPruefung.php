@@ -20,10 +20,10 @@ class StudiPruefung
 
     use DefaultEntityComparison;
 
-    public static function fromValues(StudiPruefungsId $id, StudiHash $studiId, PruefungsId $pruefungsId) {
+    public static function fromValues(StudiPruefungsId $id, StudiHash $studiHash, PruefungsId $pruefungsId) {
         $object = new self();
         $object->id = $id;
-        $object->StudiHash = $studiId;
+        $object->StudiHash = $studiHash;
         $object->pruefungsId = $pruefungsId;
 
         return $object;
