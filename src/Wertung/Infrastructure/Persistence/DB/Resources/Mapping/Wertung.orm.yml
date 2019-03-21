@@ -1,0 +1,15 @@
+Wertung\Domain\Wertung:
+  type: entity
+  table: pruefung
+
+  id:
+    id:
+      type: aggregateId
+
+  embedded:
+    format:
+      class: Pruefung\Domain\PruefungsFormat
+      columnPrefix: false
+    datum:
+      class: Pruefung\Domain\PruefungsDatum
+      columnPrefix: false

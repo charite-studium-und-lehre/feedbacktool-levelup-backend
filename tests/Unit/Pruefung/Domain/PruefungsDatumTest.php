@@ -2,10 +2,8 @@
 
 namespace Tests\Unit\Pruefung\Domain;
 
-
 use PHPUnit\Framework\TestCase;
 use Pruefung\Domain\PruefungsDatum;
-use Pruefung\Domain\PruefungsFormat;
 
 class PruefungsDatumTest extends TestCase
 {
@@ -34,7 +32,6 @@ class PruefungsDatumTest extends TestCase
         $date = \DateTimeImmutable::createFromFormat("d.m.Y", $dateString);
         $this->assertEquals($pruefungsdatum->toDateTimeImmutable()->getTimestamp(), $date->getTimestamp());
     }
-
 
     public function testFromDateTimeImmutable_Falsch_ZuFrueh() {
         $date = \DateTimeImmutable::createFromFormat("Y-m-d", "2009-01-01");

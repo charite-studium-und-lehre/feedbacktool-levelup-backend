@@ -19,7 +19,7 @@ class PruefungTest extends TestCase
 
         $pruefung = Pruefung::create($id, $pruefungsDatum, $pruefungsFormat);
 
-        $this->assertEquals("12345", $pruefung->getId());
+        $this->assertEquals("12345", $pruefung->getId()->getValue());
         $this->assertEquals($pruefungsDatum, $pruefung->getDatum());
         $this->assertEquals(PruefungsFormat::MC, $pruefung->getFormat()->getValue());
     }

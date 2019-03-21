@@ -2,7 +2,7 @@
 
 namespace Tests\Integration\Wertung\Infrastructure\Persistence;
 
-use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
+use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiRepository;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsDatum;
 use Pruefung\Domain\PruefungsFormat;
@@ -17,7 +17,7 @@ final class WertungRepositoryTest extends DbRepoTestCase
     public function getAllRepositories() {
 
         return [
-            'file-based-repo' => [FileBasedSimplePruefungsRepository::createTempFileRepo()],
+            'file-based-repo' => [FileBasedSimpleStudiRepository::createTempFileRepo()],
             'db-repo'         => [$this->dbRepo],
         ];
     }
