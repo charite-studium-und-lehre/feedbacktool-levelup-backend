@@ -1,12 +1,12 @@
 <?php
 
-namespace StudiPruefung\Domain;
+namespace Wertung\Domain\Wertung;
 
 use Common\Domain\AggregateId;
 
 /**
  * @static fromInt(string $id) StudiPruefungsId
  */
-final class StudiPruefungsId extends AggregateId
+final class WertungsId extends AggregateId
 {
 }

@@ -11,8 +11,8 @@ final class DBPruefungsRepository implements PruefungsRepository
 {
     use DDDDoctrineRepoTrait;
 
-    public function delete(Pruefung $pruefung): void {
-        $this->abstractDelete($pruefung);
+    public function delete(Pruefung $itemWertung): void {
+        $this->abstractDelete($itemWertung);
     }
 
     public function add(Pruefung $pruefung): void {

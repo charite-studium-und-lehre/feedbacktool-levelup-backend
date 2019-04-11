@@ -62,13 +62,7 @@ abstract class DbRepoTestCase extends KernelTestCase
     }
 
     protected function emptyRepositoryWithTruncate() : void {
-
-        $entityManagerRef = $this->getEntityManager();
-
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = $entityManagerRef->getValue($this->dbRepo);
-
-        $connection = $entityManager->getConnection();
+        $connection = $this->getDoctrineEntityManager()->getConnection();
         $platform = $connection->getDatabasePlatform();
         $truncateSql = $platform->getTruncateTableSQL($this->getTableName()) . ";";
         $this->executeSQL($truncateSql);
@@ -85,45 +79,44 @@ abstract class DbRepoTestCase extends KernelTestCase
     }
 
     protected function getTableName(): string {
-        $entityManagerRef = $this->getEntityManager();
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = $entityManagerRef->getValue($this->dbRepo);
-        /** @var EntityRepository $doctrineRepo */
-        $ref = new \ReflectionObject($this->dbRepo);
-        $doctrineRepoRef = $ref->getProperty('doctrineRepo');
-        $doctrineRepoRef->setAccessible(TRUE);
-        $entityManagerRef->setAccessible(TRUE);
-        $doctrineRepo = $doctrineRepoRef->getValue($this->dbRepo);
-
-        $tableName = $entityManager->getClassMetadata($doctrineRepo->getClassName())->getTableName();
-
-        return $tableName;
+        $className = $this->getDoctrineRepository()->getClassName();
+        return $this->getDoctrineEntityManager()
+            ->getClassMetadata($className)
+            ->getTableName();
     }
 
     /**
-     * @return \ReflectionProperty
      * @throws \ReflectionException
      */
-    protected function getEntityManager(): \ReflectionProperty {
+    protected function getDoctrineEntityManager(): EntityManagerInterface {
         $ref = new \ReflectionObject($this->dbRepo);
-        /** @var EntityManagerInterface $em */
         $entityManagerRef = $ref->getProperty('entityManager');
-        /** @var EntityManagerInterface $entityManager */
-        $doctrineRepoRef = $ref->getProperty('doctrineRepo');
         $entityManagerRef->setAccessible(TRUE);
-        $doctrineRepoRef->setAccessible(TRUE);
+        return $entityManagerRef->getValue($this->dbRepo);
+    }
 
-        return $entityManagerRef;
+    /**
+     * @throws \ReflectionException
+     */
+    protected function getDoctrineRepository(): EntityRepository {
+        $ref = new \ReflectionObject($this->dbRepo);
+        $doctrineRepoRef = $ref->getProperty('doctrineRepo');
+        $doctrineRepoRef->setAccessible(TRUE);
+        $doctrineRepo = $doctrineRepoRef->getValue($this->dbRepo);
+
+        return $doctrineRepo;
+    }
+
+    protected function refreshEntities(...$entities) {
+        $entityManager = $this->getDoctrineEntityManager();
+        foreach ($entities as $entity) {
+            $entityManager->persist($entity);
+            $entityManager->refresh($entity);
+        }
     }
 
     private function executeSQL($sql) : void {
-        $entityManagerRef = $this->getEntityManager();
-
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = $entityManagerRef->getValue($this->dbRepo);
-        /** @var EntityRepository $doctrineRepo */
-        $connection = $entityManager->getConnection();
-
+        $connection = $this->getDoctrineEntityManager()->getConnection();
         $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
         $connection->executeUpdate($sql);
         $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');

@@ -1,11 +1,11 @@
-controllers:
-    resource1: ../../src/Cluster/
-        type: annotation
-    resource2: ../../src/Pruefung/
-        type: annotation
-    resource3: ../../src/Studi/
-        type: annotation
-    resource4: ../../src/StudiPruefung/
-        type: annotation
-    resource5: ../../src/Wertung/
-        type: annotation
+#controllers:
+#    resource1: "../../src/Cluster/"
+#        type: annotation
+#    resource2: "../../src/Pruefung/"
+#        type: annotation
+#    resource3: "../../src/Studi/"
+#        type: annotation
+#    resource4: "../../src/StudiPruefung/"
+#        type: annotation
+#    resource5: "../../src/Wertung/"
+#        type: annotation

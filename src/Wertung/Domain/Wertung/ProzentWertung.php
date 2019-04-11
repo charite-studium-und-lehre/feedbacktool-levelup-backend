@@ -2,7 +2,6 @@
 
 namespace Wertung\Domain\Wertung;
 
-use Assert\Assertion;
 use Wertung\Domain\Skala\ProzentSkala;
 use Wertung\Domain\Skala\Skala;
 
@@ -11,27 +10,26 @@ class ProzentWertung extends AbstractWertung
     /** @var Prozentzahl */
     private $prozentzahl;
 
-    public static function fromProzentzahl(Prozentzahl $prozentzahl, string $kommentar = NULL): ProzentWertung {
-        Assertion::nullOrString($kommentar);
+    public static function fromProzentzahl(Prozentzahl $prozentzahl): self {
 
         $object = new self();
+        $object->skala = ProzentSkala::create();
         $object->prozentzahl = $prozentzahl;
-        $object->kommentar = $kommentar;
 
         return $object;
     }
 
     /**
-     * @see WertungsInterface::getRelativeWertung()
      * @return float
+     * @see Wertung::getRelativeWertung()
      */
     public function getRelativeWertung(): float {
         return $this->prozentzahl->getValue();
     }
 
     /**
-     * @see WertungsInterface::getSkala()
      * @return Skala
+     * @see Wertung::getSkala()
      */
     public function getSkala(): Skala {
         return ProzentSkala::create();

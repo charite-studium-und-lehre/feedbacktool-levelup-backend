@@ -6,14 +6,14 @@ use PHPUnit\Framework\TestCase;
 use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiHash;
 use StudiPruefung\Domain\StudiPruefung;
-use StudiPruefung\Domain\StudiPruefungsId;
+use StudiPruefung\Domain\PruefungsItemId;
 
 class StudiPruefungTest extends TestCase
 {
 
     public function testCreate() {
 
-        $id = StudiPruefungsId::fromInt("12345");
+        $id = PruefungsItemId::fromInt("12345");
         $studiHash = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
         $pruefungsId = PruefungsId::fromInt("789");
 

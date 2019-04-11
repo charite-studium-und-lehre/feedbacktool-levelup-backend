@@ -2,11 +2,11 @@
 
 namespace Wertung\Domain\Wertung;
 
+use Common\Domain\DDDValueObject;
 use Wertung\Domain\Skala\Skala;
 
-interface WertungsInterface
+interface Wertung extends DDDValueObject
 {
-    public function getKommentar(): string;
     public function getRelativeWertung(): float;
     public function getSkala(): Skala;
 }

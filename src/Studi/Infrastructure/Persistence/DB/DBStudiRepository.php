@@ -14,8 +14,8 @@ final class DBStudiRepository implements StudiRepository
 {
     use DDDDoctrineRepoTrait;
 
-    public function delete(Studi $pruefung): void {
-        $this->abstractDelete($pruefung);
+    public function delete(Studi $itemWertung): void {
+        $this->abstractDelete($itemWertung);
     }
 
     public function add(Studi $pruefung): void {

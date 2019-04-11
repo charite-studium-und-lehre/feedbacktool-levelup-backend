@@ -3,7 +3,7 @@
 namespace Tests\Unit\Wertung\Domain;
 
 use PHPUnit\Framework\TestCase;
-use StudiPruefung\Domain\StudiPruefungsId;
+use Pruefung\Domain\PruefungsItemId;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsId;
 use Wertung\Domain\Skala\PunktSkala;
@@ -16,7 +16,7 @@ class ItemWertungTest extends TestCase
     public function testCreate() {
 
         $id = ItemWertungsId::fromInt("12345");
-        $studiPruefungsId = StudiPruefungsId::fromInt("789");
+        $pruefungsItemId = PruefungsItemId::fromInt("789");
         $wertung = PunktWertung::fromPunktzahlUndSkala(
             Punktzahl::fromFloat(4.5),
             PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(6))
@@ -24,12 +24,12 @@ class ItemWertungTest extends TestCase
 
         $itemWertung = ItemWertung::create(
             $id,
-            $studiPruefungsId,
+            $pruefungsItemId,
             $wertung
         );
 
         $this->assertEquals("12345", $itemWertung->getId()->getValue());
-        $this->assertEquals($studiPruefungsId, $itemWertung->getStudiPruefungsId());
+        $this->assertEquals($pruefungsItemId, $itemWertung->getPruefungsItemId());
         $this->assertEquals(0.75, $itemWertung->getWertung()->getRelativeWertung());
     }
 

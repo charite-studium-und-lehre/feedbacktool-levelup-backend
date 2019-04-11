@@ -24,10 +24,13 @@ doctrine:
                 class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
             studiHash:
                 class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiHashType"
+            wertung:
+                class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
         mapping_types:
             aggregateId: integer
             aggregateString: string
             studiHash: string
+            wertung: integer
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
@@ -77,9 +80,9 @@ doctrine:
 #                dir:                  "%kernel.project_dir%/src/StudiPruefung/Infrastructure/Persistence/DB/Resources/Mapping"
 #                prefix:               "StudiPruefung\\Domain"
 #
-#            Wertung:
-#                is_bundle:            false
-#                mapping:              true
-#                type:                 yml
-#                dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
-#                prefix:               "Wertung\\Domain"
+            Wertung:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "Wertung\\Domain"

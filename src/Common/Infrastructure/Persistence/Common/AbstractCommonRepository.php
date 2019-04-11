@@ -4,7 +4,7 @@ namespace Common\Infrastructure\Persistence\Common;
 
 use Common\Domain\AggregateId;
 
-/** @method all() array */
+/** @method array all() */
 class AbstractCommonRepository
 {
 

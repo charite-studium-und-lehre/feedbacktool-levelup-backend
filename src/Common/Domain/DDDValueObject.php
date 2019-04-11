@@ -2,7 +2,7 @@
 
 namespace Common\Domain;
 
-interface DDDEntity
+interface DDDValueObject
 {
     public function equals(object $otherObject): bool;
 }

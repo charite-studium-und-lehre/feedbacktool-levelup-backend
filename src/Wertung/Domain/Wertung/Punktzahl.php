@@ -7,10 +7,11 @@ use Assert\Assertion;
 class Punktzahl
 {
     const MAX_PUNKTZAHL = 1000;
+    const NACHKOMMASTELLEN = 2;
 
     const INVALID_WERT = "Punktzahl darf max. " . self::MAX_PUNKTZAHL . " (+/-) sein: ";
-
-    const INVALID_WERT_ZU_GENAU = "Punktzahlen dürfen höchstens eine Nachkommastelle haben: ";
+    const INVALID_WERT_ZU_GENAU = "Punktzahlen dürfen höchstens " . self::NACHKOMMASTELLEN
+    . " Nachkommastellen haben: ";
 
     /** @var float */
     private $value;
@@ -21,8 +22,9 @@ class Punktzahl
                            self::MAX_PUNKTZAHL,
                            self::INVALID_WERT . $punktzahl
         );
-        Assertion::eq($punktzahl,
-                      intval($punktzahl * 10) / 10,
+        Assertion::eq(0,
+                      ((int) ($punktzahl * (10 ** self::NACHKOMMASTELLEN))) -
+                      ($punktzahl * (10 ** self::NACHKOMMASTELLEN)),
                       self::INVALID_WERT_ZU_GENAU . $punktzahl
         );
 
@@ -32,11 +34,13 @@ class Punktzahl
         return $object;
     }
 
+    /** auf 2*X Nachkommastellen genau */
     public function getAnteilVon(Punktzahl $anderePunktzahl): float {
-        return $this->getValue() / $anderePunktzahl->getValue();
+        return ((int) ((10 ** (2 * self::NACHKOMMASTELLEN)) * $this->getValue() / $anderePunktzahl->getValue()))
+            / (10 ** (2 * self::NACHKOMMASTELLEN));
     }
 
-    public function getValue() {
+    public function getValue() : float {
         return $this->value;
     }
 }

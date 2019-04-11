@@ -13,27 +13,25 @@ class PunktWertung extends AbstractWertung
     /** @var PunktSkala */
     protected $skala;
 
-    public static function fromPunktzahlUndSkala(Punktzahl $punktzahl, PunktSkala $skala, string $kommentar = NULL): PunktWertung {
-        Assertion::nullOrString($kommentar);
+    public static function fromPunktzahlUndSkala(Punktzahl $punktzahl, PunktSkala $skala): self {
         $object = new static();
         $object->punktzahl = $punktzahl;
         $object->skala = $skala;
-        $object->kommentar = $kommentar;
 
         return $object;
     }
 
     /**
-     * @see WertungsInterface::getRelativeWertung()
      * @return float
+     *@see Wertung::getRelativeWertung()
      */
     public function getRelativeWertung(): float {
         return $this->punktzahl->getAnteilVon($this->skala->getMaxPunktzahl());
     }
 
     /**
-     * @see WertungsInterface::getSkala()
      * @return PunktSkala
+     *@see Wertung::getSkala()
      */
     public function getSkala(): Skala {
         return $this->skala;

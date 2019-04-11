@@ -9,7 +9,7 @@ use Wertung\Domain\Wertung\Punktzahl;
 class PunktZahlTest extends TestCase
 {
     public function testFromFloat() {
-        $value = 10.5;
+        $value = 10.25;
         $punktZahl = Punktzahl::fromFloat($value);
 
         $this->assertEquals($value, $punktZahl->getValue());
@@ -23,6 +23,16 @@ class PunktZahlTest extends TestCase
 
         $this->assertEquals($value1 / $value2,$punktZahl1->getAnteilVon($punktZahl2));
     }
+
+    public function testAnteilGenauigkeit() {
+        $value1 = 3.5;
+        $punktZahl1 = Punktzahl::fromFloat($value1);
+        $value2 = 15.5;
+        $punktZahl2 = Punktzahl::fromFloat($value2);
+
+        $this->assertEquals(.2258,$punktZahl1->getAnteilVon($punktZahl2));
+    }
+
 
     public function testFromFloat_FalschZuGross() {
         $this->expectException(InvalidArgumentException::class);
@@ -44,7 +54,7 @@ class PunktZahlTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(Punktzahl::INVALID_WERT_ZU_GENAU);
 
-        $value = 101.12;
+        $value = 101.126;
         Punktzahl::fromFloat($value);
     }
 

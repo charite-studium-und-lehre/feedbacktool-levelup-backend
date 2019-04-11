@@ -5,7 +5,6 @@ namespace StudiPruefung\Domain;
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiHash;
-use Wertung\Domain\Wertung\WertungsInterface;
 
 class StudiPruefung
 {
@@ -20,7 +19,7 @@ class StudiPruefung
 
     use DefaultEntityComparison;
 
-    public static function fromValues(StudiPruefungsId $id, StudiHash $studiHash, PruefungsId $pruefungsId) {
+    public static function fromValues(PruefungsItemId $id, StudiHash $studiHash, PruefungsId $pruefungsId) {
         $object = new self();
         $object->id = $id;
         $object->StudiHash = $studiHash;
@@ -29,7 +28,7 @@ class StudiPruefung
         return $object;
     }
 
-    public function getId(): StudiPruefungsId {
+    public function getId(): PruefungsItemId {
         return $this->id;
     }
 

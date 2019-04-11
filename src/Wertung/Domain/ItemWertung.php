@@ -4,42 +4,45 @@ namespace Wertung\Domain;
 
 
 use Common\Domain\DDDEntity;
-use StudiPruefung\Domain\StudiPruefungsId;
-use Wertung\Domain\Wertung\WertungsInterface;
+use Common\Domain\DefaultEntityComparison;
+use Pruefung\Domain\PruefungsItemId;
+use Wertung\Domain\Wertung\Wertung;
 
 class ItemWertung implements DDDEntity
 {
+    use DefaultEntityComparison;
+
     /** @var ItemWertungsId */
     private $id;
 
-    /** @var StudiPruefungsId */
-    private $studiPruefungsId;
+    /** @var PruefungsItemId */
+    private $pruefungsItemId;
 
-    /** @var WertungsInterface */
+    /** @var Wertung */
     private $wertung;
 
     public static function create(
         ItemWertungsId $id,
-        StudiPruefungsId $studiPruefungsId,
-        WertungsInterface $wertung
+        PruefungsItemId $pruefungsItemId,
+        Wertung $wertung
     ): self {
         $object = new self();
         $object->id = $id;
-        $object->studiPruefungsId = $studiPruefungsId;
+        $object->pruefungsItemId = $pruefungsItemId;
         $object->wertung = $wertung;
 
         return $object;
     }
 
     public function getId(): ItemWertungsId {
-        return $this->id;
+        return ItemWertungsId::fromInt($this->id);
     }
 
-    public function getStudiPruefungsId(): StudiPruefungsId {
-        return $this->studiPruefungsId;
+    public function getPruefungsItemId(): PruefungsItemId {
+        return PruefungsItemId::fromInt($this->pruefungsItemId);
     }
 
-    public function getWertung(): WertungsInterface {
+    public function getWertung(): Wertung {
         return $this->wertung;
     }
 

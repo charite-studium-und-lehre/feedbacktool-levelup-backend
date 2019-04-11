@@ -1,0 +1,13 @@
+Wertung\Domain\ItemWertung:
+  type: entity
+  table: wertung_item
+
+  id:
+    id:
+      type: aggregateId
+
+  fields:
+    pruefungsItemId:
+      type: aggregateId
+    wertung:
+      type: wertung

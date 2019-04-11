@@ -9,13 +9,14 @@ use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Skala\Skala;
 use Wertung\Domain\Wertung\Punktzahl;
 
+/** @TODO: unused */
 class SkalaType extends Type
 {
 
     const TYPE_NAME = 'wertungsSkala'; // modify to match your type name
 
-    const PROZENT_SKALA = 10;
-    const PUNKT_SKALA = 20;
+    const PUNKT_SKALA = 1;
+    const PROZENT_SKALA = 2;
 
     const AMOUNT_FACTOR = 100;
 
