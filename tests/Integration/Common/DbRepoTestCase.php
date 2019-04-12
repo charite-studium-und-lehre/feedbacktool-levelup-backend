@@ -16,9 +16,11 @@ abstract class DbRepoTestCase extends KernelTestCase
 
     protected $dbRepoInterface;
 
+    const CONTAINER_ALREADY_PRESENT = "containerAlreadyPresent";
+
     public function __construct(?string $name = NULL, array $data = [], string $dataName = '') {
         parent::__construct($name, $data, $dataName);
-        if ($name !== "containerAlreadyPresent") {
+        if ($name !== self::CONTAINER_ALREADY_PRESENT) {
             $kernel = self::bootKernel();
             $this->currentContainer = $kernel->getContainer();
         }
@@ -27,7 +29,7 @@ abstract class DbRepoTestCase extends KernelTestCase
 
     /** @return static */
     public static function createWithContainer($container) : object {
-        $object = new static("containerAlreadyPresent");
+        $object = new static(self::CONTAINER_ALREADY_PRESENT);
         $object->currentContainer = $container;
         $object->setDbRepo();
 

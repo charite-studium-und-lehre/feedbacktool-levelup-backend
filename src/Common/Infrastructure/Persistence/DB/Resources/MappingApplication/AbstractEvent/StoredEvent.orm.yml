@@ -5,8 +5,6 @@ Common\Application\AbstractEvent\StoredEvent:
   id:
     id:
       type: aggregateId
-  #            generator:
-  #                strategy: AUTO
 
   fields:
     occurredOn:
