@@ -21,7 +21,7 @@ class PunktZahlTest extends TestCase
         $value2 = 20.5;
         $punktZahl2 = Punktzahl::fromFloat($value2);
 
-        $this->assertEquals($value1 / $value2,$punktZahl1->getAnteilVon($punktZahl2));
+        $this->assertEquals("0.5122",$punktZahl1->getAnteilVon($punktZahl2));
     }
 
     public function testAnteilGenauigkeit() {

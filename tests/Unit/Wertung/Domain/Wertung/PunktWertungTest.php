@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Wertung\Domain\Wertung;
 
-use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Wertung\PunktWertung;
@@ -24,9 +23,8 @@ class PunktWertungTest extends TestCase
         $punktzahl = Punktzahl::fromFloat(800);
         $skala = PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(20));
 
-        $punktWertung = PunktWertung::fromPunktzahlUndSkala($punktzahl, $skala, "Kommentar");
+        $punktWertung = PunktWertung::fromPunktzahlUndSkala($punktzahl, $skala);
 
         $this->assertEquals($punktzahl, $punktWertung->getPunktzahl());
-        $this->assertEquals("Kommentar", $punktWertung->getKommentar());
     }
 }

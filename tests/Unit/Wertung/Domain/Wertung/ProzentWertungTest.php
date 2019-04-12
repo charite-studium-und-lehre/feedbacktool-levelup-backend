@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Wertung\Domain\Wertung;
 
+use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
@@ -17,11 +18,10 @@ class ProzentWertungTest extends TestCase
     }
 
     public function testFalsch_ZuHoheGenauigkeit() {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(Prozentzahl::INVALID_WERT_ZU_GENAU);
         $prozentZahl = .18585;
-        $prozentWertung = ProzentWertung::fromProzentzahl(Prozentzahl::fromFloat($prozentZahl));
-
-        $this->assertNotEquals($prozentZahl, $prozentWertung->getRelativeWertung());
-        $this->assertEquals(18.58, $prozentWertung->getProzentzahl()->getProzentWert());
+        ProzentWertung::fromProzentzahl(Prozentzahl::fromFloat($prozentZahl));
     }
 
 }

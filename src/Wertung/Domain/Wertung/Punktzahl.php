@@ -36,7 +36,7 @@ class Punktzahl
 
     /** auf 2*X Nachkommastellen genau */
     public function getAnteilVon(Punktzahl $anderePunktzahl): float {
-        return ((int) ((10 ** (2 * self::NACHKOMMASTELLEN)) * $this->getValue() / $anderePunktzahl->getValue()))
+        return (round(((10 ** (2 * self::NACHKOMMASTELLEN)) * $this->getValue() / $anderePunktzahl->getValue())))
             / (10 ** (2 * self::NACHKOMMASTELLEN));
     }
 
