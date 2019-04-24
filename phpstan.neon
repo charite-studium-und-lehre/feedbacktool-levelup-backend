@@ -8,6 +8,7 @@ parameters:
 
    excludes_analyse:
        - src/FBToolCommon/Infrastructure/Persistence/Migrations/
+       - src/Common/Infrastructure/Export/Service/ExcelExportService.php
 
 
    ignoreErrors:

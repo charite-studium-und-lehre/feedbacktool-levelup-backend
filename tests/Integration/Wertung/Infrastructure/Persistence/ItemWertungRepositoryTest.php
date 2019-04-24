@@ -53,11 +53,11 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
         $object1 = $repo->byId(ItemWertungsId::fromInt(123));
         $object2 = $repo->byId(ItemWertungsId::fromInt(789));
 
-        /* @var $object1Wertung PunktWertung */
+        /** @var PunktWertung $object1Wertung */
         $object1Wertung = $object1->getWertung();
 
         $this->assertTrue($object1Wertung->equals($itemWertung1->getWertung()));
-        $this->assertEquals(0.2063, $object1->getWertung()->getRelativeWertung());
+        $this->assertEquals(0.2063, $object1Wertung->getRelativeWertung());
         $this->assertEquals(3.25, $object1Wertung->getPunktzahl()->getValue());
         $this->assertTrue($object2->getWertung()->equals($itemWertung2->getWertung()));
 
@@ -66,7 +66,6 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
     }
 
     /**
-     * @test
      * @dataProvider getAllRepositories
      */
     public function testDelete(ItemWertungsRepository $repo) {

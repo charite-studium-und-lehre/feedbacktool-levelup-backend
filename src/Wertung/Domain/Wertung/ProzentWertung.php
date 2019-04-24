@@ -13,7 +13,6 @@ class ProzentWertung extends AbstractWertung
     public static function fromProzentzahl(Prozentzahl $prozentzahl): self {
 
         $object = new self();
-        $object->skala = ProzentSkala::create();
         $object->prozentzahl = $prozentzahl;
 
         return $object;
