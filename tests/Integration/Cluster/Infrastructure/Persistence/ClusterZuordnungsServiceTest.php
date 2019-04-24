@@ -39,6 +39,7 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
 
         $zuordnungsService->addZuordnung($zuordnung);
         $zuordnungsService->flush();
+        $this->refreshEntities($zuordnung);
 
         $pruefungsItemIds = $zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2));
         $this->assertCount(1, $pruefungsItemIds);

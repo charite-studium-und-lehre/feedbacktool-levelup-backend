@@ -38,6 +38,7 @@ final class PruefungsItemRepositoryTest extends DbRepoTestCase
         $repo->add($pruefungsItem1);
         $repo->add($pruefungsItem2);
         $repo->flush();
+        $this->refreshEntities($pruefungsItem1, $pruefungsItem2);
 
         $this->assertCount(2, $repo->all());
         $pruefungsItem2 = $repo->byId(PruefungsItemId::fromInt(456));

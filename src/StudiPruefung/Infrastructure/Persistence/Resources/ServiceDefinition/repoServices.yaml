@@ -5,19 +5,19 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
+        public: false       # false allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
-    Studi-Domain-StudiRepository-DoctrineRepo:
+    StudiPruefung-Domain-StudiPruefungsRepository-DoctrineRepo:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - Studi\Domain\Studi
+            - StudiPruefung\Domain\StudiPruefung
 
-    Studi\Domain\StudiRepository:
-        class: 'Studi\Infrastructure\Persistence\DB\DBStudiRepository'
+    StudiPruefung\Domain\StudiPruefungsRepository:
+        class: StudiPruefung\Infrastructure\Persistence\DB\DBStudiPruefungsRepository
         arguments:
-          - "@Studi-Domain-StudiRepository-DoctrineRepo"
+          - "@StudiPruefung-Domain-StudiPruefungsRepository-DoctrineRepo"
           - "@doctrine.orm.entity_manager"
         public: true

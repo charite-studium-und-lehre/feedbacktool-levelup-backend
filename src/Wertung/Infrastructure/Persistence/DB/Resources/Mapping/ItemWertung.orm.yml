@@ -1,6 +1,6 @@
 Wertung\Domain\ItemWertung:
   type: entity
-  table: wertung_item
+  table: pruefung_itemWertung
 
   id:
     id:

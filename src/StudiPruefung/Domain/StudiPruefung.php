@@ -8,36 +8,36 @@ use Studi\Domain\StudiHash;
 
 class StudiPruefung
 {
-    /** StudiPruefungsId */
+    /** @var StudiPruefungsId */
     private $id;
 
     /** @var StudiHash */
-    private $StudiHash;
+    private $studiHash;
 
     /** @var PruefungsId */
     private $pruefungsId;
 
     use DefaultEntityComparison;
 
-    public static function fromValues(PruefungsItemId $id, StudiHash $studiHash, PruefungsId $pruefungsId) {
+    public static function fromValues(StudiPruefungsId $id, StudiHash $studiHash, PruefungsId $pruefungsId) {
         $object = new self();
         $object->id = $id;
-        $object->StudiHash = $studiHash;
+        $object->studiHash = $studiHash;
         $object->pruefungsId = $pruefungsId;
 
         return $object;
     }
 
-    public function getId(): PruefungsItemId {
-        return $this->id;
+    public function getId(): StudiPruefungsId {
+        return StudiPruefungsId::fromInt($this->id->getValue());
     }
 
     public function getStudiHash(): StudiHash {
-        return $this->StudiHash;
+        return $this->studiHash;
     }
 
     public function getPruefungsId(): PruefungsId {
-        return $this->pruefungsId;
+        return PruefungsId::fromInt($this->pruefungsId->getValue());
     }
 
 }

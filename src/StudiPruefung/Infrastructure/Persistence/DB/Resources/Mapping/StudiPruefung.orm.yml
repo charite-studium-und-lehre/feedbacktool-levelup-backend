@@ -1,0 +1,16 @@
+StudiPruefung\Domain\StudiPruefung:
+  type: entity
+  table: pruefung_studiPruefung
+
+  id:
+    id:
+      type: aggregateId
+
+  fields:
+    studiHash:
+      type: studiHash
+
+  embedded:
+    pruefungsId:
+      class: Common\Domain\AggregateId
+      columnPrefix: "pruefungs_"

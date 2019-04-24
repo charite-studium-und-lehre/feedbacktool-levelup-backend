@@ -2,12 +2,12 @@
 
 namespace Tests\Integration\Pruefung\Infrastructure\Persistence;
 
-use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsDatum;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsRepository;
+use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
 final class PruefungsRepositoryTest extends DbRepoTestCase
@@ -41,11 +41,12 @@ final class PruefungsRepositoryTest extends DbRepoTestCase
         $repo->add($pruefung1);
         $repo->add($pruefung2);
         $repo->flush();
+        $this->refreshEntities($pruefung1, $pruefung2);
 
         $this->assertCount(2, $repo->all());
         $pruefung2 = $repo->byId(PruefungsId::fromInt(259));
-        $this->assertEquals(PruefungsDatum::fromString("31.01.2015"), $pruefung2->getDatum());
-        $this->assertEquals(PruefungsFormat::fromConst(PruefungsFormat::OSCE), $pruefung2->getFormat());
+        $this->assertTrue($pruefung2->getDatum()->equals(PruefungsDatum::fromString("31.01.2015")));
+        $this->assertTrue($pruefung2->getFormat()->equals(PruefungsFormat::fromConst(PruefungsFormat::OSCE)));
     }
 
     /**

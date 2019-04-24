@@ -42,12 +42,12 @@ class Cluster implements DDDEntity
 
     /** @return ClusterTypId */
     public function getClusterTypId(): ClusterTypId {
-        return $this->clusterTypId;
+        return ClusterTypId::fromInt($this->clusterTypId);
     }
 
     /** @return mixed */
     public function getParentId() {
-        return $this->parentId;
+        return ClusterId::fromInt($this->parentId);
     }
 
     public function getTitel(): ClusterTitel {

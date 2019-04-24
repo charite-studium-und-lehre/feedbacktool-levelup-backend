@@ -42,6 +42,7 @@ final class ClusterRepositoryTest extends DbRepoTestCase
         $repo->add($cluster1);
         $repo->add($cluster2);
         $repo->flush();
+        $this->refreshEntities($cluster1, $cluster2);
 
         $this->assertCount(2, $repo->all());
         $cluster2 = $repo->byId(ClusterId::fromInt(6));

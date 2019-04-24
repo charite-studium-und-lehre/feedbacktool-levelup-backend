@@ -41,4 +41,10 @@ class PruefungsDatum
     public function __toString() {
         return $this->value->format("d.m.Y");
     }
+
+    public function equals(object $otherObject): bool {
+        $format = "d.m.Y";
+        return $this->value->format($format)
+            === $otherObject->value->format($format);
+    }
 }
