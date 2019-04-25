@@ -13,14 +13,15 @@ final class Geburtsdatum
     const MAX_JAHR = 2100;
     const UNGUELTIG = "Das Geburtsdatum ist ungültig: ";
     const UNGUELTIG_JAHR = "Das Geburtsjahr liegt nicht zwischen " . self::MIN_JAHR . " und " . self::MAX_JAHR . ":";
-    const DATUMS_FORMAT = "d.m.Y";
+    const DATUMS_FORMAT_DEUTSCH = "d.m.Y";
+    const DATUMS_FORMAT_DEUTSCH_MINUS = "d-m-Y";
 
     /** @var \DateTimeImmutable */
     private $value;
 
     public static function fromDateTimeImmutable(\DateTimeImmutable $date): self {
-        Assertion::min($date->format("Y"), self::MIN_JAHR, self::UNGUELTIG_JAHR);
-        Assertion::max($date->format("Y"), self::MAX_JAHR, self::UNGUELTIG_JAHR);
+        Assertion::min($date->format("Y"), self::MIN_JAHR, self::UNGUELTIG_JAHR . $date->format("d.m.Y"));
+        Assertion::max($date->format("Y"), self::MAX_JAHR, self::UNGUELTIG_JAHR . $date->format("d.m.Y"));
 
         $object = new self();
         $object->value = $date;
@@ -29,9 +30,15 @@ final class Geburtsdatum
     }
 
     public static function fromStringDeutsch(string $dateString): self {
-        Assertion::date($dateString, self::DATUMS_FORMAT, self::UNGUELTIG);
+        Assertion::date($dateString, self::DATUMS_FORMAT_DEUTSCH, self::UNGUELTIG . $dateString);
         return self::fromDateTimeImmutable(
-            \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT, $dateString)
+            \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH, $dateString)
+        );
+    }
+    public static function fromStringDeutschMinus(string $dateString): self {
+        Assertion::date($dateString, self::DATUMS_FORMAT_DEUTSCH_MINUS, self::UNGUELTIG . $dateString);
+        return self::fromDateTimeImmutable(
+            \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH_MINUS, $dateString)
         );
     }
 
@@ -40,7 +47,7 @@ final class Geburtsdatum
     }
 
     public function __toString() : string {
-        return $this->value->format(self::DATUMS_FORMAT);
+        return $this->value->format(self::DATUMS_FORMAT_DEUTSCH);
     }
 
 }

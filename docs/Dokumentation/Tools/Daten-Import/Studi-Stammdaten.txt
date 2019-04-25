@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-04-25T16:56:32+02:00
+
+====== Studi-Stammdaten ======
+
+* Automatisch hochgeladen vom Team HIS/SLcM (Bernhard+Adam)
+* username: studidaten
+* Hochgeladen in [[/home/studidaten]]
+
+* Testdatei in :
+tests/Integration/DatenImport/Infrastructure/TestFileStudisStammdaten.csv

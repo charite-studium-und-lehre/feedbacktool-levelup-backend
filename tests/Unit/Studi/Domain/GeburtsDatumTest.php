@@ -14,6 +14,13 @@ class GeburtsDatumTest extends TestCase
         $this->assertEquals($value, $object->getValue()->format("d.m.Y"));
     }
 
+    public function testFromStringDeutschMinus() {
+        $value = "10-12-2000";
+        $object = Geburtsdatum::fromStringDeutschMinus($value);
+
+        $this->assertEquals($value, $object->getValue()->format("d-m-Y"));
+    }
+
     public function testFromDateTimeImmutable() {
         $value = "10/12/2000";
         $object = Geburtsdatum::fromDateTimeImmutable(

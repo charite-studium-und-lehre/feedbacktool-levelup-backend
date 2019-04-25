@@ -16,14 +16,26 @@ final class StudiHash
 
     private $value;
 
-
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);
-        Assertion::startsWith($value, "$");
+        Assertion::startsWith($value, "$", self::UNGUELTIG . $value);
         Assertion::false(strstr($value, "'"), self::UNGUELTIG);
         Assertion::false(strstr($value, '"'), self::UNGUELTIG);
         Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG . $value);
         Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG . $value);
+
+        $object = new self();
+        $object->value = $value;
+
+        return $object;
+    }
+
+    public static function fromStudiData(
+        Matrikelnummer $matrikelnummer,
+        Nachname $nachname,
+        Geburtsdatum $geburtsdatum
+    ): self {
+        $hashString =
 
         $object = new self();
         $object->value = $value;
