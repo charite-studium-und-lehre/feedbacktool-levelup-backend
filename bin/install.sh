@@ -35,9 +35,12 @@ AKTUELLES_DATUM=`date +%d.%m.%Y`
 LETZTES_COMPOSER_UPDATE=`cat ./var/log/letztesComposerUpdate 2>/dev/null`
 if [ "$LETZTES_COMPOSER_UPDATE" != "$AKTUELLES_DATUM" -a "$1" != "fast" -o "composer.json" -nt "composer.lock" ]; then
     echo $AKTUELLES_DATUM > ./var/log/letztesComposerUpdate
-    echo "Composer heute zum ersten mal aufgerufen; Composer-Update wird ausgeführt"
+    echo "Composer heute zum ersten mal aufgerufen (oder composer.json geändert oder Parameter 'slow' gesetzt);"
+    echo "-> Composer-Update wird ausgeführt"
     ./composer.phar --ansi update
+    touch composer.lock
 else
+    echo "Composer 'update' heute schon einmal ausgeführt. Starte composer install. Übergehen mit Parameter 'slow'"
     ./composer.phar --ansi install
     RESULT_CODE=$?
     if [ $RESULT_CODE -ne 0 ] ; then
@@ -46,27 +49,10 @@ else
     fi
 fi
 
+rm -rf ./var/cache/*
 ./bin/console cache:warmup
 
-# Encore
-#yarn
-#
-#if [ "$1" == "--no-dev" ]; then
-#    yarn run encore production
-#else
-#    yarn run encore dev
-#fi
-
-#if [ "$SYMFONY_ENV" == "dev" ]; then
-#    ./bin/console security:check --ansi
-#fi
-
-#application/modelsDoctrine/executeMigrations.sh
-
-#if [ "$SYMFONY_ENV" == "dev" ]; then
-#    echo -e "\n\e[42m\e[97m\e[1m Prüfe Code-Duplikate: \e[0m ( Details über bin/checkDuplications.sh )"
-#    bin/checkDuplications.sh | grep "lines"
-#fi
+bin/console doctrine:migrations:migrate --no-interaction
 
 echo
 echo -e "  \e[44m\e[97m ---  Ende des Deployments --- \e[0m  "
