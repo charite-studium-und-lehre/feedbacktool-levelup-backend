@@ -21,3 +21,16 @@ services:
           - "@Studi-Domain-StudiRepository-DoctrineRepo"
           - "@doctrine.orm.entity_manager"
         public: true
+
+    Studi-Domain-StudiInternRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Studi\Domain\StudiIntern
+
+    Studi\Domain\StudiInternRepository:
+        class: 'Studi\Infrastructure\Persistence\DB\DBStudiInternRepository'
+        arguments:
+            - "@Studi-Domain-StudiInternRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true

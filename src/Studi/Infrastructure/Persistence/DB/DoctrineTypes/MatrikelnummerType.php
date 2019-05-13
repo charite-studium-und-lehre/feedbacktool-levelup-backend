@@ -4,25 +4,26 @@ namespace Studi\Infrastructure\Persistence\DB\DoctrineTypes;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiHash;
 
-class StudiHashType extends Type
+class MatrikelnummerType extends Type
 {
 
-    const TYPE_NAME = 'studiHash'; // modify to match your type name
+    const TYPE_NAME = 'matrikelnummer'; // modify to match your type name
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-        return "VARCHAR(100)";
+        return "INTEGER";
     }
 
-    /** @return StudiHash */
+    /** @return Matrikelnummer */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
-        return $value ? StudiHash::fromString($value) : NULL;
+        return Matrikelnummer::fromInt($value);
     }
 
-    /** @param StudiHash $value */
+    /** @param Matrikelnummer $value */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-        return $value ? $value->getValue() : null;
+        return $value->getValue();
     }
 
     public function getName() {

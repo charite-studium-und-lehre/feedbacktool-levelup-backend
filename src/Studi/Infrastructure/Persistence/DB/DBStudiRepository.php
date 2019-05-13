@@ -8,18 +8,18 @@ use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;
 
 /**
- * @method  byId($objectId)
+ * @method byId($objectId)
  */
 final class DBStudiRepository implements StudiRepository
 {
     use DDDDoctrineRepoTrait;
 
-    public function delete(Studi $itemWertung): void {
-        $this->abstractDelete($itemWertung);
+    public function delete(Studi $object): void {
+        $this->abstractDelete($object);
     }
 
-    public function add(Studi $pruefung): void {
-        $this->abstractAdd($pruefung);
+    public function add(Studi $object): void {
+        $this->abstractAdd($object);
     }
 
     public function byHash(StudiHash $studiHash): ?Studi {

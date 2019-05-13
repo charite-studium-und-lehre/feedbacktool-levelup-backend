@@ -6,7 +6,7 @@ Studi\Domain\Studi:
     studiHash:
       type: studiHash
 
-  embedded:
+  fields:
     loginHash:
-      class: Studi\Domain\LoginHash
-      columnPrefix: false
+      type: loginHash
+      nullable: true

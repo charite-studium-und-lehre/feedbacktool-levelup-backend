@@ -11,18 +11,20 @@ use Studi\Domain\Nachname;
 use Studi\Domain\Vorname;
 use Studi\Infrastructure\Service\StudiHashCreator_Argon2I;
 
-class PTMCSVImportServiceTest extends TestCase
+class StudiStammdatenCSVImportServiceTest extends TestCase
 {
 
     public function testGetCSVData() {
 
         $studiHashCreator = new StudiHashCreator_Argon2I();
         $csvImportService = new StudiStammdatenCSVImportService($studiHashCreator);
-        $dataArray = $csvImportService->getStudiObjects(__DIR__ . "/TestFileStudisStammdaten.csv");
-        $this->assertCount(16, $dataArray);
+        $studiInternObjects = $csvImportService->getStudiInternObjects(
+            ["inputFile" => __DIR__ . "/TestFileStudisStammdaten.csv"]
+        );
+        $this->assertCount(16, $studiInternObjects);
 
         $this->assertTrue($studiHashCreator->isCorrectStudiHash(
-            $dataArray[0],
+            $studiInternObjects[0]->getStudiHash(),
             Matrikelnummer::fromInt(221231),
             Vorname::fromString("Marika"),
             Nachname::fromString("Heißler"),
@@ -30,7 +32,7 @@ class PTMCSVImportServiceTest extends TestCase
         ));
 
         $this->assertFalse($studiHashCreator->isCorrectStudiHash(
-            $dataArray[0],
+            $studiInternObjects[0]->getStudiHash(),
             Matrikelnummer::fromInt(221231),
             Vorname::fromString("Marika"),
             Nachname::fromString("Heisler"),
@@ -38,7 +40,7 @@ class PTMCSVImportServiceTest extends TestCase
         ));
 
         $this->assertTrue($studiHashCreator->isCorrectStudiHash(
-            $dataArray[15],
+            $studiInternObjects[15]->getStudiHash(),
             Matrikelnummer::fromInt(211257),
             Vorname::fromString("Lara Sophie Katharina"),
             Nachname::fromString("von der Stääts-Lüdenscheid"),

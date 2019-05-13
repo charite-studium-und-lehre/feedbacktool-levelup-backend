@@ -1,0 +1,12 @@
+Studi\Domain\StudiIntern:
+  type: entity
+  table: studi_intern
+
+  id:
+    matrikelnummer:
+      type: matrikelnummer
+
+
+  fields:
+    studiHash:
+      type: studiHash

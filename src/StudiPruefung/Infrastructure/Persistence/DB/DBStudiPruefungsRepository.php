@@ -11,8 +11,8 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
 {
     use DDDDoctrineRepoTrait;
 
-    public function delete(StudiPruefung $itemWertung): void {
-        $this->abstractDelete($itemWertung);
+    public function delete(StudiPruefung $object): void {
+        $this->abstractDelete($object);
     }
 
     public function add(StudiPruefung $pruefung): void {

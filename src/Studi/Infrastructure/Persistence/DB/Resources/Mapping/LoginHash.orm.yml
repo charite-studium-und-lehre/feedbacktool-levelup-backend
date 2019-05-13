@@ -1,8 +1,0 @@
-Studi\Domain\LoginHash:
-    type: embeddable
-    fields:
-        value:
-          type: string
-          length: 100
-          column: loginHash
-          nullable: true

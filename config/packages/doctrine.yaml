@@ -22,14 +22,20 @@ doctrine:
                 class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdType"
             aggregateIdString:
                 class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
+            matrikelnummer:
+                class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\MatrikelnummerType"
             studiHash:
                 class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiHashType"
+            loginHash:
+                class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
             wertung:
                 class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
         mapping_types:
             aggregateId: integer
             aggregateString: string
+            matrikelnummer: integer
             studiHash: string
+            loginHash: string
             wertung: integer
 
     orm:

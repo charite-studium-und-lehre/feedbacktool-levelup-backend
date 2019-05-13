@@ -11,8 +11,8 @@ final class DBItemWertungsRepository implements ItemWertungsRepository
 {
     use DDDDoctrineRepoTrait;
 
-    public function delete(ItemWertung $itemWertung): void {
-        $this->abstractDelete($itemWertung);
+    public function delete(ItemWertung $object): void {
+        $this->abstractDelete($object);
     }
 
     public function add(ItemWertung $itemWertung): void {

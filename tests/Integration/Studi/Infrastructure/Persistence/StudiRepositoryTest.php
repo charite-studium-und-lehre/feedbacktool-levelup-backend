@@ -36,6 +36,7 @@ final class StudiRepositoryTest extends DbRepoTestCase
         $repo->add($studi1);
         $repo->add($studi2);
         $repo->flush();
+        $this->refreshEntities($studi1, $studi2);
 
         $this->assertCount(2, $repo->all());
         $studi1 = $repo->byHash($hash1);

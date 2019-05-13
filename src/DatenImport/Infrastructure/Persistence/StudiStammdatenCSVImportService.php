@@ -7,7 +7,7 @@ use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\Nachname;
 use Studi\Domain\Service\StudiHashCreator;
-use Studi\Domain\Studi;
+use Studi\Domain\StudiIntern;
 use Studi\Domain\Vorname;
 
 class StudiStammdatenCSVImportService
@@ -19,25 +19,31 @@ class StudiStammdatenCSVImportService
         $this->studiHashCreator = $studiHashCreator;
     }
 
-    /** @return Studi[] */
-    public function getStudiObjects(string $inputfile): array {
-        $studiHashArray = [];
+    /** @return StudiIntern[] */
+    public function getStudiInternObjects(array $importSettings = []): array {
+        $inputFile = $importSettings["inputFile"];
+        if (!$inputFile) {
+            throw new \Exception("inputFile must be given");
+        }
+        $studisIntern = [];
 
-        foreach ($this->getCSVDataAsArray($inputfile) as $dataLine) {
+        foreach ($this->getCSVDataAsArray($inputFile) as $dataLine) {
             $matrikelnummer = Matrikelnummer::fromInt($dataLine[0]);
             $vorname = Vorname::fromString($dataLine[1]);
             $nachname = Nachname::fromString($dataLine[2]);
             $geburtsdatum = Geburtsdatum::fromStringDeutschMinus($dataLine[3]);
 
-            $studiHashArray[] = $this->studiHashCreator->createStudiHash(
+            $studiHash = $this->studiHashCreator->createStudiHash(
                 $matrikelnummer,
                 $vorname,
                 $nachname,
                 $geburtsdatum
             );
+            $studisIntern[]
+                = StudiIntern::fromMatrikelUndStudiHash($matrikelnummer, $studiHash);
         }
 
-        return $studiHashArray;
+        return $studisIntern;
     }
 
     private function getCSVDataAsArray(string $inputfile): array {
