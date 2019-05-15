@@ -3,9 +3,10 @@
 namespace Studi\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class LoginHash
+final class LoginHash implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -15,7 +16,6 @@ final class LoginHash
     const UNGUELTIG = "Scheint kein Login-Hash zu sein: ";
 
     private $value;
-
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);
@@ -35,7 +35,7 @@ final class LoginHash
         return $this->value;
     }
 
-    public function __toString() {
+    public function __toString(): string {
         return $this->value;
     }
 

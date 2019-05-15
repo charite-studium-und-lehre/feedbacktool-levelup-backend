@@ -3,9 +3,10 @@
 namespace Pruefung\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-class PruefungsFormat
+class PruefungsFormat implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -14,7 +15,6 @@ class PruefungsFormat
     const PTM = 20;
 
     const OSCE = 30;
-
 
     const FORMAT_KONSTANTEN = [
         self::MC,
@@ -27,7 +27,6 @@ class PruefungsFormat
         self::PTM  => "PTM",
         self::OSCE => "Stationsprüfung",
     ];
-
 
     const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Prüfungsformat: ";
 
@@ -44,12 +43,12 @@ class PruefungsFormat
         return $object;
     }
 
-    public function getValue() : int {
+    public function getValue(): int {
         return $this->value;
 
     }
 
-    public function getTitel() : string {
+    public function getTitel(): string {
         return self::FORMAT_TITEL[$this->value];
     }
 

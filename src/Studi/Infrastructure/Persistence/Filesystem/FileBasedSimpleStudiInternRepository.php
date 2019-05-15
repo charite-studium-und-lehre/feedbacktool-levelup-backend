@@ -23,5 +23,6 @@ final class FileBasedSimpleStudiInternRepository extends AbstractCommonRepositor
                 return $entity;
             }
         }
+        return NULL;
     }
 }

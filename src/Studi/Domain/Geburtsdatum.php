@@ -3,9 +3,10 @@
 namespace Studi\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class Geburtsdatum
+final class Geburtsdatum implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -31,22 +32,25 @@ final class Geburtsdatum
 
     public static function fromStringDeutsch(string $dateString): self {
         Assertion::date($dateString, self::DATUMS_FORMAT_DEUTSCH, self::UNGUELTIG . $dateString);
+
         return self::fromDateTimeImmutable(
             \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH, $dateString)
         );
     }
+
     public static function fromStringDeutschMinus(string $dateString): self {
         Assertion::date($dateString, self::DATUMS_FORMAT_DEUTSCH_MINUS, self::UNGUELTIG . $dateString);
+
         return self::fromDateTimeImmutable(
             \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH_MINUS, $dateString)
         );
     }
 
-    public function getValue() : \DateTimeImmutable {
+    public function getValue(): \DateTimeImmutable {
         return $this->value;
     }
 
-    public function __toString() : string {
+    public function __toString(): string {
         return $this->value->format(self::DATUMS_FORMAT_DEUTSCH);
     }
 

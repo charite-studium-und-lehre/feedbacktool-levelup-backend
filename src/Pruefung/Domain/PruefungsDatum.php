@@ -3,9 +3,10 @@
 namespace Pruefung\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-class PruefungsDatum
+class PruefungsDatum implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -19,6 +20,7 @@ class PruefungsDatum
         if (!$datetimeImmutable) {
             throw new \InvalidArgumentException(self::INVALID_PRUEFUNGSFORMAT . $value);
         }
+
         return self::fromDateTimeImmutable($datetimeImmutable);
     }
 
@@ -38,12 +40,13 @@ class PruefungsDatum
         return $this->value;
     }
 
-    public function __toString() {
+    public function __toString(): string {
         return $this->value->format("d.m.Y");
     }
 
     public function equals(object $otherObject): bool {
         $format = "d.m.Y";
+
         return $this->value->format($format)
             === $otherObject->value->format($format);
     }

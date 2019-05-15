@@ -3,9 +3,10 @@
 namespace Studi\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class Matrikelnummer
+final class Matrikelnummer implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 

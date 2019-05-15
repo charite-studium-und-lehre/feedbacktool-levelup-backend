@@ -3,9 +3,10 @@
 namespace Studi\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class StudiHash
+final class StudiHash implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -30,24 +31,11 @@ final class StudiHash
         return $object;
     }
 
-    public static function fromStudiData(
-        Matrikelnummer $matrikelnummer,
-        Nachname $nachname,
-        Geburtsdatum $geburtsdatum
-    ): self {
-        $hashString =
-
-        $object = new self();
-        $object->value = $value;
-
-        return $object;
-    }
-
     public function getValue() {
         return $this->value;
     }
 
-    public function __toString() {
+    public function __toString(): string {
         return $this->value;
     }
 

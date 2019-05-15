@@ -23,6 +23,6 @@ final class DBStudiInternRepository implements StudiInternRepository
     }
 
     public function byMatrikelnummer(Matrikelnummer $matrikelnummer): ?StudiIntern {
-        return $this->abstractById($matrikelnummer->getValue());
+        return $this->abstractById($matrikelnummer);
     }
 }

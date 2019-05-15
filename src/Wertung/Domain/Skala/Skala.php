@@ -2,6 +2,8 @@
 
 namespace Wertung\Domain\Skala;
 
-interface Skala
+use Common\Domain\DDDValueObject;
+
+interface Skala extends DDDValueObject
 {
 }

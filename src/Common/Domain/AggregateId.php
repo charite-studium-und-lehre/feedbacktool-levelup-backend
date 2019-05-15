@@ -4,7 +4,7 @@ namespace Common\Domain;
 
 use Assert\Assertion;
 
-class AggregateId
+class AggregateId implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 

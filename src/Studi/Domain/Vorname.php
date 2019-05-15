@@ -3,9 +3,10 @@
 namespace Studi\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class Vorname
+final class Vorname implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -34,7 +35,7 @@ final class Vorname
         return $this->value;
     }
 
-    public function __toString() {
+    public function __toString(): string {
         return $this->value;
     }
 

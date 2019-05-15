@@ -3,10 +3,13 @@
 namespace Wertung\Domain\Skala;
 
 use Assert\Assertion;
+use Common\Domain\DefaultValueObjectComparison;
 use Wertung\Domain\Wertung\Punktzahl;
 
 class PunktSkala implements Skala
 {
+    use DefaultValueObjectComparison;
+
     const INVALID_GROESSER_NULL = "Eine Punktskala darf keine negative maximale Punktzahl haben: ";
 
     /** @var Punktzahl */

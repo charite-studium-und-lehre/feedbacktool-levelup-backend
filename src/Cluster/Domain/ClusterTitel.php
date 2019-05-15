@@ -3,9 +3,10 @@
 namespace Cluster\Domain;
 
 use Assert\Assertion;
+use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-class ClusterTitel
+class ClusterTitel implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 

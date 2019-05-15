@@ -14,6 +14,7 @@ class ProzentSkala implements Skala
         if (!self::$singleton) {
             self::$singleton = new self();
         }
+
         return self::$singleton;
     }
 }
