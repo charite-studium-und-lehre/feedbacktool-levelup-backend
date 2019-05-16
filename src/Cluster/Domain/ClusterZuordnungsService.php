@@ -3,15 +3,17 @@
 namespace Cluster\Domain;
 
 use Common\Domain\FlushableRepository;
+use Pruefung\Domain\PruefungsItemId;
 
 interface ClusterZuordnungsService extends FlushableRepository
 {
     public function addZuordnung(ClusterZuordnung $clusterZuordnung): void;
+
     public function removeZuordnung(ClusterZuordnung $clusterZuordnung): void;
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(\Pruefung\Domain\PruefungsItemId $pruefungsItemId) : array;
+    public function alleClusterVonPruefungsItem(PruefungsItemId $pruefungsItemId): array;
 
-    /** @return \Pruefung\Domain\PruefungsItemId[] */
-    public function allePruefungsItemsVonCluster(ClusterId $clusterId) : array;
+    /** @return PruefungsItemId[] */
+    public function allePruefungsItemsVonCluster(ClusterId $clusterId): array;
 }

@@ -12,7 +12,7 @@ class ClusterTitel implements DDDValueObject
 
     const MIN_TAG_LAENGE = 2;
 
-    const MAX_TAG_LAENGE = 50;
+    const MAX_TAG_LAENGE = 100;
 
     const INVALID_ZU_KURZ = "Der Clustertitel muss mindestens " . self::MIN_TAG_LAENGE . " Zeichen enthalten: ";
 

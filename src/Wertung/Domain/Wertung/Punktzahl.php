@@ -3,9 +3,12 @@
 namespace Wertung\Domain\Wertung;
 
 use Assert\Assertion;
+use Common\Domain\DefaultValueObjectComparison;
 
 class Punktzahl
 {
+    use DefaultValueObjectComparison;
+
     const MAX_PUNKTZAHL = 1000;
     const NACHKOMMASTELLEN = 2;
 

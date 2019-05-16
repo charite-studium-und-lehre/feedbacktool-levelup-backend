@@ -8,6 +8,7 @@ use Cluster\Domain\ClusterZuordnungsService;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
+use Pruefung\Domain\PruefungsItemId;
 
 final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository implements ClusterZuordnungsService
 {
@@ -26,7 +27,7 @@ final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository im
     }
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(\Pruefung\Domain\PruefungsItemId $pruefungsItemId): array {
+    public function alleClusterVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
         $resultArray = [];
         foreach ($this->all() as $aktuelleZuordnung) {
             /* @var $aktuelleZuordnung ClusterZuordnung */
@@ -34,10 +35,11 @@ final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository im
                 $resultArray[] = $aktuelleZuordnung->getClusterId();
             }
         }
+
         return $resultArray;
     }
 
-    /** @return \Pruefung\Domain\PruefungsItemId[] */
+    /** @return PruefungsItemId[] */
     public function allePruefungsItemsVonCluster(ClusterId $clusterId): array {
         $resultArray = [];
         foreach ($this->all() as $aktuelleZuordnung) {
@@ -46,16 +48,18 @@ final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository im
                 $resultArray[] = $aktuelleZuordnung->getPruefungsItemId();
             }
         }
+
         return $resultArray;
     }
 
-    private function sucheAktuelleZuordnung(ClusterZuordnung $clusterZuordnung) : ?ClusterZuordnung {
+    private function sucheAktuelleZuordnung(ClusterZuordnung $clusterZuordnung): ?ClusterZuordnung {
         foreach ($this->all() as $aktuelleZuordnung) {
             /* @var $aktuelleZuordnung ClusterZuordnung */
             if ($aktuelleZuordnung->equals($clusterZuordnung)) {
                 return $aktuelleZuordnung;
             }
         }
-        return null;
+
+        return NULL;
     }
 }

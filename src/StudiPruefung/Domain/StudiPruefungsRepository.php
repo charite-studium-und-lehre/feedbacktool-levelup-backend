@@ -4,6 +4,8 @@ namespace StudiPruefung\Domain;
 
 use Common\Domain\DDDRepository;
 use Common\Domain\FlushableRepository;
+use Pruefung\Domain\PruefungsId;
+use Studi\Domain\StudiHash;
 
 interface StudiPruefungsRepository extends DDDRepository, FlushableRepository
 {
@@ -17,4 +19,7 @@ interface StudiPruefungsRepository extends DDDRepository, FlushableRepository
     public function delete(StudiPruefung $object): void;
 
     public function nextIdentity(): StudiPruefungsId;
+
+
+    public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung;
 }

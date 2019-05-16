@@ -6,6 +6,7 @@ namespace Wertung\Domain;
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsItemId;
+use StudiPruefung\Domain\StudiPruefungsId;
 use Wertung\Domain\Wertung\Wertung;
 
 class ItemWertung implements DDDEntity
@@ -18,17 +19,22 @@ class ItemWertung implements DDDEntity
     /** @var PruefungsItemId */
     private $pruefungsItemId;
 
+    /** @var StudiPruefungsId */
+    private $studiPruefungsId;
+
     /** @var Wertung */
     private $wertung;
 
     public static function create(
         ItemWertungsId $id,
         PruefungsItemId $pruefungsItemId,
+        StudiPruefungsId $studiPruefungsId,
         Wertung $wertung
     ): self {
         $object = new self();
         $object->id = $id;
         $object->pruefungsItemId = $pruefungsItemId;
+        $object->studiPruefungsId = $studiPruefungsId;
         $object->wertung = $wertung;
 
         return $object;
@@ -44,6 +50,10 @@ class ItemWertung implements DDDEntity
 
     public function getWertung(): Wertung {
         return $this->wertung;
+    }
+
+    public function getStudiPruefungsId(): StudiPruefungsId {
+        return StudiPruefungsId::fromInt($this->studiPruefungsId);
     }
 
 }

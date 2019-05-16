@@ -26,7 +26,7 @@ class StudiIntern
         return $this->studiHash;
     }
 
-    public function getMatrikelnummer(): ?Matrikelnummer {
+    public function getMatrikelnummer(): Matrikelnummer {
         return $this->matrikelnummer;
     }
 

@@ -6,6 +6,7 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsService;
 use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleZuordnungsService;
+use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -109,8 +110,7 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
         $this->assertCount(2, $clusterIds);
     }
 
-
-    protected function clearDatabase() : void {
+    protected function clearDatabase(): void {
         // use $this->deleteIdsFromDB or $this->emptyRepository()
         $this->emptyRepositoryWithTruncate();
     }

@@ -3,7 +3,8 @@
 namespace Tests\Unit\DatenImport\Infrastructure;
 
 use DatenImport\Domain\StudiStammdatenPersistenzService;
-use DatenImport\Infrastructure\Persistence\StudiStammdatenHIS_CSVImportService;
+use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
+use DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService;
 use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
@@ -33,7 +34,13 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
     public function testImportStudiInternPersistenz(StudiInternRepository $repository) {
 
         $studiHashCreator = new StudiHashCreator_Argon2I();
-        $csvImportService = new StudiStammdatenHIS_CSVImportService($studiHashCreator);
+        $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService(
+            [
+                AbstractCSVImportService::FROM_ENCODING_OPTION => "ISO-8859-15",
+                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TestFileStudisStammdaten.csv",
+            ]
+        );
+
         $studiStammdatenPersistenzService = new StudiStammdatenPersistenzService(
             $repository,
             $csvImportService,
@@ -47,9 +54,7 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
 
         $this->assertCount(0, $repository->all());
 
-        $studiStammdatenPersistenzService->persistiereStudiListe(
-            ["inputFile" => __DIR__ . "/TestFileStudisStammdaten.csv"]
-        );
+        $studiStammdatenPersistenzService->persistiereStudiListe();
 
         $this->assertCount(16, $repository->all());
 

@@ -3,6 +3,8 @@
 namespace StudiPruefung\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
+use Pruefung\Domain\PruefungsId;
+use Studi\Domain\StudiHash;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
@@ -25,6 +27,15 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
 
     public function nextIdentity(): StudiPruefungsId {
         return StudiPruefungsId::fromInt($this->abstractNextIdentityAsInt());
+    }
+
+    public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung {
+        return $this->doctrineRepo->findOneBy(
+            [
+                "studiHash" => $studiHash,
+                "pruefungsId.id" => $pruefungsId->getValue()
+            ]
+        );
     }
 
 }

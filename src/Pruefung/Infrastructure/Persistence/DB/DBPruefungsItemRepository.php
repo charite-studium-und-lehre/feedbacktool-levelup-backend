@@ -3,7 +3,6 @@
 namespace Pruefung\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
-use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
@@ -25,7 +24,7 @@ final class DBPruefungsItemRepository implements PruefungsItemRepository
     }
 
     public function nextIdentity(): PruefungsItemId {
-        return PruefungsItemId::fromInt($this->abstractNextIdentityAsInt());
+        return PruefungsItem::fromInt($this->abstractNextIdentityAsInt());
     }
 
 }

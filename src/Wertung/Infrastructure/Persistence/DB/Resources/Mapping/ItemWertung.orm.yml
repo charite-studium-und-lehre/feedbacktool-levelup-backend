@@ -9,5 +9,7 @@ Wertung\Domain\ItemWertung:
   fields:
     pruefungsItemId:
       type: aggregateId
+    studiPruefungsId:
+      type: aggregateId
     wertung:
       type: wertung

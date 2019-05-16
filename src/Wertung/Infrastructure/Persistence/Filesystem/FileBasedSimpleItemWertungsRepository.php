@@ -5,13 +5,16 @@ namespace Wertung\Infrastructure\Persistence\Filesystem;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
-use Pruefung\Domain\Pruefung;
-use Pruefung\Domain\PruefungsId;
-use Pruefung\Domain\PruefungsRepository;
+use Pruefung\Domain\PruefungsItem;
+use Pruefung\Domain\PruefungsItemId;
+use StudiPruefung\Domain\StudiPruefungsId;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsId;
 use Wertung\Domain\ItemWertungsRepository;
 
+/**
+ * @method ItemWertung[] all()
+ */
 final class FileBasedSimpleItemWertungsRepository extends AbstractCommonRepository implements ItemWertungsRepository
 {
     use FileBasedRepoTrait;
@@ -22,5 +25,19 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
 
     public function nextIdentity(): ItemWertungsId {
         return ItemWertungsId::fromInt($this->abstractNextIdentity());
+    }
+
+    public function byStudiPruefungsIdUndPruefungssItemId(
+        StudiPruefungsId $studiPruefungsId,
+        PruefungsItemId $pruefungsItemId
+    ): ?ItemWertung {
+        foreach ($this->all() as $wertung) {
+            if ($wertung->getStudiPruefungsId()->equals($studiPruefungsId)
+                && $wertung->getPruefungsItemId()->equals($pruefungsItemId)
+            ) {
+                return$wertung;
+            }
+        }
+        return NULL;
     }
 }

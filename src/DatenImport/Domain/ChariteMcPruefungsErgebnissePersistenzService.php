@@ -2,17 +2,17 @@
 
 namespace DatenImport\Domain;
 
-
+use Pruefung\Domain\PruefungsId;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 
-class StudiStammdatenPersistenzService
+class ChariteMcPruefungsErgebnissePersistenzService
 {
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    /** @var PruefungsId */
+    private $pruefungsId;
 
     /** @var StudiStammdatenImportService */
     private $studiStammdatenImportService;
@@ -21,15 +21,15 @@ class StudiStammdatenPersistenzService
     private $studiHashCreator;
 
     public function __construct(
-        StudiInternRepository $studiInternRepository,
+        PruefungsId $pruefungsId,
         StudiStammdatenImportService $studiStammdatenImportService,
         StudiHashCreator $studiHashCreator
     ) {
-        $this->studiInternRepository = $studiInternRepository;
+        $this->pruefungsId = $pruefungsId;
         $this->studiStammdatenImportService = $studiStammdatenImportService;
         $this->studiHashCreator = $studiHashCreator;
     }
-
+    
     public function persistiereStudiListe() {
 
         $studiDataObjectsToImport = $this->studiStammdatenImportService->getStudiData();

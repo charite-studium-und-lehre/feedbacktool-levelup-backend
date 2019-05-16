@@ -10,7 +10,7 @@ class ClusterZuordnung
     /** @var ClusterId */
     private $clusterId;
 
-    /** @var \Pruefung\Domain\PruefungsItemId */
+    /** @var PruefungsItemId */
     private $pruefungsItemId;
 
     use DefaultValueObjectComparison;
@@ -19,6 +19,7 @@ class ClusterZuordnung
         $object = new self();
         $object->clusterId = $clusterId;
         $object->pruefungsItemId = $pruefungsItemId;
+
         return $object;
     }
 

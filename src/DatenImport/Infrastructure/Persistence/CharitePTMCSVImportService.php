@@ -2,7 +2,7 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
-class PTMCSVImportService
+class CharitePTMCSVImportService
 {
 
     public function getCSVDataAsArray($inputfile){

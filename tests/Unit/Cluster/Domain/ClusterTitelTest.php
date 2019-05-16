@@ -23,7 +23,7 @@ class ClusterTitelTest extends TestCase
 
     public function testFromIntFalschZuLang() {
         $this->expectExceptionMessage(ClusterTitel::INVALID_ZU_LANG);
-        ClusterTitel::fromString("Ein Fach, was klinisch, vorklinisch oder Querschnittsfach sein kann und in der ÄAppO steht.");
+        ClusterTitel::fromString("Ein Fach, was klinisch, vorklinisch oder Querschnittsfach sein kann und in der ÄAppO steht und einen ewig langen Beschreibungstext hat.");
     }
 
 }

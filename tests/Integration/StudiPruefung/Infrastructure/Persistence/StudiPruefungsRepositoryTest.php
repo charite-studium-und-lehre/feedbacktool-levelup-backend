@@ -14,6 +14,9 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
 {
     protected $dbRepoInterface = StudiPruefungsRepository::class;
 
+    /** @var StudiHash */
+    private $studiHash1;
+
     public function getAllRepositories() {
 
         return [
@@ -27,9 +30,10 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
      * @dataProvider getAllRepositories
      */
     public function kann_speichern_und_wiederholen(StudiPruefungsRepository $repo) {
+        $this->studiHash1 = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
         $studiPruefung1 = StudiPruefung::fromValues(
             StudiPruefungsId::fromInt(123),
-            StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I)),
+            $this->studiHash1,
             PruefungsId::fromInt(7890)
         );
         $studiPruefung2 = StudiPruefung::fromValues(
@@ -63,6 +67,21 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
         }
         $repo->flush();
         $this->assertCount(0, $repo->all());
+    }
+
+    /** * @dataProvider getAllRepositories */
+    public function testByStudiHashUndPruefungsId(StudiPruefungsRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $studiPruefung = $repo->byStudiHashUndPruefungsId(
+            $this->studiHash1, PruefungsId::fromInt(7890)
+        );
+        $this->assertTrue($studiPruefung->getId()->equals(StudiPruefungsId::fromInt(123)));
+
+        $studiPruefung = $repo->byStudiHashUndPruefungsId(
+            $this->studiHash1, PruefungsId::fromInt(7891)
+        );
+        $this->assertNull($studiPruefung);
+
     }
 
     protected function clearDatabase(): void {
