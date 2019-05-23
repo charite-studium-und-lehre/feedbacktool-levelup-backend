@@ -2,6 +2,7 @@
 
 namespace DatenImport\Domain;
 
+use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
@@ -13,17 +14,18 @@ use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Wertung\PunktWertung;
+use Wertung\Domain\Wertung\Punktzahl;
 
-class MCPruefungWertungPersistenzService
+class ChariteMCPruefungWertungPersistenzService
 {
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    /** @var PruefungsId */
+    private $pruefungsId;
 
     /** @var McPruefungsdatenImportService */
     private $mcPruefungsdatenImportService;
 
-    /** @var PruefungsId */
-    private $pruefungsId;
+    /** @var PruefungsRepository */
+    private $pruefungsRepository;
 
     /** @var StudiPruefungsRepository */
     private $studiPruefungsRepository;
@@ -38,18 +40,18 @@ class MCPruefungWertungPersistenzService
     private $studiInternRepository;
 
     public function __construct(
-        PruefungsRepository $pruefungsRepository,
+        PruefungsId $pruefungsId,
         McPruefungsdatenImportService $mcPruefungsdatenImportService,
+        PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
-        PruefungsId $pruefungsId,
         StudiInternRepository $studiInternRepository
     ) {
-        $this->pruefungsRepository = $pruefungsRepository;
-        $this->mcPruefungsdatenImportService = $mcPruefungsdatenImportService;
-        $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->pruefungsId = $pruefungsId;
+        $this->mcPruefungsdatenImportService = $mcPruefungsdatenImportService;
+        $this->pruefungsRepository = $pruefungsRepository;
+        $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->pruefungsItemRepository = $pruefungsItemRepository;
         $this->studiInternRepository = $studiInternRepository;
@@ -61,7 +63,8 @@ class MCPruefungWertungPersistenzService
         $pruefungsWertungen = $this->mcPruefungsdatenImportService->getMCData();
         foreach ($pruefungsWertungen as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
 
-            $studiHash = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+            $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+            $studiHash = $studiIntern->getStudiHash();
             $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
                 $studiHash,
                 $this->pruefungsId,
@@ -83,7 +86,7 @@ class MCPruefungWertungPersistenzService
                     $this->pruefungsId
                 );
                 $this->pruefungsItemRepository->add($pruefungsItem);
-                $this->pruefungsItemRepository->flush();
+
             }
 
             $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
@@ -92,7 +95,7 @@ class MCPruefungWertungPersistenzService
             );
             $punktWertung = PunktWertung::fromPunktzahlUndSkala(
                 $punktzahl,
-                PunktSkala::fromMaxPunktzahl(1000)
+                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
             );
             if (!$itemWertung
                 || $itemWertung->getWertung()->equals(
@@ -107,12 +110,11 @@ class MCPruefungWertungPersistenzService
                     $punktWertung
                 );
                 $this->itemWertungsRepository->add($itemWertung);
-                $this->itemWertungsRepository->flush();
             }
         }
+        $this->pruefungsItemRepository->flush();
+        $this->itemWertungsRepository->flush();
 
     }
-
-}
 
 }

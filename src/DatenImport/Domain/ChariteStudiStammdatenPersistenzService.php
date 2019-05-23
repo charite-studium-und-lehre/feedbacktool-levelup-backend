@@ -9,7 +9,7 @@ use Studi\Domain\StudiData;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 
-class ChariteMcPruefungsErgebnissePersistenzService
+class ChariteStudiStammdatenPersistenzService
 {
     /** @var PruefungsId */
     private $pruefungsId;

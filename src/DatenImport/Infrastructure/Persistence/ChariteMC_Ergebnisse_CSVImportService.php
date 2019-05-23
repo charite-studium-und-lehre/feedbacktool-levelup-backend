@@ -3,14 +3,14 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use Cluster\Domain\ClusterTitel;
-use Pruefung\Domain\PruefungsItem;
+use DatenImport\Domain\McPruefungsdatenImportService;
 use Pruefung\Domain\PruefungsItemId;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\StudiData;
 use Wertung\Domain\Wertung\Punktzahl;
 
-class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService
+class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService implements McPruefungsdatenImportService
 {
     const ITEM_ID_PREFIX_OPTION = "ITEM_ID_PREFIX";
     const ITEM_ID_PREFIX_DEFAULT = "";
@@ -32,7 +32,7 @@ class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService
 
         foreach ($this->getCSVDataAsArray() as $dataLine) {
             $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikel"]);
-            $punktzahl = Punktzahl::fromFloat($dataLine["richtig"]);
+            $punktzahl = Punktzahl::fromFloat(max(0, $dataLine["richtig"]));
             $pruefungsItemId = PruefungsItemId::fromInt($this->itemIdPrefix . $dataLine["FragenNr"]);
             $clusterTitel = $dataLine["LZFach"] ? ClusterTitel::fromString($dataLine["LZFach"]) : NULL;
 

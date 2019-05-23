@@ -10,7 +10,7 @@ final class StudiHash implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    const MIN_LENGTH = 75;
+    const MIN_LENGTH = 50;
     const MAX_LENGTH = 100;
 
     const UNGUELTIG = "Scheint kein Studi-Data-Hash zu sein: ";

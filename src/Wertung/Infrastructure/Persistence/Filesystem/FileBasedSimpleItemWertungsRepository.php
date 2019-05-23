@@ -35,7 +35,7 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
             if ($wertung->getStudiPruefungsId()->equals($studiPruefungsId)
                 && $wertung->getPruefungsItemId()->equals($pruefungsItemId)
             ) {
-                return$wertung;
+                return $wertung;
             }
         }
         return NULL;

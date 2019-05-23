@@ -35,8 +35,8 @@ final class DBItemWertungsRepository implements ItemWertungsRepository
     ): ?ItemWertung {
         return $this->doctrineRepo->findOneBy(
             [
-                "studiPruefungsId" => $studiPruefungsId->getValue(),
-                "pruefungsItemId"  => $pruefungsItemId->getValue(),
+                "studiPruefungsId" => $studiPruefungsId,
+                "pruefungsItemId"  => $pruefungsItemId,
             ]
         );
     }

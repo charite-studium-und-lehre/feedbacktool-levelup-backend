@@ -11,7 +11,7 @@ use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 
-/** @method StudiPruefung[] all()  */
+/** @method StudiPruefung[] all() */
 final class FileBasedSimpleStudiPruefungsRepository extends AbstractCommonRepository implements StudiPruefungsRepository
 {
     use FileBasedRepoTrait;
@@ -21,17 +21,17 @@ final class FileBasedSimpleStudiPruefungsRepository extends AbstractCommonReposi
     }
 
     public function nextIdentity(): StudiPruefungsId {
-        return PruefungsId::fromInt($this->abstractNextIdentity());
+        return StudiPruefungsId::fromInt($this->abstractNextIdentity());
     }
 
-
     public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung {
-        foreach($this->all() as $studiPruefung) {
+        foreach ($this->all() as $studiPruefung) {
             if ($studiPruefung->getStudiHash()->equals($studiHash)
-            && $studiPruefung->getPruefungsId()->equals($pruefungsId)) {
+                && $studiPruefung->getPruefungsId()->equals($pruefungsId)) {
                 return $studiPruefung;
             }
         }
+
         return NULL;
     }
 }
