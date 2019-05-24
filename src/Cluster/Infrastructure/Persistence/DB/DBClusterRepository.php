@@ -2,10 +2,12 @@
 
 namespace Cluster\Infrastructure\Persistence\DB;
 
-use Cluster\Domain\ClusterRepository;
-use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterId;
+use Cluster\Domain\ClusterRepository;
+use Cluster\Domain\ClusterTitel;
+use Cluster\Domain\ClusterTypId;
+use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 
 final class DBClusterRepository implements ClusterRepository
 {
@@ -27,4 +29,21 @@ final class DBClusterRepository implements ClusterRepository
         return ClusterId::fromInt($this->abstractNextIdentityAsInt());
     }
 
+    public function byClusterTypIdUndTitel(ClusterTypId $clusterTypId, ClusterTitel $clusterTitel): ?Cluster {
+        return $this->doctrineRepo->findOneBy(
+            [
+                "clusterTypId.id" => $clusterTypId->getValue(),
+                "titel.value" => $clusterTitel->getValue(),
+            ]
+        );
+    }
+
+    /** @return Cluster[] */
+    public function allByClusterTypId(ClusterTypId $clusterTypId): array {
+        return $this->doctrineRepo->findBy(
+            [
+                "clusterTypId.id" => $clusterTypId->getValue(),
+            ]
+        );
+    }
 }

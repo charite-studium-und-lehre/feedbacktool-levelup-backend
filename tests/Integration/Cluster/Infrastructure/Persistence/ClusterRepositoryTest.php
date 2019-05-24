@@ -66,9 +66,34 @@ final class ClusterRepositoryTest extends DbRepoTestCase
         $this->assertCount(0, $repo->all());
     }
 
+    /**
+     * @dataProvider getAllRepositories
+     */
+    public function testAllByClusterTypId(ClusterRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $clustersByTyp = $repo->allByClusterTypId(ClusterTypId::fromInt(26));
+        $this->assertCount(1, $clustersByTyp);
+        $this->assertTrue($clustersByTyp[0]->getId()->equals(ClusterId::fromInt(6)));
+    }
+
+    /**
+     * @dataProvider getAllRepositories
+     */
+    public function testByClusterTypIdUndTitel(ClusterRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $cluster = $repo->byClusterTypIdUndTitel(
+            ClusterTypId::fromInt(26),
+            ClusterTitel::fromString("Chemie")
+        );
+        $this->assertNotNull($cluster);
+        $this->assertTrue($cluster->getId()->equals(ClusterId::fromInt(6)));
+    }
+
+
     protected function clearDatabase(): void {
         // use $this->deleteIdsFromDB or $this->emptyRepositoryWithTruncate()
         $this->emptyRepositoryWithTruncate();
     }
+
 
 }

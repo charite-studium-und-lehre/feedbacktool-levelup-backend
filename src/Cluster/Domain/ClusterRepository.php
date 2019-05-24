@@ -16,5 +16,10 @@ interface ClusterRepository extends DDDRepository, FlushableRepository
 
     public function delete(Cluster $object): void;
 
+    public function byClusterTypIdUndTitel(ClusterTypId $clusterTypId, ClusterTitel $clusterTitel): ?Cluster;
+
+    /** @return Cluster[] */
+    public function allByClusterTypId(ClusterTypId $clusterTypId): array;
+
     public function nextIdentity(): ClusterId;
 }

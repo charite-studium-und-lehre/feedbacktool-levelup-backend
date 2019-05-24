@@ -7,7 +7,6 @@ use Studi\Domain\Matrikelnummer;
 use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiIntern;
-use Studi\Domain\StudiInternRepository;
 
 class ChariteStudiStammdatenPersistenzService
 {
@@ -29,7 +28,7 @@ class ChariteStudiStammdatenPersistenzService
         $this->studiStammdatenImportService = $studiStammdatenImportService;
         $this->studiHashCreator = $studiHashCreator;
     }
-    
+
     public function persistiereStudiListe() {
 
         $studiDataObjectsToImport = $this->studiStammdatenImportService->getStudiData();
@@ -90,7 +89,7 @@ class ChariteStudiStammdatenPersistenzService
         $this->studiInternRepository->flush();
     }
 
-    private function addStudiFromStudiData(StudiData $studiDataObject) : void {
+    private function addStudiFromStudiData(StudiData $studiDataObject): void {
         $studiHash = $this->studiHashCreator->createStudiHash($studiDataObject);
         $studiInternNeu = StudiIntern::fromMatrikelUndStudiHash(
             $studiDataObject->getMatrikelnummer(),

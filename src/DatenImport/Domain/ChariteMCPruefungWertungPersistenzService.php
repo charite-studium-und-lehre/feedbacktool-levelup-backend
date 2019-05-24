@@ -21,9 +21,6 @@ class ChariteMCPruefungWertungPersistenzService
     /** @var PruefungsId */
     private $pruefungsId;
 
-    /** @var McPruefungsdatenImportService */
-    private $mcPruefungsdatenImportService;
-
     /** @var PruefungsRepository */
     private $pruefungsRepository;
 
@@ -41,7 +38,6 @@ class ChariteMCPruefungWertungPersistenzService
 
     public function __construct(
         PruefungsId $pruefungsId,
-        McPruefungsdatenImportService $mcPruefungsdatenImportService,
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
@@ -49,7 +45,6 @@ class ChariteMCPruefungWertungPersistenzService
         StudiInternRepository $studiInternRepository
     ) {
         $this->pruefungsId = $pruefungsId;
-        $this->mcPruefungsdatenImportService = $mcPruefungsdatenImportService;
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
@@ -58,10 +53,9 @@ class ChariteMCPruefungWertungPersistenzService
     }
 
     /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung() {
+    public function persistierePruefung($mcPruefungsDaten) {
 
-        $pruefungsWertungen = $this->mcPruefungsdatenImportService->getMCData();
-        foreach ($pruefungsWertungen as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
 
             $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
             $studiHash = $studiIntern->getStudiHash();

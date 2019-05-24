@@ -21,7 +21,7 @@ trait FileBasedRepoTrait
     }
 
     public function all(): array {
-        if (empty($this->persistedEntities === NULL)) {
+        if ($this->persistedEntities === NULL) {
 
             if (!file_exists($this->filePath)) {
                 $this->persistedEntities = [];
@@ -48,7 +48,7 @@ trait FileBasedRepoTrait
 
     public function clearRepo() {
         file_put_contents($this->filePath, "");
-        $this->persistedEntities = [];
+        $this->persistedEntities = NULL;
     }
 
 }

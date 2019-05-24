@@ -74,7 +74,6 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
 
         $service = new ChariteMCPruefungWertungPersistenzService(
             PruefungsId::fromInt(1234),
-            $csvImportService,
             $pruefungsRepository,
             $studiPruefungsRepository,
             $pruefungsItemRepository,
@@ -82,7 +81,8 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
             $studiInternRepository
         );
 
-        $service->persistierePruefung();
+        $data = $csvImportService->getMCData();
+        $service->persistierePruefung($data);
 
         $this->assertCount(3, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
