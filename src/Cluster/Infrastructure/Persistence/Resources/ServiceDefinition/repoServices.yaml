@@ -28,8 +28,8 @@ services:
         arguments:
             - Cluster\Domain\ClusterZuordnung
 
-    Cluster\Domain\ClusterZuordnungsService:
-        class: Cluster\Infrastructure\Persistence\DB\DBClusterZuordnungsService
+    Cluster\Domain\ClusterZuordnungsRepository:
+        class: Cluster\Infrastructure\Persistence\DB\DBClusterZuordnungsRepository
         arguments:
             - '@Cluster-Domain-ClusterZuordnung-DoctrineRepo'
 #            - "@doctrine.orm.entity_manager"

@@ -7,7 +7,6 @@ use DatenImport\Domain\McPruefungsdatenImportService;
 use Pruefung\Domain\PruefungsItemId;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
-use Studi\Domain\StudiData;
 use Wertung\Domain\Wertung\Punktzahl;
 
 class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService implements McPruefungsdatenImportService
@@ -21,26 +20,29 @@ class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService imp
         $options[AbstractCSVImportService::HAS_HEADERS_OPTION] = TRUE;
         $this->itemIdPrefix = !empty($options[self::ITEM_ID_PREFIX_OPTION])
             ? $options[self::ITEM_ID_PREFIX_OPTION]
-            : self:: ITEM_ID_PREFIX_DEFAULT;
+            : self::ITEM_ID_PREFIX_DEFAULT;
 
         parent::__construct($options);
     }
 
-    /** @return StudiData[] */
-    public function getMCData(): array {
+    public function getData(): array {
         $data = [];
 
         foreach ($this->getCSVDataAsArray() as $dataLine) {
             $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikel"]);
             $punktzahl = Punktzahl::fromFloat(max(0, $dataLine["richtig"]));
             $pruefungsItemId = PruefungsItemId::fromInt($this->itemIdPrefix . $dataLine["FragenNr"]);
-            $clusterTitel = $dataLine["LZFach"] ? ClusterTitel::fromString($dataLine["LZFach"]) : NULL;
+            $fachClusterTitel = $dataLine["LZFach"] ? ClusterTitel::fromString($dataLine["LZFach"]) : NULL;
+            $lzNummerClusterTitel = is_numeric($dataLine["LernzielNr"])
+                ? ClusterTitel::fromString($dataLine["LernzielNr"])
+                : NULL;
 
             $data[] = [
                 $matrikelnummer,
                 $punktzahl,
                 $pruefungsItemId,
-                $clusterTitel,
+                $fachClusterTitel,
+                $lzNummerClusterTitel,
             ];
         }
 

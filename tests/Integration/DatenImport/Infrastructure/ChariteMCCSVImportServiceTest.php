@@ -23,7 +23,7 @@ class ChariteMCCSVImportServiceTest extends TestCase
                     AbstractCSVImportService::DELIMITER_OPTION => ",",
                 ]
             );
-        $mcData = $csvImportService->getMCData();
+        $mcData = $csvImportService->getData();
 
         $this->assertCount(200, $mcData);
 

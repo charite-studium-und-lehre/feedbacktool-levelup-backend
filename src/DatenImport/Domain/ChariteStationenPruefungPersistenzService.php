@@ -4,19 +4,20 @@ namespace DatenImport\Domain;
 
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
+use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
+use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
-use Wertung\Domain\Skala\PunktSkala;
-use Wertung\Domain\Wertung\PunktWertung;
-use Wertung\Domain\Wertung\Punktzahl;
+use Wertung\Domain\Wertung\ProzentWertung;
+use Wertung\Domain\Wertung\Prozentzahl;
 
-class ChariteMCPruefungWertungPersistenzService
+class ChariteStationenPruefungPersistenzService
 {
     /** @var PruefungsId */
     private $pruefungsId;
@@ -53,12 +54,16 @@ class ChariteMCPruefungWertungPersistenzService
     }
 
     /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung($mcPruefungsDaten) {
+    public function persistierePruefung($pruefungsDaten) {
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
-
+        foreach ($pruefungsDaten as $dataLine) {
+            $ergebnisse = $dataLine["ergebnisse"];
+            $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikelnummer"]);
             $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
             $studiHash = $studiIntern->getStudiHash();
+            $fach = $dataLine["fach"];
+            $datum = $dataLine["datum"];
+
             $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
                 $studiHash,
                 $this->pruefungsId,
@@ -73,36 +78,43 @@ class ChariteMCPruefungWertungPersistenzService
                 $this->studiPruefungsRepository->flush();
             }
 
-            $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
-            if (!$pruefungsItem) {
-                $pruefungsItem = PruefungsItem::create(
-                    $pruefungsItemId,
-                    $this->pruefungsId
-                );
-                $this->pruefungsItemRepository->add($pruefungsItem);
+            foreach ($ergebnisse as $ergebnisKey => $ergebnis) {
+                $itemCode = $ergebnisKey . $fach;
 
-            }
+                $pruefungsItemIdInt = base_convert(substr(md5($itemCode), 0, 5), 16, 10);
+                $pruefungsItemId = PruefungsItemId::fromInt($pruefungsItemIdInt);
 
-            $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
-                $studiPruefung->getId(),
-                $pruefungsItemId
-            );
-            $punktWertung = PunktWertung::fromPunktzahlUndSkala(
-                $punktzahl,
-                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
-            );
-            if (!$itemWertung
-                || !$itemWertung->getWertung()->equals($punktWertung)) {
-                if ($itemWertung) {
-                    $this->itemWertungsRepository->delete($itemWertung);
+                $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
+                if (!$pruefungsItem) {
+                    $pruefungsItem = PruefungsItem::create(
+                        $pruefungsItemId,
+                        $this->pruefungsId
+                    );
+                    $this->pruefungsItemRepository->add($pruefungsItem);
+
                 }
-                $itemWertung = ItemWertung::create(
-                    $this->itemWertungsRepository->nextIdentity(),
-                    $pruefungsItemId,
+
+                $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
                     $studiPruefung->getId(),
-                    $punktWertung
+                    $pruefungsItemId
                 );
-                $this->itemWertungsRepository->add($itemWertung);
+                $prozentWertung = ProzentWertung::fromProzentzahl(
+                    Prozentzahl::fromFloatRunden($ergebnis / 100)
+                );
+                if (!$itemWertung
+                    || !$itemWertung->getWertung()->equals($prozentWertung)) {
+                    if ($itemWertung) {
+                        $this->itemWertungsRepository->delete($itemWertung);
+                    }
+                    $itemWertung = ItemWertung::create(
+                        $this->itemWertungsRepository->nextIdentity(),
+                        $pruefungsItemId,
+                        $studiPruefung->getId(),
+                        $prozentWertung
+                    );
+                    $this->itemWertungsRepository->add($itemWertung);
+                }
+
             }
         }
         $this->pruefungsItemRepository->flush();

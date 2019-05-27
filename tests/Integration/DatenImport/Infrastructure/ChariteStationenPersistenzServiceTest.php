@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\DatenImport\Infrastructure;
 
-use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
+use DatenImport\Domain\ChariteStationenPruefungPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
@@ -17,17 +17,19 @@ use Studi\Domain\StudiHash;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
-use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
+use Wertung\Domain\Skala\ProzentSkala;
 use Wertung\Domain\Skala\PunktSkala;
+use Wertung\Domain\Wertung\ProzentWertung;
+use Wertung\Domain\Wertung\Prozentzahl;
 use Wertung\Domain\Wertung\PunktWertung;
 use Wertung\Domain\Wertung\Punktzahl;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
 
-class ChariteMcPersistenzServiceTest extends DbRepoTestCase
+class ChariteStationenPersistenzServiceTest extends DbRepoTestCase
 {
     protected $dbRepoInterface = StudiInternRepository::class;
 
@@ -65,14 +67,14 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
                            $pruefungsItemRepository, $itemWertungsRepository, $studiInternRepository]);
         $this->createTestStudis($studiInternRepository);
 
-        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService(
+        $csvImportService = new ChariteStationenErgebnisse_CSVImportService(
             [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",
+                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv",
                 AbstractCSVImportService::DELIMITER_OPTION => ",",
             ]
         );
 
-        $service = new ChariteMCPruefungWertungPersistenzService(
+        $service = new ChariteStationenPruefungPersistenzService(
             PruefungsId::fromInt(1234),
             $pruefungsRepository,
             $studiPruefungsRepository,
@@ -84,40 +86,37 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
         $data = $csvImportService->getData();
         $service->persistierePruefung($data);
 
-        $this->assertCount(3, $studiPruefungsRepository->all());
+        $this->assertCount(13, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
                               ->getPruefungsId()->equals(PruefungsId::fromInt(1234)));
 
-        $this->assertCount(200, $pruefungsItemRepository->all());
+        $this->assertCount(12, $pruefungsItemRepository->all());
         $this->assertTrue($pruefungsItemRepository->all()[0]
                               ->getPruefungsId()->equals(PruefungsId::fromInt(1234)));
 
-        $this->assertCount(200, $itemWertungsRepository->all());
+        $this->assertCount(52, $itemWertungsRepository->all());
 
         $pruefungsItem1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromInt(3)
+            PruefungsItemId::fromInt(925197)
         );
         $this->assertNotNull($pruefungsItem1);
         $this->refreshEntities($pruefungsItem1);
         $this->assertTrue($pruefungsItem1->getWertung()->getSkala()->equals(
-            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1)))
+            ProzentSkala::create())
         );
-        $this->assertTrue($pruefungsItem1->getWertung()->equals(
-            PunktWertung::fromPunktzahlUndSkala(
-                Punktzahl::fromFloat(0),
-                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1)))
-        ));
-
+        $this->assertEquals(
+            ProzentWertung::fromProzentzahl(Prozentzahl::fromFloat(.9))->getRelativeWertung(),
+            $pruefungsItem1->getWertung()->getRelativeWertung()
+        );
         $pruefungsItem2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromInt(5)
+            PruefungsItemId::fromInt(631774)
         );
-        $this->assertTrue($pruefungsItem2->getWertung()->equals(
-            PunktWertung::fromPunktzahlUndSkala(
-                Punktzahl::fromFloat(1),
-                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1)))
-        ));
+        $this->assertEquals(
+            ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.966666666666667))->getRelativeWertung(),
+            $pruefungsItem2->getWertung()->getRelativeWertung()
+        );
 
     }
 
@@ -131,18 +130,13 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
             $studiInternRepo->delete($studiIntern);
             $studiInternRepo->flush();
         }
-        $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-            Matrikelnummer::fromInt("222222"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E')
-        ));
-        $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-            Matrikelnummer::fromInt("444444"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$LkhXWG5HRS9hWm1kWWx0VA$qSA8yS4/Zdsm0zeWajL3uw3188zkk/HCPZic0KlweCs')
-        ));
-        $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-            Matrikelnummer::fromInt("555555"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$anh4WFZZc3VDdExCdEMzdg$Zfy1+698erxOxiqG0RhUqiZ7uHt59nrR9llJMlsJXOY')
-        ));
+        foreach (range(111111, 111234) as $matrikelnummer) {
+            $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
+                Matrikelnummer::fromInt($matrikelnummer),
+                StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed' . $matrikelnummer)
+            ));
+
+        }
         $studiInternRepo->flush();
 
     }

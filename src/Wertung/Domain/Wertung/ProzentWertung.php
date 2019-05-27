@@ -41,4 +41,8 @@ class ProzentWertung extends AbstractWertung
         return $this->prozentzahl;
     }
 
+    public function equals(object $otherObject): bool {
+        return $this->prozentzahl->equals($otherObject->getProzentWert());
+    }
+
 }

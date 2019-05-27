@@ -4,20 +4,20 @@ namespace Tests\Integration\Cluster\Infrastructure\Persistence;
 
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterZuordnung;
-use Cluster\Domain\ClusterZuordnungsService;
-use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleZuordnungsService;
+use Cluster\Domain\ClusterZuordnungsRepository;
+use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleZuordnungsRepository;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Tests\Integration\Common\DbRepoTestCase;
 
-final class ClusterZuordnungsServiceTest extends DbRepoTestCase
+final class ClusterZuordnungsRepositoryTest extends DbRepoTestCase
 {
-    protected $dbRepoInterface = ClusterZuordnungsService::class;
+    protected $dbRepoInterface = ClusterZuordnungsRepository::class;
 
     public function getAllRepositories() {
 
         return [
-            'file-based-service' => [FileBasedSimpleZuordnungsService::createTempFileRepo()],
+            'file-based-service' => [FileBasedSimpleZuordnungsRepository::createTempFileRepo()],
             'db-service'         => [$this->dbRepo],
         ];
     }
@@ -26,16 +26,16 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
      * @test
      * @dataProvider getAllRepositories
      */
-    public function anfangs_leer(ClusterZuordnungsService $zuordnungsService) {
+    public function anfangs_leer(ClusterZuordnungsRepository $zuordnungsService) {
         $this->assertEmpty($zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2)));
-        $this->assertEmpty($zuordnungsService->alleClusterVonPruefungsItem(PruefungsItemId::fromInt(3)));
+        $this->assertEmpty($zuordnungsService->alleClusterIdsVonPruefungsItem(PruefungsItemId::fromInt(3)));
     }
 
     /**
      * @test
      * @dataProvider getAllRepositories
      */
-    public function kann_speichern_und_wiederholen(ClusterZuordnungsService $zuordnungsService) {
+    public function kann_speichern_und_wiederholen(ClusterZuordnungsRepository $zuordnungsService) {
         $zuordnung = $this->createZuordnung();
 
         $zuordnungsService->addZuordnung($zuordnung);
@@ -50,10 +50,10 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
      * @test
      * @dataProvider getAllRepositories
      */
-    public function kann_loeschen(ClusterZuordnungsService $zuordnungsService) {
+    public function kann_loeschen(ClusterZuordnungsRepository $zuordnungsService) {
         $this->kann_speichern_und_wiederholen($zuordnungsService);
 
-        $zuordnungsService->removeZuordnung($this->createZuordnung());
+        $zuordnungsService->delete($this->createZuordnung());
         $zuordnungsService->flush();
 
         $pruefungsItemIds = $zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2));
@@ -64,7 +64,7 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
      * @test
      * @dataProvider getAllRepositories
      */
-    public function mehrfach_anlegen_wird_abgefangen(ClusterZuordnungsService $zuordnungsService) {
+    public function mehrfach_anlegen_wird_abgefangen(ClusterZuordnungsRepository $zuordnungsService) {
         $zuordnungsService->addZuordnung($this->createZuordnung());
         $zuordnungsService->flush();
         $zuordnungsService->addZuordnung($this->createZuordnung());
@@ -78,13 +78,13 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
      * @test
      * @dataProvider getAllRepositories
      */
-    public function mehrfach_loeschen_ist_kein_fehler(ClusterZuordnungsService $zuordnungsService) {
+    public function mehrfach_loeschen_ist_kein_fehler(ClusterZuordnungsRepository $zuordnungsService) {
         $this->kann_speichern_und_wiederholen($zuordnungsService);
 
-        $zuordnungsService->removeZuordnung($this->createZuordnung());
-        $zuordnungsService->removeZuordnung($this->createZuordnung());
+        $zuordnungsService->delete($this->createZuordnung());
+        $zuordnungsService->delete($this->createZuordnung());
         $zuordnungsService->flush();
-        $zuordnungsService->removeZuordnung($this->createZuordnung());
+        $zuordnungsService->delete($this->createZuordnung());
         $zuordnungsService->flush();
 
         $pruefungsItemIds = $zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2));
@@ -95,7 +95,7 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
      * @test
      * @dataProvider getAllRepositories
      */
-    public function kann_mehrfach_holen(ClusterZuordnungsService $zuordnungsService) {
+    public function kann_mehrfach_holen(ClusterZuordnungsRepository $zuordnungsService) {
 
         $zuordnungsService->addZuordnung($this->createZuordnung(2, 30));
         $zuordnungsService->addZuordnung($this->createZuordnung(2, 31));
@@ -106,7 +106,7 @@ final class ClusterZuordnungsServiceTest extends DbRepoTestCase
         $pruefungsItemIds = $zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2));
         $this->assertCount(2, $pruefungsItemIds);
 
-        $clusterIds = $zuordnungsService->alleClusterVonPruefungsItem(PruefungsItemId::fromInt(30));
+        $clusterIds = $zuordnungsService->alleClusterIdsVonPruefungsItem(PruefungsItemId::fromInt(30));
         $this->assertCount(2, $clusterIds);
     }
 

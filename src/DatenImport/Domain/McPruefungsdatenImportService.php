@@ -4,5 +4,5 @@ namespace DatenImport\Domain;
 
 interface McPruefungsdatenImportService
 {
-    public function getMCData(): array;
+    public function getData(): array;
 }

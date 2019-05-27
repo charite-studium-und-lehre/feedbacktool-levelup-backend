@@ -7,12 +7,10 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTypId;
-use Cluster\Domain\ClusterZuordnung;
-use Cluster\Domain\ClusterZuordnungsRepository;
 use Cluster\Domain\ClusterZuordnungsService;
 use Studi\Domain\StudiIntern;
 
-class ChariteMCPruefungFachPersistenzService
+class ChariteMCPruefungLernzielModulPersistenzService
 {
     /** @var ClusterRepository */
     private $clusterRepository;
@@ -29,19 +27,19 @@ class ChariteMCPruefungFachPersistenzService
     }
 
     /** @param StudiIntern[] $studiInternArray */
-    public function persistiereFachZuordnung($mcPruefungsDaten) {
+    public function persistiereMcModulZuordnung($mcPruefungsDaten, $lzModulDaten) {
 
         foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $fragenFach, $lernzielNummer]) {
 
             $zuzuordnen = [];
-
-            if ($fragenFach) {
+            if ($lernzielNummer) {
+                $fragenModul = $lzModulDaten[$lernzielNummer->getValue()];
                 $cluster = $this->clusterRepository->byClusterTypIdUndTitel(
                     ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
-                    $fragenFach
+                    $fragenModul
                 );
                 if (!$cluster) {
-                    $clusterId = $this->clusterHinzufuegen($fragenFach);
+                    $clusterId = $this->clusterHinzufuegen($fragenModul);
                 } else {
                     $clusterId = $cluster->getId();
                 }
@@ -49,20 +47,20 @@ class ChariteMCPruefungFachPersistenzService
             }
             $this->clusterZuordnungsService->setzeZuordnungenFuerClusterTypId(
                 $pruefungsItemId,
-                ClusterTypId::fromInt(ClusterTypId::TYP_ID_FACH),
+                ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
                 $zuzuordnen
             );
         }
 
     }
 
-    private function clusterHinzufuegen(ClusterTitel $fragenFach): ClusterId {
+    private function clusterHinzufuegen(ClusterTitel $fragenModul): ClusterId {
         $clusterId = $this->clusterRepository->nextIdentity();
         $this->clusterRepository->add(
             Cluster::create(
                 $clusterId,
                 ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
-                $fragenFach
+                $fragenModul
             )
         );
         $this->clusterRepository->flush();

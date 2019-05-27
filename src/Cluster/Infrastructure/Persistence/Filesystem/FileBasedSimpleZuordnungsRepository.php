@@ -4,13 +4,14 @@ namespace Cluster\Infrastructure\Persistence\Filesystem;
 
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterZuordnung;
-use Cluster\Domain\ClusterZuordnungsService;
+use Cluster\Domain\ClusterZuordnungsRepository;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
+use phpDocumentor\Reflection\Types\Parent_;
 use Pruefung\Domain\PruefungsItemId;
 
-final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository implements ClusterZuordnungsService
+final class FileBasedSimpleZuordnungsRepository extends AbstractCommonRepository implements ClusterZuordnungsRepository
 {
     use FileBasedRepoTrait;
 
@@ -20,14 +21,14 @@ final class FileBasedSimpleZuordnungsService extends AbstractCommonRepository im
         }
     }
 
-    public function removeZuordnung(ClusterZuordnung $clusterZuordnung): void {
+    public function delete($clusterZuordnung): void {
         if ($this->sucheAktuelleZuordnung($clusterZuordnung)) {
-            $this->delete($clusterZuordnung);
+            parent::delete($clusterZuordnung);
         }
     }
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
+    public function alleClusterIdsVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
         $resultArray = [];
         foreach ($this->all() as $aktuelleZuordnung) {
             /* @var $aktuelleZuordnung ClusterZuordnung */

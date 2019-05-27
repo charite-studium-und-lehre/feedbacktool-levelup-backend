@@ -4,11 +4,11 @@ namespace Cluster\Infrastructure\Persistence\DB;
 
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterZuordnung;
-use Cluster\Domain\ClusterZuordnungsService;
+use Cluster\Domain\ClusterZuordnungsRepository;
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use Pruefung\Domain\PruefungsItemId;
 
-final class DBClusterZuordnungsService implements ClusterZuordnungsService
+final class DBClusterZuordnungsRepository implements ClusterZuordnungsRepository
 {
     use DDDDoctrineRepoTrait;
 
@@ -18,15 +18,15 @@ final class DBClusterZuordnungsService implements ClusterZuordnungsService
         }
     }
 
-    public function removeZuordnung(ClusterZuordnung $clusterZuordnung): void {
+    public function delete(ClusterZuordnung $clusterZuordnung): void {
         $gefundeneZuordnung = $this->sucheAktuelleZuordnung($clusterZuordnung);
         if ($gefundeneZuordnung) {
-            $this->entityManager->remove($gefundeneZuordnung);
+            $this->abstractDelete($gefundeneZuordnung);
         }
     }
 
     /** @return ClusterId[] */
-    public function alleClusterVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
+    public function alleClusterIdsVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
         return $this->doctrineRepo
             ->findBy(
                 ["pruefungsItemId" => $pruefungsItemId]
@@ -39,10 +39,6 @@ final class DBClusterZuordnungsService implements ClusterZuordnungsService
             ->findBy(
                 ["clusterId" => $clusterId]
             );
-    }
-
-    public function delete(ClusterZuordnung $clusterZuordnung): void {
-        $this->abstractDelete($clusterZuordnung);
     }
 
     private function sucheAktuelleZuordnung(ClusterZuordnung $clusterZuordnung): ?ClusterZuordnung {

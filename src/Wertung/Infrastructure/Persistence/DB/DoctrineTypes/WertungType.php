@@ -64,7 +64,7 @@ class WertungType extends Type
                 return PunktWertung::fromPunktzahlUndSkala($punktzahl, $punktSkala);
                 break;
             case self::PROZENT_WERTUNG:
-                $prozentZahlFloat = FloatToIntKodierer::fromInt($wertunsTyp, self::PROZENT_SKALA_NACHKOMMASTELLEN);
+                $prozentZahlFloat = FloatToIntKodierer::fromInt($wertungsWert, self::PROZENT_SKALA_NACHKOMMASTELLEN);
                 $prozentZahl = Prozentzahl::fromFloat($prozentZahlFloat);
 
                 return ProzentWertung::fromProzentzahl($prozentZahl);

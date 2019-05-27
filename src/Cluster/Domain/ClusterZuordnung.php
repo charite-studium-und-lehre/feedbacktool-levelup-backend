@@ -24,10 +24,10 @@ class ClusterZuordnung
     }
 
     public function getClusterId(): ClusterId {
-        return $this->clusterId;
+        return ClusterId::fromInt($this->clusterId);
     }
 
     public function getPruefungsItemId(): PruefungsItemId {
-        return $this->pruefungsItemId;
+        return PruefungsItemId::fromInt($this->pruefungsItemId);
     }
 }
