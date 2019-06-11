@@ -20,7 +20,7 @@ class ChariteStationenCSVImportServiceTest extends TestCase
         $csvImportService =
             new ChariteStationenErgebnisse_CSVImportService(
                 [
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1KLINIkSoSe2018.csv",
+                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1KLINIKSoSe2018.csv",
                     AbstractCSVImportService::DELIMITER_OPTION => ",",
                 ]
             );

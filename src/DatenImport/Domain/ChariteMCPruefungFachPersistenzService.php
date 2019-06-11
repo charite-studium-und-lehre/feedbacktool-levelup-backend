@@ -7,8 +7,6 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTypId;
-use Cluster\Domain\ClusterZuordnung;
-use Cluster\Domain\ClusterZuordnungsRepository;
 use Cluster\Domain\ClusterZuordnungsService;
 use Studi\Domain\StudiIntern;
 

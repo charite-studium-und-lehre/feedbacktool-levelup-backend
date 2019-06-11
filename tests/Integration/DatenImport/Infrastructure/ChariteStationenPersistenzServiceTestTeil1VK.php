@@ -22,14 +22,11 @@ use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPrue
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\ProzentSkala;
-use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
-use Wertung\Domain\Wertung\PunktWertung;
-use Wertung\Domain\Wertung\Punktzahl;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
 
-class ChariteStationenPersistenzServiceTest extends DbRepoTestCase
+class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
 {
     protected $dbRepoInterface = StudiInternRepository::class;
 
@@ -133,7 +130,8 @@ class ChariteStationenPersistenzServiceTest extends DbRepoTestCase
         foreach (range(111111, 111234) as $matrikelnummer) {
             $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
                 Matrikelnummer::fromInt($matrikelnummer),
-                StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed' . $matrikelnummer)
+                StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed'
+                                      . $matrikelnummer)
             ));
 
         }

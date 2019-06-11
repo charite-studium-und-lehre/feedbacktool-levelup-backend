@@ -98,9 +98,13 @@ class ChariteStationenPruefungPersistenzService
                     $studiPruefung->getId(),
                     $pruefungsItemId
                 );
+                if (strstr($itemCode, "#") == FALSE) {
+                    $ergebnis /= 100;
+                }
                 $prozentWertung = ProzentWertung::fromProzentzahl(
-                    Prozentzahl::fromFloatRunden($ergebnis / 100)
+                    Prozentzahl::fromFloatRunden($ergebnis)
                 );
+
                 if (!$itemWertung
                     || !$itemWertung->getWertung()->equals($prozentWertung)) {
                     if ($itemWertung) {
