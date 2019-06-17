@@ -2,25 +2,49 @@
 
 namespace Tests\Unit\DatenImport\Infrastructure;
 
-
+use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use PHPUnit\Framework\TestCase;
-use Studi\Domain\Matrikelnummer;
-use Studi\Domain\MatrikelnummerMitStudiHash;
 
 class PTMCSVImportServiceTest extends TestCase
 {
 
+    public function testGetCSVDataMatrikelNr() {
 
-    public function testGetCSVDataMatrikelNr(){
+        $service = new CharitePTMCSVImportService(
+            [
+                AbstractCSVImportService::INPUTFILE_OPTION =>
+                    __DIR__ . "/TESTEinzeldaten Berlin PT38(gesamt).csv",
+                AbstractCSVImportService::HAS_HEADERS_OPTION => TRUE
+            ]
 
-        $service = new CharitePTMCSVImportService();
-        $PTMDataArray = $service->getCSVDataAsArray(__DIR__ . "/TestFilePTM.csv");
-        $matnr = $PTMDataArray[0]['Matrikelnummer'];
+        );
+        $data = $service->getData();
 
-        $object = Matrikelnummer::fromInt("123456");
+        $this->assertCount(9, $data);
 
-        $this->assertNotEquals($object->getValue(), $matnr);
+        $this->assertEquals(111119, array_keys($data)[8]);
+
+        $this->assertEquals(111111, array_keys($data)[0]);
+
+        $this->assertEquals(0,
+                            $data['111111']
+                            [CharitePTMCSVImportService::CLUSTER_ORGANSYSTEM]
+                            [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['akl']]
+                            [CharitePTMCSVImportService::TYP_RICHTIG]);
+
+        $this->assertEquals(19,
+                            $data['111111']
+                            [CharitePTMCSVImportService::CLUSTER_ORGANSYSTEM]
+                            [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['atm']]
+                            [CharitePTMCSVImportService::TYP_WEISSNICHT]);
+
+        $this->assertEquals(2,
+                            $data['111116']
+                            [CharitePTMCSVImportService::CLUSTER_FACH]
+                            [CharitePTMCSVImportService::FACH_KUERZEL['ana']]
+                            [CharitePTMCSVImportService::TYP_FALSCH]);
+
 
 
     }

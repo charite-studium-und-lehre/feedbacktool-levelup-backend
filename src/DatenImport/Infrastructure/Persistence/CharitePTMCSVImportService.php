@@ -2,48 +2,96 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
-class CharitePTMCSVImportService
+class CharitePTMCSVImportService extends AbstractCSVImportService
+
 {
+    const CLUSTER_ORGANSYSTEM = 10;
+    const CLUSTER_FACH = 20;
 
-    public function getCSVDataAsArray($inputfile){
+    const TYP_RICHTIG = 'r';
+    const TYP_FALSCH = 'f';
+    const TYP_WEISSNICHT = 'w';
 
-        $PTMdataAsArray=null;
-        if (($handle = fopen($inputfile, "r")) !== FALSE) {
-            $data = fgetcsv($handle, null, ";");
-            $headers = array_flip($data);
+    const ORGANSYSTEM_KUERZEL = [
+        'hkl' => 'Herz- Kreislauf',
+        'zel' => 'Genetik Zellmechanismen',
+        'ver' => 'Verdauung',
+        'hst' => 'Hormone Stoffwechsel',
+        'blu' => 'Blut Lymphe Immun',
+        'pso' => 'psychische Erkrankungen',
+        'met' => 'Methodik Instrumente',
+        'akl' => 'Allg. Kranmkheitslehre',
+        'bew' => 'Bewegungsapparat',
+        'ngs' => 'Nervensystem Gehirn Sinne',
+        'ges' => 'Fortpflanzung',
+        'atm' => 'Atmung',
+        'hau' => 'Haut- Hautanhangsgebilde',
+        'nha' => 'Niere Harnwege',
+    ];
 
-            $zeilenindex = 0;
-            while (($data = fgetcsv($handle, null, ";")) !== FALSE && isset($data)) {
+    const FACH_KUERZEL = [
+        'alg' => 'Allgemeinmedizin',
+        'ano' => 'Anästhesiologie, Notfall- und Intensivmedizin',
+        'ana' => 'Anatomie, Biologie',
+        'aug' => 'Augenheilkunde',
+        'bch' => 'Biochemie, Chemie, Molekularbiologie',
+        'gen' => 'Humangenetik',
+        'epi' => 'Epidemiologie, med. Biometrie',
+        'chi' => 'Chirurgie',
+        'der' => 'Dermatologie, Venerologie',
+        'gyn' => 'Frauenheilkunde und Geburtshilfe',
+        'hno' => 'Hals-Nasen-Ohrenheilkunde',
+        'inn' => 'Innere Medizin',
+        'kin' => 'Kinderheilkunde',
+        'kch' => 'Klinische Chemie',
+        'mps' => 'Med. Psychologie/Soziologie',
+        'hyg' => 'Hygiene, Mikrobiologie',
+        'neu' => 'Neurologie',
+        'arb' => 'Arbeits- und Sozialmedizin, Gesundheitswesen',
+        'ort' => 'Orthopädie',
+        'pat' => 'Pathologie',
+        'pha' => 'Pharmakologie, Toxikologie',
+        'npm' => 'Naturheilverfahren, Physikalische Medizin',
+        'phy' => 'Physiologie, Physik',
+        'psy' => 'Psychiatrie, Psychosomatik',
+        'rad' => 'Radiologie, Nuklearmedizin',
+        'rec' => 'Rechtsmedizin',
+        'uro' => 'Urologie',
+    ];
 
-                $PTMdataAsArray[$zeilenindex]['Matrikelnummer'] = $data[$headers[" matnr"]];
-                $PTMdataAsArray[$zeilenindex]['SummeRichtig'] = $data[$headers[" all_r"]];
-                $PTMdataAsArray[$zeilenindex]['SummeFalsch'] = $data[$headers[" all_f"]];
-                $PTMdataAsArray[$zeilenindex]['SummeWeissNicht'] = $data[$headers[" all_w"]];
+    public function getData(): array {
+        $data = [];
 
-                $antwortenEndeIndex = 0;
-                $organsysteme = [];
-                
-                //alle einzelnen 200 Antworten
-                for($i = 1;  $i <=200; $i++){
-                    $PTMdataAsArray[$zeilenindex]['AntwortenEinzeln'][" f_".$i] = $data[$headers[" f_".$i]];
-                    if($i == 200){
-                        $antwortenEndeIndex = $headers[" f_".$i]+1;
-                    }
+        foreach ($this->getCSVDataAsArray() as $dataLine) {
+
+            $matrikelnummer = $dataLine["matnr"];
+            foreach ($dataLine as $key => $ergebnis) {
+
+                if ((strstr($key, "_") === FALSE) || !is_numeric($ergebnis)) {
+                    continue;
                 }
-                //alle Organsysteme
-                for($j = $antwortenEndeIndex; $j < count($headers)-1; $j++){
-                    $aktOrgansys = array_search($j, $headers);
-                    $organsysteme[$aktOrgansys] = $data[$headers[$aktOrgansys]];
-                }
-                ksort($organsysteme);
-                $PTMdataAsArray[$zeilenindex]['Organsysteme']=$organsysteme;
 
-                $zeilenindex++;
+                $kuerzel = explode("_", $key)[0];
+
+                if (array_key_exists($kuerzel, self::FACH_KUERZEL)) {
+                    $clusterTyp = self::CLUSTER_FACH;
+                    $clusterName = self::FACH_KUERZEL[$kuerzel];
+                } elseif (array_key_exists($kuerzel, self::ORGANSYSTEM_KUERZEL)) {
+                    $clusterTyp = self::CLUSTER_ORGANSYSTEM;
+                    $clusterName = self::ORGANSYSTEM_KUERZEL[$kuerzel];
+                } else {
+                    continue;
+                }
+
+                $bewertungsTyp = explode("_", $key)[1];
+                if (!in_array($bewertungsTyp, [self::TYP_RICHTIG, self::TYP_FALSCH, self::TYP_WEISSNICHT])) {
+                    continue;
+                }
+                $data[$matrikelnummer][$clusterTyp][$clusterName][$bewertungsTyp] = $ergebnis;
             }
         }
-        return $PTMdataAsArray;
+
+        return $data;
     }
-
-
 
 }
