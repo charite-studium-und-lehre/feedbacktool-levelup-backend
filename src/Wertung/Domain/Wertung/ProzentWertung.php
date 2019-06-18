@@ -34,15 +34,20 @@ class ProzentWertung extends AbstractWertung
         return ProzentSkala::create();
     }
 
+    public function equals(object $otherObject): bool {
+        if (!($otherObject instanceof ProzentWertung)) {
+            return FALSE;
+        }
+
+        return $this->prozentzahl->equals($otherObject->getProzentzahl());
+    }
+
     /**
      * @return Prozentzahl
      */
-    public function getProzentzahl(): Prozentzahl {
+    public
+    function getProzentzahl(): Prozentzahl {
         return $this->prozentzahl;
-    }
-
-    public function equals(object $otherObject): bool {
-        return $this->prozentzahl->equals($otherObject->getProzentWert());
     }
 
 }

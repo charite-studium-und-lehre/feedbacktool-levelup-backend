@@ -11,6 +11,7 @@ use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
 use Wertung\Domain\Wertung\PunktWertung;
 use Wertung\Domain\Wertung\Punktzahl;
+use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 use Wertung\Domain\Wertung\Wertung;
 
 /**
@@ -26,10 +27,13 @@ class WertungType extends Type
 
     const PUNKT_WERTUNG = 1;
     const PROZENT_WERTUNG = 2;
+    const RICHTIG_FALSCH_WEISSNICHT_WERTUNG = 3;
 
     const TYP_STELLEN = 2;
 
     const PUNKT_SKALA_STELLEN = 6;
+    const RICHTIG_FALSCH_WEISSNICHT_STELLEN = 2;
+
     /** 2 Nachkommastellen */
     const PUNKT_SKALA_NACHKOMMASTELLEN = Punktzahl::NACHKOMMASTELLEN;
 
@@ -50,25 +54,11 @@ class WertungType extends Type
 
         switch ($wertunsTyp) {
             case self::PUNKT_WERTUNG:
-                $maxPunktzahlInt = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert, 0,
-                                                                            self::PUNKT_SKALA_STELLEN);
-                $maxPunktzahlFloat = FloatToIntKodierer::fromInt($maxPunktzahlInt, self::PUNKT_SKALA_NACHKOMMASTELLEN);
-                $maxPunktzahl = Punktzahl::fromFloat($maxPunktzahlFloat);
-
-                $punktzahlInt = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert, self::PUNKT_SKALA_STELLEN);
-                $punktzahlFloat = FloatToIntKodierer::fromInt($punktzahlInt, self::PUNKT_SKALA_NACHKOMMASTELLEN);
-                $punktzahl = Punktzahl::fromFloat($punktzahlFloat);
-
-                $punktSkala = PunktSkala::fromMaxPunktzahl($maxPunktzahl);
-
-                return PunktWertung::fromPunktzahlUndSkala($punktzahl, $punktSkala);
-                break;
+                return $this->dekodierePunktWertung($wertungsWert);
             case self::PROZENT_WERTUNG:
-                $prozentZahlFloat = FloatToIntKodierer::fromInt($wertungsWert, self::PROZENT_SKALA_NACHKOMMASTELLEN);
-                $prozentZahl = Prozentzahl::fromFloat($prozentZahlFloat);
-
-                return ProzentWertung::fromProzentzahl($prozentZahl);
-                break;
+                return $this->dekodiereProzentWertung($wertungsWert);
+            case self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG:
+                return $this->dekodiereRichtigFalschWeissnichtWertung($wertungsWert);
             default:
                 throw new \Exception("Wertungsart '" . $value % 100 . "'nicht bekannt!'");
         }
@@ -80,25 +70,12 @@ class WertungType extends Type
             throw new \Exception("Wertung muss Interface 'Wertung' implementieren!");
         }
         if ($value instanceof PunktWertung) {
-            $typSummand = IntsToIntKodierer::erzeugeSummand(self::PUNKT_WERTUNG, 0, self::TYP_STELLEN);
-            $maxPunktzahlInt = FloatToIntKodierer::toInt($value->getSkala()->getMaxPunktzahl()->getValue(),
-                                                         self::PUNKT_SKALA_NACHKOMMASTELLEN);
-            $maxPunktzahlSummand = IntsToIntKodierer::erzeugeSummand($maxPunktzahlInt, self::TYP_STELLEN,
-                                                                     self::TYP_STELLEN + self::PUNKT_SKALA_STELLEN);
-            $punktzahlInt = FloatToIntKodierer::toInt($value->getPunktzahl()->getValue(),
-                                                      self::PUNKT_SKALA_NACHKOMMASTELLEN);
-            $punktzahlSummand = IntsToIntKodierer::erzeugeSummand($punktzahlInt, self::TYP_STELLEN +
-                                                                               self::PUNKT_SKALA_STELLEN);
-
-            return $typSummand + $maxPunktzahlSummand + $punktzahlSummand;
+            return $this->kodierePunktWertung($value);
         } elseif ($value instanceof ProzentWertung) {
-            $typSummand = IntsToIntKodierer::erzeugeSummand(self::PROZENT_WERTUNG, 0, self::TYP_STELLEN);
-            $prozentZahlint = FloatToIntKodierer::toInt($value->getProzentzahl()->getValue(),
-                                                        self::PROZENT_SKALA_NACHKOMMASTELLEN);
-            $prozentZahlSummand = IntsToIntKodierer::erzeugeSummand($prozentZahlint, self::TYP_STELLEN);
+            return $this->kodiereProzentWertung($value);
 
-            return $typSummand + $prozentZahlSummand;
-
+        } elseif ($value instanceof RichtigFalschWeissnichtWertung) {
+            return $this->kodiereRichtigFalschWeissnichtWertung($value);
         }
         throw new \Exception("Wertungs-Typ '" . get_class($value) . "'ist unbekannt!");
     }
@@ -109,5 +86,113 @@ class WertungType extends Type
 
     public function requiresSQLCommentHint(AbstractPlatform $platform) {
         return TRUE;
+    }
+
+
+    private function kodiereRichtigFalschWeissnichtWertung($value): int {
+        $stellenzahlVon = 0;
+        $stellenzahlBis = self::TYP_STELLEN;
+        $typSummand = IntsToIntKodierer::erzeugeSummand(self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG, $stellenzahlVon, $stellenzahlBis);
+
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $richtigSummand = IntsToIntKodierer::erzeugeSummand(
+            $value->getPunktzahlRichtig()->getValue(),
+            $stellenzahlVon,
+            $stellenzahlBis);
+
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $falschSummand = IntsToIntKodierer::erzeugeSummand(
+            $value->getPunktzahlFalsch()->getValue(),
+            $stellenzahlVon,
+            $stellenzahlBis);
+
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $weissnichtSummand = IntsToIntKodierer::erzeugeSummand(
+            $value->getPunktzahlWeissnicht()->getValue(),
+            $stellenzahlVon,
+            $stellenzahlBis);
+
+        return $typSummand + $richtigSummand + $falschSummand + $weissnichtSummand;
+    }
+
+
+    private function kodiereProzentWertung(ProzentWertung $value): int {
+        $typSummand = IntsToIntKodierer::erzeugeSummand(self::PROZENT_WERTUNG, 0, self::TYP_STELLEN);
+        $prozentZahlint = FloatToIntKodierer::toInt($value->getProzentzahl()->getValue(),
+                                                    self::PROZENT_SKALA_NACHKOMMASTELLEN);
+        $prozentZahlSummand = IntsToIntKodierer::erzeugeSummand($prozentZahlint, self::TYP_STELLEN);
+
+        return $typSummand + $prozentZahlSummand;
+    }
+
+
+    private function kodierePunktWertung(PunktWertung $value): int {
+        $typSummand = IntsToIntKodierer::erzeugeSummand(self::PUNKT_WERTUNG, 0, self::TYP_STELLEN);
+        $maxPunktzahlInt = FloatToIntKodierer::toInt($value->getSkala()->getMaxPunktzahl()->getValue(),
+                                                     self::PUNKT_SKALA_NACHKOMMASTELLEN);
+        $maxPunktzahlSummand = IntsToIntKodierer::erzeugeSummand($maxPunktzahlInt, self::TYP_STELLEN,
+                                                                 self::TYP_STELLEN + self::PUNKT_SKALA_STELLEN);
+        $punktzahlInt = FloatToIntKodierer::toInt($value->getPunktzahl()->getValue(),
+                                                  self::PUNKT_SKALA_NACHKOMMASTELLEN);
+        $punktzahlSummand = IntsToIntKodierer::erzeugeSummand($punktzahlInt, self::TYP_STELLEN +
+                                                                           self::PUNKT_SKALA_STELLEN);
+
+        return $typSummand + $maxPunktzahlSummand + $punktzahlSummand;
+    }
+
+
+    private function dekodierePunktWertung(int $wertungsWert): PunktWertung {
+        $maxPunktzahlInt = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert, 0,
+                                                                    self::PUNKT_SKALA_STELLEN);
+        $maxPunktzahlFloat = FloatToIntKodierer::fromInt($maxPunktzahlInt, self::PUNKT_SKALA_NACHKOMMASTELLEN);
+        $maxPunktzahl = Punktzahl::fromFloat($maxPunktzahlFloat);
+
+        $punktzahlInt = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert, self::PUNKT_SKALA_STELLEN);
+        $punktzahlFloat = FloatToIntKodierer::fromInt($punktzahlInt, self::PUNKT_SKALA_NACHKOMMASTELLEN);
+        $punktzahl = Punktzahl::fromFloat($punktzahlFloat);
+
+        $punktSkala = PunktSkala::fromMaxPunktzahl($maxPunktzahl);
+
+        return PunktWertung::fromPunktzahlUndSkala($punktzahl, $punktSkala);
+    }
+
+
+    private function dekodiereProzentWertung(int $wertungsWert): ProzentWertung {
+        $prozentZahlFloat = FloatToIntKodierer::fromInt($wertungsWert, self::PROZENT_SKALA_NACHKOMMASTELLEN);
+        $prozentZahl = Prozentzahl::fromFloat($prozentZahlFloat);
+
+        return ProzentWertung::fromProzentzahl($prozentZahl);
+    }
+
+
+    private function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
+        $stellenzahlVon = 0;
+        $stellenzahlBis = self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+
+        $richtigPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
+                                                                     $stellenzahlVon,
+                                                                     $stellenzahlBis);
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+
+        $falschPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
+                                                                     $stellenzahlVon,
+                                                                     $stellenzahlBis);
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+
+        $weissnichtPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
+                                                                    $stellenzahlVon,
+                                                                    $stellenzahlBis);
+
+        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat($richtigPunktzahl),
+            Punktzahl::fromFloat($falschPunktzahl),
+            Punktzahl::fromFloat($weissnichtPunktzahl)
+        );
+
     }
 }

@@ -27,7 +27,7 @@ class IntsToIntKodierer
         self::checkAssertions($zahlZuDeKodieren, $vonStelle, $bisStelle);
         $zahlAnRichtigerStelle = $zahlZuDeKodieren / (10 ** $vonStelle);
 
-        return $zahlAnRichtigerStelle % (10 ** ($bisStelle));
+        return $zahlAnRichtigerStelle % (10 ** ($bisStelle - $vonStelle));
 
     }
 
