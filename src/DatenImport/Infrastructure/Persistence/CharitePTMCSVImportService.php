@@ -2,15 +2,13 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
+use DatenImport\Domain\CharitePTMPersistenzService;
+
 class CharitePTMCSVImportService extends AbstractCSVImportService
 
 {
     const CLUSTER_ORGANSYSTEM = 10;
     const CLUSTER_FACH = 20;
-
-    const TYP_RICHTIG = 'r';
-    const TYP_FALSCH = 'f';
-    const TYP_WEISSNICHT = 'w';
 
     const ORGANSYSTEM_KUERZEL = [
         'hkl' => 'Herz- Kreislauf',
@@ -84,7 +82,9 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
                 }
 
                 $bewertungsTyp = explode("_", $key)[1];
-                if (!in_array($bewertungsTyp, [self::TYP_RICHTIG, self::TYP_FALSCH, self::TYP_WEISSNICHT])) {
+                if (!in_array($bewertungsTyp, [CharitePTMPersistenzService::TYP_RICHTIG,
+                                               CharitePTMPersistenzService::TYP_FALSCH,
+                                               CharitePTMPersistenzService::TYP_WEISSNICHT])) {
                     continue;
                 }
                 $data[$matrikelnummer][$clusterTyp][$clusterName][$bewertungsTyp] = $ergebnis;

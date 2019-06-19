@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\DatenImport\Infrastructure;
 
+use DatenImport\Domain\CharitePTMPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use PHPUnit\Framework\TestCase;
@@ -31,19 +32,19 @@ class PTMCSVImportServiceTest extends TestCase
                             $data['111111']
                             [CharitePTMCSVImportService::CLUSTER_ORGANSYSTEM]
                             [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['akl']]
-                            [CharitePTMCSVImportService::TYP_RICHTIG]);
+                            [CharitePTMPersistenzService::TYP_RICHTIG]);
 
         $this->assertEquals(19,
                             $data['111111']
                             [CharitePTMCSVImportService::CLUSTER_ORGANSYSTEM]
                             [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['atm']]
-                            [CharitePTMCSVImportService::TYP_WEISSNICHT]);
+                            [CharitePTMPersistenzService::TYP_WEISSNICHT]);
 
         $this->assertEquals(2,
                             $data['111116']
                             [CharitePTMCSVImportService::CLUSTER_FACH]
                             [CharitePTMCSVImportService::FACH_KUERZEL['ana']]
-                            [CharitePTMCSVImportService::TYP_FALSCH]);
+                            [CharitePTMPersistenzService::TYP_FALSCH]);
 
 
 
