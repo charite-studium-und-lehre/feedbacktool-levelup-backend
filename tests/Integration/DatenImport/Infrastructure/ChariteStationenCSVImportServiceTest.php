@@ -105,7 +105,7 @@ class ChariteStationenCSVImportServiceTest extends TestCase
             );
         $data = $csvImportService->getData();
 
-        $this->assertCount(176, $data);
+        $this->assertCount(80, $data);
 
         $this->assertEquals("111112", $data[1]["matrikelnummer"]);
         $this->assertIsArray($data[1]["ergebnisse"]);

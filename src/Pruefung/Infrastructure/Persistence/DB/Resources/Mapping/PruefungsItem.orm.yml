@@ -4,9 +4,9 @@ Pruefung\Domain\PruefungsItem:
 
   id:
     id:
-      type: aggregateId
+      type: aggregateIdString
 
   fields:
     pruefungsId:
-      type: aggregateId
+      type: aggregateIdString
       column: pruefungsId

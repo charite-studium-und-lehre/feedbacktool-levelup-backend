@@ -19,7 +19,6 @@ trait DoctrineAutoIncrementTrait
         $sql = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES"
             . " WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName'";
 
-        $a = $this->entityManager->createNativeQuery($sql, $rsm);
         $maxId = $this->entityManager->createNativeQuery($sql, $rsm)->getResult()[0]["AUTO_INCREMENT"];
         $maxId = max([1, $maxId]);
 

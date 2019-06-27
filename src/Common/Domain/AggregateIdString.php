@@ -9,15 +9,19 @@ class AggregateIdString implements DDDValueObject
     use DefaultValueObjectComparison;
 
     const INVALID_ID = "Ist keine gültige ID: ";
+    const INVALID_SIZE = "Hat mehr Zeichen als die erlaubten " . self::MAX_CHARS . ": ";
+
+    const MAX_CHARS = 30;
 
     protected $id;
 
-    public static function fromInt(string $id) {
+    public static function fromInt(string $id): self {
         return static::fromString($id);
     }
 
-    public static function fromString(string $id) {
+    public static function fromString(string $id): self {
         Assertion::string($id, 0, self::INVALID_ID . $id);
+        Assertion::maxLength($id, self::MAX_CHARS, self::INVALID_SIZE . $id);
 
         $object = new static();
         $object->id = $id;

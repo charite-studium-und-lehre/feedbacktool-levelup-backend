@@ -20,10 +20,7 @@ abstract class AbstractCSVImportService
     }
 
     protected function getCSVDataAsArray(): array {
-        $inputFile = $this->options[self::INPUTFILE_OPTION];
-        if (!$inputFile) {
-            throw new \Exception("inputFile must be given");
-        }
+        $inputFile = $this->getInputFile();
         $handle = fopen($inputFile, "r");
 
         $dataAsArray = [];
@@ -64,6 +61,14 @@ abstract class AbstractCSVImportService
 
     protected function trimDataCell($string) {
         return trim($string);
+    }
+
+    protected function getInputFile(): string {
+        $inputFile = $this->options[self::INPUTFILE_OPTION];
+        if (!$inputFile) {
+            throw new \Exception("inputFile must be given");
+        }
+        return $inputFile;
     }
 
     private function getDelimiterOption() : string {

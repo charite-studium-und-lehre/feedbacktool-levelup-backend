@@ -13,7 +13,7 @@ class AggregateId implements DDDValueObject
     protected $id;
 
     /** @return static */
-    public static function fromInt(string $id) {
+    public static function fromInt(string $id): self {
         Assertion::integerish($id, self::INVALID_ID . $id);
         Assertion::greaterThan($id, 0, self::INVALID_ID . $id);
 

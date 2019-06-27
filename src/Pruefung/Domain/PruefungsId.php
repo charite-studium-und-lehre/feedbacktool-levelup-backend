@@ -2,8 +2,8 @@
 
 namespace Pruefung\Domain;
 
-use Common\Domain\AggregateId;
+use Common\Domain\AggregateIdString;
 
-class PruefungsId extends AggregateId
+class PruefungsId extends AggregateIdString
 {
 }

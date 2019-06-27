@@ -3,4 +3,4 @@ Common\Domain\AggregateIdString:
     fields:
         id:
           type: string
-          length: 20
+          length: 30

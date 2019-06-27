@@ -12,5 +12,5 @@ StudiPruefung\Domain\StudiPruefung:
 
   embedded:
     pruefungsId:
-      class: Common\Domain\AggregateId
+      class: Common\Domain\AggregateIdString
       columnPrefix: "pruefungs_"
