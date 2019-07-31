@@ -37,7 +37,7 @@ class StudiPruefung
     }
 
     public function getPruefungsId(): PruefungsId {
-        return PruefungsId::fromInt($this->pruefungsId->getValue());
+        return PruefungsId::fromString($this->pruefungsId->getValue());
     }
 
 }

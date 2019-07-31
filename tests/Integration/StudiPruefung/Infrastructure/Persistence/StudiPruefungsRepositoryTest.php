@@ -34,12 +34,12 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
         $studiPruefung1 = StudiPruefung::fromValues(
             StudiPruefungsId::fromInt(123),
             $this->studiHash1,
-            PruefungsId::fromInt(7890)
+            PruefungsId::fromString(7890)
         );
         $studiPruefung2 = StudiPruefung::fromValues(
             StudiPruefungsId::fromInt(456),
             StudiHash::fromString(password_hash("test2", PASSWORD_ARGON2I)),
-            PruefungsId::fromInt(9876)
+            PruefungsId::fromString(9876)
         );
 
         $repo->add($studiPruefung1);
@@ -73,12 +73,12 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
     public function testByStudiHashUndPruefungsId(StudiPruefungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $studiPruefung = $repo->byStudiHashUndPruefungsId(
-            $this->studiHash1, PruefungsId::fromInt(7890)
+            $this->studiHash1, PruefungsId::fromString(7890)
         );
         $this->assertTrue($studiPruefung->getId()->equals(StudiPruefungsId::fromInt(123)));
 
         $studiPruefung = $repo->byStudiHashUndPruefungsId(
-            $this->studiHash1, PruefungsId::fromInt(7891)
+            $this->studiHash1, PruefungsId::fromString(7891)
         );
         $this->assertNull($studiPruefung);
 

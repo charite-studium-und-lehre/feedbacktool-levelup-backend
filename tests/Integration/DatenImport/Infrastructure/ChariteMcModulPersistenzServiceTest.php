@@ -26,10 +26,10 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
                 $this->currentContainer->get(ClusterRepository::class),
                 $this->currentContainer->get(ClusterZuordnungsRepository::class),
             ],
-            'file-based-repos' => [
-                FileBasedSimpleClusterRepository::createTempFileRepo(),
-                FileBasedSimpleZuordnungsRepository::createTempFileRepo(),
-            ],
+//            'file-based-repos' => [
+//                FileBasedSimpleClusterRepository::createTempFileRepo(),
+//                FileBasedSimpleZuordnungsRepository::createTempFileRepo(),
+//            ],
         ];
     }
 

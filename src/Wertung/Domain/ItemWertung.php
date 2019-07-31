@@ -45,7 +45,7 @@ class ItemWertung implements DDDEntity
     }
 
     public function getPruefungsItemId(): PruefungsItemId {
-        return PruefungsItemId::fromInt($this->pruefungsItemId);
+        return PruefungsItemId::fromString($this->pruefungsItemId);
     }
 
     public function getWertung(): Wertung {

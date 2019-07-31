@@ -18,6 +18,6 @@ final class FileBasedSimplePruefungsItemRepository extends AbstractCommonReposit
     }
 
     public function nextIdentity(): PruefungsItemId {
-        return PruefungsItemId::fromInt($this->abstractNextIdentity());
+        return PruefungsItemId::fromString($this->abstractNextIdentity());
     }
 }

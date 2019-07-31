@@ -13,7 +13,7 @@ class PruefungTest extends TestCase
 
     public function testCreate(){
 
-        $id = PruefungsId::fromInt("12345");
+        $id = PruefungsId::fromString("12345");
         $pruefungsFormat = PruefungsFormat::fromConst(PruefungsFormat::MC);
         $pruefungsDatum = PruefungsDatum::fromString("20.08.2018");
 

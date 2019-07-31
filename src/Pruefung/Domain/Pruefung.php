@@ -38,7 +38,7 @@ class Pruefung
     }
 
     public function getId(): PruefungsId {
-        return PruefungsId::fromInt($this->id->getValue());
+        return PruefungsId::fromString($this->id->getValue());
     }
 
     public function getDatum(): PruefungsDatum {

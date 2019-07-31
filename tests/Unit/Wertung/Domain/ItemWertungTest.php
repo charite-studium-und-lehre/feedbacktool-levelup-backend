@@ -17,7 +17,7 @@ class ItemWertungTest extends TestCase
     public function testCreate() {
 
         $id = ItemWertungsId::fromInt("12345");
-        $pruefungsItemId = PruefungsItemId::fromInt("789");
+        $pruefungsItemId = PruefungsItemId::fromString("789");
         $studiPruefungsId = StudiPruefungsId::fromInt("5000");
         $wertung = PunktWertung::fromPunktzahlUndSkala(
             Punktzahl::fromFloat(4.5),

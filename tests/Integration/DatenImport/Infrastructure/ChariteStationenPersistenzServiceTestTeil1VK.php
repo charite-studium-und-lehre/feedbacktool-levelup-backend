@@ -72,7 +72,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
         );
 
         $service = new ChariteStationenPruefungPersistenzService(
-            PruefungsId::fromInt(1234),
+            PruefungsId::fromString(1234),
             $pruefungsRepository,
             $studiPruefungsRepository,
             $pruefungsItemRepository,
@@ -85,17 +85,17 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
 
         $this->assertCount(13, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
-                              ->getPruefungsId()->equals(PruefungsId::fromInt(1234)));
+                              ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
 
         $this->assertCount(12, $pruefungsItemRepository->all());
         $this->assertTrue($pruefungsItemRepository->all()[0]
-                              ->getPruefungsId()->equals(PruefungsId::fromInt(1234)));
+                              ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
 
         $this->assertCount(52, $itemWertungsRepository->all());
 
         $pruefungsItem1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromInt(925197)
+            PruefungsItemId::fromString(925197)
         );
         $this->assertNotNull($pruefungsItem1);
         $this->refreshEntities($pruefungsItem1);
@@ -108,7 +108,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
         );
         $pruefungsItem2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromInt(631774)
+            PruefungsItemId::fromString(631774)
         );
         $this->assertEquals(
             ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.966666666666667))->getRelativeWertung(),

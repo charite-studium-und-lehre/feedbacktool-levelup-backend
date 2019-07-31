@@ -35,21 +35,21 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
     public function kann_speichern_und_wiederholen(ItemWertungsRepository $repo) {
         $itemWertungPunktzahl = ItemWertung::create(
             ItemWertungsId::fromInt(123),
-            PruefungsItemId::fromInt(456),
+            PruefungsItemId::fromString(456),
             StudiPruefungsId::fromInt(789),
             PunktWertung::fromPunktzahlUndSkala(Punktzahl::fromFloat(3.25),
                                                 PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(15.75)))
         );
         $itemWertungProzent = ItemWertung::create(
             ItemWertungsId::fromInt(789),
-            PruefungsItemId::fromInt(12),
+            PruefungsItemId::fromString(12),
             StudiPruefungsId::fromInt(5000),
             ProzentWertung::fromProzentzahl(Prozentzahl::fromFloat(.8746))
         );
 
         $itemWertungRichtigFalschWeissnicht = ItemWertung::create(
             ItemWertungsId::fromInt(456),
-            PruefungsItemId::fromInt(12),
+            PruefungsItemId::fromString(12),
             StudiPruefungsId::fromInt(5000),
             RichtigFalschWeissnichtWertung::fromPunktzahlen(
                 Punktzahl::fromFloat(12),
@@ -101,13 +101,13 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
         $this->kann_speichern_und_wiederholen($repo);
         $itemWertung = $repo->byStudiPruefungsIdUndPruefungssItemId(
             StudiPruefungsId::fromInt(789),
-            PruefungsItemId::fromInt(456),
+            PruefungsItemId::fromString(456),
             );
         $this->assertTrue($itemWertung->getId()->equals(ItemWertungsId::fromInt(123),));
 
         $itemWertung = $repo->byStudiPruefungsIdUndPruefungssItemId(
             StudiPruefungsId::fromInt(789),
-            PruefungsItemId::fromInt(457),
+            PruefungsItemId::fromString(457),
             );
         $this->assertNull($itemWertung);
     }

@@ -28,6 +28,6 @@ class ClusterZuordnung
     }
 
     public function getPruefungsItemId(): PruefungsItemId {
-        return PruefungsItemId::fromInt($this->pruefungsItemId);
+        return PruefungsItemId::fromString($this->pruefungsItemId);
     }
 }

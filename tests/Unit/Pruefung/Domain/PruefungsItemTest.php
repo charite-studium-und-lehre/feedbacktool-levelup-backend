@@ -12,8 +12,8 @@ class PruefungsItemTest extends TestCase
 
     public function testCreate() {
 
-        $id = PruefungsItemId::fromInt("12345");
-        $pruefungsId = PruefungsId::fromInt("789");
+        $id = PruefungsItemId::fromString("12345");
+        $pruefungsId = PruefungsId::fromString("789");
 
         $pruefungsItem = PruefungsItem::create($id, $pruefungsId);
 

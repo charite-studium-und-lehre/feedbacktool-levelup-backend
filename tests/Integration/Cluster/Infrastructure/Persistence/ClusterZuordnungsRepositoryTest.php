@@ -28,7 +28,7 @@ final class ClusterZuordnungsRepositoryTest extends DbRepoTestCase
      */
     public function anfangs_leer(ClusterZuordnungsRepository $zuordnungsService) {
         $this->assertEmpty($zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2)));
-        $this->assertEmpty($zuordnungsService->alleClusterIdsVonPruefungsItem(PruefungsItemId::fromInt(3)));
+        $this->assertEmpty($zuordnungsService->alleClusterIdsVonPruefungsItem(PruefungsItemId::fromString(3)));
     }
 
     /**
@@ -106,7 +106,7 @@ final class ClusterZuordnungsRepositoryTest extends DbRepoTestCase
         $pruefungsItemIds = $zuordnungsService->allePruefungsItemsVonCluster(ClusterId::fromInt(2));
         $this->assertCount(2, $pruefungsItemIds);
 
-        $clusterIds = $zuordnungsService->alleClusterIdsVonPruefungsItem(PruefungsItemId::fromInt(30));
+        $clusterIds = $zuordnungsService->alleClusterIdsVonPruefungsItem(PruefungsItemId::fromString(30));
         $this->assertCount(2, $clusterIds);
     }
 
@@ -120,7 +120,7 @@ final class ClusterZuordnungsRepositoryTest extends DbRepoTestCase
      */
     private function createZuordnung(int $idCluster = 2, int $idItem = 3): ClusterZuordnung {
         $zuordnung = ClusterZuordnung::byIds(ClusterId::fromInt($idCluster),
-                                             PruefungsItemId::fromInt($idItem));
+                                             PruefungsItemId::fromString($idItem));
 
         return $zuordnung;
     }

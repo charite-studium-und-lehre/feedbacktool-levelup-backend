@@ -24,10 +24,10 @@ class PruefungsItem
     }
 
     public function getId(): PruefungsItemId {
-        return PruefungsItemId::fromInt($this->id);
+        return PruefungsItemId::fromString($this->id);
     }
 
     public function getPruefungsId(): PruefungsId {
-        return PruefungsId::fromInt($this->pruefungsId);
+        return PruefungsId::fromString($this->pruefungsId);
     }
 }

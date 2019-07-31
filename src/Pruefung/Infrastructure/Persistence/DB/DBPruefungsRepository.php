@@ -24,7 +24,7 @@ final class DBPruefungsRepository implements PruefungsRepository
     }
 
     public function nextIdentity(): PruefungsId {
-        return PruefungsId::fromInt($this->abstractNextIdentityAsInt());
+        return PruefungsId::fromString($this->abstractNextIdentityAsInt());
     }
 
 }

@@ -79,7 +79,7 @@ class CharitePTMPersistenzService
                     }
 
                     $pruefungsItemIdInt = base_convert(substr(md5($clusterTyp . "-" . $clusterName), 0, 5), 16, 10);
-                    $pruefungsItemId = PruefungsItemId::fromInt($pruefungsItemIdInt);
+                    $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdInt);
 
                     $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
                     if (!$pruefungsItem) {

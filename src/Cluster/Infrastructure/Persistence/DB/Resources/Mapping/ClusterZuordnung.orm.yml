@@ -6,4 +6,4 @@ Cluster\Domain\ClusterZuordnung:
     clusterId:
       type: aggregateId
     pruefungsItemId:
-      type: aggregateId
+      type: aggregateIdString

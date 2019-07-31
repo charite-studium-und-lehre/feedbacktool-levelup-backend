@@ -27,12 +27,12 @@ final class PruefungsItemRepositoryTest extends DbRepoTestCase
      */
     public function kann_speichern_und_wiederholen(PruefungsItemRepository $repo) {
         $pruefungsItem1 = PruefungsItem::create(
-            PruefungsItemId::fromInt(123),
-            PruefungsId::fromInt(259)
+            PruefungsItemId::fromString(123),
+            PruefungsId::fromString(259)
         );
         $pruefungsItem2 = PruefungsItem::create(
-            PruefungsItemId::fromInt(456),
-            PruefungsId::fromInt(8090)
+            PruefungsItemId::fromString(456),
+            PruefungsId::fromString(8090)
         );
 
         $repo->add($pruefungsItem1);
@@ -41,8 +41,8 @@ final class PruefungsItemRepositoryTest extends DbRepoTestCase
         $this->refreshEntities($pruefungsItem1, $pruefungsItem2);
 
         $this->assertCount(2, $repo->all());
-        $pruefungsItem2 = $repo->byId(PruefungsItemId::fromInt(456));
-        $this->assertEquals(PruefungsId::fromInt(8090), $pruefungsItem2->getPruefungsId());
+        $pruefungsItem2 = $repo->byId(PruefungsItemId::fromString(456));
+        $this->assertEquals(PruefungsId::fromString(8090), $pruefungsItem2->getPruefungsId());
     }
 
     /**

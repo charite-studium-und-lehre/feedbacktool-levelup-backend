@@ -15,10 +15,6 @@ class AggregateIdString implements DDDValueObject
 
     protected $id;
 
-    public static function fromInt(string $id): self {
-        return static::fromString($id);
-    }
-
     public static function fromString(string $id): self {
         Assertion::string($id, 0, self::INVALID_ID . $id);
         Assertion::maxLength($id, self::MAX_CHARS, self::INVALID_SIZE . $id);
