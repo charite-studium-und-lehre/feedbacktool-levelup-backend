@@ -2,7 +2,6 @@
 
 namespace DatenImport\Domain;
 
-
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
