@@ -3,6 +3,7 @@
 namespace Tests\Unit\Cluster\Domain;
 
 use Cluster\Domain\Cluster;
+use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTypId;
@@ -23,8 +24,10 @@ class ClusterTest extends TestCase
     public function testCreateMitParent() {
         [$clusterId, $clusterTypId, $clusterTitel] = $this->createValueObjects();
         $parentId = ClusterId::fromInt(789);
+        $clusterCode = ClusterCode::fromString("F01");
 
-        $cluster = Cluster::create($clusterId, $clusterTypId, $clusterTitel, $parentId);
+        $cluster = Cluster::create($clusterId, $clusterTypId, $clusterTitel,
+                                   $parentId, $clusterCode);
         $this->assertTrue($cluster->getParentId()->equals($parentId));
     }
 

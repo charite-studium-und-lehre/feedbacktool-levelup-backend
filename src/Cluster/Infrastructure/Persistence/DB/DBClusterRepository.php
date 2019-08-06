@@ -3,6 +3,7 @@
 namespace Cluster\Infrastructure\Persistence\DB;
 
 use Cluster\Domain\Cluster;
+use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
@@ -23,6 +24,12 @@ final class DBClusterRepository implements ClusterRepository
 
     public function byId(ClusterId $clusterId): ?Cluster {
         return $this->abstractById($clusterId->getValue());
+    }
+
+    public function byCode(ClusterCode $clusterCode): ?Cluster {
+        return $this->doctrineRepo->findOneBy(
+            ["code" => $clusterCode]
+        );
     }
 
     public function nextIdentity(): ClusterId {
@@ -46,4 +53,6 @@ final class DBClusterRepository implements ClusterRepository
             ]
         );
     }
+
+
 }

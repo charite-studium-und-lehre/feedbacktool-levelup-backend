@@ -30,6 +30,8 @@ doctrine:
                 class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
             wertung:
                 class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
+            clusterCode:
+                class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
         mapping_types:
             aggregateId: integer
             aggregateString: string
@@ -37,6 +39,7 @@ doctrine:
             studiHash: string
             loginHash: string
             wertung: integer
+            clusterCode: string
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

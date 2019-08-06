@@ -18,6 +18,9 @@ class Cluster implements DDDEntity
     /** @var ClusterTitel */
     private $titel;
 
+    /** @var ?ClusterCode */
+    private $code;
+
     /** @var ClusterId */
     private $parentId;
 
@@ -25,13 +28,15 @@ class Cluster implements DDDEntity
         ClusterId $id,
         ClusterTypId $clusterTypId,
         ClusterTitel $titel,
-        ?ClusterId $parentId = NULL
+        ?ClusterId $parentId = NULL,
+        ?ClusterCode $clusterCode = NULL
     ): self {
         $object = new self();
         $object->id = $id;
         $object->titel = $titel;
         $object->clusterTypId = $clusterTypId;
         $object->parentId = $parentId;
+        $object->code = $clusterCode;
 
         return $object;
     }
@@ -40,17 +45,21 @@ class Cluster implements DDDEntity
         return ClusterId::fromInt($this->id->getValue());
     }
 
-    /** @return ClusterTypId */
     public function getClusterTypId(): ClusterTypId {
         return ClusterTypId::fromInt($this->clusterTypId);
     }
 
-    /** @return mixed */
-    public function getParentId() {
+    public function getParentId(): ?ClusterId {
         return ClusterId::fromInt($this->parentId);
     }
 
     public function getTitel(): ClusterTitel {
         return $this->titel;
     }
+
+    public function getCode(): ?ClusterCode {
+        return $this->code;
+    }
+
+
 }

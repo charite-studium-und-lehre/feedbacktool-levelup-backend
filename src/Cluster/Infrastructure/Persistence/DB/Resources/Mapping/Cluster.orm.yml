@@ -10,6 +10,10 @@ Cluster\Domain\Cluster:
     parentId:
       type: aggregateId
       nullable: true
+    code:
+      type: clusterCode
+      nullable: true
+
 
   embedded:
     clusterTypId:
