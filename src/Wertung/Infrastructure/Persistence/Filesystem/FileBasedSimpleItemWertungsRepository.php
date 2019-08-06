@@ -4,8 +4,6 @@ namespace Wertung\Infrastructure\Persistence\Filesystem;
 
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
-use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
-use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use StudiPruefung\Domain\StudiPruefungsId;
 use Wertung\Domain\ItemWertung;
@@ -38,6 +36,7 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
                 return $wertung;
             }
         }
+
         return NULL;
     }
 }

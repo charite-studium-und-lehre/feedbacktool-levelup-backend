@@ -7,8 +7,6 @@ use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
-use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
-use phpDocumentor\Reflection\Types\Parent_;
 use Pruefung\Domain\PruefungsItemId;
 
 final class FileBasedSimpleZuordnungsRepository extends AbstractCommonRepository implements ClusterZuordnungsRepository

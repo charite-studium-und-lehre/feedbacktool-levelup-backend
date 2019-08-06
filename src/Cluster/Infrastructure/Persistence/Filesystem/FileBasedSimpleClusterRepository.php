@@ -9,7 +9,6 @@ use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTypId;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
-use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
 
 /** @method Cluster[] all() */
 final class FileBasedSimpleClusterRepository extends AbstractCommonRepository implements ClusterRepository

@@ -6,7 +6,6 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleZuordnungsRepository;
-use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Tests\Integration\Common\DbRepoTestCase;
 

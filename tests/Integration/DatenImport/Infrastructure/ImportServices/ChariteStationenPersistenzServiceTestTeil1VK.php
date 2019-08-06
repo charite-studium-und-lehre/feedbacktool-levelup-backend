@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\DatenImport\Infrastructure;
+namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use DatenImport\Domain\ChariteStationenPruefungPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
@@ -26,7 +26,7 @@ use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
 
-class ChariteStationenPersistenzServiceTestTeil3 extends DbRepoTestCase
+class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
 {
     protected $dbRepoInterface = StudiInternRepository::class;
 
@@ -66,7 +66,7 @@ class ChariteStationenPersistenzServiceTestTeil3 extends DbRepoTestCase
 
         $csvImportService = new ChariteStationenErgebnisse_CSVImportService(
             [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil3SoSe2018HAUPT.csv",
+                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv",
                 AbstractCSVImportService::DELIMITER_OPTION => ",",
             ]
         );
@@ -83,19 +83,19 @@ class ChariteStationenPersistenzServiceTestTeil3 extends DbRepoTestCase
         $data = $csvImportService->getData();
         $service->persistierePruefung($data);
 
-        $this->assertCount(80, $studiPruefungsRepository->all());
+        $this->assertCount(13, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
                               ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
 
-        $this->assertCount(9, $pruefungsItemRepository->all());
+        $this->assertCount(12, $pruefungsItemRepository->all());
         $this->assertTrue($pruefungsItemRepository->all()[0]
                               ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
 
-        $this->assertCount(319, $itemWertungsRepository->all());
+        $this->assertCount(52, $itemWertungsRepository->all());
 
         $pruefungsItem1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString(193728)
+            PruefungsItemId::fromString(925197)
         );
         $this->assertNotNull($pruefungsItem1);
         $this->refreshEntities($pruefungsItem1);
@@ -103,16 +103,15 @@ class ChariteStationenPersistenzServiceTestTeil3 extends DbRepoTestCase
             ProzentSkala::create())
         );
         $this->assertEquals(
-            ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.15))
-                ->getRelativeWertung(),
+            ProzentWertung::fromProzentzahl(Prozentzahl::fromFloat(.9))->getRelativeWertung(),
             $pruefungsItem1->getWertung()->getRelativeWertung()
         );
         $pruefungsItem2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString(108047)
+            PruefungsItemId::fromString(631774)
         );
         $this->assertEquals(
-            ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.48875))->getRelativeWertung(),
+            ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.966666666666667))->getRelativeWertung(),
             $pruefungsItem2->getWertung()->getRelativeWertung()
         );
 
@@ -128,7 +127,7 @@ class ChariteStationenPersistenzServiceTestTeil3 extends DbRepoTestCase
             $studiInternRepo->delete($studiIntern);
             $studiInternRepo->flush();
         }
-        foreach (range(111111, 111286) as $matrikelnummer) {
+        foreach (range(111111, 111234) as $matrikelnummer) {
             $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
                 Matrikelnummer::fromInt($matrikelnummer),
                 StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed'

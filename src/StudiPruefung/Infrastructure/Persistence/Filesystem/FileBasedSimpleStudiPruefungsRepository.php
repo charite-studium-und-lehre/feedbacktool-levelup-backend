@@ -4,7 +4,6 @@ namespace StudiPruefung\Infrastructure\Persistence\Filesystem;
 
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
-use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
 use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiHash;
 use StudiPruefung\Domain\StudiPruefung;

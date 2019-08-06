@@ -1,0 +1,9 @@
+DatenImport\Domain\LernzielFach:
+  type: entity
+  table: importData_lernziel_fach
+
+  id:
+    lernzielNummer:
+      type: aggregateId
+    clusterId:
+      type: aggregateId

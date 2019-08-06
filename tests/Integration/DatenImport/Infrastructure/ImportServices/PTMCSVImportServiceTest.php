@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\Unit\DatenImport\Infrastructure;
+namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use DatenImport\Domain\CharitePTMPersistenzService;
+use DatenImport\Domain\FachCodeKonstanten;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use PHPUnit\Framework\TestCase;
@@ -43,7 +44,7 @@ class PTMCSVImportServiceTest extends TestCase
         $this->assertEquals(2,
                             $data['111116']
                             [CharitePTMCSVImportService::CLUSTER_FACH]
-                            [CharitePTMCSVImportService::FACH_KUERZEL['ana']]
+                            [FachCodeKonstanten::PTM_FACH_KUERZEL['ana']]
                             [CharitePTMPersistenzService::TYP_FALSCH]);
 
 

@@ -92,3 +92,10 @@ doctrine:
                 type:                 yml
                 dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
                 prefix:               "Wertung\\Domain"
+
+            DatenImport:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/DatenImport/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "DatenImport\\Domain"

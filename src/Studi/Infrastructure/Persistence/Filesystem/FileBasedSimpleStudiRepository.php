@@ -4,7 +4,6 @@ namespace Studi\Infrastructure\Persistence\Filesystem;
 
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
-use Lehrberechtigung\Infrastructure\Persistence\Common\AbstractSimpleLehrberechtigungRepository;
 use Studi\Domain\Studi;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;

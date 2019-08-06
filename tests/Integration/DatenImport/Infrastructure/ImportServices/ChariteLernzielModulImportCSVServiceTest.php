@@ -1,16 +1,12 @@
 <?php
 
-namespace Tests\Unit\DatenImport\Infrastructure;
+namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use Cluster\Domain\ClusterTitel;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
 use PHPUnit\Framework\TestCase;
-use Pruefung\Domain\PruefungsItemId;
-use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
-use Wertung\Domain\Wertung\Punktzahl;
 
 class ChariteLernzielModulImportCSVServiceTest extends TestCase
 {

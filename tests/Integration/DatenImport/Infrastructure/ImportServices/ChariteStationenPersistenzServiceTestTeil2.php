@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\DatenImport\Infrastructure;
+namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use DatenImport\Domain\ChariteStationenPruefungPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
