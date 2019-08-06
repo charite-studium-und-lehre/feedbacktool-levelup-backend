@@ -1,3 +1,7 @@
+controllers:
+  resource: ../../src/SSO/Infrastructure/Web/Controller
+  type: annotation
+
 #controllers:
 #    resource1: "../../src/Cluster/"
 #        type: annotation
