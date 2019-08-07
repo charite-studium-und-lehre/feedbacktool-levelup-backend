@@ -125,4 +125,17 @@ abstract class DbRepoTestCase extends KernelTestCase
 
     }
 
+    protected function clearRepos($repositories): void {
+        if (!is_array($repositories)) {
+            $repositories = [$repositories];
+        }
+        foreach ($repositories as $repo) {
+            /** @var DDDRepository $repo */
+            foreach ($repo->all() as $object) {
+                $repo->delete($object);
+            }
+        }
+        $repo->flush();
+    }
+
 }

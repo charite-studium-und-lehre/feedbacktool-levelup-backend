@@ -78,14 +78,4 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
 
     }
 
-    private function clearRepos($repositories): void {
-        foreach ($repositories as $repo) {
-            /** @var DDDRepository $repo */
-            foreach ($repo->all() as $object) {
-                $repo->delete($object);
-            }
-        }
-        $repo->flush();
-    }
-
 }

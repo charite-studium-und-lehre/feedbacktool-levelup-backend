@@ -12,7 +12,7 @@ final class DBLernzielFachRepository implements LernzielFachRepository
 {
     use DDDDoctrineRepoTrait;
 
-    public function getFachByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId {
+    public function getFachClusterIdByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId {
         $lernzielFach = $this->doctrineRepo->findOneBy(
             ["lernzielNummer" => $lernzielNummer]
         );
@@ -21,13 +21,13 @@ final class DBLernzielFachRepository implements LernzielFachRepository
     }
 
     public function addLernzielFach(\DatenImport\Domain\LernzielFach $lernzielFach): void {
-        if (!$this->getFachByLernzielNummer($lernzielFach->getLernzielNummer())) {
+        if (!$this->getFachClusterIdByLernzielNummer($lernzielFach->getLernzielNummer())) {
             $this->entityManager->persist($lernzielFach);
         }
     }
 
     public function delete(LernzielFach $lernzielFach): void {
-        if ($this->getFachByLernzielNummer($lernzielFach->getLernzielNummer())) {
+        if ($this->getFachClusterIdByLernzielNummer($lernzielFach->getLernzielNummer())) {
             $this->abstractDelete($lernzielFach);
         }
     }

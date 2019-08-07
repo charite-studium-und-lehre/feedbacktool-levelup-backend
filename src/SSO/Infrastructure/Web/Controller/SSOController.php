@@ -15,8 +15,8 @@ class SSOController extends AbstractController
         $oidc = new OpenIDConnectClient(
             'https://sso.charite.de/adfs',
 //                                        'https://sso.charite.de/adfs/discovery/keys'
-                                        '2a4a78f8-4586-45ec-b507-8e0abedd854d',
-//                                        'pah9naiV%i1quaeK0auN"aoQu8phah'
+                                        'b75841f5-0da8-40b3-ae71-5e4f6d1f2d81',
+                                        'Lsz9YToyXw7TGv7T2P0yiNXLThFrcUNW7PkX4wHq'
             );
         $oidc->providerConfigParam(
             [
@@ -27,7 +27,7 @@ class SSOController extends AbstractController
             ]
         );
         $oidc->setCertPath('/etc/ssl/certs');
-        $oidc->setRedirectURL("https://feedbacktool.charite.de/ssoSuccess/index.html");
+        $oidc->setRedirectURL("https://feedbacktool.charite.de/ssoSuccess/index.php");
         $oidc->authenticate();
         $name = $oidc->requestUserInfo('given_name');
 

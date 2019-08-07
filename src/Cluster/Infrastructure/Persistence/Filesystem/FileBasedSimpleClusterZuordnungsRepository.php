@@ -3,13 +3,14 @@
 namespace Cluster\Infrastructure\Persistence\Filesystem;
 
 use Cluster\Domain\ClusterId;
+use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Pruefung\Domain\PruefungsItemId;
 
-final class FileBasedSimpleZuordnungsRepository extends AbstractCommonRepository implements ClusterZuordnungsRepository
+final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRepository implements ClusterZuordnungsRepository
 {
     use FileBasedRepoTrait;
 
@@ -61,4 +62,6 @@ final class FileBasedSimpleZuordnungsRepository extends AbstractCommonRepository
 
         return NULL;
     }
+
+
 }

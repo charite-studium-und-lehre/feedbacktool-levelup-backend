@@ -5,7 +5,7 @@ namespace Tests\Integration\Cluster\Infrastructure\Persistence;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
-use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleZuordnungsRepository;
+use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterZuordnungsRepository;
 use Pruefung\Domain\PruefungsItemId;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -16,7 +16,7 @@ final class ClusterZuordnungsRepositoryTest extends DbRepoTestCase
     public function getAllRepositories() {
 
         return [
-            'file-based-service' => [FileBasedSimpleZuordnungsRepository::createTempFileRepo()],
+            'file-based-service' => [FileBasedSimpleClusterZuordnungsRepository::createTempFileRepo()],
             'db-service'         => [$this->dbRepo],
         ];
     }

@@ -12,7 +12,7 @@ interface LernzielFachRepository extends FlushableRepository
 
     public function addLernzielFach(LernzielFach $lernzielFach): void;
 
-    public function getFachByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId;
+    public function getFachClusterIdByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId;
 
     public function delete(LernzielFach $lernzielFach): void;
 }

@@ -18,10 +18,12 @@ interface ClusterRepository extends DDDRepository, FlushableRepository
 
     public function byCode(ClusterCode $clusterCode): ?Cluster;
 
-    public function byClusterTypIdUndTitel(ClusterTypId $clusterTypId, ClusterTitel $clusterTitel): ?Cluster;
+    public function byClusterTypUndTitel(ClusterTyp $clusterTyp, ClusterTitel $clusterTitel): ?Cluster;
+
+    public function byClusterTypUndCode(ClusterTyp $clusterTyp, ClusterCode $clusterCode): ?Cluster;
 
     /** @return Cluster[] */
-    public function allByClusterTypId(ClusterTypId $clusterTypId): array;
+    public function allByClusterTyp(ClusterTyp $clusterTyp): array;
 
     public function nextIdentity(): ClusterId;
 }

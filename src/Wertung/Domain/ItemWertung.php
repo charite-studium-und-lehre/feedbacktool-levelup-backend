@@ -56,4 +56,8 @@ class ItemWertung implements DDDEntity
         return StudiPruefungsId::fromInt($this->studiPruefungsId);
     }
 
+    public function setWertung(Wertung $wertung): void {
+        $this->wertung = $wertung;
+    }
+
 }

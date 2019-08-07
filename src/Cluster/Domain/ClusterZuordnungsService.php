@@ -27,7 +27,7 @@ class ClusterZuordnungsService
      */
     public function setzeZuordnungenFuerClusterTypId(
         PruefungsItemId $pruefungsItemId,
-        ClusterTypId $clusterTypId,
+        ClusterTyp $clusterTypId,
         array $clusterIdsZuzuordnen
     ) {
 
@@ -65,19 +65,19 @@ class ClusterZuordnungsService
     }
 
     /**
-     * @param ClusterTypId $clusterTypId
+     * @param ClusterTyp $clusterTypId
      * @param $vorhandeneClusterIds
      * @return ClusterId[]
      */
     public function getVorhandeneClusterIdsNachTyp(
         PruefungsItemId $pruefungsItemId,
-        ClusterTypId $clusterTypId
+        ClusterTyp $clusterTypId
     ): array {
         $vorhandeneClusterIds = $this->clusterZuordnungsRepository->alleClusterIdsVonPruefungsItem($pruefungsItemId);
         $gefilterteClusterIds = [];
         foreach ($vorhandeneClusterIds as $vorhandenerClusterId) {
             $cluster = $this->clusterRepository->byId($vorhandenerClusterId);
-            if ($cluster->getClusterTypId()->equals($clusterTypId)) {
+            if ($cluster->getClusterTyp()->equals($clusterTypId)) {
                 $gefilterteClusterIds[] = $vorhandenerClusterId;
             }
         }

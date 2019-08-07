@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
+use Cluster\Domain\ClusterTyp;
 use DatenImport\Domain\CharitePTMPersistenzService;
 use DatenImport\Domain\FachCodeKonstanten;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
@@ -31,19 +32,19 @@ class PTMCSVImportServiceTest extends TestCase
 
         $this->assertEquals(0,
                             $data['111111']
-                            [CharitePTMCSVImportService::CLUSTER_ORGANSYSTEM]
+                            [ClusterTyp::getOrgansystemTyp()->getConst()]
                             [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['akl']]
                             [CharitePTMPersistenzService::TYP_RICHTIG]);
 
         $this->assertEquals(19,
                             $data['111111']
-                            [CharitePTMCSVImportService::CLUSTER_ORGANSYSTEM]
+                            [ClusterTyp::getOrgansystemTyp()->getConst()]
                             [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['atm']]
                             [CharitePTMPersistenzService::TYP_WEISSNICHT]);
 
         $this->assertEquals(2,
                             $data['111116']
-                            [CharitePTMCSVImportService::CLUSTER_FACH]
+                            [ClusterTyp::getFachTyp()->getConst()]
                             [FachCodeKonstanten::PTM_FACH_KUERZEL['ana']]
                             [CharitePTMPersistenzService::TYP_FALSCH]);
 

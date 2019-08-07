@@ -2,15 +2,13 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
+use Cluster\Domain\ClusterTyp;
 use DatenImport\Domain\CharitePTMPersistenzService;
 use DatenImport\Domain\FachCodeKonstanten;
 
 class CharitePTMCSVImportService extends AbstractCSVImportService
 
 {
-    const CLUSTER_ORGANSYSTEM = 10;
-    const CLUSTER_FACH = 20;
-
     const ORGANSYSTEM_KUERZEL = [
         'hkl' => 'Herz- Kreislauf',
         'zel' => 'Genetik Zellmechanismen',
@@ -40,14 +38,14 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
                     continue;
                 }
 
-                $kuerzel = explode("_", $key)[0];
+                $kuerzel = trim(explode("_", $key)[0]);
 
                 if (array_key_exists($kuerzel, FachCodeKonstanten::PTM_FACH_KUERZEL)) {
-                    $clusterTyp = self::CLUSTER_FACH;
-                    $clusterName = FachCodeKonstanten::PTM_FACH_KUERZEL[$kuerzel];
+                    $clusterTyp = ClusterTyp::getFachTyp()->getConst();
+                    $ptmClusterKuerzel = $kuerzel;
                 } elseif (array_key_exists($kuerzel, self::ORGANSYSTEM_KUERZEL)) {
-                    $clusterTyp = self::CLUSTER_ORGANSYSTEM;
-                    $clusterName = self::ORGANSYSTEM_KUERZEL[$kuerzel];
+                    $clusterTyp = ClusterTyp::getOrgansystemTyp()->getConst();
+                    $ptmClusterKuerzel = self::ORGANSYSTEM_KUERZEL[$kuerzel];
                 } else {
                     continue;
                 }
@@ -58,7 +56,7 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
                                                CharitePTMPersistenzService::TYP_WEISSNICHT])) {
                     continue;
                 }
-                $data[$matrikelnummer][$clusterTyp][$clusterName][$bewertungsTyp] = $ergebnis;
+                $data[$matrikelnummer][$clusterTyp][$ptmClusterKuerzel][$bewertungsTyp] = $ergebnis;
             }
         }
 

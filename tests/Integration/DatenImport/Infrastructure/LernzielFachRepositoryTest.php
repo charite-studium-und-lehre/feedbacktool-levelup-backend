@@ -27,7 +27,7 @@ final class LernzielFachRepositoryTest extends DbRepoTestCase
      */
     public function anfangs_leer(LernzielFachRepository $lernzielFachRepository) {
         $this->assertEmpty($lernzielFachRepository->all());
-        $this->assertEmpty($lernzielFachRepository->getFachByLernzielNummer(LernzielNummer::fromInt(1)));
+        $this->assertEmpty($lernzielFachRepository->getFachClusterIdByLernzielNummer(LernzielNummer::fromInt(1)));
     }
 
     /**
@@ -42,7 +42,7 @@ final class LernzielFachRepositoryTest extends DbRepoTestCase
         $lernzielFachRepository->flush();
         $this->refreshEntities($lernzielFach);
 
-        $lernzielFach = $lernzielFachRepository->getFachByLernzielNummer(LernzielNummer::fromInt(123));
+        $lernzielFach = $lernzielFachRepository->getFachClusterIdByLernzielNummer(LernzielNummer::fromInt(123));
         $this->assertTrue($lernzielFach->equals(ClusterId::fromInt(456)));
     }
 

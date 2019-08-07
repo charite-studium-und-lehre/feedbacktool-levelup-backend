@@ -6,7 +6,7 @@ use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
-use Cluster\Domain\ClusterTypId;
+use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
 use Studi\Domain\StudiIntern;
 
@@ -34,8 +34,8 @@ class ChariteMCPruefungLernzielModulPersistenzService
             $zuzuordnen = [];
             if ($lernzielNummer) {
                 $fragenModul = $lzModulDaten[$lernzielNummer->getValue()];
-                $cluster = $this->clusterRepository->byClusterTypIdUndTitel(
-                    ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
+                $cluster = $this->clusterRepository->byClusterTypUndTitel(
+                    ClusterTyp::getModulTyp(),
                     $fragenModul
                 );
                 if (!$cluster) {
@@ -47,7 +47,7 @@ class ChariteMCPruefungLernzielModulPersistenzService
             }
             $this->clusterZuordnungsService->setzeZuordnungenFuerClusterTypId(
                 $pruefungsItemId,
-                ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
+                ClusterTyp::getModulTyp(),
                 $zuzuordnen
             );
         }
@@ -59,7 +59,7 @@ class ChariteMCPruefungLernzielModulPersistenzService
         $this->clusterRepository->add(
             Cluster::create(
                 $clusterId,
-                ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
+                ClusterTyp::getModulTyp(),
                 $fragenModul
             )
         );

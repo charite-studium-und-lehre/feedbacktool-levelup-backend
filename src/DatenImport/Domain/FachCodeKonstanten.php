@@ -35,6 +35,7 @@ class FachCodeKonstanten
         'Q01' => 'Epidemiologie, medizinische Biometrie und medizinische Informatik',
         'Q11' => 'Bildgebende Verfahren, Strahlenbehandlung',
         'Q12' => 'Rehabilitation, Physikalische Medizin, Naturheilverfahren',
+        'FÜ'  => 'Fachübergreifend',
     ];
 
     const MC_FACH_ZUSAMMENFASSUNG = [
@@ -54,6 +55,7 @@ class FachCodeKonstanten
         'Z03' => 'Q11',
         'Z04' => 'Q11',
         'T01' => 'F01',
+        'D1'  => 'S03',
     ];
     public const PTM_FACH_KUERZEL = [
         'alg' => 'Allgemeinmedizin',

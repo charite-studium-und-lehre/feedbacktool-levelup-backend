@@ -7,7 +7,7 @@ use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
-use Cluster\Domain\ClusterTypId;
+use Cluster\Domain\ClusterTyp;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 
@@ -34,9 +34,9 @@ final class FileBasedSimpleClusterRepository extends AbstractCommonRepository im
         return ClusterId::fromInt($this->abstractNextIdentity());
     }
 
-    public function byClusterTypIdUndTitel(ClusterTypId $clusterTypId, ClusterTitel $clusterTitel): ?Cluster {
+    public function byClusterTypUndTitel(ClusterTyp $clusterTyp, ClusterTitel $clusterTitel): ?Cluster {
         foreach ($this->all() as $cluster) {
-            if ($cluster->getClusterTypId()->equals($clusterTypId)
+            if ($cluster->getClusterTyp()->equals($clusterTyp)
                 && $cluster->getTitel()->equals($clusterTitel)) {
                 return $cluster;
             }
@@ -44,11 +44,21 @@ final class FileBasedSimpleClusterRepository extends AbstractCommonRepository im
         return NULL;
     }
 
+    public function byClusterTypUndCode(ClusterTyp $clusterTyp, ClusterCode $clusterCode): ?Cluster {
+        foreach ($this->all() as $cluster) {
+            if ($cluster->getClusterTyp()->equals($clusterTyp)
+                && $cluster->getCode() && $cluster->getCode()->equals($clusterCode)) {
+                return $cluster;
+            }
+        }
+        return NULL;
+    }
+
     /** @return Cluster[] */
-    public function allByClusterTypId(ClusterTypId $clusterTypId): array {
+    public function allByClusterTyp(ClusterTyp $clusterTyp): array {
         $returnArray = [];
         foreach ($this->all() as $cluster) {
-            if ($cluster->getClusterTypId()->equals($clusterTypId)) {
+            if ($cluster->getClusterTyp()->equals($clusterTyp)) {
                 $returnArray[] = $cluster;
             }
         }

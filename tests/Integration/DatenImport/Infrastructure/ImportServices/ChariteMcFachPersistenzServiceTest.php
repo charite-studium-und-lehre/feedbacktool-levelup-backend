@@ -7,12 +7,13 @@ use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Cluster\Domain\ClusterZuordnungsService;
 use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterRepository;
-use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
-use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleZuordnungsRepository;
-use Common\Domain\DDDRepository;
+use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterZuordnungsRepository;
+use DatenImport\Domain\ChariteFaecherAnlegenService;
 use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
+use DatenImport\Domain\LernzielFachRepository;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -26,10 +27,12 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
             'db-repos'         => [
                 $this->currentContainer->get(ClusterRepository::class),
                 $this->currentContainer->get(ClusterZuordnungsRepository::class),
+                $this->currentContainer->get(LernzielFachRepository::class),
             ],
             'file-based-repos' => [
                 FileBasedSimpleClusterRepository::createTempFileRepo(),
-                FileBasedSimpleZuordnungsRepository::createTempFileRepo(),
+                FileBasedSimpleClusterZuordnungsRepository::createTempFileRepo(),
+                FileBasedSimpleLernzielFachRepository::createTempFileRepo(),
             ],
         ];
     }
@@ -39,9 +42,12 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
      */
     public function testPersistierePruefung(
         ClusterRepository $clusterRepository,
-        ClusterZuordnungsRepository $clusterZuordnungsRepository
+        ClusterZuordnungsRepository $clusterZuordnungsRepository,
+        LernzielFachRepository $lernzielFachRepository
     ) {
         $this->clearRepos([$clusterRepository, $clusterZuordnungsRepository]);
+        (new ChariteFaecherAnlegenService($clusterRepository))->addAlleFaecherZuDB();
+        LernzielFachPersistenzServiceTest::createLernzielFaecher($clusterRepository, $lernzielFachRepository);
 
         $csvImportService = new ChariteMC_Ergebnisse_CSVImportService(
             [
@@ -57,33 +63,19 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
         $service = new ChariteMCPruefungFachPersistenzService(
             $clusterRepository,
             $zuordnungsService,
+            $lernzielFachRepository,
         );
 
         $data = $csvImportService->getData();
 
         $service->persistiereFachZuordnung($data);
 
-        $clusters = $clusterRepository->all();
-        $this->assertCount(40, $clusters);
-
-        $this->assertTrue($clusters[0]->getTitel()->equals(ClusterTitel::fromString("Kinderheilkunde")));
-
-        $this->assertCount(140, $clusterZuordnungsRepository->all());
+        $this->assertCount(11, $clusterZuordnungsRepository->all());
 
     }
 
     protected function clearDatabase(): void {
 
-    }
-
-    private function clearRepos($repositories): void {
-        foreach ($repositories as $repo) {
-            /** @var DDDRepository $repo */
-            foreach ($repo->all() as $object) {
-                $repo->delete($object);
-            }
-        }
-        $repo->flush();
     }
 
 }

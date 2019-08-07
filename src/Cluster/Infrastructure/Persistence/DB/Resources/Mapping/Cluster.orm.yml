@@ -16,9 +16,9 @@ Cluster\Domain\Cluster:
 
 
   embedded:
-    clusterTypId:
-      class: Common\Domain\AggregateId
-      columnPrefix: "clusterTyp_"
+    clusterTyp:
+      class: Cluster\Domain\ClusterTyp
+      columnPrefix: false
     titel:
       class: Cluster\Domain\ClusterTitel
       columnPrefix: false

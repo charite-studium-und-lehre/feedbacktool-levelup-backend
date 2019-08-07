@@ -3,7 +3,6 @@
 namespace Tests\Unit\Cluster\Domain;
 
 use Cluster\Domain\ClusterTyp;
-use Cluster\Domain\ClusterTypId;
 use Cluster\Domain\ClusterTypTitel;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +20,7 @@ class ClusterTypTest extends TestCase
     public function testCreateMitParent() {
         list($clusterTypId, $clusterTypTitel) = $this->createValueObjects();
 
-        $parentId = ClusterTypId::fromInt(789);
+        $parentId = ClusterTyp::fromInt(789);
 
         $clusterTyp = ClusterTyp::create($clusterTypId, $clusterTypTitel, $parentId);
         $this->assertTrue($clusterTyp->getParentId()->equals($parentId));
@@ -31,7 +30,7 @@ class ClusterTypTest extends TestCase
      * @return array
      */
     private function createValueObjects(): array {
-        $clusterTypId = ClusterTypId::fromInt(456);
+        $clusterTypId = ClusterTyp::fromInt(456);
         $clusterTypTitel = ClusterTypTitel::fromString("Fach nach Klinikbezug");
         return array($clusterTypId, $clusterTypTitel);
     }

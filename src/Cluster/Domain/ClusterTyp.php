@@ -2,41 +2,62 @@
 
 namespace Cluster\Domain;
 
-use Common\Domain\DDDEntity;
-use Common\Domain\DefaultEntityComparison;
+use Assert\Assertion;
+use Common\Domain\DDDValueObject;
+use Common\Domain\DefaultValueObjectComparison;
 
-class ClusterTyp implements DDDEntity
+class ClusterTyp implements DDDValueObject
 {
-    use DefaultEntityComparison;
+    use DefaultValueObjectComparison;
 
-    /** @var ClusterTypId */
-    private $id;
+    private const TYP_ID_FACH = 100;
+    private const TYP_ID_ORGANSYSTEM = 200;
+    private const TYP_ID_MODUL = 500;
 
-    /** @var ClusterTypTitel */
-    private $titel;
+    private const ALLE_KONSTANTEN = [
+        self::TYP_ID_FACH, self::TYP_ID_ORGANSYSTEM, self::TYP_ID_MODUL,
+    ];
 
-    /** @var ClusterTypId */
-    private $parentId;
+    const INVALID = "Der Clustertyp ist nicht bekannt: ";
 
-    public static function create(ClusterTypId $id, ClusterTypTitel $titel, ?ClusterTypId $parentId = NULL): self {
+    /** @var int */
+    private $const;
 
+    public static function fromConst(int $const): self {
+        Assertion::inArray($const, self::ALLE_KONSTANTEN, self::INVALID . $const);
         $object = new self();
-        $object->id = $id;
-        $object->titel = $titel;
-        $object->parentId = $parentId;
+        $object->const = $const;
 
         return $object;
     }
+    
 
-    public function getTitel(): ClusterTypTitel {
-        return $this->titel;
+    public static function getFachTyp(): ClusterTyp {
+        return self::fromConst(self::TYP_ID_FACH);
     }
 
-    public function getId(): ClusterTypId {
-        return $this->id;
+    public static function getOrgansystemTyp(): ClusterTyp {
+        return self::fromConst(self::TYP_ID_ORGANSYSTEM);
     }
 
-    public function getParentId(): ClusterTypId {
-        return $this->parentId;
+    public static function getModulTyp(): ClusterTyp {
+        return self::fromConst(self::TYP_ID_MODUL);
     }
+
+    public function getConst(): int {
+        return $this->const;
+    }
+
+    public function isFachTyp(): bool {
+        return $this->getConst() == self::TYP_ID_FACH;
+    }
+
+    public function isOrgansystemTyp(): bool {
+        return $this->getConst() == self::TYP_ID_ORGANSYSTEM;
+    }
+
+    public function isModulTyp(): bool {
+        return $this->getConst() == self::TYP_ID_MODUL();
+    }
+
 }

@@ -42,7 +42,7 @@ abstract class AbstractCSVImportService
                 continue;
             }
             if ($hasHeaders) {
-                $dataLineFixed = array_combine($headers, $dataLine);
+                $dataLineFixed = array_combine($headers, $dataLineFixed);
             }
 
             $dataAsArray[] = $dataLineFixed;

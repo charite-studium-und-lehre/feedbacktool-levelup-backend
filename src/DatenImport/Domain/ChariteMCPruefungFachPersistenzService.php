@@ -6,7 +6,7 @@ use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
-use Cluster\Domain\ClusterTypId;
+use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
 use Studi\Domain\StudiIntern;
 
@@ -18,54 +18,44 @@ class ChariteMCPruefungFachPersistenzService
     /** @var ClusterZuordnungsService */
     private $clusterZuordnungsService;
 
+    /** @var LernzielFachRepository */
+    private $lernzielFachRepository;
+
     public function __construct(
         ClusterRepository $clusterRepository,
-        ClusterZuordnungsService $clusterZuordnungsService
+        ClusterZuordnungsService $clusterZuordnungsService,
+        LernzielFachRepository $lernzielFachRepository
     ) {
         $this->clusterRepository = $clusterRepository;
         $this->clusterZuordnungsService = $clusterZuordnungsService;
+        $this->lernzielFachRepository = $lernzielFachRepository;
     }
 
     /** @param StudiIntern[] $studiInternArray */
     public function persistiereFachZuordnung($mcPruefungsDaten) {
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $fragenFach, $lernzielNummer]) {
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $lernzielNummer]) {
 
             $zuzuordnen = [];
 
-            if ($fragenFach) {
-                $cluster = $this->clusterRepository->byClusterTypIdUndTitel(
-                    ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
-                    $fragenFach
-                );
-                if (!$cluster) {
-                    $clusterId = $this->clusterHinzufuegen($fragenFach);
-                } else {
-                    $clusterId = $cluster->getId();
+            if ($lernzielNummer) {
+                $fachClusterId = $this->lernzielFachRepository
+                    ->getFachClusterIdByLernzielNummer(
+                        LernzielNummer::fromInt($lernzielNummer)
+                    );
+                if ($fachClusterId) {
+                    $fachCluster = $this->clusterRepository->byId($fachClusterId);
+                    $zuzuordnen = [$fachCluster->getId()];
                 }
-                $zuzuordnen = [$clusterId];
             }
             $this->clusterZuordnungsService->setzeZuordnungenFuerClusterTypId(
                 $pruefungsItemId,
-                ClusterTypId::fromInt(ClusterTypId::TYP_ID_FACH),
+                ClusterTyp::getFachTyp(),
                 $zuzuordnen
             );
         }
 
     }
 
-    private function clusterHinzufuegen(ClusterTitel $fragenFach): ClusterId {
-        $clusterId = $this->clusterRepository->nextIdentity();
-        $this->clusterRepository->add(
-            Cluster::create(
-                $clusterId,
-                ClusterTypId::fromInt(ClusterTypId::TYP_ID_MODUL),
-                $fragenFach
-            )
-        );
-        $this->clusterRepository->flush();
-
-        return $clusterId;
-    }
 
 }

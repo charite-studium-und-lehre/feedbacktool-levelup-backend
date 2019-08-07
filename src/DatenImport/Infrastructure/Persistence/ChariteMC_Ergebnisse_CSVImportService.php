@@ -31,17 +31,13 @@ class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService imp
             $pruefungsItemIdString = $this->pruefungsId->getValue() . "-" . $dataLine["FragenNr"];
 
             $pruefungsItemIdString = PruefungsItemId::fromString($pruefungsItemIdString);
-            $fachClusterTitel = $dataLine["LZFach"] ? ClusterTitel::fromString($dataLine["LZFach"]) : NULL;
-            $lzNummerClusterTitel = is_numeric($dataLine["LernzielNr"])
-                ? ClusterTitel::fromString($dataLine["LernzielNr"])
-                : NULL;
+            $lzNummer = is_numeric($dataLine["LernzielNr"]) ? $dataLine["LernzielNr"] : NULL;
 
             $data[] = [
                 $matrikelnummer,
                 $punktzahl,
                 $pruefungsItemIdString,
-                $fachClusterTitel,
-                $lzNummerClusterTitel,
+                $lzNummer,
             ];
         }
 

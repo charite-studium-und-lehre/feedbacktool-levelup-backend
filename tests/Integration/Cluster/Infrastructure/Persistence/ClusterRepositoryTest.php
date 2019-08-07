@@ -7,7 +7,7 @@ use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
-use Cluster\Domain\ClusterTypId;
+use Cluster\Domain\ClusterTyp;
 use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -30,20 +30,20 @@ final class ClusterRepositoryTest extends DbRepoTestCase
     public function kann_speichern_und_wiederholen(ClusterRepository $repo) {
         $cluster1 = Cluster::create(
             ClusterId::fromInt(5),
-            ClusterTypId::fromInt(25),
+            ClusterTyp::getFachTyp(),
             ClusterTitel::fromString("Anatomie"),
             NULL
         );
         $cluster2 = Cluster::create(
             ClusterId::fromInt(6),
-            ClusterTypId::fromInt(26),
+            ClusterTyp::getFachTyp(),
             ClusterTitel::fromString("Chemie"),
             $cluster1->getId(),
             ClusterCode::fromString("F01")
         );
         $cluster3 = Cluster::create(
             ClusterId::fromInt(7),
-            ClusterTypId::fromInt(27),
+            ClusterTyp::getFachTyp(),
             ClusterTitel::fromString("Allgemeinmedizin"),
             NULL,
             ClusterCode::fromString("F02")
@@ -58,7 +58,7 @@ final class ClusterRepositoryTest extends DbRepoTestCase
         $cluster2 = $repo->byId(ClusterId::fromInt(6));
         $this->assertEquals(ClusterTitel::fromString("Chemie"), $cluster2->getTitel());
         $this->assertEquals(ClusterId::fromInt(5), $cluster2->getParentId());
-        $this->assertEquals(ClusterTypId::fromInt(26), $cluster2->getClusterTypId());
+        $this->assertEquals(ClusterTyp::getFachTyp(), $cluster2->getClusterTyp());
         $this->assertEquals(ClusterCode::fromString("F02"), $cluster3->getCode());
 
     }
@@ -80,25 +80,39 @@ final class ClusterRepositoryTest extends DbRepoTestCase
     /**
      * @dataProvider getAllRepositories
      */
-    public function testAllByClusterTypId(ClusterRepository $repo) {
+    public function testAllByClusterTyp(ClusterRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
-        $clustersByTyp = $repo->allByClusterTypId(ClusterTypId::fromInt(26));
-        $this->assertCount(1, $clustersByTyp);
-        $this->assertTrue($clustersByTyp[0]->getId()->equals(ClusterId::fromInt(6)));
+        $clustersByTyp = $repo->allByClusterTyp(ClusterTyp::getFachTyp());
+        $this->assertCount(3, $clustersByTyp);
+        $this->assertTrue($clustersByTyp[0]->getId()->equals(ClusterId::fromInt(5)));
     }
 
     /**
      * @dataProvider getAllRepositories
      */
-    public function testByClusterTypIdUndTitel(ClusterRepository $repo) {
+    public function testByClusterTypUndTitel(ClusterRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
-        $cluster = $repo->byClusterTypIdUndTitel(
-            ClusterTypId::fromInt(26),
+        $cluster = $repo->byClusterTypUndTitel(
+            ClusterTyp::getFachTyp(),
             ClusterTitel::fromString("Chemie")
         );
         $this->assertNotNull($cluster);
         $this->assertTrue($cluster->getId()->equals(ClusterId::fromInt(6)));
     }
+
+    /**
+     * @dataProvider getAllRepositories
+     */
+    public function testByClusterTypUndCode(ClusterRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $cluster = $repo->byClusterTypUndCode(
+            ClusterTyp::getFachTyp(),
+            ClusterCode::fromString("F01")
+        );
+        $this->assertNotNull($cluster);
+        $this->assertTrue($cluster->getId()->equals(ClusterId::fromInt(6)));
+    }
+
 
     /**
      * @dataProvider getAllRepositories

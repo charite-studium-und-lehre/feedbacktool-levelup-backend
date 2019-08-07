@@ -140,13 +140,4 @@ class ChariteStationenPersistenzServiceTestTeil1Klinik extends DbRepoTestCase
 
     }
 
-    private function clearRepos($repositories): void {
-        foreach ($repositories as $repo) {
-            foreach ($repo->all() as $object) {
-                $repo->delete($object);
-            }
-        }
-        $repo->flush();
-    }
-
 }

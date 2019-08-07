@@ -13,7 +13,7 @@ final class FileBasedSimpleLernzielFachRepository extends AbstractCommonReposito
 {
     use FileBasedRepoTrait;
 
-    public function getFachByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId {
+    public function getFachClusterIdByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId {
         foreach ($this->all() as $lernzielFach) {
             /** @var $lernzielFach LernzielFach */
             if ($lernzielFach->getLernzielNummer()->equals($lernzielNummer)) {
@@ -25,13 +25,13 @@ final class FileBasedSimpleLernzielFachRepository extends AbstractCommonReposito
     }
 
     public function addLernzielFach(LernzielFach $lernzielFach): void {
-        if (!$this->getFachByLernzielNummer($lernzielFach->getLernzielNummer())) {
+        if (!$this->getFachClusterIdByLernzielNummer($lernzielFach->getLernzielNummer())) {
             $this->add($lernzielFach);
         }
     }
 
     public function delete($lernzielFach): void {
-        if ($this->getFachByLernzielNummer($lernzielFach->getLernzielNummer())) {
+        if ($this->getFachClusterIdByLernzielNummer($lernzielFach->getLernzielNummer())) {
             parent::delete($lernzielFach);
         }
     }

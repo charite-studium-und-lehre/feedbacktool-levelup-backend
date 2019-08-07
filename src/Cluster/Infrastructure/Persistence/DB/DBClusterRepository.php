@@ -7,7 +7,7 @@ use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
-use Cluster\Domain\ClusterTypId;
+use Cluster\Domain\ClusterTyp;
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 
 final class DBClusterRepository implements ClusterRepository
@@ -36,23 +36,34 @@ final class DBClusterRepository implements ClusterRepository
         return ClusterId::fromInt($this->abstractNextIdentityAsInt());
     }
 
-    public function byClusterTypIdUndTitel(ClusterTypId $clusterTypId, ClusterTitel $clusterTitel): ?Cluster {
+    public function byClusterTypUndTitel(ClusterTyp $clusterTyp, ClusterTitel $clusterTitel): ?Cluster {
         return $this->doctrineRepo->findOneBy(
             [
-                "clusterTypId.id" => $clusterTypId->getValue(),
+                "clusterTyp.const" => $clusterTyp->getConst(),
                 "titel.value" => $clusterTitel->getValue(),
             ]
         );
     }
 
-    /** @return Cluster[] */
-    public function allByClusterTypId(ClusterTypId $clusterTypId): array {
-        return $this->doctrineRepo->findBy(
+    public function byClusterTypUndCode(ClusterTyp $clusterTyp, ClusterCode $clusterCode): ?Cluster {
+        return $this->doctrineRepo->findOneBy(
             [
-                "clusterTypId.id" => $clusterTypId->getValue(),
+                "clusterTyp.const" => $clusterTyp->getConst(),
+                "code" => $clusterCode,
             ]
         );
     }
+
+    /** @return Cluster[] */
+    public function allByClusterTyp(ClusterTyp $clusterTyp): array {
+        return $this->doctrineRepo->findBy(
+            [
+                "clusterTyp.const" => $clusterTyp->getConst(),
+            ]
+        );
+    }
+
+
 
 
 }

@@ -6,7 +6,7 @@ use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterTitel;
-use Cluster\Domain\ClusterTypId;
+use Cluster\Domain\ClusterTyp;
 use PHPUnit\Framework\TestCase;
 
 class ClusterTest extends TestCase
@@ -17,7 +17,7 @@ class ClusterTest extends TestCase
         $cluster = Cluster::create($clusterId, $clusterTypId, $clusterTitel);
 
         $this->assertTrue($cluster->getId()->equals($clusterId));
-        $this->assertTrue($cluster->getClusterTypId()->equals($clusterTypId));
+        $this->assertTrue($cluster->getClusterTyp()->equals($clusterTypId));
         $this->assertTrue($cluster->getTitel()->equals($clusterTitel));
     }
 
@@ -36,7 +36,7 @@ class ClusterTest extends TestCase
      */
     private function createValueObjects(): array {
         $clusterId = ClusterId::fromInt(123);
-        $clusterTypId = ClusterTypId::fromInt(456);
+        $clusterTypId = ClusterTyp::fromConst(456);
         $clusterTitel = ClusterTitel::fromString("Klinische Fächer");
         return array($clusterId, $clusterTypId, $clusterTitel);
     }
