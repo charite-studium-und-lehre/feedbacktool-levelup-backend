@@ -127,26 +127,6 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
 
     }
 
-    private function createTestStudis(StudiInternRepository $studiInternRepo): void {
 
-        foreach ($studiInternRepo->all() as $studiIntern) {
-            $studiInternRepo->delete($studiIntern);
-            $studiInternRepo->flush();
-        }
-        $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-            Matrikelnummer::fromInt("222222"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E')
-        ));
-        $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-            Matrikelnummer::fromInt("444444"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$LkhXWG5HRS9hWm1kWWx0VA$qSA8yS4/Zdsm0zeWajL3uw3188zkk/HCPZic0KlweCs')
-        ));
-        $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-            Matrikelnummer::fromInt("555555"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$anh4WFZZc3VDdExCdEMzdg$Zfy1+698erxOxiqG0RhUqiZ7uHt59nrR9llJMlsJXOY')
-        ));
-        $studiInternRepo->flush();
-
-    }
 
 }

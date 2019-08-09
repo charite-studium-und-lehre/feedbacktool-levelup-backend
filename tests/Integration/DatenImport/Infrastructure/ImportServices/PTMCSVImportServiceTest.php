@@ -28,16 +28,16 @@ class PTMCSVImportServiceTest extends TestCase
 
         $this->assertEquals(111119, array_keys($data)[8]);
 
-        $this->assertEquals(111111, array_keys($data)[0]);
+        $this->assertEquals(222222, array_keys($data)[0]);
 
         $this->assertEquals(0,
-                            $data['111111']
+                            $data['222222']
                             [ClusterTyp::getOrgansystemTyp()->getConst()]
                             [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['akl']]
                             [CharitePTMPersistenzService::TYP_RICHTIG]);
 
         $this->assertEquals(19,
-                            $data['111111']
+                            $data['222222']
                             [ClusterTyp::getOrgansystemTyp()->getConst()]
                             [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['atm']]
                             [CharitePTMPersistenzService::TYP_WEISSNICHT]);
@@ -45,7 +45,7 @@ class PTMCSVImportServiceTest extends TestCase
         $this->assertEquals(2,
                             $data['111116']
                             [ClusterTyp::getFachTyp()->getConst()]
-                            [FachCodeKonstanten::PTM_FACH_KUERZEL['ana']]
+                            ['ana']
                             [CharitePTMPersistenzService::TYP_FALSCH]);
 
 

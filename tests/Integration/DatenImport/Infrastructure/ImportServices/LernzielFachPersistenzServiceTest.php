@@ -77,13 +77,13 @@ class LernzielFachPersistenzServiceTest extends DbRepoTestCase
         $data = self::createLernzielFaecher($clusterRepository, $lernzielFachRepository);
 
         $lernzielFaecher = $lernzielFachRepository->all();
-        $this->assertCount(341, $lernzielFaecher);
+        $this->assertCount(349, $lernzielFaecher);
         $cluster = $clusterRepository->byId($lernzielFaecher[0]->getClusterId());
         $this->assertTrue($cluster->getCode()->equals(ClusterCode::fromString("S02")));
 
         $lernzielFaecher = $lernzielFachRepository->all();
         $service->persistiereLernzielFaecher($data);
-        $this->assertCount(341, $lernzielFaecher);
+        $this->assertCount(349, $lernzielFaecher);
     }
 
     protected function clearDatabase(): void {

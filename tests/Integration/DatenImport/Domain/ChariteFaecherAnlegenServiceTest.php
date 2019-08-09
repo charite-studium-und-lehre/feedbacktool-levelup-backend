@@ -28,7 +28,7 @@ class ChariteFaecherAnlegenServiceTest extends DbRepoTestCase
         $fachImportService->addAlleFaecherZuDB();
         $alleFaecher = $clusterRepository->all();
 
-        $this->assertCount(28, $alleFaecher);
+        $this->assertCount(29, $alleFaecher);
 
     }
 

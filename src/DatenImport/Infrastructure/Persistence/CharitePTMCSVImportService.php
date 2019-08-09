@@ -29,6 +29,7 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
     public function getData(): array {
         $data = [];
 
+        $this->getCSVDataAsArray();
         foreach ($this->getCSVDataAsArray() as $dataLine) {
 
             $matrikelnummer = $dataLine["matnr"];

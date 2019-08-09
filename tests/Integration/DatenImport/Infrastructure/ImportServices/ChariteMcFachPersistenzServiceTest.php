@@ -24,15 +24,15 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
     public function getNeededRepos() {
 
         return [
-            'db-repos'         => [
-                $this->currentContainer->get(ClusterRepository::class),
-                $this->currentContainer->get(ClusterZuordnungsRepository::class),
-                $this->currentContainer->get(LernzielFachRepository::class),
-            ],
             'file-based-repos' => [
                 FileBasedSimpleClusterRepository::createTempFileRepo(),
                 FileBasedSimpleClusterZuordnungsRepository::createTempFileRepo(),
                 FileBasedSimpleLernzielFachRepository::createTempFileRepo(),
+            ],
+            'db-repos'         => [
+                $this->currentContainer->get(ClusterRepository::class),
+                $this->currentContainer->get(ClusterZuordnungsRepository::class),
+                $this->currentContainer->get(LernzielFachRepository::class),
             ],
         ];
     }

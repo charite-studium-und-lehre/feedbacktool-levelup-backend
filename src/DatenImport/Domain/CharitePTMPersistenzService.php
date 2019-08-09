@@ -2,6 +2,7 @@
 
 namespace DatenImport\Domain;
 
+use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnung;
@@ -11,7 +12,7 @@ use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
-use Studi\Domain\StudiIntern;
+use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
@@ -69,6 +70,7 @@ class CharitePTMPersistenzService
         $this->clusterRepository = $clusterRepository;
         $this->clusterZuordnungsRepository = $clusterZuordnungsRepository;
     }
+
     public function persistierePruefung($ptmPruefungsDaten) {
         foreach ($ptmPruefungsDaten as $matrikelnummer => $studiErgebnis) {
             foreach ($studiErgebnis as $clusterTypValue => $clusterTypErgebnis) {
@@ -78,7 +80,7 @@ class CharitePTMPersistenzService
                     $this->createFachClusterZuordnung($clusterTypValue, $clusterPTMCode);
 
                     // evtl. in Zukunft auch Organsysteme
-                    //                    $this->createOrgansystemClusterZuordnung($clusterTypValue, $clusterPTMCode);
+                    //   $this->createOrgansystemClusterZuordnung($clusterTypValue, $clusterPTMCode);
                 }
             }
         }
@@ -90,7 +92,12 @@ class CharitePTMPersistenzService
     }
 
     private function createOrUpdateWertung($matrikelnummer, $clusterTyp, $clusterPTMCode, $bewertungsTyp): void {
-        $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+        $studiIntern = $this->studiInternRepository->byMatrikelnummer(
+            Matrikelnummer::fromInt($matrikelnummer)
+        );
+        if (!$studiIntern) {
+            return;
+        }
         $studiHash = $studiIntern->getStudiHash();
         $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
             $studiHash,
@@ -106,7 +113,7 @@ class CharitePTMPersistenzService
             $this->studiPruefungsRepository->flush();
         }
 
-        $pruefungsItemId = $this->getPruefungsItemId($clusterTyp, $clusterPTMCode);
+        $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode);
 
         $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
         if (!$pruefungsItem) {
@@ -144,8 +151,8 @@ class CharitePTMPersistenzService
         }
     }
 
-    private function getPruefungsItemId($clusterTyp, $clusterPTMCode): PruefungsItemId {
-        $pruefungsItemIdInt = base_convert(substr(md5($clusterTyp . "-" . $clusterPTMCode), 0, 5), 16, 10);
+    private function getPruefungsItemId($clusterPTMCode): PruefungsItemId {
+        $pruefungsItemIdInt = $this->pruefungsId->getValue() . "-" . $clusterPTMCode;
         $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdInt);
 
         return $pruefungsItemId;
@@ -166,13 +173,16 @@ class CharitePTMPersistenzService
 
             return;
         }
-        $fachCluster = $this->clusterRepository->byClusterTypUndCode($clusterTyp, $fachCode);
+        $fachCluster = $this->clusterRepository->byClusterTypUndCode(
+            $clusterTyp,
+            ClusterCode::fromString($fachCode)
+        );
         if (!$fachCluster) {
             echo "PTM: Fach für Code nicht gefunden: '$fachCode'";
 
             return;
         }
-        $pruefungsItemId = $this->getPruefungsItemId($clusterTyp, $clusterPTMCode);
+        $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode);
         $alleClusterIds = $this->clusterZuordnungsRepository->alleClusterIdsVonPruefungsItem($pruefungsItemId);
         $found = FALSE;
         foreach ($alleClusterIds as $clusterId) {

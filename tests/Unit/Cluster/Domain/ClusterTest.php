@@ -36,7 +36,7 @@ class ClusterTest extends TestCase
      */
     private function createValueObjects(): array {
         $clusterId = ClusterId::fromInt(123);
-        $clusterTypId = ClusterTyp::fromConst(456);
+        $clusterTypId = ClusterTyp::getFachTyp();
         $clusterTitel = ClusterTitel::fromString("Klinische Fächer");
         return array($clusterId, $clusterTypId, $clusterTitel);
     }

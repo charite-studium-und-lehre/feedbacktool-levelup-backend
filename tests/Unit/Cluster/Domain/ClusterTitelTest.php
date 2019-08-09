@@ -11,7 +11,7 @@ class ClusterTitelTest extends TestCase
 {
     public function testFromValues() {
 
-        $object = ClusterTypTitel::fromString("Fach");
+        $object = ClusterTitel::fromString("Fach");
 
         $this->assertEquals($object->getValue(), "Fach");
     }

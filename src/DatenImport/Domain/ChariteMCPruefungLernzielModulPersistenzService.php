@@ -29,11 +29,11 @@ class ChariteMCPruefungLernzielModulPersistenzService
     /** @param StudiIntern[] $studiInternArray */
     public function persistiereMcModulZuordnung($mcPruefungsDaten, $lzModulDaten) {
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $fragenFach, $lernzielNummer]) {
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $lernzielNummer]) {
 
             $zuzuordnen = [];
             if ($lernzielNummer) {
-                $fragenModul = $lzModulDaten[$lernzielNummer->getValue()];
+                $fragenModul = $lzModulDaten[$lernzielNummer];
                 $cluster = $this->clusterRepository->byClusterTypUndTitel(
                     ClusterTyp::getModulTyp(),
                     $fragenModul
