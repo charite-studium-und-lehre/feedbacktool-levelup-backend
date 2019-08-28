@@ -10,6 +10,7 @@ use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
 use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -54,7 +55,8 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
         );
 
         $lzModulData = $lzModulImportService->getLernzielZuModulData();
-        $mcData = $csvMcImportService->getData();
+        $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
+        $mcData = $csvMcImportService->getData($pruefungsId);
 
         $zuordnungsService = new ClusterZuordnungsService(
             $clusterZuordnungsRepository,

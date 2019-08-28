@@ -64,11 +64,11 @@ abstract class AbstractCSVImportService
     }
 
     protected function getInputFile(): string {
-        $inputFile = $this->options[self::INPUTFILE_OPTION];
-        if (!$inputFile) {
+
+        if (!isset($this->options[self::INPUTFILE_OPTION])) {
             throw new \Exception("inputFile must be given");
         }
-        return $inputFile;
+        return $this->options[self::INPUTFILE_OPTION];
     }
 
     private function getDelimiterOption() : string {

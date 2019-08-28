@@ -14,6 +14,7 @@ use DatenImport\Domain\LernzielFachRepository;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
+use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -66,7 +67,8 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
             $lernzielFachRepository,
         );
 
-        $data = $csvImportService->getData();
+        $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
+        $data = $csvImportService->getData($pruefungsId);
 
         $service->persistiereFachZuordnung($data);
 

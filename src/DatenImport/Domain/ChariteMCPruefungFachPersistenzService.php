@@ -2,10 +2,7 @@
 
 namespace DatenImport\Domain;
 
-use Cluster\Domain\Cluster;
-use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
-use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
 use Studi\Domain\StudiIntern;
@@ -55,6 +52,5 @@ class ChariteMCPruefungFachPersistenzService
             );
         }
     }
-
 
 }

@@ -3,6 +3,7 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\McPruefungsdatenImportService;
+use Pruefung\Domain\PruefungsId;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
@@ -22,7 +23,7 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
         parent::__construct($options);
     }
 
-    public function getData(): array {
+    public function getData(?PruefungsId $pruefungsId = NULL): array {
         $data = [];
 
         foreach ($this->getCSVDataAsArray() as $dataLine) {

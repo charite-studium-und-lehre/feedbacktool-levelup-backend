@@ -18,9 +18,6 @@ use Wertung\Domain\Wertung\Punktzahl;
 
 class ChariteMCPruefungWertungPersistenzService
 {
-    /** @var PruefungsId */
-    private $pruefungsId;
-
     /** @var PruefungsRepository */
     private $pruefungsRepository;
 
@@ -37,14 +34,12 @@ class ChariteMCPruefungWertungPersistenzService
     private $studiInternRepository;
 
     public function __construct(
-        PruefungsId $pruefungsId,
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         StudiInternRepository $studiInternRepository
     ) {
-        $this->pruefungsId = $pruefungsId;
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
@@ -53,7 +48,7 @@ class ChariteMCPruefungWertungPersistenzService
     }
 
     /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung($mcPruefungsDaten) {
+    public function persistierePruefung($mcPruefungsDaten, PruefungsId $pruefungsId) {
 
         foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
 
@@ -61,13 +56,13 @@ class ChariteMCPruefungWertungPersistenzService
             $studiHash = $studiIntern->getStudiHash();
             $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
                 $studiHash,
-                $this->pruefungsId,
+                $pruefungsId,
                 );
             if (!$studiPruefung) {
                 $studiPruefung = StudiPruefung::fromValues(
                     $this->studiPruefungsRepository->nextIdentity(),
                     $studiHash,
-                    $this->pruefungsId
+                    $pruefungsId
                 );
                 $this->studiPruefungsRepository->add($studiPruefung);
                 $this->studiPruefungsRepository->flush();
@@ -77,7 +72,7 @@ class ChariteMCPruefungWertungPersistenzService
             if (!$pruefungsItem) {
                 $pruefungsItem = PruefungsItem::create(
                     $pruefungsItemId,
-                    $this->pruefungsId
+                    $pruefungsId
                 );
                 $this->pruefungsItemRepository->add($pruefungsItem);
 

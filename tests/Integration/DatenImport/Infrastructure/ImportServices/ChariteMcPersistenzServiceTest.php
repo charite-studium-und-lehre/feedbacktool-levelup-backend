@@ -5,6 +5,7 @@ namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
@@ -71,10 +72,9 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
             ]
         );
 
-        $pruefungsId = $csvImportService->getPruefungsId();
+        $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
 
         $service = new ChariteMCPruefungWertungPersistenzService(
-            $pruefungsId,
             $pruefungsRepository,
             $studiPruefungsRepository,
             $pruefungsItemRepository,
@@ -83,8 +83,8 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
         );
 
 
-        $data = $csvImportService->getData();
-        $service->persistierePruefung($data);
+        $data = $csvImportService->getData($pruefungsId);
+        $service->persistierePruefung($data, $pruefungsId);
 
         $this->assertCount(3, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
@@ -98,7 +98,7 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
 
         $itemWertung1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString("MC-WiSe2018-1-3")
+            PruefungsItemId::fromString("MC-WiSe2018-3")
         );
         $this->assertNotNull($itemWertung1);
         $this->refreshEntities($itemWertung1);
@@ -113,7 +113,7 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
 
         $itemWertung2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString("MC-WiSe2018-1-1")
+            PruefungsItemId::fromString("MC-WiSe2018-1")
         );
         $this->assertTrue($itemWertung2->getWertung()->equals(
             PunktWertung::fromPunktzahlUndSkala(

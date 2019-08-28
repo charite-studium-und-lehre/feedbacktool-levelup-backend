@@ -2,7 +2,9 @@
 
 namespace DatenImport\Domain;
 
+use Pruefung\Domain\PruefungsId;
+
 interface McPruefungsdatenImportService
 {
-    public function getData(): array;
+    public function getData(?PruefungsId $pruefungsId = NULL): array;
 }
