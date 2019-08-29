@@ -4,8 +4,6 @@ namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use Cluster\Domain\ClusterTyp;
 use DatenImport\Domain\CharitePTMPersistenzService;
-use DatenImport\Domain\FachCodeKonstanten;
-use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use PHPUnit\Framework\TestCase;
 
@@ -14,15 +12,12 @@ class PTMCSVImportServiceTest extends TestCase
 
     public function testGetCSVDataMatrikelNr() {
 
-        $service = new CharitePTMCSVImportService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION =>
-                    __DIR__ . "/TESTEinzeldaten Berlin PT38(gesamt).csv",
-                AbstractCSVImportService::HAS_HEADERS_OPTION => TRUE
-            ]
+        $service = new CharitePTMCSVImportService();
 
+        $data = $service->getData(
+            __DIR__ . "/TESTEinzeldaten Berlin PT38(gesamt).csv",
+            ";"
         );
-        $data = $service->getData();
 
         $this->assertCount(9, $data);
 
@@ -47,8 +42,6 @@ class PTMCSVImportServiceTest extends TestCase
                             [ClusterTyp::getFachTyp()->getConst()]
                             ['ana']
                             [CharitePTMPersistenzService::TYP_FALSCH]);
-
-
 
     }
 }

@@ -13,25 +13,18 @@ class StudiStammdatenPersistenzService
     /** @var StudiInternRepository */
     private $studiInternRepository;
 
-    /** @var StudiStammdatenImportService */
-    private $studiStammdatenImportService;
-
     /** @var StudiHashCreator */
     private $studiHashCreator;
 
     public function __construct(
         StudiInternRepository $studiInternRepository,
-        StudiStammdatenImportService $studiStammdatenImportService,
         StudiHashCreator $studiHashCreator
     ) {
         $this->studiInternRepository = $studiInternRepository;
-        $this->studiStammdatenImportService = $studiStammdatenImportService;
         $this->studiHashCreator = $studiHashCreator;
     }
 
-    public function persistiereStudiListe() {
-
-        $studiDataObjectsToImport = $this->studiStammdatenImportService->getStudiData();
+    public function persistiereStudiListe($studiDataObjectsToImport) {
 
         $this->loescheObsoleteStudis($studiDataObjectsToImport);
 
@@ -89,7 +82,7 @@ class StudiStammdatenPersistenzService
         $this->studiInternRepository->flush();
     }
 
-    private function addStudiFromStudiData(StudiData $studiDataObject) : void {
+    private function addStudiFromStudiData(StudiData $studiDataObject): void {
         $studiHash = $this->studiHashCreator->createStudiHash($studiDataObject);
         $studiInternNeu = StudiIntern::fromMatrikelUndStudiHash(
             $studiDataObject->getMatrikelnummer(),

@@ -160,6 +160,16 @@ abstract class DbRepoTestCase extends KernelTestCase
             Matrikelnummer::fromInt("555555"),
             StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$anh4WFZZc3VDdExCdEMzdg$Zfy1+698erxOxiqG0RhUqiZ7uHt59nrR9llJMlsJXOY')
         ));
+
+        foreach (range(111111, 111234) as $matrikelnummer) {
+            $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
+                Matrikelnummer::fromInt($matrikelnummer),
+                StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed'
+                                      . $matrikelnummer)
+            ));
+
+        }
+
         $studiInternRepo->flush();
 
     }

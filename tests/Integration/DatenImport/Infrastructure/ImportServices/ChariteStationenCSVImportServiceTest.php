@@ -12,14 +12,11 @@ class ChariteStationenCSVImportServiceTest extends TestCase
 
     public function testTeil1Klinik() {
 
-        $csvImportService =
-            new ChariteStationenErgebnisse_CSVImportService(
-                [
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1KLINIKSoSe2018.csv",
-                    AbstractCSVImportService::DELIMITER_OPTION => ",",
-                ]
-            );
-        $data = $csvImportService->getData();
+        $csvImportService = new ChariteStationenErgebnisse_CSVImportService();
+        $data = $csvImportService->getData(
+            __DIR__ . "/TEST_Teil1KLINIKSoSe2018.csv",
+            ","
+        );
 
         $this->assertCount(32, $data);
 
@@ -44,13 +41,11 @@ class ChariteStationenCSVImportServiceTest extends TestCase
 
     public function testTeil1VorKlinik() {
         $csvImportService =
-            new ChariteStationenErgebnisse_CSVImportService(
-                [
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv",
-                    AbstractCSVImportService::DELIMITER_OPTION => ",",
-                ]
-            );
-        $data = $csvImportService->getData();
+            new ChariteStationenErgebnisse_CSVImportService();
+        $data = $csvImportService->getData(
+            __DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv",
+            ","
+        );
 
         $this->assertCount(26, $data);
 
@@ -67,14 +62,11 @@ class ChariteStationenCSVImportServiceTest extends TestCase
     }
 
     public function testTeil2() {
-        $csvImportService =
-            new ChariteStationenErgebnisse_CSVImportService(
-                [
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil2SoSe2018HAUPT.csv",
-                    AbstractCSVImportService::DELIMITER_OPTION => ",",
-                ]
-            );
-        $data = $csvImportService->getData();
+        $csvImportService = new ChariteStationenErgebnisse_CSVImportService();
+        $data = $csvImportService->getData(
+            __DIR__ . "/TEST_Teil2SoSe2018HAUPT.csv",
+            ","
+        );
 
         $this->assertCount(20, $data);
 
@@ -91,14 +83,11 @@ class ChariteStationenCSVImportServiceTest extends TestCase
     }
 
     public function testTeil3() {
-        $csvImportService =
-            new ChariteStationenErgebnisse_CSVImportService(
-                [
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil3SoSe2018HAUPT.csv",
-                    AbstractCSVImportService::DELIMITER_OPTION => ",",
-                ]
-            );
-        $data = $csvImportService->getData();
+        $csvImportService = new ChariteStationenErgebnisse_CSVImportService();
+        $data = $csvImportService->getData(
+            __DIR__ . "/TEST_Teil3SoSe2018HAUPT.csv",
+            ","
+        );
 
         $this->assertCount(80, $data);
 

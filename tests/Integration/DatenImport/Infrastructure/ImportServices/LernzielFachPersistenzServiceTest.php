@@ -7,7 +7,6 @@ use Cluster\Domain\ClusterRepository;
 use DatenImport\Domain\ChariteFaecherAnlegenService;
 use DatenImport\Domain\ChariteLernzielFachPersistenzService;
 use DatenImport\Domain\LernzielFachRepository;
-use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielFachEinleseCSVService;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
@@ -25,19 +24,18 @@ class LernzielFachPersistenzServiceTest extends DbRepoTestCase
         ClusterRepository $clusterRepository,
         LernzielFachRepository $lernzielFachRepository
     ): array {
-        $csvImportService = new ChariteLernzielFachEinleseCSVService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/LEVELUP-Lernziel-Fach.csv",
-                AbstractCSVImportService::FROM_ENCODING_OPTION => "ISO-8859-15",
-                AbstractCSVImportService::DELIMITER_OPTION => ";",
-            ]
-        );
+        $csvImportService = new ChariteLernzielFachEinleseCSVService();
         $service = new ChariteLernzielFachPersistenzService(
             $lernzielFachRepository,
             $clusterRepository
         );
 
-        $data = $csvImportService->getData();
+        $data = $csvImportService->getData(
+            __DIR__ . "/LEVELUP-Lernziel-Fach.csv",
+            ";",
+            TRUE,
+            "ISO-8859-15"
+        );
 
         $service->persistiereLernzielFaecher($data);
 

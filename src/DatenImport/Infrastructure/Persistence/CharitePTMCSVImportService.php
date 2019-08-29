@@ -26,11 +26,16 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
         'nha' => 'Niere Harnwege',
     ];
 
-    public function getData(): array {
+    public function getData(
+        string $inputFile,
+        string $delimiter = ",",
+        bool $hasHeaders = TRUE,
+        string $fromEncoding = AbstractCSVImportService::OUT_ENCODING
+    ): array {
         $data = [];
 
-        $this->getCSVDataAsArray();
-        foreach ($this->getCSVDataAsArray() as $dataLine) {
+        foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
+            as $dataLine) {
 
             $matrikelnummer = $dataLine["matnr"];
             foreach ($dataLine as $key => $ergebnis) {

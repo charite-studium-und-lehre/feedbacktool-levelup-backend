@@ -17,16 +17,13 @@ class StudiStammdatenCSVImportServiceTest extends TestCase
 
     public function testGetCSVData() {
 
-        $csvImportService =
-            new ChariteStudiStammdatenHIS_CSVImportService(
-                [
-                    AbstractCSVImportService::FROM_ENCODING_OPTION => "ISO-8859-15",
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TestFileStudisStammdaten.csv",
-                    AbstractCSVImportService::DELIMITER_OPTION => ";",
-                    AbstractCSVImportService::DELIMITER_OPTION => ";",
-                ]
-            );
-        $studiDataObjects = $csvImportService->getStudiData();
+        $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService();
+        $studiDataObjects = $csvImportService->getStudiData(
+            __DIR__ . "/TestFileStudisStammdaten.csv",
+            ";",
+            FALSE,
+            "ISO-8859-15"
+        );
         $this->assertCount(16, $studiDataObjects);
 
         $this->assertTrue($studiDataObjects[0]->equals(

@@ -11,10 +11,7 @@ use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
 use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsItemRepository;
 use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
-use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
-use Studi\Domain\StudiHash;
-use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
@@ -65,12 +62,7 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
                            $pruefungsItemRepository, $itemWertungsRepository, $studiInternRepository]);
         $this->createTestStudis($studiInternRepository);
 
-        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => $filename,
-                AbstractCSVImportService::DELIMITER_OPTION => ",",
-            ]
-        );
+        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService();
 
         $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
 
@@ -82,8 +74,14 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
             $studiInternRepository
         );
 
+        $data = $csvImportService->getData(
+            $filename,
+            ",",
+            TRUE,
+            AbstractCSVImportService::OUT_ENCODING,
+            $pruefungsId
+        );
 
-        $data = $csvImportService->getData($pruefungsId);
         $service->persistierePruefung($data, $pruefungsId);
 
         $this->assertCount(3, $studiPruefungsRepository->all());
@@ -126,7 +124,5 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
     protected function clearDatabase(): void {
 
     }
-
-
 
 }

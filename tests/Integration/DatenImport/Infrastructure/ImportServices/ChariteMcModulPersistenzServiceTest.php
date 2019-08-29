@@ -5,7 +5,8 @@ namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Cluster\Domain\ClusterZuordnungsService;
-use Common\Domain\DDDRepository;
+use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterRepository;
+use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterZuordnungsRepository;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
@@ -25,10 +26,10 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
                 $this->currentContainer->get(ClusterRepository::class),
                 $this->currentContainer->get(ClusterZuordnungsRepository::class),
             ],
-//            'file-based-repos' => [
-//                FileBasedSimpleClusterRepository::createTempFileRepo(),
-//                FileBasedSimpleZuordnungsRepository::createTempFileRepo(),
-//            ],
+            'file-based-repos' => [
+                FileBasedSimpleClusterRepository::createTempFileRepo(),
+                FileBasedSimpleClusterZuordnungsRepository::createTempFileRepo(),
+            ],
         ];
     }
 
@@ -41,22 +42,20 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
     ) {
         $this->clearRepos([$clusterRepository, $clusterZuordnungsRepository]);
 
-        $csvMcImportService = new ChariteMC_Ergebnisse_CSVImportService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",
-                AbstractCSVImportService::DELIMITER_OPTION => ",",
-            ]
-        );
-        $lzModulImportService = new ChariteLernzielModulImportCSVService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/Lernziel-Module.csv",
-                AbstractCSVImportService::DELIMITER_OPTION => ";",
-            ]
-        );
+        $csvMcImportService = new ChariteMC_Ergebnisse_CSVImportService();
+        $lzModulImportService = new ChariteLernzielModulImportCSVService();
 
-        $lzModulData = $lzModulImportService->getLernzielZuModulData();
+        $lzModulData = $lzModulImportService->getLernzielZuModulData(
+            __DIR__ . "/Lernziel-Module.csv", ";", TRUE
+        );
         $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
-        $mcData = $csvMcImportService->getData($pruefungsId);
+        $mcData = $csvMcImportService->getData(
+            __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",
+            ",",
+            TRUE,
+            AbstractCSVImportService::OUT_ENCODING,
+            $pruefungsId
+        );
 
         $zuordnungsService = new ClusterZuordnungsService(
             $clusterZuordnungsRepository,
@@ -65,7 +64,7 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
         $service = new ChariteMCPruefungLernzielModulPersistenzService(
             $clusterRepository,
             $zuordnungsService,
-            );
+        );
 
         $service->persistiereMcModulZuordnung($mcData, $lzModulData);
 

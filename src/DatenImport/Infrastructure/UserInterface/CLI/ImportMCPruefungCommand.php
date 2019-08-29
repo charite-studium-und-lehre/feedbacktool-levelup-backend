@@ -6,6 +6,7 @@ use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use Pruefung\Domain\PruefungsId;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,6 +24,14 @@ class ImportMCPruefungCommand extends Command
         ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz
     ) {
 
+    }
+
+    private function computeFileNameToPruefungsId(string $filename): PruefungsId {
+        $filename = basename($filename);
+        $semester = substr(explode("_", $filename)[1], 0, 8);
+        $durchlauf = substr(explode("_", $filename)[2], 0, 1);
+
+        return PruefungsId::fromString("MC-$semester-$durchlauf");
     }
 
     protected function configure() {

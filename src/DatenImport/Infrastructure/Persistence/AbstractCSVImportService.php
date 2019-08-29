@@ -4,13 +4,8 @@ namespace DatenImport\Infrastructure\Persistence;
 
 abstract class AbstractCSVImportService
 {
-    const INPUTFILE_OPTION = "INPUTFILE";
-    const FROM_ENCODING_OPTION = "FROM_ENCODING";
-    const DELIMITER_OPTION = "DELIMITER";
-    const HAS_HEADERS_OPTION = "HAS_HEADERS";
-
-    const OUT_ENCODING="UTF-8";
-    const DEFAULT_DELIMITER=";";
+    const OUT_ENCODING = "UTF-8";
+    const DEFAULT_DELIMITER = ";";
 
     /** @var array */
     private $options;
@@ -19,13 +14,15 @@ abstract class AbstractCSVImportService
         $this->options = $options;
     }
 
-    protected function getCSVDataAsArray(): array {
-        $inputFile = $this->getInputFile();
+    protected function getCSVDataAsArray(
+        string $inputFile,
+        string $delimiter = self::DEFAULT_DELIMITER,
+        bool $hasHeaders = TRUE,
+        $fromEncoding = self::OUT_ENCODING
+    ): array {
         $handle = fopen($inputFile, "r");
 
         $dataAsArray = [];
-        $delimiter = $this->getDelimiterOption();
-        $hasHeaders = $this->hasHeaders();
         $headers = [];
         $counter = 0;
 
@@ -33,7 +30,7 @@ abstract class AbstractCSVImportService
             $counter++;
             $dataLineFixed = [];
             foreach ($dataLine as $dataCell) {
-                $dataCell = $this->fixEncoding($dataCell);
+                $dataCell = $this->fixEncoding($dataCell, $fromEncoding);
                 $dataCell = $this->trimDataCell($dataCell);
                 $dataLineFixed[] = $dataCell;
             }
@@ -52,37 +49,16 @@ abstract class AbstractCSVImportService
         return $dataAsArray;
     }
 
-    protected function fixEncoding($string) {
-        if (!empty($this->options[self::FROM_ENCODING_OPTION])) {
-            return iconv($this->options[self::FROM_ENCODING_OPTION], self::OUT_ENCODING, $string);
+    protected function fixEncoding($string, $fromEncoding, $toEncoding = self::OUT_ENCODING) {
+        if ($fromEncoding != $toEncoding) {
+            return iconv($fromEncoding, $toEncoding, $string);
         }
+
         return $string;
     }
 
     protected function trimDataCell($string) {
         return trim($string);
-    }
-
-    protected function getInputFile(): string {
-
-        if (!isset($this->options[self::INPUTFILE_OPTION])) {
-            throw new \Exception("inputFile must be given");
-        }
-        return $this->options[self::INPUTFILE_OPTION];
-    }
-
-    private function getDelimiterOption() : string {
-        if (!empty($this->options[self::DELIMITER_OPTION])) {
-            return $this->options[self::DELIMITER_OPTION];
-        }
-        return self::DEFAULT_DELIMITER;
-    }
-
-    private function hasHeaders() : bool {
-        if (!empty($this->options[self::HAS_HEADERS_OPTION])) {
-            return $this->options[self::HAS_HEADERS_OPTION];
-        }
-        return FALSE;
     }
 
 }

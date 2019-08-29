@@ -31,36 +31,36 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
     /**
      * @dataProvider getAllRepositories
      */
-    public function testImportStudiInternPersistenz(StudiInternRepository $repository) {
+    public function testImportStudiInternPersistenz(StudiInternRepository $studiInternRepository) {
 
         $studiHashCreator = new StudiHashCreator_Argon2I();
-        $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService(
-            [
-                AbstractCSVImportService::FROM_ENCODING_OPTION => "ISO-8859-15",
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TestFileStudisStammdaten.csv",
-            ]
-        );
+        $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService();
 
         $studiStammdatenPersistenzService = new StudiStammdatenPersistenzService(
-            $repository,
-            $csvImportService,
+            $studiInternRepository,
             $studiHashCreator
         );
 
-        foreach ($repository->all() as $object) {
-            $repository->delete($object);
+        foreach ($studiInternRepository->all() as $object) {
+            $studiInternRepository->delete($object);
         }
-        $repository->flush();
+        $studiInternRepository->flush();
 
-        $this->assertCount(0, $repository->all());
+        $this->assertCount(0, $studiInternRepository->all());
 
-        $studiStammdatenPersistenzService->persistiereStudiListe();
+        $studiObjects = $csvImportService->getStudiData(
+            __DIR__ . "/TestFileStudisStammdaten.csv",
+            ";",
+            FALSE,
+            "ISO-8859-15"
+        );
+        $studiStammdatenPersistenzService->persistiereStudiListe($studiObjects);
 
-        $this->assertCount(16, $repository->all());
+        $this->assertCount(16, $studiInternRepository->all());
 
         $this->assertTrue(
             $studiHashCreator->isCorrectStudiHash(
-                $repository->byMatrikelnummer(Matrikelnummer::fromInt(221231))
+                $studiInternRepository->byMatrikelnummer(Matrikelnummer::fromInt(221231))
                     ->getStudiHash(),
                 StudiData::fromValues(
                     Matrikelnummer::fromInt(221231),

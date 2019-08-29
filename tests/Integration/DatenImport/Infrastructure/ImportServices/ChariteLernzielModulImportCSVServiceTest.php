@@ -3,7 +3,6 @@
 namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use Cluster\Domain\ClusterTitel;
-use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
 use PHPUnit\Framework\TestCase;
 use Studi\Domain\MatrikelnummerMitStudiHash;
@@ -12,15 +11,10 @@ class ChariteLernzielModulImportCSVServiceTest extends TestCase
 {
 
     public function testGetCSVData() {
-
-        $csvImportService =
-            new ChariteLernzielModulImportCSVService(
-                [
-                    AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/Lernziel-Module.csv",
-                    AbstractCSVImportService::DELIMITER_OPTION => ";",
-                ]
-            );
-        $lzModulData = $csvImportService->getLernzielZuModulData();
+        $csvImportService = new ChariteLernzielModulImportCSVService();
+        $lzModulData = $csvImportService->getLernzielZuModulData(
+            __DIR__ . "/Lernziel-Module.csv", ";", TRUE
+        );
 
         $this->assertCount(4847, $lzModulData);
 

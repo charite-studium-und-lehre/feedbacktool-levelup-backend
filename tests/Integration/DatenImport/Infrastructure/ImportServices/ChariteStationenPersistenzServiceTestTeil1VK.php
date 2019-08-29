@@ -64,12 +64,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
                            $pruefungsItemRepository, $itemWertungsRepository, $studiInternRepository]);
         $this->createTestStudis($studiInternRepository);
 
-        $csvImportService = new ChariteStationenErgebnisse_CSVImportService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv",
-                AbstractCSVImportService::DELIMITER_OPTION => ",",
-            ]
-        );
+        $csvImportService = new ChariteStationenErgebnisse_CSVImportService();
 
         $service = new ChariteStationenPruefungPersistenzService(
             PruefungsId::fromString(1234),
@@ -80,7 +75,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
             $studiInternRepository
         );
 
-        $data = $csvImportService->getData();
+        $data = $csvImportService->getData(__DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv");
         $service->persistierePruefung($data);
 
         $this->assertCount(13, $studiPruefungsRepository->all());
@@ -121,22 +116,6 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
 
     }
 
-    private function createTestStudis(StudiInternRepository $studiInternRepo): void {
 
-        foreach ($studiInternRepo->all() as $studiIntern) {
-            $studiInternRepo->delete($studiIntern);
-            $studiInternRepo->flush();
-        }
-        foreach (range(111111, 111234) as $matrikelnummer) {
-            $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
-                Matrikelnummer::fromInt($matrikelnummer),
-                StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed'
-                                      . $matrikelnummer)
-            ));
-
-        }
-        $studiInternRepo->flush();
-
-    }
 
 }

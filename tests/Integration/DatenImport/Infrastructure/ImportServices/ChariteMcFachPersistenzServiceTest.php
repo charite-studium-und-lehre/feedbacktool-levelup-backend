@@ -3,7 +3,6 @@
 namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use Cluster\Domain\ClusterRepository;
-use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Cluster\Domain\ClusterZuordnungsService;
 use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterRepository;
@@ -50,12 +49,7 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
         (new ChariteFaecherAnlegenService($clusterRepository))->addAlleFaecherZuDB();
         LernzielFachPersistenzServiceTest::createLernzielFaecher($clusterRepository, $lernzielFachRepository);
 
-        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",
-                AbstractCSVImportService::DELIMITER_OPTION => ",",
-            ]
-        );
+        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService();
         $zuordnungsService = new ClusterZuordnungsService(
             $clusterZuordnungsRepository,
             $clusterRepository
@@ -68,7 +62,13 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
         );
 
         $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
-        $data = $csvImportService->getData($pruefungsId);
+        $data = $csvImportService->getData(
+            __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",
+            ",",
+            TRUE,
+            AbstractCSVImportService::OUT_ENCODING,
+            $pruefungsId
+        );
 
         $service->persistiereFachZuordnung($data);
 

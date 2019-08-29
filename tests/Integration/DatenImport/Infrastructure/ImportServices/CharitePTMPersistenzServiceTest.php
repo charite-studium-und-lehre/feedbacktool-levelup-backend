@@ -9,7 +9,6 @@ use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterZuordnun
 use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
 use DatenImport\Domain\ChariteFaecherAnlegenService;
 use DatenImport\Domain\CharitePTMPersistenzService;
-use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemRepository;
@@ -71,13 +70,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         (new ChariteFaecherAnlegenService($clusterRepository))->addAlleFaecherZuDB();
         $this->createTestStudis($studiInternRepository);
 
-        $csvImportService = new CharitePTMCSVImportService(
-            [
-                AbstractCSVImportService::INPUTFILE_OPTION => __DIR__ . "/TESTEinzeldaten Berlin PT38(gesamt).csv",
-                AbstractCSVImportService::DELIMITER_OPTION => ";",
-                AbstractCSVImportService::HAS_HEADERS_OPTION => TRUE,
-            ]
-        );
+        $csvImportService = new CharitePTMCSVImportService();
 
         $pruefungsId = PruefungsId::fromString("PT38");
 
@@ -92,18 +85,20 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
             $clusterZuordnungsRepository
         );
 
-        $data = $csvImportService->getData();
+        $data = $csvImportService->getData(
+            __DIR__ . "/TESTEinzeldaten Berlin PT38(gesamt).csv",
+            ";"
+        );
 
         $service->persistierePruefung($data);
 
-//        $clusters = $clusterRepository->all();
-//        $this->assertCount(40, $clusters);
-//
-//        $this->assertTrue($clusters[0]->getTitel()->equals(ClusterTitel::fromString("Kinderheilkunde")));
-//
+        //        $clusters = $clusterRepository->all();
+        //        $this->assertCount(40, $clusters);
+        //
+        //        $this->assertTrue($clusters[0]->getTitel()->equals(ClusterTitel::fromString("Kinderheilkunde")));
+        //
         $this->assertCount(41, $pruefungsItemRepository->all());
         $this->assertCount(27, $clusterZuordnungsRepository->all());
-
 
     }
 

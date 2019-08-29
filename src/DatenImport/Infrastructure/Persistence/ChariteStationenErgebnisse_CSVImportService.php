@@ -3,30 +3,21 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\McPruefungsdatenImportService;
-use Pruefung\Domain\PruefungsId;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
 class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportService implements McPruefungsdatenImportService
 {
-    const ITEM_ID_PREFIX_OPTION = "ITEM_ID_PREFIX";
-    const ITEM_ID_PREFIX_DEFAULT = "";
-
-    private $itemIdPrefix;
-
-    public function __construct($options = []) {
-        $options[AbstractCSVImportService::HAS_HEADERS_OPTION] = TRUE;
-        $this->itemIdPrefix = !empty($options[self::ITEM_ID_PREFIX_OPTION])
-            ? $options[self::ITEM_ID_PREFIX_OPTION]
-            : self::ITEM_ID_PREFIX_DEFAULT;
-
-        parent::__construct($options);
-    }
-
-    public function getData(?PruefungsId $pruefungsId = NULL): array {
+    public function getData(
+        string $inputFile,
+        string $delimiter = ",",
+        bool $hasHeaders = TRUE,
+        string $fromEncoding = AbstractCSVImportService::OUT_ENCODING
+    ): array {
         $data = [];
 
-        foreach ($this->getCSVDataAsArray() as $dataLine) {
+        foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
+            as $dataLine) {
 
             $ergebnisse = [];
             foreach ($dataLine as $key => $dataCell) {

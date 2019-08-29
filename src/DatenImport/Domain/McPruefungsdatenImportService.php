@@ -2,9 +2,14 @@
 
 namespace DatenImport\Domain;
 
-use Pruefung\Domain\PruefungsId;
+use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 
 interface McPruefungsdatenImportService
 {
-    public function getData(?PruefungsId $pruefungsId = NULL): array;
+    public function getData(
+        string $inputFile,
+        string $delimiter = ",",
+        bool $hasHeaders = TRUE,
+        string $fromEncoding = AbstractCSVImportService::OUT_ENCODING
+    ): array;
 }
