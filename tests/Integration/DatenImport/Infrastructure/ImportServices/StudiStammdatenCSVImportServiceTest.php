@@ -14,7 +14,6 @@ use Studi\Domain\Vorname;
 
 class StudiStammdatenCSVImportServiceTest extends TestCase
 {
-
     public function testGetCSVData() {
 
         $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService();

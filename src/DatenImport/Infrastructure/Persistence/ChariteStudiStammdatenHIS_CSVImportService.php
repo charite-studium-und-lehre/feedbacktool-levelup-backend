@@ -24,10 +24,10 @@ class ChariteStudiStammdatenHIS_CSVImportService extends AbstractCSVImportServic
 
         foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
             as $dataLine) {
-            $matrikelnummer = Matrikelnummer::fromInt($dataLine[0]);
-            $vorname = Vorname::fromString($dataLine[1]);
-            $nachname = Nachname::fromString($dataLine[2]);
-            $geburtsdatum = Geburtsdatum::fromStringDeutschMinus($dataLine[3]);
+            $matrikelnummer = Matrikelnummer::fromInt($dataLine["mtknr"]);
+            $vorname = Vorname::fromString($dataLine["vorname"]);
+            $nachname = Nachname::fromString($dataLine["nachname"]);
+            $geburtsdatum = Geburtsdatum::fromStringDeutschMinus($dataLine["gebdat"]);
 
             $studiDataObjects[] = StudiData::fromValues(
                 $matrikelnummer,

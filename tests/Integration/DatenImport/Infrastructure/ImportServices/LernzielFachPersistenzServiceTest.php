@@ -4,10 +4,12 @@ namespace tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterRepository;
+use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterRepository;
 use DatenImport\Domain\ChariteFaecherAnlegenService;
 use DatenImport\Domain\ChariteLernzielFachPersistenzService;
 use DatenImport\Domain\LernzielFachRepository;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielFachEinleseCSVService;
+use DatenImport\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -45,14 +47,14 @@ class LernzielFachPersistenzServiceTest extends DbRepoTestCase
     public function getNeededRepos() {
 
         return [
-            'db-repos' => [
+            'db-repos'         => [
                 $this->currentContainer->get(ClusterRepository::class),
                 $this->currentContainer->get(LernzielFachRepository::class),
             ],
-            //            'file-based-repos' => [
-            //                FileBasedSimpleClusterRepository::createTempFileRepo(),
-            //                FileBasedSimpleLernzielFachRepository::createTempFileRepo(),
-            //            ],
+            'file-based-repos' => [
+                FileBasedSimpleClusterRepository::createTempFileRepo(),
+                FileBasedSimpleLernzielFachRepository::createTempFileRepo(),
+            ],
         ];
     }
 

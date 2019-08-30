@@ -22,7 +22,11 @@ class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService imp
 
         foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
             as $dataLine) {
-            $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikel"]);
+            $matrikelnummer = is_numeric($dataLine["matrikel"])
+                ? Matrikelnummer::fromInt($dataLine["matrikel"]) : NULL;
+            if (!$matrikelnummer) {
+                continue;
+            }
             $punktzahl = Punktzahl::fromFloat(max(0, $dataLine["richtig"]));
 
             $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $dataLine["FragenNr"];
