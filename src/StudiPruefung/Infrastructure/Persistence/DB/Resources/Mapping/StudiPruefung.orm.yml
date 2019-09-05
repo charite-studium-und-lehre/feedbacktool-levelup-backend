@@ -14,3 +14,11 @@ StudiPruefung\Domain\StudiPruefung:
     pruefungsId:
       class: Common\Domain\AggregateIdString
       columnPrefix: "pruefungs_"
+
+  indexes:
+    pruefungs_id:
+      columns:
+        pruefungs_id
+    studiHash:
+      columns:
+        studiHash

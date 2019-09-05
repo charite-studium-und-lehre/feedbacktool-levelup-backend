@@ -2,14 +2,14 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
-use DatenImport\Domain\McPruefungsdatenImportService;
+use DatenImport\Domain\PruefungsdatenImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Wertung\Domain\Wertung\Punktzahl;
 
-class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService implements McPruefungsdatenImportService
+class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService implements PruefungsdatenImportService
 {
     public function getData(
         string $inputFile,
@@ -23,7 +23,7 @@ class ChariteMC_Ergebnisse_CSVImportService extends AbstractCSVImportService imp
         foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
             as $dataLine) {
             $matrikelnummer = is_numeric($dataLine["matrikel"])
-                ? Matrikelnummer::fromInt($dataLine["matrikel"]) : NULL;
+                ? Matrikelnummer::fromInt((int) $dataLine["matrikel"]) : NULL;
             if (!$matrikelnummer) {
                 continue;
             }

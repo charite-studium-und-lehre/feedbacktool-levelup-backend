@@ -23,7 +23,7 @@ class ChariteLernzielFachPersistenzService
     public function persistiereLernzielFaecher(array $lernzielFaecher) {
 
         $alleFaecherNachCode = $this->alleFaecherNachCode();
-        $alleLernzielFaecherNachLernzielNummer = $this->allerLernzielFaecherNachLernzielNummer();
+        $alleLernzielFaecherNachLernzielNummer = $this->alleLernzielFaecherNachLernzielNummer();
 
         foreach ($lernzielFaecher as $lernzielNummer => $fachCode) {
             $fachCode = trim($fachCode);
@@ -36,7 +36,7 @@ class ChariteLernzielFachPersistenzService
             $existierendesLernzielFach = isset($alleLernzielFaecherNachLernzielNummer[$lernzielNummer])
                 ? $alleLernzielFaecherNachLernzielNummer[$lernzielNummer] : NULL;
             if ($existierendesLernzielFach) {
-                if ($existierendesLernzielFach->getClusterId()->equals($alleFaecherNachCode[$fachCode])) {
+                if ($existierendesLernzielFach->getClusterId()->equals($alleFaecherNachCode[$fachCode]->getId())) {
                     continue;
                 }
                 $this->lernzielFachRepository->delete($existierendesLernzielFach);
@@ -46,6 +46,7 @@ class ChariteLernzielFachPersistenzService
                 LernzielNummer::fromInt($lernzielNummer),
                 $fachIstCluster->getId()
             );
+            echo "+";
             $this->lernzielFachRepository->addLernzielFach($neuesLernztielFach);
         }
         $this->lernzielFachRepository->flush();
@@ -63,7 +64,7 @@ class ChariteLernzielFachPersistenzService
     }
 
     /** @return LernzielFach[] */
-    private function allerLernzielFaecherNachLernzielNummer(): array {
+    private function alleLernzielFaecherNachLernzielNummer(): array {
         $faecherNachLernzielNummer = [];
         $alleLernzielFaecher = $this->lernzielFachRepository->all();
         foreach ($alleLernzielFaecher as $lernzielFach) {

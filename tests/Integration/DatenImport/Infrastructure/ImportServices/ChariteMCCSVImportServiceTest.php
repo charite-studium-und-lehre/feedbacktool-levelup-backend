@@ -3,7 +3,7 @@
 namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use PHPUnit\Framework\TestCase;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
@@ -15,7 +15,7 @@ class ChariteMCCSVImportServiceTest extends TestCase
 {
     public function testGetCSVData() {
 
-        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService();
+        $csvImportService = new Charite_Ergebnisse_CSVImportService();
         $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
         $mcData = $csvImportService->getData(
             __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",

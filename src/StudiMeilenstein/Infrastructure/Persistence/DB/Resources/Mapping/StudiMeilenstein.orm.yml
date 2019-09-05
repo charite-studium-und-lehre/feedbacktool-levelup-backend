@@ -1,0 +1,22 @@
+StudiMeilenstein\Domain\StudiMeilenstein:
+  type: entity
+  table: studi_meilenstein
+
+  id:
+    id:
+      type: aggregateId
+      generatedValue:
+        type: AUTO
+
+  fields:
+    studiHash:
+      type: studiHash
+
+  embedded:
+    meilenstein:
+      class: Meilenstein
+      columnPrefix: false
+
+  uniqueConstraints:
+    studiMeilenstein:
+      columns: studiHash, meilenstein

@@ -1,0 +1,6 @@
+StudiMeilenstein\Domain\Meilenstein:
+    type: embeddable
+    fields:
+        code:
+          type: smallint
+          column: meilenstein

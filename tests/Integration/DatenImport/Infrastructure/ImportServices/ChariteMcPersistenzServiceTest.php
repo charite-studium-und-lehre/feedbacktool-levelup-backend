@@ -4,7 +4,7 @@ namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
@@ -15,7 +15,7 @@ use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
-use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\PunktSkala;
@@ -32,7 +32,7 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
         return [
             'file-based-repos' => [
                 FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
@@ -62,7 +62,7 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
                            $pruefungsItemRepository, $itemWertungsRepository, $studiInternRepository]);
         $this->createTestStudis($studiInternRepository);
 
-        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService();
+        $csvImportService = new Charite_Ergebnisse_CSVImportService();
 
         $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
 

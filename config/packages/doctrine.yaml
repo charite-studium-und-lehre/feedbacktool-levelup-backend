@@ -89,6 +89,13 @@ doctrine:
                 dir:                  "%kernel.project_dir%/src/StudiPruefung/Infrastructure/Persistence/DB/Resources/Mapping"
                 prefix:               "StudiPruefung\\Domain"
 
+            StudiMeilenstein:
+                is_bundle:            false
+                mapping:              true
+                type:                 yml
+                dir:                  "%kernel.project_dir%/src/StudiMeilenstein/Infrastructure/Persistence/DB/Resources/Mapping"
+                prefix:               "StudiMeilenstein\\Domain"
+
             Wertung:
                 is_bundle:            false
                 mapping:              true

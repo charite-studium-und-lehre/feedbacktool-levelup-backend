@@ -10,7 +10,7 @@ use Cluster\Infrastructure\Persistence\Filesystem\FileBasedSimpleClusterZuordnun
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
@@ -42,7 +42,7 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
     ) {
         $this->clearRepos([$clusterRepository, $clusterZuordnungsRepository]);
 
-        $csvMcImportService = new ChariteMC_Ergebnisse_CSVImportService();
+        $csvMcImportService = new Charite_Ergebnisse_CSVImportService();
         $lzModulImportService = new ChariteLernzielModulImportCSVService();
 
         $lzModulData = $lzModulImportService->getLernzielZuModulData(

@@ -21,8 +21,8 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
         $this->abstractAdd($pruefung);
     }
 
-    public function byId(StudiPruefungsId $pruefungsId): ?StudiPruefung {
-        return $this->abstractById($pruefungsId->getValue());
+    public function byId(StudiPruefungsId $id): ?StudiPruefung {
+        return $this->abstractById($id->getValue());
     }
 
     public function nextIdentity(): StudiPruefungsId {

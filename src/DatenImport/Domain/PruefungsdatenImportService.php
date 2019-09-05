@@ -4,7 +4,7 @@ namespace DatenImport\Domain;
 
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 
-interface McPruefungsdatenImportService
+interface PruefungsdatenImportService
 {
     public function getData(
         string $inputFile,

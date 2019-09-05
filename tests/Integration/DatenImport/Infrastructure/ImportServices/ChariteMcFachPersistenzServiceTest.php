@@ -11,7 +11,7 @@ use DatenImport\Domain\ChariteFaecherAnlegenService;
 use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\LernzielFachRepository;
 use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
 use Pruefung\Domain\PruefungsId;
 use Studi\Domain\StudiInternRepository;
@@ -49,7 +49,7 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
         (new ChariteFaecherAnlegenService($clusterRepository))->addAlleFaecherZuDB();
         LernzielFachPersistenzServiceTest::createLernzielFaecher($clusterRepository, $lernzielFachRepository);
 
-        $csvImportService = new ChariteMC_Ergebnisse_CSVImportService();
+        $csvImportService = new Charite_Ergebnisse_CSVImportService();
         $zuordnungsService = new ClusterZuordnungsService(
             $clusterZuordnungsRepository,
             $clusterRepository

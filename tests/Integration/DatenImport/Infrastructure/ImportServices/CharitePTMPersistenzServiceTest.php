@@ -18,7 +18,7 @@ use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepos
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
-use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
@@ -32,7 +32,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         return [
             'file-based-repos' => [
                 FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),

@@ -2,11 +2,11 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
-use DatenImport\Domain\McPruefungsdatenImportService;
+use DatenImport\Domain\PruefungsdatenImportService;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
-class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportService implements McPruefungsdatenImportService
+class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportService implements PruefungsdatenImportService
 {
     public function getData(
         string $inputFile,
@@ -31,7 +31,7 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                 }
             }
 
-            $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikel"]);
+            $matrikelnummer = Matrikelnummer::fromInt((int) $dataLine["matrikel"]);
             $resultLine = [
                 "matrikelnummer" => $matrikelnummer,
                 "ergebnisse"     => $ergebnisse,

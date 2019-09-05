@@ -5,20 +5,17 @@ namespace DatenImport\Infrastructure\UserInterface\CLI;
 use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
-use DatenImport\Infrastructure\Persistence\ChariteMC_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MCCSVImportCommand extends AbstractCSVImportCommand
+class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 {
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcCSV';
 
-    /** @var ChariteMC_Ergebnisse_CSVImportService */
+    /** @var Charite_Ergebnisse_CSVImportService */
     private $chariteMCErgebnisseCSVImportService;
-
-    /** @var ChariteMCPruefungWertungPersistenzService */
-    private $chariteMCPruefungWertungPersistenzService;
 
     /** @var ChariteMCPruefungFachPersistenzService */
     private $chariteMCPruefungFachPersistenzService;
@@ -27,13 +24,11 @@ class MCCSVImportCommand extends AbstractCSVImportCommand
     private $chariteMCPruefungLernzielModulPersistenz;
 
     public function __construct(
-        ChariteMC_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService,
-        ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService,
+        Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService,
         ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService,
         ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz
     ) {
         $this->chariteMCErgebnisseCSVImportService = $chariteMCErgebnisseCSVImportService;
-        $this->chariteMCPruefungWertungPersistenzService = $chariteMCPruefungWertungPersistenzService;
         $this->chariteMCPruefungFachPersistenzService = $chariteMCPruefungFachPersistenzService;
         $this->chariteMCPruefungLernzielModulPersistenz = $chariteMCPruefungLernzielModulPersistenz;
 
@@ -49,10 +44,21 @@ class MCCSVImportCommand extends AbstractCSVImportCommand
     protected function execute(InputInterface $input, OutputInterface $output) {
         [$dateiPfad, $delimiter, $encoding, $pruefungsId] = $this->getParameters($input);
 
-        $data = $this->chariteMCErgebnisseCSVImportService->getData(
+        $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
             $dateiPfad, $delimiter, TRUE, $encoding, $pruefungsId
         );
-        $output->writeln(sizeof($data));
+        $lzModulDaten = $this->
+
+        $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
+
+        $this->chariteMCPruefungFachPersistenzService->persistiereFachZuordnung($mcPruefungsDaten);
+        $this->chariteMCPruefungLernzielModulPersistenz->persistiereMcModulZuordnung($mcPruefungsDaten);
+
+        $output->writeln("\nFertig. "
+                         . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
+                         . $this->chariteMCPruefungWertungPersistenzService->getGeaendert() . " Zeilen geändert; "
+                         . count($this->chariteMCPruefungWertungPersistenzService->getNichtZuzuordnen()) . " Matrikelnummern nicht zuzuordnen; "
+        );
 
     }
 

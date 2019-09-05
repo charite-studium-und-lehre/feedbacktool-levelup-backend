@@ -19,8 +19,8 @@ final class DBPruefungsRepository implements PruefungsRepository
         $this->abstractAdd($pruefung);
     }
 
-    public function byId(PruefungsId $pruefungsId): ?Pruefung {
-        return $this->abstractById($pruefungsId->getValue());
+    public function byId(PruefungsId $id): ?Pruefung {
+        return $this->abstractById($id->getValue());
     }
 
     public function nextIdentity(): PruefungsId {

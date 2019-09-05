@@ -18,7 +18,7 @@ use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
-use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\ProzentSkala;
@@ -42,7 +42,7 @@ class ChariteStationenPersistenzServiceTestTeil2 extends DbRepoTestCase
             ],
             'file-based-repos' => [
                 FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),

@@ -7,7 +7,7 @@ use Studi\Domain\StudiHash;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
-use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
 final class StudiPruefungsRepositoryTest extends DbRepoTestCase
@@ -20,7 +20,7 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
     public function getAllRepositories() {
 
         return [
-            'file-based-repo' => [FileBasedSimpleStudiPruefungsRepository::createTempFileRepo()],
+            'file-based-repo' => [FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo()],
             'db-repo'         => [$this->dbRepo],
         ];
     }

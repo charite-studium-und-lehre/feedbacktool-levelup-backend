@@ -14,6 +14,13 @@ class NachnameTest extends TestCase
         $this->assertEquals($value, $object->getValue());
     }
 
+    public function testFromLang() {
+        $value = "Frhr.v. Mauchenheim gen. Bechtolshe";
+        $object = Nachname::fromString($value);
+
+        $this->assertEquals($value, $object->getValue());
+    }
+
     public function testFromStringKurz() {
         $value = "Wu";
         $object = Nachname::fromString($value);
@@ -27,6 +34,7 @@ class NachnameTest extends TestCase
         $value = "Müller ";
         Nachname::fromString($value);
     }
+
 
     public function test_FalschZuLang() {
         $this->expectException(\InvalidArgumentException::class);

@@ -24,7 +24,13 @@ class ChariteStudiStammdatenHIS_CSVImportService extends AbstractCSVImportServic
 
         foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
             as $dataLine) {
-            $matrikelnummer = Matrikelnummer::fromInt($dataLine["mtknr"]);
+            try {
+                $matrikelnummer = Matrikelnummer::fromInt($dataLine["mtknr"]);
+            } catch (\InvalidArgumentException $e) {
+                echo "Fehler: " . $e->getMessage() . " -> Ignoriere Eintrag;\n";
+                continue;
+            }
+
             $vorname = Vorname::fromString($dataLine["vorname"]);
             $nachname = Nachname::fromString($dataLine["nachname"]);
             $geburtsdatum = Geburtsdatum::fromStringDeutschMinus($dataLine["gebdat"]);
@@ -33,7 +39,8 @@ class ChariteStudiStammdatenHIS_CSVImportService extends AbstractCSVImportServic
                 $matrikelnummer,
                 $vorname,
                 $nachname,
-                $geburtsdatum
+                $geburtsdatum,
+                $dataLine
             );
         }
 

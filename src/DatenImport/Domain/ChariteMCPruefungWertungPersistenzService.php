@@ -33,6 +33,15 @@ class ChariteMCPruefungWertungPersistenzService
     /** @var StudiInternRepository */
     private $studiInternRepository;
 
+    /** @var int */
+    private $hinzugefuegt = 0;
+
+    /** @var int */
+    private $geaendert = 0;
+
+    /** @var int */
+    private $nichtZuzuordnen = [];
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
@@ -49,10 +58,28 @@ class ChariteMCPruefungWertungPersistenzService
 
     /** @param StudiIntern[] $studiInternArray */
     public function persistierePruefung($mcPruefungsDaten, PruefungsId $pruefungsId) {
+        $counter = 0;
+        $lineCount = count($mcPruefungsDaten);
+        $einProzent = round($lineCount / 100);
 
         foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
+            $counter++;
+
+            if ($counter % $einProzent == 0) {
+                echo "\n" . round($counter / $lineCount * 100) . "% fertig";
+                $this->pruefungsItemRepository->flush();
+                $this->itemWertungsRepository->flush();
+            }
 
             $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+            if (!$studiIntern) {
+                if (!in_array($matrikelnummer, $this->nichtZuzuordnen)) {
+                    echo "\n Fehler: Studi mit Matrikel als Hash nicht gefunden: " . $matrikelnummer;
+                    echo " -> Ignoriere Matrikelnummer in allen Zeilen.";
+                    $this->nichtZuzuordnen[] = $matrikelnummer;
+                }
+                continue;
+            }
             $studiHash = $studiIntern->getStudiHash();
             $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
                 $studiHash,
@@ -90,6 +117,9 @@ class ChariteMCPruefungWertungPersistenzService
                 || !$itemWertung->getWertung()->equals($punktWertung)) {
                 if ($itemWertung) {
                     $this->itemWertungsRepository->delete($itemWertung);
+                    $this->geaendert++;
+                } else {
+                    $this->hinzugefuegt++;
                 }
                 $itemWertung = ItemWertung::create(
                     $this->itemWertungsRepository->nextIdentity(),
@@ -98,11 +128,25 @@ class ChariteMCPruefungWertungPersistenzService
                     $punktWertung
                 );
                 $this->itemWertungsRepository->add($itemWertung);
+                echo "+";
             }
+
         }
         $this->pruefungsItemRepository->flush();
         $this->itemWertungsRepository->flush();
 
+    }
+
+    public function getHinzugefuegt(): int {
+        return $this->hinzugefuegt;
+    }
+
+    public function getGeaendert(): int {
+        return $this->geaendert;
+    }
+
+    public function getNichtZuzuordnen(): array {
+        return $this->nichtZuzuordnen;
     }
 
 }

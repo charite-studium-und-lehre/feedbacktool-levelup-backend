@@ -16,6 +16,15 @@ class StudiStammdatenPersistenzService
     /** @var StudiHashCreator */
     private $studiHashCreator;
 
+    /** @var int */
+    private $hinzugefuegt = 0;
+
+    /** @var int */
+    private $geloescht = 0;
+
+    /** @var int */
+    private $geaendert = 0;
+
     public function __construct(
         StudiInternRepository $studiInternRepository,
         StudiHashCreator $studiHashCreator
@@ -30,6 +39,18 @@ class StudiStammdatenPersistenzService
 
         $this->neueStudisInternHinzufuegenOderUpdate($studiDataObjectsToImport);
 
+    }
+
+    public function getHinzugefuegt(): int {
+        return $this->hinzugefuegt;
+    }
+
+    public function getGeloescht(): int {
+        return $this->geloescht;
+    }
+
+    public function getGeaendert(): int {
+        return $this->geaendert;
     }
 
     /**
@@ -55,6 +76,8 @@ class StudiStammdatenPersistenzService
             $this->studiInternRepository->delete($this->studiInternRepository->byMatrikelnummer(
                 Matrikelnummer::fromInt($matrikelValue)
             ));
+            echo "-";
+            $this->geloescht++;
         }
         $this->studiInternRepository->flush();
     }
@@ -69,6 +92,8 @@ class StudiStammdatenPersistenzService
             );
             if (!$existierenderStudiIntern) {
                 $this->addStudiFromStudiData($studiDataObject);
+                echo "+";
+                $this->hinzugefuegt++;
             } else {
                 if (!$this->studiHashCreator->isCorrectStudiHash(
                     $existierenderStudiIntern->getStudiHash(),
@@ -76,6 +101,8 @@ class StudiStammdatenPersistenzService
                 ) {
                     $this->studiInternRepository->delete($existierenderStudiIntern);
                     $this->addStudiFromStudiData($studiDataObject);
+                    $this->geaendert++;
+                    echo "M";
                 }
             }
         }
