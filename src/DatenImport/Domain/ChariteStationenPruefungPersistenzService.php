@@ -19,8 +19,6 @@ use Wertung\Domain\Wertung\Prozentzahl;
 
 class ChariteStationenPruefungPersistenzService
 {
-    /** @var PruefungsId */
-    private $pruefungsId;
 
     /** @var PruefungsRepository */
     private $pruefungsRepository;
@@ -38,14 +36,12 @@ class ChariteStationenPruefungPersistenzService
     private $studiInternRepository;
 
     public function __construct(
-        PruefungsId $pruefungsId,
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         StudiInternRepository $studiInternRepository
     ) {
-        $this->pruefungsId = $pruefungsId;
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
@@ -54,25 +50,29 @@ class ChariteStationenPruefungPersistenzService
     }
 
     /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung($pruefungsDaten) {
+    public function persistierePruefung($pruefungsDaten, PruefungsId $pruefungsId) {
 
         foreach ($pruefungsDaten as $dataLine) {
             $ergebnisse = $dataLine["ergebnisse"];
             $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikelnummer"]);
             $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+            if (!$studiIntern) {
+                echo "\nWarnung: Studi mit Matrikel " . $dataLine["matrikelnummer"] . " nicht gef. Ignoriere Zeile.";
+                continue;
+            }
             $studiHash = $studiIntern->getStudiHash();
             $fach = $dataLine["fach"];
             $datum = $dataLine["datum"];
 
             $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
                 $studiHash,
-                $this->pruefungsId,
+                $pruefungsId,
                 );
             if (!$studiPruefung) {
                 $studiPruefung = StudiPruefung::fromValues(
                     $this->studiPruefungsRepository->nextIdentity(),
                     $studiHash,
-                    $this->pruefungsId
+                    $pruefungsId
                 );
                 $this->studiPruefungsRepository->add($studiPruefung);
                 $this->studiPruefungsRepository->flush();
@@ -81,14 +81,13 @@ class ChariteStationenPruefungPersistenzService
             foreach ($ergebnisse as $ergebnisKey => $ergebnis) {
                 $itemCode = $ergebnisKey . $fach;
 
-                $pruefungsItemIdInt = base_convert(substr(md5($itemCode), 0, 5), 16, 10);
-                $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdInt);
+                $pruefungsItemId = PruefungsItemId::fromString( $pruefungsId->getValue() . "-" . $itemCode);
 
                 $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
                 if (!$pruefungsItem) {
                     $pruefungsItem = PruefungsItem::create(
                         $pruefungsItemId,
-                        $this->pruefungsId
+                        $pruefungsId
                     );
                     $this->pruefungsItemRepository->add($pruefungsItem);
 

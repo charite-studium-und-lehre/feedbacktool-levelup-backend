@@ -39,6 +39,7 @@ class ClusterZuordnungsService
                 $clusterIdsZuzuordnen
             );
         foreach ($clusterIdsNeuZuzuordnen as $clusterIdNeuZuzuordnen) {
+            echo "+";
             $this->clusterZuordnungsRepository->addZuordnung(
                 ClusterZuordnung::byIds(
                     $clusterIdNeuZuzuordnen,
@@ -52,6 +53,7 @@ class ClusterZuordnungsService
             $clusterIdsZuzuordnen
         );
         foreach ($clusterIdsZuLoeschen as $clusterIdZuLoeschen) {
+            echo "-";
             $this->clusterZuordnungsRepository->delete(
                 ClusterZuordnung::byIds(
                     $clusterIdNeuZuzuordnen,

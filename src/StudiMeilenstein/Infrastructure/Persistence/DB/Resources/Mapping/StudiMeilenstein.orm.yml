@@ -20,3 +20,9 @@ StudiMeilenstein\Domain\StudiMeilenstein:
   uniqueConstraints:
     studiMeilenstein:
       columns: studiHash, meilenstein
+
+  indexes:
+    studiHash:
+      columns: studiHash
+    meilenstein:
+      columns: meilenstein

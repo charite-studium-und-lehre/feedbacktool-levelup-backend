@@ -23,3 +23,10 @@ Cluster\Domain\Cluster:
       class: Cluster\Domain\ClusterTitel
       columnPrefix: false
 
+  indexes:
+    typ:
+      columns: typ
+    parentId:
+      columns: parentId
+    code:
+      columns: code

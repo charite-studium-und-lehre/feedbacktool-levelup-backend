@@ -13,3 +13,9 @@ Pruefung\Domain\Pruefung:
     datum:
       class: Pruefung\Domain\PruefungsDatum
       columnPrefix: false
+
+#  indexes:
+#    datum:
+#      column: datum
+#    format:
+#      column: format

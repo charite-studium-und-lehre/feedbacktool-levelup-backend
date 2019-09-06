@@ -5,57 +5,59 @@ namespace DatenImport\Infrastructure\UserInterface\CLI;
 use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
+use DatenImport\Domain\CharitePTMPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
+use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
+class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 {
+    // the name of the command (the part after "bin/console")
+    protected static $defaultName = 'levelup:importFile:ptm';
+
     /** @var PruefungsRepository */
     private $pruefungsRepository;
 
-    // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'levelup:importFile:mcCSVWertung';
+    /** @var CharitePTMCSVImportService */
+    private $charitePTMCSVImportService;
 
-    /** @var Charite_Ergebnisse_CSVImportService */
-    private $chariteMCErgebnisseCSVImportService;
-
-    /** @var ChariteMCPruefungWertungPersistenzService */
-    private $chariteMCPruefungWertungPersistenzService;
+    /** @var CharitePTMPersistenzService */
+    private $charitePTMPersistenzService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
-        Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService,
-        ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService
+        CharitePTMCSVImportService $charitePTMCSVImportService,
+        CharitePTMPersistenzService $charitePTMPersistenzService
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
-        $this->chariteMCErgebnisseCSVImportService = $chariteMCErgebnisseCSVImportService;
-        $this->chariteMCPruefungWertungPersistenzService = $chariteMCPruefungWertungPersistenzService;
+        $this->charitePTMCSVImportService = $charitePTMCSVImportService;
+        $this->charitePTMPersistenzService = $charitePTMPersistenzService;
         parent::__construct();
     }
 
     protected function configure() {
         parent::configure();
-        $this->setDescription('Datenimport aus Datei: MC-Prüfung in CSV-Datei');
-        $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <Datum>");
+        $this->setDescription('Datenimport aus Datei: PTM-Prüfung in CSV-Datei');
+        $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <PTM-Pruefungs-ID>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders, ] = $this->getParameters($input);
+        $delimiter = $input->getArgument("delimiter") ?: ";";
 
-        $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getMC(),
+        $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getPTM(),
                                               $datum, $this->pruefungsRepository
         );
 
-
-        $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
+        $ptmPruefungsDaten = $this->charitePTMCSVImportService->getData(
             $dateiPfad, $delimiter, $hasHeaders, $encoding, $pruefungsId
         );
-        $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
+        $output->writeln(count($ptmPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 
-        $this->chariteMCPruefungWertungPersistenzService->persistierePruefung($mcPruefungsDaten, $pruefungsId);
+        $this->charitePTMPersistenzService->persistierePruefung($ptmPruefungsDaten, $pruefungsId);
 
         $output->writeln("\nFertig. "
                          . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "

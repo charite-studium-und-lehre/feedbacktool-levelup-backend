@@ -31,7 +31,12 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                 }
             }
 
-            $matrikelnummer = Matrikelnummer::fromInt((int) $dataLine["matrikel"]);
+            if (isset($dataLine["matrikel"])) {
+                $matrikel = $dataLine["matrikel"];
+            } else {
+                $matrikel = $dataLine["matr"];
+            }
+            $matrikelnummer = Matrikelnummer::fromInt((int) $matrikel);
             $resultLine = [
                 "matrikelnummer" => $matrikelnummer,
                 "ergebnisse"     => $ergebnisse,

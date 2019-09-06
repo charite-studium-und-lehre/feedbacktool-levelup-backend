@@ -13,3 +13,11 @@ Wertung\Domain\ItemWertung:
       type: aggregateId
     wertung:
       type: wertung
+
+  indexes:
+    pruefungsItemId:
+      columns: pruefungsItemId
+    studiPruefungsId:
+      columns: studiPruefungsId
+    pruefungsItemIdUndStudiPruefungsId:
+      columns: pruefungsItemId, studiPruefungsId

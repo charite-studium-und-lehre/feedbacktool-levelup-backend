@@ -10,7 +10,7 @@ class PruefungsDatum implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Datum: ";
+    const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Datum (d.m.Y): ";
 
     /** @var \DateTimeImmutable */
     private $value;
@@ -38,6 +38,10 @@ class PruefungsDatum implements DDDValueObject
 
     public function toDateTimeImmutable(): \DateTimeImmutable {
         return $this->value;
+    }
+
+    public function toIsoString(): string {
+        return $this->value->format("Y-m-d");
     }
 
     public function __toString(): string {

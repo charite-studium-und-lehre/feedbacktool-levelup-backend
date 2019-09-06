@@ -35,7 +35,7 @@ final class PruefungsRepositoryTest extends DbRepoTestCase
         $pruefung2 = Pruefung::create(
             PruefungsId::fromString(259),
             PruefungsDatum::fromString("31.01.2015"),
-            PruefungsFormat::fromConst(PruefungsFormat::OSCE)
+            PruefungsFormat::fromConst(PruefungsFormat::STATION)
         );
 
         $repo->add($pruefung1);
@@ -46,7 +46,7 @@ final class PruefungsRepositoryTest extends DbRepoTestCase
         $this->assertCount(2, $repo->all());
         $pruefung2 = $repo->byId(PruefungsId::fromString(259));
         $this->assertTrue($pruefung2->getDatum()->equals(PruefungsDatum::fromString("31.01.2015")));
-        $this->assertTrue($pruefung2->getFormat()->equals(PruefungsFormat::fromConst(PruefungsFormat::OSCE)));
+        $this->assertTrue($pruefung2->getFormat()->equals(PruefungsFormat::fromConst(PruefungsFormat::STATION)));
     }
 
     /**

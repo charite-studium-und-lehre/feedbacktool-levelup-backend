@@ -28,27 +28,43 @@ class ChariteMCPruefungLernzielModulPersistenzService
 
     /** @param StudiIntern[] $studiInternArray */
     public function persistiereMcModulZuordnung($mcPruefungsDaten, $lzModulDaten) {
+        $counter = 0;
+        $lineCount = count($mcPruefungsDaten);
+        $einProzent = round($lineCount / 100);
+        $nichtGefunden = [];
 
         foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $lernzielNummer]) {
-
-            $zuzuordnen = [];
-            if ($lernzielNummer) {
-                $fragenModul = $lzModulDaten[$lernzielNummer];
-                $cluster = $this->clusterRepository->byClusterTypUndTitel(
-                    ClusterTyp::getModulTyp(),
-                    $fragenModul
-                );
-                if (!$cluster) {
-                    $clusterId = $this->clusterHinzufuegen($fragenModul);
-                } else {
-                    $clusterId = $cluster->getId();
-                }
-                $zuzuordnen = [$clusterId];
+            $counter++;
+            if ($counter % $einProzent == 0) {
+                echo "\n" . round($counter / $lineCount * 100) . "% fertig";
             }
+            if (!$lernzielNummer) {
+                continue;
+            }
+
+            $fragenModul = isset($lzModulDaten[$lernzielNummer]) ? $lzModulDaten[$lernzielNummer] : NULL ;
+            if (!$fragenModul) {
+                if (!in_array("$lernzielNummer-$pruefungsItemId", $nichtGefunden)) {
+                    echo "\nFehler: Lernziel-Nummer nicht gefunden zu Frage $pruefungsItemId: $lernzielNummer";
+                    $nichtGefunden[] = "$lernzielNummer-$pruefungsItemId";
+                }
+                continue;
+            }
+
+            $cluster = $this->clusterRepository->byClusterTypUndTitel(
+                ClusterTyp::getModulTyp(),
+                $fragenModul
+            );
+            if (!$cluster) {
+                $clusterId = $this->clusterHinzufuegen($fragenModul);
+            } else {
+                $clusterId = $cluster->getId();
+            }
+
             $this->clusterZuordnungsService->setzeZuordnungenFuerClusterTypId(
                 $pruefungsItemId,
                 ClusterTyp::getModulTyp(),
-                $zuzuordnen
+                [$clusterId]
             );
         }
 

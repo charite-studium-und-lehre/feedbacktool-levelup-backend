@@ -27,9 +27,6 @@ class CharitePTMPersistenzService
     public const TYP_RICHTIG = 'r';
     public const TYP_WEISSNICHT = 'w';
 
-    /** @var PruefungsId */
-    private $pruefungsId;
-
     /** @var PruefungsRepository */
     private $pruefungsRepository;
 
@@ -52,7 +49,6 @@ class CharitePTMPersistenzService
     private $clusterZuordnungsRepository;
 
     public function __construct(
-        PruefungsId $pruefungsId,
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         ItemWertungsRepository $itemWertungsRepository,
@@ -61,7 +57,6 @@ class CharitePTMPersistenzService
         ClusterRepository $clusterRepository,
         ClusterZuordnungsRepository $clusterZuordnungsRepository
     ) {
-        $this->pruefungsId = $pruefungsId;
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
@@ -71,13 +66,21 @@ class CharitePTMPersistenzService
         $this->clusterZuordnungsRepository = $clusterZuordnungsRepository;
     }
 
-    public function persistierePruefung($ptmPruefungsDaten) {
+    public function persistierePruefung($ptmPruefungsDaten, PruefungsId $pruefungsId) {
+        $counter = 0;
+        $lineCount = count($ptmPruefungsDaten);
+        $einProzent = round($lineCount / 100);
+
         foreach ($ptmPruefungsDaten as $matrikelnummer => $studiErgebnis) {
+            $counter++;
+            if ($counter % $einProzent == 0) {
+                echo "\n" . round($counter / $lineCount * 100) . "% fertig";
+            }
             foreach ($studiErgebnis as $clusterTypValue => $clusterTypErgebnis) {
                 foreach ($clusterTypErgebnis as $clusterPTMCode => $bewertungsTyp) {
 
-                    $this->createOrUpdateWertung($matrikelnummer, $clusterTypValue, $clusterPTMCode, $bewertungsTyp);
-                    $this->createFachClusterZuordnung($clusterTypValue, $clusterPTMCode);
+                    $this->createOrUpdateWertung($matrikelnummer, $clusterPTMCode, $bewertungsTyp, $pruefungsId);
+                    $this->createFachClusterZuordnung($clusterTypValue, $clusterPTMCode, $pruefungsId);
 
                     // evtl. in Zukunft auch Organsysteme
                     //   $this->createOrgansystemClusterZuordnung($clusterTypValue, $clusterPTMCode);
@@ -91,7 +94,8 @@ class CharitePTMPersistenzService
 
     }
 
-    private function createOrUpdateWertung($matrikelnummer, $clusterTyp, $clusterPTMCode, $bewertungsTyp): void {
+    private function createOrUpdateWertung($matrikelnummer, $clusterPTMCode, $bewertungsTyp, PruefungsId $pruefungsId):
+    void {
         $studiIntern = $this->studiInternRepository->byMatrikelnummer(
             Matrikelnummer::fromInt($matrikelnummer)
         );
@@ -101,25 +105,26 @@ class CharitePTMPersistenzService
         $studiHash = $studiIntern->getStudiHash();
         $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
             $studiHash,
-            $this->pruefungsId,
-            );
+            $pruefungsId
+        );
         if (!$studiPruefung) {
             $studiPruefung = StudiPruefung::fromValues(
                 $this->studiPruefungsRepository->nextIdentity(),
                 $studiHash,
-                $this->pruefungsId
+                $pruefungsId
             );
             $this->studiPruefungsRepository->add($studiPruefung);
+            echo "+";
             $this->studiPruefungsRepository->flush();
         }
 
-        $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode);
+        $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode, $pruefungsId);
 
         $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
         if (!$pruefungsItem) {
             $pruefungsItem = PruefungsItem::create(
                 $pruefungsItemId,
-                $this->pruefungsId
+                $pruefungsId
             );
             $this->pruefungsItemRepository->add($pruefungsItem);
 
@@ -151,8 +156,8 @@ class CharitePTMPersistenzService
         }
     }
 
-    private function getPruefungsItemId($clusterPTMCode): PruefungsItemId {
-        $pruefungsItemIdInt = $this->pruefungsId->getValue() . "-" . $clusterPTMCode;
+    private function getPruefungsItemId($clusterPTMCode, $pruefungsId): PruefungsItemId {
+        $pruefungsItemIdInt = $pruefungsId->getValue() . "-" . $clusterPTMCode;
         $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdInt);
 
         return $pruefungsItemId;
@@ -162,7 +167,7 @@ class CharitePTMPersistenzService
      * @param $clusterTypValue
      * @param $clusterPTMCode
      */
-    private function createFachClusterZuordnung($clusterTypValue, $clusterPTMCode): void {
+    private function createFachClusterZuordnung($clusterTypValue, $clusterPTMCode, PruefungsId $pruefungsId): void {
         $clusterTyp = ClusterTyp::fromConst($clusterTypValue);
         if (!$clusterTyp->isFachTyp()) {
             return;
@@ -182,7 +187,7 @@ class CharitePTMPersistenzService
 
             return;
         }
-        $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode);
+        $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode, $pruefungsId);
         $alleClusterIds = $this->clusterZuordnungsRepository->alleClusterIdsVonPruefungsItem($pruefungsItemId);
         $found = FALSE;
         foreach ($alleClusterIds as $clusterId) {

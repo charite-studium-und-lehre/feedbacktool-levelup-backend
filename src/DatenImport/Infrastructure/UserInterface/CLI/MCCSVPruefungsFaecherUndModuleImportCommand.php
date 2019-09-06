@@ -2,9 +2,12 @@
 
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
+use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
+use Pruefung\Domain\PruefungsFormat;
+use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,33 +17,40 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcCSVFachUndModule';
 
+    /** @var PruefungsRepository */
+    private $pruefungsRepository;
+
     /** @var Charite_Ergebnisse_CSVImportService */
     private $chariteMCErgebnisseCSVImportService;
 
     /** @var ChariteMCPruefungLernzielModulPersistenzService */
     private $chariteMCPruefungLernzielModulPersistenz;
 
+    /** ChariteMCPruefungFachPersistenzService */
+    private $chariteMCPruefungFachPersistenzService;
+
     /** @var ChariteLernzielModulImportCSVService */
     private $chariteLernzielModulImportCSVService;
 
     public function __construct(
+        PruefungsRepository $pruefungsRepository,
         Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService,
         ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz,
+        ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService,
         ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService
     ) {
+        $this->pruefungsRepository = $pruefungsRepository;
         $this->chariteMCErgebnisseCSVImportService = $chariteMCErgebnisseCSVImportService;
         $this->chariteMCPruefungLernzielModulPersistenz = $chariteMCPruefungLernzielModulPersistenz;
+        $this->chariteMCPruefungFachPersistenzService = $chariteMCPruefungFachPersistenzService;
         $this->chariteLernzielModulImportCSVService = $chariteLernzielModulImportCSVService;
         parent::__construct();
     }
 
-
-
-
     protected function configure() {
         $this->addArgumentDateiPfad();
         $this->addArgument('dateiPfadLzModule', InputArgument::REQUIRED, 'Der volle Pfad zur Lernziel-Modul-CSV-Datei');
-        $this->addArgument('pruefungsID', InputArgument::REQUIRED, 'Die Kurz-Bezeichnung der Prüfung');
+        $this->addArgumentDatum();
         $this->addArgument('delimiterLzModule', InputArgument::OPTIONAL, 'Das CSV-Trennezichen für die Lernziel-Modul-Datei');
         $this->addAndereArgumente();
 
@@ -50,7 +60,12 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $delimiter, $encoding, $hasHeaders, $pruefungsId] = $this->getParameters($input);
+        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+
+        $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getMC(),
+                                              $datum, $this->pruefungsRepository
+        );
+
         $dateiPfadLzModule = $input->getArgument("dateiPfadLzModule");
         $delimiterLzModule = $input->getArgument("delimiterLzModule") ?: ";";
 
@@ -62,18 +77,22 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
             $dateiPfadLzModule,$delimiterLzModule, $hasHeaders, $encoding
         );
 
-        $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
+        $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. ");
+        $output->writeln("");
+        $output->writeln("Persistiere Module...");
 
         $this->chariteMCPruefungLernzielModulPersistenz->persistiereMcModulZuordnung(
             $mcPruefungsDaten, $lzModulDaten
         );
 
-        $output->writeln("\nFertig. "
-                         . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
-                         . $this->chariteMCPruefungWertungPersistenzService->getGeaendert() . " Zeilen geändert; "
-                         . count($this->chariteMCPruefungWertungPersistenzService->getNichtZuzuordnen())
-                         . " Matrikelnummern nicht zuzuordnen; "
+        $output->writeln("");
+        $output->writeln("Persistiere Fächer...");
+
+        $this->chariteMCPruefungFachPersistenzService->persistiereFachZuordnung(
+            $mcPruefungsDaten
         );
+
+        $output->writeln("\nFertig. ");
 
     }
 

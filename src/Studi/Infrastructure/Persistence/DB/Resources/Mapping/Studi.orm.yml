@@ -10,3 +10,7 @@ Studi\Domain\Studi:
     loginHash:
       type: loginHash
       nullable: true
+
+  indexes:
+    loginHash:
+      columns: loginHash

@@ -51,7 +51,7 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
                     $ptmClusterKuerzel = $kuerzel;
                 } elseif (array_key_exists($kuerzel, self::ORGANSYSTEM_KUERZEL)) {
                     $clusterTyp = ClusterTyp::getOrgansystemTyp()->getConst();
-                    $ptmClusterKuerzel = self::ORGANSYSTEM_KUERZEL[$kuerzel];
+                    $ptmClusterKuerzel = $kuerzel;
                 } else {
                     continue;
                 }

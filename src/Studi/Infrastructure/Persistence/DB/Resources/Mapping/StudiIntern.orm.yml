@@ -10,3 +10,7 @@ Studi\Domain\StudiIntern:
   fields:
     studiHash:
       type: studiHash
+
+  indexes:
+    studiHash:
+      columns: studiHash
