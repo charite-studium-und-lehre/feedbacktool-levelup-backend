@@ -45,17 +45,18 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     protected function execute(InputInterface $input, OutputInterface $output) {
         [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
 
-        $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getMC(),
-                                              $datum, $this->pruefungsRepository
-        );
-
+        foreach (PruefungsFormat::MC_KONSTANTEN_NACH_FACHSEMESTER as $MC_Konstante) {
+            $this->erzeugePruefung($output, PruefungsFormat::fromConst($MC_Konstante),
+                                                  $datum, $this->pruefungsRepository
+            );
+        }
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding, $pruefungsId
+            $dateiPfad, $delimiter, $hasHeaders, $encoding, $datum
         );
-        $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
+        $output->writeln("\n" . count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 
-        $this->chariteMCPruefungWertungPersistenzService->persistierePruefung($mcPruefungsDaten, $pruefungsId);
+        $this->chariteMCPruefungWertungPersistenzService->persistierePruefung($mcPruefungsDaten);
 
         $output->writeln("\nFertig. "
                          . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "

@@ -2,18 +2,37 @@
 
 namespace Common\Infrastructure\Persistence\DB;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 
+/** @property EntityManager $entityManager */
 trait DoctrineAutoIncrementTrait
 {
     protected function getAndIncreaseAutoIncrement(): int {
-        return $this->getAndIncreaseAutoIncrementOfTable($this->getTableNameOfRepo());
+        return $this->getAndIncreaseAutoIncrementOfTable();
     }
 
-    protected function getAndIncreaseAutoIncrementOfTable(string $tableName): int {
+    protected function getAndIncreaseAutoIncrementOfTable(): int {
         $this->entityManager->beginTransaction();
-
+        $tableName = $this->getTableNameOfRepo();
         $dbName = $this->entityManager->getConnection()->getDatabase();
+
+        // Lesen-Schreiben-Lesen um race conditions zu verhindern.
+        $ai1 = $this->getCurrentAutoIncrement($tableName, $dbName);
+        $this->increaseAutoIncrement($tableName, $dbName);
+
+
+        $this->entityManager->commit();
+
+        return $ai1;
+    }
+
+    protected function getTableNameOfRepo(): string {
+        $className = $this->doctrineRepo->getClassName();
+        return $this->entityManager->getClassMetadata($className)->getTableName();
+    }
+
+    protected function getCurrentAutoIncrement(string $tableName, string $dbName): int {
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult("AUTO_INCREMENT", "AUTO_INCREMENT", "integer");
         $sql = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES"
@@ -22,18 +41,15 @@ trait DoctrineAutoIncrementTrait
         $maxId = $this->entityManager->createNativeQuery($sql, $rsm)->getResult()[0]["AUTO_INCREMENT"];
         $maxId = max([1, $maxId]);
 
-        $sql = "ALTER TABLE $tableName AUTO_INCREMENT = " . ($maxId + 1);
-        $this->entityManager->getConnection()->executeUpdate($sql);
-
-        $this->entityManager->commit();
-
         return $maxId;
     }
 
-    protected function getTableNameOfRepo(): string {
-        $className = $this->doctrineRepo->getClassName();
-
-        return $this->entityManager->getClassMetadata($className)->getTableName();
+    protected function increaseAutoIncrement(string $tableName, string $dbName): void {
+        $sql =
+            "SET @ai = (SELECT `AUTO_INCREMENT` + 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA  = '$dbName' AND TABLE_NAME = '$tableName');"
+            . "SET @ai = CONCAT('ALTER TABLE $tableName AUTO_INCREMENT = ', @ai);"
+            . "PREPARE stmt FROM @ai ;EXECUTE stmt;";
+        $this->entityManager->getConnection()->executeUpdate($sql);
 
     }
 }

@@ -35,27 +35,29 @@ class ChariteMCPruefungFachPersistenzService
         $einProzent = round($lineCount / 100);
         $nichtGefunden = [];
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $lernzielNummer]) {
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsId, $pruefungsItemId,
+            $lernzielNummer]) {
             $counter++;
             if ($counter % $einProzent == 0) {
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
             }
 
-            if ($lernzielNummer) {
-                $fachClusterId = $this->lernzielFachRepository
-                    ->getFachClusterIdByLernzielNummer(
-                        LernzielNummer::fromInt($lernzielNummer)
-                    );
-                if (!$fachClusterId) {
-                    if (!in_array("$lernzielNummer-$pruefungsItemId", $nichtGefunden)) {
-                        echo "\nFehler: Lernziel-Nummer nicht gefunden zu Frage $pruefungsItemId: $lernzielNummer";
-                        $nichtGefunden[] = "$lernzielNummer-$pruefungsItemId";
-                    }
-                    continue;
-                }
-                $fachCluster = $this->clusterRepository->byId($fachClusterId);
-
+            if (!$lernzielNummer) {
+                continue;
             }
+            $fachClusterId = $this->lernzielFachRepository
+                ->getFachClusterIdByLernzielNummer(
+                    LernzielNummer::fromInt($lernzielNummer)
+                );
+            if (!$fachClusterId) {
+                if (!in_array("$lernzielNummer-$pruefungsItemId", $nichtGefunden)) {
+                    echo "\nFehler: Lernziel-Nummer nicht gefunden zu Frage $pruefungsItemId: $lernzielNummer";
+                    $nichtGefunden[] = "$lernzielNummer-$pruefungsItemId";
+                }
+                continue;
+            }
+            $fachCluster = $this->clusterRepository->byId($fachClusterId);
+
             $this->clusterZuordnungsService->setzeZuordnungenFuerClusterTypId(
                 $pruefungsItemId,
                 ClusterTyp::getFachTyp(),

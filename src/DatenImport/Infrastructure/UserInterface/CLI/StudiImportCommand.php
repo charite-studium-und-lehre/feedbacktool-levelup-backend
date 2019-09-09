@@ -40,10 +40,12 @@ class StudiImportCommand extends AbstractCSVImportCommand
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $delimiter, $encoding] = $this->getParameters($input);
+        [$dateiPfad, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+        $delimiter = $input->getArgument("delimiter") ?: ";";
+
 
         $studiObjects = $this->chariteStudiStammdatenHIS_CSVImportService->getStudiData(
-            $dateiPfad, $delimiter, TRUE, $encoding);
+            $dateiPfad, $delimiter, $hasHeaders, $encoding);
 
         $output->writeln(count($studiObjects) . " Studis in Datei gefunden!");
         $output->writeln("Persistiere!");

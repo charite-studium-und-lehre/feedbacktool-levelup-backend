@@ -61,16 +61,11 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
-
-        $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getMC(),
-                                              $datum, $this->pruefungsRepository
-        );
-
         $dateiPfadLzModule = $input->getArgument("dateiPfadLzModule");
         $delimiterLzModule = $input->getArgument("delimiterLzModule") ?: ";";
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding, $pruefungsId,
+            $dateiPfad, $delimiter, $hasHeaders, $encoding, $datum,
         );
 
         $lzModulDaten = $this->chariteLernzielModulImportCSVService->getLernzielZuModulData(

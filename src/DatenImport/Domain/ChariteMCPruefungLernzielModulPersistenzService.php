@@ -33,7 +33,8 @@ class ChariteMCPruefungLernzielModulPersistenzService
         $einProzent = round($lineCount / 100);
         $nichtGefunden = [];
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $lernzielNummer]) {
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsId, $pruefungsItemId,
+            $lernzielNummer]) {
             $counter++;
             if ($counter % $einProzent == 0) {
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";

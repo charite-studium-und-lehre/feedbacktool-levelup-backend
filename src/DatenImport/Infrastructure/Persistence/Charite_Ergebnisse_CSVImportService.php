@@ -3,6 +3,8 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\PruefungsdatenImportService;
+use Pruefung\Domain\PruefungsDatum;
+use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Studi\Domain\Matrikelnummer;
@@ -16,7 +18,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
         string $delimiter = ",",
         bool $hasHeaders = TRUE,
         string $fromEncoding = AbstractCSVImportService::OUT_ENCODING,
-        ?PruefungsId $pruefungsId = NULL
+        PruefungsDatum $datum = NULL
     ): array {
         $data = [];
 
@@ -29,15 +31,44 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             }
             $punktzahl = Punktzahl::fromFloat(max(0, $dataLine["richtig"]));
 
+            if (!isset($dataLine["Kl_Nr"])) {
+                echo "\nKl_Nr nicht gesetzt.";
+                print_r($dataLine);
+                continue;
+            }
+            $pruefungSemester = $dataLine["Kl_Nr"];
+            if ($pruefungSemester == "3D-MC") {
+                $pruefungSemester = 3;
+            } else {
+                $pruefungSemester = str_replace("MC Semester ", "", "$pruefungSemester");
+            }
+            if (!is_numeric($pruefungSemester)) {
+                if (strpos($pruefungSemester, "Modul ") === FALSE
+                    && strpos($pruefungSemester, "Modul") === FALSE) {
+                    echo "-$pruefungSemester";
+                }
+                continue;
+            }
+
+            try {
+                $pruefungsId = PruefungsId::fromPruefungsformatUndDatum(
+                    PruefungsFormat::getMC($pruefungSemester),
+                    $datum
+                );
+            } catch (\Exception $e) {
+                echo "- Fehler beim Import: Prüfungstitel (Sem): ".$dataLine["Kl_Nr"];
+            }
+
             $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $dataLine["FragenNr"];
 
-            $pruefungsItemIdString = PruefungsItemId::fromString($pruefungsItemIdString);
+            $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdString);
             $lzNummer = is_numeric($dataLine["LernzielNr"]) ? $dataLine["LernzielNr"] : NULL;
 
             $data[] = [
                 $matrikelnummer,
                 $punktzahl,
-                $pruefungsItemIdString,
+                $pruefungsId,
+                $pruefungsItemId,
                 $lzNummer,
             ];
         }

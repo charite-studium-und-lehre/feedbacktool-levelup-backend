@@ -2,10 +2,8 @@
 
 namespace DatenImport\Domain;
 
-use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemRepository;
-use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
@@ -18,8 +16,6 @@ use Wertung\Domain\Wertung\Punktzahl;
 
 class ChariteMCPruefungWertungPersistenzService
 {
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
 
     /** @var StudiPruefungsRepository */
     private $studiPruefungsRepository;
@@ -43,13 +39,11 @@ class ChariteMCPruefungWertungPersistenzService
     private $nichtZuzuordnen = [];
 
     public function __construct(
-        PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         StudiInternRepository $studiInternRepository
     ) {
-        $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->pruefungsItemRepository = $pruefungsItemRepository;
@@ -57,12 +51,13 @@ class ChariteMCPruefungWertungPersistenzService
     }
 
     /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung($mcPruefungsDaten, PruefungsId $pruefungsId) {
+    public function persistierePruefung($mcPruefungsDaten) {
         $counter = 0;
         $lineCount = count($mcPruefungsDaten);
         $einProzent = round($lineCount / 100);
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsItemId, $clusterTitel]) {
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsId, $pruefungsItemId,
+            $clusterTitel]) {
             $counter++;
 
             if ($counter % $einProzent == 0) {
