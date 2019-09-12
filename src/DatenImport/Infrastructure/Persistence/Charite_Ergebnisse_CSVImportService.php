@@ -31,12 +31,12 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             }
             $punktzahl = Punktzahl::fromFloat(max(0, $dataLine["richtig"]));
 
-            if (!isset($dataLine["Kl_Nr"])) {
+            if (!isset($dataLine["Kl_Nr"]) && !isset($dataLine["Kl_nr"])) {
                 echo "\nKl_Nr nicht gesetzt.";
                 print_r($dataLine);
                 continue;
             }
-            $pruefungSemester = $dataLine["Kl_Nr"];
+            $pruefungSemester = isset($dataLine["Kl_Nr"]) ? $dataLine["Kl_Nr"] : $dataLine["Kl_nr"];
             if ($pruefungSemester == "3D-MC") {
                 $pruefungSemester = 3;
             } else {
