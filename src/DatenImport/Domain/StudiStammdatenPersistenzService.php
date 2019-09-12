@@ -2,16 +2,20 @@
 
 namespace DatenImport\Domain;
 
-use Studi\Domain\Matrikelnummer;
 use Studi\Domain\Service\StudiHashCreator;
+use Studi\Domain\Studi;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
+use Studi\Domain\StudiRepository;
 
 class StudiStammdatenPersistenzService
 {
     /** @var StudiInternRepository */
     private $studiInternRepository;
+
+    /** @var StudiRepository */
+    private $studiRepository;
 
     /** @var StudiHashCreator */
     private $studiHashCreator;
@@ -27,9 +31,11 @@ class StudiStammdatenPersistenzService
 
     public function __construct(
         StudiInternRepository $studiInternRepository,
+        StudiRepository $studiRepository,
         StudiHashCreator $studiHashCreator
     ) {
         $this->studiInternRepository = $studiInternRepository;
+        $this->studiRepository = $studiRepository;
         $this->studiHashCreator = $studiHashCreator;
     }
 
@@ -62,20 +68,17 @@ class StudiStammdatenPersistenzService
 
         // alle Studis werden erstmal zum Löschen markiert
         foreach ($alleStudisInternAktuell as $studiInternAktuell) {
-            $matrikelZuLoeschen[] = $studiInternAktuell->getMatrikelnummer()->getValue();
+            $matrikelZuLoeschen[$studiInternAktuell->getMatrikelnummer()->getValue()] = $studiInternAktuell;
         }
 
         // Studis, die im Import vorhanden sind, werden von Löschliste entfernt.
         foreach ($alleStudisImport as $studiImport) {
-            $matrikelZuLoeschen = array_diff($matrikelZuLoeschen,
-                                             [$studiImport->getMatrikelnummer()->getValue()]
-            );
+            unset($matrikelZuLoeschen[$studiImport->getMatrikelnummer()->getValue()]);
         }
 
-        foreach ($matrikelZuLoeschen as $matrikelValue) {
-            $this->studiInternRepository->delete($this->studiInternRepository->byMatrikelnummer(
-                Matrikelnummer::fromInt($matrikelValue)
-            ));
+        foreach ($matrikelZuLoeschen as $matrikelValue => $studiInternAktuell) {
+            $this->studiInternRepository->delete($studiInternAktuell);
+            $this->studiRepository->delete($this->studiRepository->byHash($studiInternAktuell->getStudiHash()));
             echo "-";
             $this->geloescht++;
         }
@@ -100,12 +103,17 @@ class StudiStammdatenPersistenzService
                     $studiDataObject)
                 ) {
                     $this->studiInternRepository->delete($existierenderStudiIntern);
+                    $studi = $this->studiRepository->byHash($existierenderStudiIntern->getStudiHash());
+                    if ($studi) {
+                        $this->studiRepository->delete($studi);
+                    }
                     $this->addStudiFromStudiData($studiDataObject);
                     $this->geaendert++;
                     echo "M";
                 }
             }
         }
+        $this->studiRepository->flush();
         $this->studiInternRepository->flush();
     }
 
@@ -116,6 +124,9 @@ class StudiStammdatenPersistenzService
             $studiHash
         );
         $this->studiInternRepository->add($studiInternNeu);
+
+        $studiNeu = Studi::fromStudiHash($studiHash);
+        $this->studiRepository->add($studiNeu);
     }
 
 }
