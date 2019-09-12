@@ -30,7 +30,7 @@ final class DBStudiMeilensteinRepository implements StudiMeilensteinRepository
     }
 
     /** @return StudiMeilenstein[] */
-    public function allByStudiId(StudiHash $studiHash): array {
+    public function allByStudiHash(StudiHash $studiHash): array {
         return $this->doctrineRepo->findBy(
             [
                 "studiHash" => $studiHash,

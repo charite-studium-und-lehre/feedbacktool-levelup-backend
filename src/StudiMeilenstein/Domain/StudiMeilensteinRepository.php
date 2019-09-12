@@ -18,7 +18,7 @@ interface StudiMeilensteinRepository extends DDDRepository, FlushableRepository
     public function delete(StudiMeilenstein $object): void;
 
     /** @return StudiMeilenstein[] */
-    public function allByStudiId(StudiHash $studiHash): array;
+    public function allByStudiHash(StudiHash $studiHash): array;
 
     public function byStudiIdUndMeilenstein(StudiHash $studiHash, Meilenstein $meilenstein): ?StudiMeilenstein;
 

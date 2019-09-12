@@ -59,7 +59,7 @@ class StudiMeilensteinPersistenzService
             }
 
 
-            $alleMeilensteineDesStudis = $this->studiMeilensteinRepository->allByStudiId(
+            $alleMeilensteineDesStudis = $this->studiMeilensteinRepository->allByStudiHash(
                 $existierenderStudiIntern->getStudiHash()
             );
 

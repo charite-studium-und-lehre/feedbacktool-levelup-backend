@@ -83,6 +83,10 @@ final class Meilenstein implements DDDValueObject
         return $this->code;
     }
 
+    public function getKuerzel() {
+        return array_flip(MEILENSTEINE_KUERZEL_ZU_CODE)[$this->code];
+    }
+
     public function getTitel() {
         if (isset(self::MEILENSTEINE[$this->code])) {
             return self::MEILENSTEINE[$this->code];
@@ -104,6 +108,22 @@ final class Meilenstein implements DDDValueObject
             $alleTitel[$code] = Meilenstein::fromCode($code)->getTitel();
         }
         return $alleTitel;
+    }
+
+    public function getFachsemester(): int {
+        switch ($this->code) {
+            case 10: return 6;
+            case 20: return 3;
+            case 30: return 3;
+            case 40: return 4;
+            case 50: return 6;
+            case 60: return 10;
+            case 70: return 9;
+        }
+        if ($this->code > 100) {
+            return $this->code % 100;
+        }
+        throw new \Exception("Fachsemester unbekannt für Code " . $this->code);
     }
 
     public function __toString(): string {

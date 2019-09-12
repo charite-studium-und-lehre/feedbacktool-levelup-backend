@@ -24,7 +24,7 @@ final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepo
     }
 
     /** @return StudiMeilenstein[] */
-    public function allByStudiId(StudiHash $studiHash): array {
+    public function allByStudiHash(StudiHash $studiHash): array {
         $all = [];
         foreach ($this->all() as $studiMeilenstein) {
             if ($studiMeilenstein->getStudiHash()->equals($studiHash)) {
