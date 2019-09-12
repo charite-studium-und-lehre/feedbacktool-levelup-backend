@@ -3,6 +3,6 @@ Cluster\Domain\ClusterTitel:
     fields:
         value:
           type: string
-          length: 50
+          length: 100
           nullable: false
           column: clusterTitel
