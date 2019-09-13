@@ -1,6 +1,6 @@
 <?php
 
-namespace StudiPruefung\Infrastructure\Persistence\Filesystem;
+namespace StudiMeilenstein\Infrastructure\Persistence\Filesystem;
 
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;

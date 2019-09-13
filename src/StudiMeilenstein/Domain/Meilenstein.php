@@ -61,6 +61,21 @@ final class Meilenstein implements DDDValueObject
         "voraus_sem8"  => 308,
         "voraus_sem9"  => 309,
 
+        "mc_sem1"  => 401,
+        "mc_sem2"  => 402,
+        "mc_sem3"  => 403,
+        "mc_sem4"  => 404,
+        "mc_sem5"  => 405,
+        "mc_sem6"  => 406,
+        "mc_sem7"  => 407,
+        "mc_sem8"  => 408,
+        "mc_sem9"  => 409,
+        "mc_sem10" => 410,
+
+        "stat_prfg_sem2" => 502,
+        "stat_prfg_sem4" => 504,
+        "stat_prfg_sem9" => 509,
+
     ];
 
     private $code;
@@ -84,21 +99,29 @@ final class Meilenstein implements DDDValueObject
     }
 
     public function getKuerzel() {
-        return array_flip(MEILENSTEINE_KUERZEL_ZU_CODE)[$this->code];
+        return array_flip(self::MEILENSTEINE_KUERZEL_ZU_CODE)[$this->code];
     }
 
     public function getTitel() {
         if (isset(self::MEILENSTEINE[$this->code])) {
             return self::MEILENSTEINE[$this->code];
         }
+        $fachsemester = ($this->getCode() % 100);
         if ($this->code > 100 && $this->code <= 110) {
-            return "Anwesenheit Sem. " . ($this->getCode() % 100);
+            return "Anwesenheit Sem. $fachsemester";
         }
         if ($this->code > 200 && $this->code <= 210) {
-            return "Abgeschlossen Sem. " . ($this->getCode() % 100);
+            return "Abgeschlossen Sem. $fachsemester";
         }
         if ($this->code > 300 && $this->code <= 310) {
-            return "Voraussetzung erfüllt Sem. " . ($this->getCode() % 100);
+            return "Voraussetzung erfüllt Sem. " .
+                ($fachsemester < 9 ? $fachsemester : "9+10");
+        }
+        if ($this->code > 400 && $this->code <= 410) {
+            return "MC-Prüfung Sem. $fachsemester";
+        }
+        if ($this->code > 500 && $this->code <= 510) {
+            return "Stationen-Prüfung Sem. $fachsemester";
         }
     }
 

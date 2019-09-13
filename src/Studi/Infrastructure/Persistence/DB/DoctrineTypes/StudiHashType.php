@@ -22,7 +22,7 @@ class StudiHashType extends Type
 
     /** @param StudiHash $value */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-        return $value ? $value->getValue() : null;
+        return ($value instanceof StudiHash) ? $value->getValue() : $value;
     }
 
     public function getName() {

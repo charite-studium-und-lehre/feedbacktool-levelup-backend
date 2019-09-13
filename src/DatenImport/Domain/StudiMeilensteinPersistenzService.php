@@ -50,7 +50,9 @@ class StudiMeilensteinPersistenzService
             $meilensteinCodesHinzuzufuegen = [];
             foreach (Meilenstein::MEILENSTEINE_KUERZEL_ZU_CODE as $kuerzel => $codeExistierend) {
                 if (!isset($dataLine[$kuerzel])) {
-                    echo "\n Fehler: Kürzel nicht gefunden:  $kuerzel";
+                    if ($codeExistierend < 400) {
+                        echo "\n Fehler: Kürzel nicht gefunden:  $kuerzel";
+                    }
                     continue;
                 }
                 if ($dataLine[$kuerzel]) {

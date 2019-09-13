@@ -34,10 +34,19 @@ class StudiMeilensteinApiController extends AbstractController{
         foreach ($meilensteine as $meilenstein) {
             $studiCodes[] = $meilenstein->getMeilenstein()->getCode();
         }
+        // TODO: mit echten Prüfungen ersetzen;
+        $studiCodes[] = 401;
+        $studiCodes[] = 402;
+        $studiCodes[] = 403;
+        $studiCodes[] = 404;
+        $studiCodes[] = 406;
+
+        $studiCodes[] = 502;
+        $studiCodes[] = 504;
 
         foreach (Meilenstein::MEILENSTEINE_KUERZEL_ZU_CODE as $code) {
             $meilenstein = Meilenstein::fromCode($code);
-            $meilensteinArray = [
+            $meilensteinArray[] = [
                 "code" => $code,
                 "kuerzel" => $meilenstein->getKuerzel(),
                 "beschreibung" => $meilenstein->getTitel(),
