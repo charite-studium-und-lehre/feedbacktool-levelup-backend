@@ -20,6 +20,8 @@ interface StudiPruefungsRepository extends DDDRepository, FlushableRepository
 
     public function nextIdentity(): StudiPruefungsId;
 
+    /** @return StudiPruefung[] */
+    public function allByStudiHash(StudiHash $studiHash): array;
 
     public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung;
 }
