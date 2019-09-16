@@ -33,4 +33,16 @@ final class FileBasedSimpleStudiPruefungsRepository extends AbstractCommonReposi
 
         return NULL;
     }
+
+    /** @return StudiPruefung[] */
+    public function allByStudiHash(StudiHash $studiHash): array {
+        $resultArray = [];
+        foreach ($this->all() as $studiPruefung) {
+            if ($studiPruefung->getStudiHash()->equals($studiHash)) {
+                $resultArray[] = $studiPruefung;
+            }
+        }
+
+        return $resultArray;
+    }
 }

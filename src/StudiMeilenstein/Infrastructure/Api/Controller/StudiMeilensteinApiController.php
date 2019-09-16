@@ -3,6 +3,7 @@ namespace StudiMeilenstein\Infrastructure\Api\Controller;
 
 use SSO\Domain\EingeloggterStudiService;
 use StudiMeilenstein\Domain\Meilenstein;
+use StudiMeilenstein\Domain\Service\MeilensteinExportService;
 use StudiMeilenstein\Domain\StudiMeilensteinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,18 +11,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StudiMeilensteinApiController extends AbstractController{
 
-    /** @var StudiMeilensteinRepository */
-    private $studiMeilensteinRepository;
-
     /** @var EingeloggterStudiService */
     private $eingeloggterStudiService;
 
+    /** @var MeilensteinExportService */
+    private $meilensteinExportService;
+
     public function __construct(
-        StudiMeilensteinRepository $studiMeilensteinRepository,
-        EingeloggterStudiService $eingeloggterStudiServcie
+        EingeloggterStudiService $eingeloggterStudiService,
+        MeilensteinExportService $meilensteinExportService
     ) {
-        $this->studiMeilensteinRepository = $studiMeilensteinRepository;
-        $this->eingeloggterStudiService = $eingeloggterStudiServcie;
+        $this->eingeloggterStudiService = $eingeloggterStudiService;
+        $this->meilensteinExportService = $meilensteinExportService;
     }
 
     /**
@@ -29,20 +30,13 @@ class StudiMeilensteinApiController extends AbstractController{
      */
     public function jsonMeilensteineAction() {
         $eingeloggterStudi = $this->eingeloggterStudiService->getEingeloggterStudi();
-        $meilensteine = $this->studiMeilensteinRepository->allByStudiHash($eingeloggterStudi->getStudiHash());
+        $meilensteine = $this->meilensteinExportService->alleMeilensteineFuerStudi(
+            $eingeloggterStudi->getStudiHash()
+        );
         $studiCodes = [];
         foreach ($meilensteine as $meilenstein) {
-            $studiCodes[] = $meilenstein->getMeilenstein()->getCode();
+            $studiCodes[] = $meilenstein->getCode();
         }
-        // TODO: mit echten Prüfungen ersetzen;
-        $studiCodes[] = 401;
-        $studiCodes[] = 402;
-        $studiCodes[] = 403;
-        $studiCodes[] = 404;
-        $studiCodes[] = 406;
-
-        $studiCodes[] = 502;
-        $studiCodes[] = 504;
 
         foreach (Meilenstein::MEILENSTEINE_KUERZEL_ZU_CODE as $code) {
             $meilenstein = Meilenstein::fromCode($code);

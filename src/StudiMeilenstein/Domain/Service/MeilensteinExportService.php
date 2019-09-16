@@ -2,7 +2,9 @@
 
 namespace StudiMeilenstein\Domain\Service;
 
+use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\StudiHash;
+use StudiMeilenstein\Domain\Meilenstein;
 use StudiMeilenstein\Domain\StudiMeilensteinRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 
@@ -15,26 +17,34 @@ class MeilensteinExportService
     /** @var StudiPruefungsRepository */
     private $studiPruefungsRepository;
 
+    /** @var PruefungsRepository */
+    private $pruefungsRepository;
+
     public function __construct(
         StudiMeilensteinRepository $studiMeilensteinRepository,
-        StudiPruefungsRepository $studiPruefungsRepository
+        StudiPruefungsRepository $studiPruefungsRepository,
+        pruefungsRepository $pruefungsRepository
     ) {
         $this->studiMeilensteinRepository = $studiMeilensteinRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
+        $this->pruefungsRepository = $pruefungsRepository;
     }
 
-    /** return array<int> */
-    public function alleMeilensteinCodesFuerStudi(StudiHash $studiHash): array {
-        $meilensteine = $this->studiMeilensteinRepository->allByStudiHash($studiHash);
-        $studiCodes = [];
-        foreach ($meilensteine as $meilenstein) {
-            $studiCodes[] = $meilenstein->getMeilenstein()->getCode();
+    /** return Meilenstein[] */
+    public function alleMeilensteineFuerStudi(StudiHash $studiHash): array {
+        $alleMeilensteine = [];
+        foreach ($this->studiMeilensteinRepository->allByStudiHash($studiHash) as $meilenstein) {
+            $alleMeilensteine[] = $meilenstein->getMeilenstein();
         }
-        foreach ($this->studiPruefungsRepository->allByStudiHash($studiHash)) {
-
+        foreach ($this->studiPruefungsRepository->allByStudiHash($studiHash) as $studiPruefung) {
+            $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
+            $meilenstein = Meilenstein::fromPruefung($pruefung);
+            if ($meilenstein) {
+                $alleMeilensteine[] = $meilenstein;
+            }
         }
 
-        return $studiCodes;
+        return $alleMeilensteine;
 
     }
 

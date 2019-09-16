@@ -59,12 +59,7 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 
         $this->charitePTMPersistenzService->persistierePruefung($ptmPruefungsDaten, $pruefungsId);
 
-        $output->writeln("\nFertig. "
-                         . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
-                         . $this->chariteMCPruefungWertungPersistenzService->getGeaendert() . " Zeilen geändert; "
-                         . count($this->chariteMCPruefungWertungPersistenzService->getNichtZuzuordnen())
-                         . " Matrikelnummern nicht zuzuordnen; "
-        );
+        $output->writeln("\nFertig. ");
 
     }
 

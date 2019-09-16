@@ -89,10 +89,10 @@ class PruefungsFormat implements DDDValueObject
         self::MC_SEM9                 => "MC-Sem9",
         self::MC_SEM10                => "MC-Sem10",
         self::PTM                     => "PTM",
-        self::STATION_TEIL1_VORKLINIK => "Stat-Teil1 VK",
-        self::STATION_TEIL1_KLINIK    => "Stat-Teil1 K",
-        self::STATION_TEIL2           => "Stat-Teil2",
-        self::STATION_TEIL3           => "Stat-Teil3",
+        self::STATION_TEIL1_VORKLINIK => "Stat-1VK",
+        self::STATION_TEIL1_KLINIK    => "Stat-1K",
+        self::STATION_TEIL2           => "Stat-2",
+        self::STATION_TEIL3           => "Stat-3",
     ];
 
     const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Prüfungsformat: ";
@@ -146,5 +146,18 @@ class PruefungsFormat implements DDDValueObject
     public function getCode(): string {
         return self::FORMAT_CODE[$this->value];
     }
+
+    public function isMc(): bool {
+        return $this->getValue() >= self::MC_SEM1 && $this->getValue() <= self::MC_SEM10;
+    }
+
+    public function isStation(): bool {
+        return $this->getValue() >= self::STATION_TEIL1_VORKLINIK && $this->getCode() <= self::STATION_TEIL3;
+    }
+
+    public function isPTM(): bool {
+        return $this->getValue() == self::PTM;
+    }
+
 
 }

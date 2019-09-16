@@ -72,6 +72,12 @@ class CharitePTMPersistenzService
         $einProzent = round($lineCount / 100);
 
         foreach ($ptmPruefungsDaten as $matrikelnummer => $studiErgebnis) {
+            try {
+                $matrikelnummerVO = Matrikelnummer::fromInt($matrikelnummer);
+            } catch (\Exception $e) {
+                echo "\n" . $e->getMessage() . " --- Skipping!";
+                continue;
+            }
             $counter++;
             if ($counter % $einProzent == 0) {
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
@@ -80,7 +86,9 @@ class CharitePTMPersistenzService
                 foreach ($clusterTypErgebnis as $clusterPTMCode => $bewertungsTyp) {
 
                     $this->createOrUpdateWertung($matrikelnummer, $clusterPTMCode, $bewertungsTyp, $pruefungsId);
-                    $this->createFachClusterZuordnung($clusterTypValue, $clusterPTMCode, $pruefungsId);
+                    if ($counter == 1) {
+                        $this->createFachClusterZuordnung($clusterTypValue, $clusterPTMCode, $pruefungsId);
+                    }
 
                     // evtl. in Zukunft auch Organsysteme
                     //   $this->createOrgansystemClusterZuordnung($clusterTypValue, $clusterPTMCode);
@@ -127,7 +135,6 @@ class CharitePTMPersistenzService
                 $pruefungsId
             );
             $this->pruefungsItemRepository->add($pruefungsItem);
-
         }
 
         $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
@@ -194,6 +201,7 @@ class CharitePTMPersistenzService
             $cluster = $this->clusterRepository->byId($clusterId);
             if (!$cluster->getClusterTyp()->equals($clusterTyp)) {
                 continue;
+                echo "C";
             }
 
             if ($cluster->equals($fachCluster)) {
@@ -202,9 +210,7 @@ class CharitePTMPersistenzService
                 $this->clusterZuordnungsRepository->delete(
                     ClusterZuordnung::byIds($clusterId, $pruefungsItemId)
                 );
-                $found = FALSE;
             }
-            break;
         }
         if (!$found) {
             $clusterZuordnung = ClusterZuordnung::byIds(

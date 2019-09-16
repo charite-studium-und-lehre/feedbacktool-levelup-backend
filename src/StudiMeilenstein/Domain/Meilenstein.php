@@ -5,6 +5,7 @@ namespace StudiMeilenstein\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use Pruefung\Domain\Pruefung;
 
 final class Meilenstein implements DDDValueObject
 {
@@ -61,18 +62,19 @@ final class Meilenstein implements DDDValueObject
         "voraus_sem8"  => 308,
         "voraus_sem9"  => 309,
 
-        "mc_sem1"  => 401,
-        "mc_sem2"  => 402,
-        "mc_sem3"  => 403,
-        "mc_sem4"  => 404,
-        "mc_sem5"  => 405,
-        "mc_sem6"  => 406,
-        "mc_sem7"  => 407,
-        "mc_sem8"  => 408,
-        "mc_sem9"  => 409,
-        "mc_sem10" => 410,
+        "MC-Sem1"  => 401,
+        "MC-Sem2"  => 402,
+        "MC-Sem3"  => 403,
+        "MC-Sem4"  => 404,
+        "MC-Sem5"  => 405,
+        "MC-Sem6"  => 406,
+        "MC-Sem7"  => 407,
+        "MC-Sem8"  => 408,
+        "MC-Sem9"  => 409,
+        "MC-Sem10" => 410,
 
-        "stat_prfg_sem2" => 502,
+        "stat_prfg_sem2_vorklinik" => 501,
+        "stat_prfg_sem2_klinik" => 502,
         "stat_prfg_sem4" => 504,
         "stat_prfg_sem9" => 509,
 
@@ -87,6 +89,26 @@ final class Meilenstein implements DDDValueObject
         $object->code = $value;
 
         return $object;
+    }
+
+    public static function fromPruefung(Pruefung $pruefung): ?self {
+        $pruefungsFormat = $pruefung->getFormat();
+        if (!$pruefungsFormat->isMc() && !$pruefungsFormat->isStation()) {
+            throw new \Exception("Prüfung kann nicht in Meilenstein umgewandelt werden (nur MC/Station): " .
+                                 $pruefungsFormat->getValue() . ($pruefungsFormat->isMc() ?"1":"0")
+                                 . ($pruefungsFormat->isPTM() ?"1":"0")
+            );
+        }
+
+        if ($pruefungsFormat->isMc()) {
+            return Meilenstein::fromCode($pruefungsFormat->getValue() - 10 + 400);
+        }
+
+        if ($pruefungsFormat->isStation()) {
+            return Meilenstein::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500);
+        }
+        
+
     }
 
     public static function fromKuerzel(string $value): self {
@@ -121,6 +143,12 @@ final class Meilenstein implements DDDValueObject
             return "MC-Prüfung Sem. $fachsemester";
         }
         if ($this->code > 500 && $this->code <= 510) {
+            if ($this->code == 501) {
+                return "Stationen-Prüfung Sem. 2 Vorklinik";
+            }
+            if ($this->code == 502) {
+                return "Stationen-Prüfung Sem. 2 Klinik";
+            }
             return "Stationen-Prüfung Sem. $fachsemester";
         }
     }

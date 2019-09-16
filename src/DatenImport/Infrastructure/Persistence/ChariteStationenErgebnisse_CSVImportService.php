@@ -27,6 +27,13 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                     && is_numeric($ergebnis)
                     && $ergebnis > 0) {
 
+                    if ($key == "Skala1_erg") {
+                        $key = "Sk1";
+                    }
+                    if ($key == "Skala2_erg") {
+                        $key = "Sk2";
+                    }
+
                     $ergebnisse[$key] = $ergebnis;
                 }
             }

@@ -8,6 +8,7 @@ use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
 final class StudiPruefungsRepositoryTest extends DbRepoTestCase
@@ -20,7 +21,7 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
     public function getAllRepositories() {
 
         return [
-            'file-based-repo' => [FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo()],
+            'file-based-repo' => [FileBasedSimpleStudiPruefungsRepository::createTempFileRepo()],
             'db-repo'         => [$this->dbRepo],
         ];
     }
@@ -37,20 +38,26 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
             PruefungsId::fromString(7890)
         );
         $studiPruefung2 = StudiPruefung::fromValues(
-            StudiPruefungsId::fromInt(456),
+            StudiPruefungsId::fromInt(457),
             StudiHash::fromString(password_hash("test2", PASSWORD_ARGON2I)),
             PruefungsId::fromString(9876)
+        );
+        $studiPruefung3 = StudiPruefung::fromValues(
+            StudiPruefungsId::fromInt(458),
+            $this->studiHash1,
+            PruefungsId::fromString(9877)
         );
 
         $repo->add($studiPruefung1);
         $repo->add($studiPruefung2);
+        $repo->add($studiPruefung3);
         $repo->flush();
         $this->refreshEntities($studiPruefung1, $studiPruefung2);
 
-        $this->assertCount(2, $repo->all());
-        $studiPruefung2 = $repo->byId(StudiPruefungsId::fromInt(456));
+        $this->assertCount(3, $repo->all());
+        $studiPruefung2 = $repo->byId(StudiPruefungsId::fromInt(457));
 
-        $this->assertEquals(456, $studiPruefung2->getId()->getValue());
+        $this->assertEquals(457, $studiPruefung2->getId()->getValue());
         $this->assertTrue(password_verify("test2", $studiPruefung2->getStudiHash()->getValue()));
         $this->assertEquals(9876, $studiPruefung2->getPruefungsId()->getValue());
     }
@@ -61,7 +68,7 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
      */
     public function testDelete(StudiPruefungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
-        $this->assertCount(2, $repo->all());
+        $this->assertCount(3, $repo->all());
         foreach ($repo->all() as $entity) {
             $repo->delete($entity);
         }
@@ -82,6 +89,13 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
         );
         $this->assertNull($studiPruefung);
 
+    }
+
+    /** * @dataProvider getAllRepositories */
+    public function testAllByStudiHash(StudiPruefungsRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $studiPruefungen = $repo->allByStudiHash($this->studiHash1);
+        $this->assertCount(2, $studiPruefungen);
     }
 
     protected function clearDatabase(): void {

@@ -38,4 +38,12 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
         );
     }
 
+    /** @return StudiPruefung[] */
+    public function allByStudiHash(StudiHash $studiHash): array {
+        return $this->doctrineRepo->findBy(
+            [
+                "studiHash" => $studiHash
+            ]
+        );
+    }
 }
