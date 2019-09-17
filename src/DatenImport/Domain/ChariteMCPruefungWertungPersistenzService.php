@@ -208,11 +208,12 @@ class ChariteMCPruefungWertungPersistenzService
                 $bestehensGrenzeWertung
             );
             $this->studiPruefungsWertungRepository->add($studiPruefungsWertung);
+            $this->studiPruefungsWertungRepository->flush();
         }
         if ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
             $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
+            $this->studiPruefungsWertungRepository->flush();
         }
-        $this->studiPruefungsWertungRepository->flush();
     }
 
     private function pruefeOderErzeugePruefungsItem($pruefungsItemId, $pruefungsId, ?int $schwierigkeit): void {

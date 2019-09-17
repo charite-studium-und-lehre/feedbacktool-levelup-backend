@@ -6,6 +6,8 @@ use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 use Pruefung\Domain\Pruefung;
+use StudiPruefung\Domain\StudiPruefung;
+use StudiPruefung\Domain\StudiPruefungsId;
 
 final class Meilenstein implements DDDValueObject
 {
@@ -82,24 +84,27 @@ final class Meilenstein implements DDDValueObject
 
     private $code;
 
-    public static function fromCode(int $value): self {
+    private $studiPruefungsId;
+
+    public static function fromCode(int $value, ?StudiPruefungsId $studiPruefungsId = NULL): self {
         Assertion::inArray($value, self::MEILENSTEINE_KUERZEL_ZU_CODE, self::UNGUELTIG . $value);
 
         $object = new self();
         $object->code = $value;
+        $object->studiPruefungsId = $studiPruefungsId;
 
         return $object;
     }
 
-    public static function fromPruefung(Pruefung $pruefung): ?self {
+    public static function fromPruefung(Pruefung $pruefung, StudiPruefungsId $studiPruefungsId): ?self {
         $pruefungsFormat = $pruefung->getFormat();
 
         if ($pruefungsFormat->isMc()) {
-            return Meilenstein::fromCode($pruefungsFormat->getValue() - 10 + 400);
+            return Meilenstein::fromCode($pruefungsFormat->getValue() - 10 + 400, $studiPruefungsId);
         }
 
         if ($pruefungsFormat->isStation()) {
-            return Meilenstein::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500);
+            return Meilenstein::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500, $studiPruefungsId);
         }
 
         return NULL;
@@ -118,6 +123,12 @@ final class Meilenstein implements DDDValueObject
     public function getKuerzel() {
         return array_flip(self::MEILENSTEINE_KUERZEL_ZU_CODE)[$this->code];
     }
+
+    public function getStudiPruefungsId(): ?StudiPruefungsId {
+        return $this->studiPruefungsId;
+    }
+
+
 
     public function getTitel() {
         if (isset(self::MEILENSTEINE[$this->code])) {

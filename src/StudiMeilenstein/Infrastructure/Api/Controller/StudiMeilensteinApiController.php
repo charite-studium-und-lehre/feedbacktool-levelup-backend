@@ -1,15 +1,16 @@
 <?php
+
 namespace StudiMeilenstein\Infrastructure\Api\Controller;
 
 use SSO\Domain\EingeloggterStudiService;
 use StudiMeilenstein\Domain\Meilenstein;
 use StudiMeilenstein\Domain\Service\MeilensteinExportService;
-use StudiMeilenstein\Domain\StudiMeilensteinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StudiMeilensteinApiController extends AbstractController{
+class StudiMeilensteinApiController extends AbstractController
+{
 
     /** @var EingeloggterStudiService */
     private $eingeloggterStudiService;
@@ -41,17 +42,18 @@ class StudiMeilensteinApiController extends AbstractController{
         foreach (Meilenstein::MEILENSTEINE_KUERZEL_ZU_CODE as $code) {
             $meilenstein = Meilenstein::fromCode($code);
             $meilensteinArray[] = [
-                "code" => $code,
-                "kuerzel" => $meilenstein->getKuerzel(),
+                "code"         => $code,
+                "kuerzel"      => $meilenstein->getKuerzel(),
                 "beschreibung" => $meilenstein->getTitel(),
                 "fachsemester" => $meilenstein->getFachsemester(),
-                "erfuellt" => in_array($code, $studiCodes),
+                "erfuellt"     => in_array($code, $studiCodes),
+                "studiPruefungsId" => $meilenstein->getStudiPruefungsId(),
             ];
         }
+
         return new JsonResponse(
             ["meilensteine" => $meilensteinArray]
         );
-
 
     }
 

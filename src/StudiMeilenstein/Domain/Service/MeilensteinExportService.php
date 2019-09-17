@@ -41,7 +41,7 @@ class MeilensteinExportService
                 continue;
             }
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-            $meilenstein = Meilenstein::fromPruefung($pruefung);
+            $meilenstein = Meilenstein::fromPruefung($pruefung, $studiPruefung->getId());
             if ($meilenstein) {
                 $alleMeilensteine[] = $meilenstein;
             }
