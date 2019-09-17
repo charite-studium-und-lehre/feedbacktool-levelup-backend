@@ -17,7 +17,7 @@ class FloatToIntKodierer
      */
     public static function toInt(float $zahlZuKodieren, int $nachkommastellen): int {
         Assertion::numeric($zahlZuKodieren);
-        Assertion::between($zahlZuKodieren, 0, self::MAX_STELLENZAHL);
+        Assertion::between($zahlZuKodieren, 0, 10 ** self::MAX_STELLENZAHL);
         return (int) ($zahlZuKodieren * (10 ** $nachkommastellen));
     }
 

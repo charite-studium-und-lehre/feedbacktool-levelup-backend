@@ -2,6 +2,7 @@
 
 namespace DatenImport\Domain;
 
+use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemRepository;
 use Studi\Domain\StudiIntern;
@@ -11,6 +12,8 @@ use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\PunktSkala;
+use Wertung\Domain\StudiPruefungsWertung;
+use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\PunktWertung;
 use Wertung\Domain\Wertung\Punktzahl;
 
@@ -29,6 +32,9 @@ class ChariteMCPruefungWertungPersistenzService
     /** @var StudiInternRepository */
     private $studiInternRepository;
 
+    /** @var StudiPruefungsWertungRepository */
+    private $studiPruefungsWertungRepository;
+
     /** @var int */
     private $hinzugefuegt = 0;
 
@@ -40,14 +46,16 @@ class ChariteMCPruefungWertungPersistenzService
 
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,
-        PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
-        StudiInternRepository $studiInternRepository
+        PruefungsItemRepository $pruefungsItemRepository,
+        StudiInternRepository $studiInternRepository,
+        StudiPruefungsWertungRepository $studiPruefungsWertungRepository
     ) {
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->pruefungsItemRepository = $pruefungsItemRepository;
         $this->studiInternRepository = $studiInternRepository;
+        $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
     /** @param StudiIntern[] $studiInternArray */
@@ -56,79 +64,56 @@ class ChariteMCPruefungWertungPersistenzService
         $lineCount = count($mcPruefungsDaten);
         $einProzent = round($lineCount / 100);
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsId, $pruefungsItemId,
-            $clusterTitel]) {
-            $counter++;
+        foreach ($mcPruefungsDaten as
+        [$matrikelnummer,
+            $punktzahl,
+            $pruefungsId,
+            $pruefungsItemId,
+            $fragenNr,
+            $lzNummer,
+            $gesamtErreichtePunktzahl,
+            $fragenAnzahl,
+            $bestehensGrenze,
+            $schwierigkeit]
+        ) {
 
+            $counter++;
             if ($counter % $einProzent == 0) {
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
                 $this->pruefungsItemRepository->flush();
                 $this->itemWertungsRepository->flush();
             }
 
-            $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+            $studiIntern = $this->holeStudiIntern($matrikelnummer);
             if (!$studiIntern) {
-                if (!in_array($matrikelnummer, $this->nichtZuzuordnen)) {
-                    echo "\n Fehler: Studi mit Matrikel als Hash nicht gefunden: " . $matrikelnummer;
-                    echo " -> Ignoriere Matrikelnummer in allen Zeilen.";
-                    $this->nichtZuzuordnen[] = $matrikelnummer;
-                }
                 continue;
             }
+
             $studiHash = $studiIntern->getStudiHash();
-            $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
+            $studiPruefung = $this->holeOderErzeugeStudiPruefung(
                 $studiHash,
                 $pruefungsId,
-                );
-            if (!$studiPruefung) {
-                $studiPruefung = StudiPruefung::fromValues(
-                    $this->studiPruefungsRepository->nextIdentity(),
-                    $studiHash,
-                    $pruefungsId
-                );
-                $this->studiPruefungsRepository->add($studiPruefung);
-                $this->studiPruefungsRepository->flush();
-            }
-
-            $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
-            if (!$pruefungsItem) {
-                $pruefungsItem = PruefungsItem::create(
-                    $pruefungsItemId,
-                    $pruefungsId
-                );
-                $this->pruefungsItemRepository->add($pruefungsItem);
-
-            }
-
-            $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
-                $studiPruefung->getId(),
-                $pruefungsItemId
+                $gesamtErreichtePunktzahl,
+                $bestehensGrenze
             );
-            $punktWertung = PunktWertung::fromPunktzahlUndSkala(
-                $punktzahl,
-                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
+
+            $this->erzeugeStudiPruefungsWertung(
+                $studiPruefung,
+                $gesamtErreichtePunktzahl,
+                $fragenAnzahl,
+                $bestehensGrenze
             );
-            if (!$itemWertung
-                || !$itemWertung->getWertung()->equals($punktWertung)) {
-                if ($itemWertung) {
-                    $this->itemWertungsRepository->delete($itemWertung);
-                    $this->geaendert++;
-                } else {
-                    $this->hinzugefuegt++;
-                }
-                $itemWertung = ItemWertung::create(
-                    $this->itemWertungsRepository->nextIdentity(),
-                    $pruefungsItemId,
-                    $studiPruefung->getId(),
-                    $punktWertung
-                );
-                $this->itemWertungsRepository->add($itemWertung);
-                echo "+";
-            }
+
+            $this->pruefeOderErzeugePruefungsItem(
+                $pruefungsItemId,
+                $pruefungsId,
+                $schwierigkeit
+            );
+
+            $this->pruefeOderErzeugeItemWertung($studiPruefung, $pruefungsItemId, $punktzahl);
 
         }
-        $this->pruefungsItemRepository->flush();
-        $this->itemWertungsRepository->flush();
+        $this->flushAllRepos();
 
     }
 
@@ -142,6 +127,144 @@ class ChariteMCPruefungWertungPersistenzService
 
     public function getNichtZuzuordnen(): array {
         return $this->nichtZuzuordnen;
+    }
+
+    /**
+     * @param \Studi\Domain\StudiHash $studiHash
+     * @param $pruefungsId
+     * @return StudiPruefung|null
+     */
+    private function holeOderErzeugeStudiPruefung(
+        \Studi\Domain\StudiHash $studiHash,
+        $pruefungsId,
+        $gesamtPunktzahl = NULL,
+        $bestehensgrenze = NULL
+    ) {
+        $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
+            $studiHash,
+            $pruefungsId,
+            );
+        $bestanden = $gesamtPunktzahl && $bestehensgrenze && $gesamtPunktzahl > $bestehensgrenze;
+        if (!$studiPruefung) {
+            $studiPruefung = StudiPruefung::fromValues(
+                $this->studiPruefungsRepository->nextIdentity(),
+                $studiHash,
+                $pruefungsId,
+                $bestanden
+            );
+            $this->studiPruefungsRepository->add($studiPruefung);
+            $this->studiPruefungsRepository->flush();
+        }
+        if ($studiPruefung->isBestanden() != $bestanden) {
+            $studiPruefung->setBestanden($bestanden);
+        }
+
+        return $studiPruefung;
+    }
+
+    private function holeStudiIntern($matrikelnummer) {
+        $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+        if (!$studiIntern) {
+            if (!in_array($matrikelnummer, $this->nichtZuzuordnen)) {
+                echo "\n Fehler: Studi mit Matrikel als Hash nicht gefunden: " . $matrikelnummer;
+                echo " -> Ignoriere Matrikelnummer in allen Zeilen.";
+                $this->nichtZuzuordnen[] = $matrikelnummer;
+
+                return NULL;
+            }
+
+        }
+
+        return $studiIntern;
+    }
+
+    private function erzeugeStudiPruefungsWertung(
+        ?StudiPruefung $studiPruefung,
+        $gesamtErreichtePunktzahl,
+        $fragenAnzahl,
+        $bestehensGrenze
+    ): void {
+        $studiPruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId(
+            $studiPruefung->getId()
+        );
+        if (!$studiPruefungsWertung && $gesamtErreichtePunktzahl) {
+            $gesamtErgebnis = PunktWertung::fromPunktzahlUndSkala(
+                Punktzahl::fromFloat($gesamtErreichtePunktzahl),
+                PunktSkala::fromMaxPunktzahl(
+                    Punktzahl::fromFloat($fragenAnzahl)
+                )
+            );
+            if ($bestehensGrenze) {
+                $bestehensGrenzeWertung = PunktWertung::fromPunktzahlUndSkala(
+                    Punktzahl::fromFloat($bestehensGrenze),
+                    PunktSkala::fromMaxPunktzahl(
+                        Punktzahl::fromFloat($fragenAnzahl)
+                    )
+                );
+            }
+            $studiPruefungsWertung = StudiPruefungsWertung::create(
+                $studiPruefung->getId(),
+                $gesamtErgebnis,
+                $bestehensGrenzeWertung
+            );
+            $this->studiPruefungsWertungRepository->add($studiPruefungsWertung);
+        }
+        if ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
+            $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
+        }
+        $this->studiPruefungsWertungRepository->flush();
+    }
+
+    private function pruefeOderErzeugePruefungsItem($pruefungsItemId, $pruefungsId, ?int $schwierigkeit): void {
+        $schwierigkeitVO = NULL;
+        if ($schwierigkeit) {
+            $schwierigkeitVO = ItemSchwierigkeit::fromConst($schwierigkeit);
+        }
+
+        $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
+        if (!$pruefungsItem) {
+            $pruefungsItem = PruefungsItem::create(
+                $pruefungsItemId,
+                $pruefungsId,
+                $schwierigkeitVO
+            );
+            $this->pruefungsItemRepository->add($pruefungsItem);
+        }
+        $pruefungsItem->setItemSchwierigkeit(ItemSchwierigkeit::fromConst($schwierigkeit));
+    }
+
+    private function pruefeOderErzeugeItemWertung(?StudiPruefung $studiPruefung, $pruefungsItemId, $punktzahl): void {
+        $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
+            $studiPruefung->getId(),
+            $pruefungsItemId
+        );
+        $punktWertung = PunktWertung::fromPunktzahlUndSkala(
+            $punktzahl,
+            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
+        );
+        if (!$itemWertung
+            || !$itemWertung->getWertung()->equals($punktWertung)) {
+            if ($itemWertung) {
+                $this->itemWertungsRepository->delete($itemWertung);
+                $this->geaendert++;
+            } else {
+                $this->hinzugefuegt++;
+            }
+            $itemWertung = ItemWertung::create(
+                $this->itemWertungsRepository->nextIdentity(),
+                $pruefungsItemId,
+                $studiPruefung->getId(),
+                $punktWertung
+            );
+            $this->itemWertungsRepository->add($itemWertung);
+            echo "+";
+        }
+    }
+
+    private function flushAllRepos(): void {
+        $this->pruefungsItemRepository->flush();
+        $this->itemWertungsRepository->flush();
+        $this->studiPruefungsWertungRepository->flush();
     }
 
 }

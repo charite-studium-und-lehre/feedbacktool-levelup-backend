@@ -17,13 +17,22 @@ class StudiPruefung
     /** @var PruefungsId */
     private $pruefungsId;
 
+    /** @var bool */
+    private $bestanden;
+
     use DefaultEntityComparison;
 
-    public static function fromValues(StudiPruefungsId $id, StudiHash $studiHash, PruefungsId $pruefungsId) {
+    public static function fromValues(
+        StudiPruefungsId $id,
+        StudiHash $studiHash,
+        PruefungsId $pruefungsId,
+        bool $bestanden = TRUE
+    ) {
         $object = new self();
         $object->id = $id;
         $object->studiHash = $studiHash;
         $object->pruefungsId = $pruefungsId;
+        $object->bestanden = $bestanden;
 
         return $object;
     }
@@ -38,6 +47,14 @@ class StudiPruefung
 
     public function getPruefungsId(): PruefungsId {
         return PruefungsId::fromString($this->pruefungsId->getValue());
+    }
+
+    public function isBestanden(): bool {
+        return $this->bestanden;
+    }
+
+    public function setBestanden(bool $bestanden): void {
+        $this->bestanden = $bestanden;
     }
 
 }

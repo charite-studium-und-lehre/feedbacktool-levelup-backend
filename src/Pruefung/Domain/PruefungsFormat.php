@@ -136,7 +136,6 @@ class PruefungsFormat implements DDDValueObject
 
     public function getValue(): int {
         return $this->value;
-
     }
 
     public function getTitel(): string {
@@ -159,6 +158,10 @@ class PruefungsFormat implements DDDValueObject
 
     public function isPTM(): bool {
         return $this->getValue() == self::PTM;
+    }
+
+    public function hatBestandenWert(): bool {
+        return $this->isPTM();
     }
 
 

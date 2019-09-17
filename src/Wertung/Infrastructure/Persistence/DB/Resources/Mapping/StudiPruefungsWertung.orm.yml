@@ -1,0 +1,14 @@
+Wertung\Domain\StudiPruefungsWertung:
+  type: entity
+  table: pruefung_studiPruefungsWertung
+
+  id:
+    studiPruefungsId:
+      type: aggregateId
+
+  fields:
+    gesamtErgebnis:
+      type: wertung
+    bestehensGrenze:
+      type: wertung
+      nullable: true

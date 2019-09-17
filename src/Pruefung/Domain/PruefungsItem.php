@@ -14,11 +14,19 @@ class PruefungsItem
     /** @var PruefungsId */
     private $pruefungsId;
 
-    public static function create(PruefungsItemId $id, PruefungsId $pruefungsId): self {
+    /** @var ?ItemSchwierigkeit */
+    private $itemSchwierigkeit;
+
+    public static function create(
+        PruefungsItemId $id,
+        PruefungsId $pruefungsId,
+        ?ItemSchwierigkeit $itemSchwierigkeit = NULL
+    ): self {
 
         $object = new self();
         $object->id = $id;
         $object->pruefungsId = $pruefungsId;
+        $object->itemSchwierigkeit = $itemSchwierigkeit;
 
         return $object;
     }
@@ -29,5 +37,13 @@ class PruefungsItem
 
     public function getPruefungsId(): PruefungsId {
         return PruefungsId::fromString($this->pruefungsId);
+    }
+
+   public function getItemSchwierigkeit(): ?ItemSchwierigkeit {
+        return $this->itemSchwierigkeit;
+    }
+
+    public function setItemSchwierigkeit(ItemSchwierigkeit $itemSchwierigkeit): void {
+        $this->itemSchwierigkeit = $itemSchwierigkeit;
     }
 }

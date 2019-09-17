@@ -29,13 +29,15 @@ class ItemWertung implements DDDEntity
         ItemWertungsId $id,
         PruefungsItemId $pruefungsItemId,
         StudiPruefungsId $studiPruefungsId,
-        Wertung $wertung
+        Wertung $wertung,
+        bool $istGesamtErgebnis = FALSE
     ): self {
         $object = new self();
         $object->id = $id;
         $object->pruefungsItemId = $pruefungsItemId;
         $object->studiPruefungsId = $studiPruefungsId;
         $object->wertung = $wertung;
+        $object->istGesamtErgebnis = $istGesamtErgebnis;
 
         return $object;
     }
@@ -59,5 +61,4 @@ class ItemWertung implements DDDEntity
     public function setWertung(Wertung $wertung): void {
         $this->wertung = $wertung;
     }
-
 }

@@ -35,24 +35,33 @@ class ChariteMCPruefungFachPersistenzService
         $einProzent = round($lineCount / 100);
         $nichtGefunden = [];
 
-        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsId, $pruefungsItemId,
-            $lernzielNummer]) {
+        foreach ($mcPruefungsDaten as
+        [$matrikelnummer,
+            $punktzahl,
+            $pruefungsId,
+            $pruefungsItemId,
+            $fragenNr,
+            $lzNummer,
+            $gesamtErreichtePunktzahl,
+            $fragenAnzahl,
+            $bestehensGrenze,
+            $schwierigkeit]) {
             $counter++;
             if ($counter % $einProzent == 0) {
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
             }
 
-            if (!$lernzielNummer) {
+            if (!$lzNummer) {
                 continue;
             }
             $fachClusterId = $this->lernzielFachRepository
                 ->getFachClusterIdByLernzielNummer(
-                    LernzielNummer::fromInt($lernzielNummer)
+                    LernzielNummer::fromInt($lzNummer)
                 );
             if (!$fachClusterId) {
-                if (!in_array("$lernzielNummer-$pruefungsItemId", $nichtGefunden)) {
-                    echo "\nFehler: Lernziel-Nummer nicht gefunden zu Frage $pruefungsItemId: $lernzielNummer";
-                    $nichtGefunden[] = "$lernzielNummer-$pruefungsItemId";
+                if (!in_array("$lzNummer-$pruefungsItemId", $nichtGefunden)) {
+                    echo "\nFehler: Lernziel-Nummer nicht gefunden zu Frage $pruefungsItemId: $lzNummer";
+                    $nichtGefunden[] = "$lzNummer-$pruefungsItemId";
                 }
                 continue;
             }

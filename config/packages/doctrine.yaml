@@ -1,111 +1,117 @@
 parameters:
-    # Adds a fallback DATABASE_URL if the env var is not set.
-    # This allows you to run cache:warmup even if your
-    # environment variables are not available yet.
-    # You should not need to change this value.
-    env(DATABASE_URL): ''
+  # Adds a fallback DATABASE_URL if the env var is not set.
+  # This allows you to run cache:warmup even if your
+  # environment variables are not available yet.
+  # You should not need to change this value.
+  env(DATABASE_URL): ''
 
 doctrine:
-    dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '8.0'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
+  dbal:
+    # configure these for your database server
+    driver: 'pdo_mysql'
+    server_version: '8.0'
+    charset: utf8mb4
+    default_table_options:
+      charset: utf8mb4
+      collate: utf8mb4_unicode_ci
 
-        url: '%env(resolve:DATABASE_URL)%'
+    url: '%env(resolve:DATABASE_URL)%'
 
-        types:
-            aggregateId:
-                class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdType"
-            aggregateIdString:
-                class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
-            matrikelnummer:
-                class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\MatrikelnummerType"
-            studiHash:
-                class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiHashType"
-            loginHash:
-                class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
-            wertung:
-                class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
-            clusterCode:
-                class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
-        mapping_types:
-            aggregateId: integer
-            aggregateString: string
-            matrikelnummer: integer
-            studiHash: string
-            loginHash: string
-            wertung: integer
-            clusterCode: string
+    types:
+      aggregateId:
+        class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdType"
+      aggregateId_AutoIncrement:
+        class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdAIType"
+      aggregateIdString:
+        class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
+      matrikelnummer:
+        class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\MatrikelnummerType"
+      studiHash:
+        class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiHashType"
+      loginHash:
+        class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
+      wertung:
+        class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
+      clusterCode:
+        class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
+      itemSchwierigkeit:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
+    mapping_types:
+      aggregateId: integer
+      aggregateId_AutoIncrement: integer
+      aggregateString: string
+      matrikelnummer: integer
+      studiHash: string
+      loginHash: string
+      wertung: integer
+      clusterCode: string
+      itemSchwierigkeit: integer
 
-    orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
-#        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+  orm:
+    auto_generate_proxy_classes: '%kernel.debug%'
+    #        naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
 
-        mappings:
-            CommmonMapping:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "Common\\Domain"
+    mappings:
+      CommmonMapping:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "Common\\Domain"
 
-            AbstractEvent:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/MappingApplication/AbstractEvent"
-                prefix:               "Common\\Application\\AbstractEvent"
+      AbstractEvent:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/MappingApplication/AbstractEvent"
+        prefix:               "Common\\Application\\AbstractEvent"
 
-            Cluster:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/Cluster/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "Cluster\\Domain"
+      Cluster:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Cluster/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "Cluster\\Domain"
 
-            Pruefung:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "Pruefung\\Domain"
+      Pruefung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "Pruefung\\Domain"
 
-            Studi:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/Studi/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "Studi\\Domain"
+      Studi:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Studi/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "Studi\\Domain"
 
-            StudiPruefung:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/StudiPruefung/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "StudiPruefung\\Domain"
+      StudiPruefung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/StudiPruefung/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "StudiPruefung\\Domain"
 
-            StudiMeilenstein:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/StudiMeilenstein/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "StudiMeilenstein\\Domain"
+      StudiMeilenstein:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/StudiMeilenstein/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "StudiMeilenstein\\Domain"
 
-            Wertung:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "Wertung\\Domain"
+      Wertung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "Wertung\\Domain"
 
-            DatenImport:
-                is_bundle:            false
-                mapping:              true
-                type:                 yml
-                dir:                  "%kernel.project_dir%/src/DatenImport/Infrastructure/Persistence/DB/Resources/Mapping"
-                prefix:               "DatenImport\\Domain"
+      DatenImport:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/DatenImport/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "DatenImport\\Domain"

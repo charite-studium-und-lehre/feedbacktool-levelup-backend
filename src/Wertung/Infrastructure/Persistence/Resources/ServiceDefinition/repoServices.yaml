@@ -21,3 +21,19 @@ services:
           - "@Wertung-Domain-ItemWertungsRepository-DoctrineRepo"
           - "@doctrine.orm.entity_manager"
         public: true
+
+
+
+
+    Wertung-Domain-StudiPruefungsWertungRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Wertung\Domain\StudiPruefungsWertung
+
+    Wertung\Domain\StudiPruefungsWertungRepository:
+        class: 'Wertung\Infrastructure\Persistence\DB\DBStudiPruefungsWertungRepository'
+        arguments:
+            - "@Wertung-Domain-StudiPruefungsWertungRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true

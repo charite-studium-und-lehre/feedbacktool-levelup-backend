@@ -3,6 +3,7 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\PruefungsdatenImportService;
+use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsDatum;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
@@ -38,15 +39,15 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             }
             $pruefungSemester = isset($dataLine["Kl_Nr"]) ? $dataLine["Kl_Nr"] : $dataLine["Kl_nr"];
             if ($pruefungSemester == "3D-MC") {
-                $pruefungSemester = 3;
+                continue;
             } else {
                 $pruefungSemester = str_replace("MC Semester ", "", "$pruefungSemester");
             }
+            if (strstr($pruefungSemester, "Grundlagenfächer_S05") !== FALSE) {
+                continue;
+            }
             if (!is_numeric($pruefungSemester)) {
-                if (strpos($pruefungSemester, "Modul ") === FALSE
-                    && strpos($pruefungSemester, "Modul") === FALSE) {
-                    echo "-$pruefungSemester";
-                }
+                echo "-$pruefungSemester";
                 continue;
             }
 
@@ -59,17 +60,36 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 echo "- Fehler beim Import: Prüfungstitel (Sem): ".$dataLine["Kl_Nr"];
             }
 
-            $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $dataLine["FragenNr"];
+            $fragenNr = $dataLine["FragenNr"];
+            $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $fragenNr;
 
             $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdString);
-            $lzNummer = is_numeric($dataLine["LernzielNr"]) ? $dataLine["LernzielNr"] : NULL;
+            $lzNummer = is_numeric($dataLine["LZNummer"]) ? $dataLine["LZNummer"] : NULL;
+
+            $fragenAnzahl = is_numeric($dataLine["fr_anz"]) ? $dataLine["fr_anz"] : NULL;
+            $gesamtErreichtePunktzahl = is_numeric($dataLine["punkte"]) ? $dataLine["punkte"] : NULL;
+            $bestehensGrenze = is_numeric($dataLine["best_gr"]) ? $dataLine["best_gr"] : NULL;
+            $schwierigkeitsWert =  is_numeric($dataLine["p"]) ? $dataLine["p"] : NULL;
+            $schwierigkeit = NULL;
+            if ($schwierigkeitsWert < .4) {
+                $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_LEICHT;
+            } elseif($schwierigkeitsWert > .8) {
+                $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_SCHWER;
+            } elseif ($schwierigkeitsWert) {
+                $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_NORMAL;
+            }
 
             $data[] = [
                 $matrikelnummer,
                 $punktzahl,
                 $pruefungsId,
                 $pruefungsItemId,
+                $fragenNr,
                 $lzNummer,
+                $gesamtErreichtePunktzahl,
+                $fragenAnzahl,
+                $bestehensGrenze,
+                $schwierigkeit,
             ];
         }
 

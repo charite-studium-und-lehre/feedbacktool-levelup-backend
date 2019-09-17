@@ -10,3 +10,6 @@ Pruefung\Domain\PruefungsItem:
     pruefungsId:
       type: aggregateIdString
       column: pruefungsId
+    itemSchwierigkeit:
+      type: itemSchwierigkeit
+      nullable: true

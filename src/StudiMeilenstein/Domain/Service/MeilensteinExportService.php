@@ -37,6 +37,9 @@ class MeilensteinExportService
             $alleMeilensteine[] = $meilenstein->getMeilenstein();
         }
         foreach ($this->studiPruefungsRepository->allByStudiHash($studiHash) as $studiPruefung) {
+            if (!$studiPruefung->isBestanden()) {
+                continue;
+            }
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
             $meilenstein = Meilenstein::fromPruefung($pruefung);
             if ($meilenstein) {

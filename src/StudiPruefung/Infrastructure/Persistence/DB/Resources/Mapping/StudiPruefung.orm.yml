@@ -4,11 +4,16 @@ StudiPruefung\Domain\StudiPruefung:
 
   id:
     id:
-      type: aggregateId
+      type: aggregateId_AutoIncrement
+      generator:
+        strategy: IDENTITY
 
   fields:
     studiHash:
       type: studiHash
+    bestanden:
+      type: boolean
+      nullable: false
 
   embedded:
     pruefungsId:
