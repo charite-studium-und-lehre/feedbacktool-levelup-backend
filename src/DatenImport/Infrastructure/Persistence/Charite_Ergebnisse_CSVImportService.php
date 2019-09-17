@@ -72,9 +72,9 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             $schwierigkeitsWert =  is_numeric($dataLine["p"]) ? $dataLine["p"] : NULL;
             $schwierigkeit = NULL;
             if ($schwierigkeitsWert < .4) {
-                $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_LEICHT;
-            } elseif($schwierigkeitsWert > .8) {
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_SCHWER;
+            } elseif($schwierigkeitsWert > .8) {
+                $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_LEICHT;
             } elseif ($schwierigkeitsWert) {
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_NORMAL;
             }
