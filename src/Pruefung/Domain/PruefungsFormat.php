@@ -148,11 +148,13 @@ class PruefungsFormat implements DDDValueObject
     }
 
     public function isMc(): bool {
-        return $this->getValue() >= self::MC_SEM1 && $this->getValue() <= self::MC_SEM10;
+        return $this->getValue() >= self::MC_SEM1
+            && $this->getValue() <= self::MC_SEM10;
     }
 
     public function isStation(): bool {
-        return $this->getValue() >= self::STATION_TEIL1_VORKLINIK && $this->getCode() <= self::STATION_TEIL3;
+        return $this->getValue() >= self::STATION_TEIL1_VORKLINIK
+            && $this->getValue() <= self::STATION_TEIL3;
     }
 
     public function isPTM(): bool {

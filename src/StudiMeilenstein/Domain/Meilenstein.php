@@ -93,12 +93,6 @@ final class Meilenstein implements DDDValueObject
 
     public static function fromPruefung(Pruefung $pruefung): ?self {
         $pruefungsFormat = $pruefung->getFormat();
-        if (!$pruefungsFormat->isMc() && !$pruefungsFormat->isStation()) {
-            throw new \Exception("Prüfung kann nicht in Meilenstein umgewandelt werden (nur MC/Station): " .
-                                 $pruefungsFormat->getValue() . ($pruefungsFormat->isMc() ?"1":"0")
-                                 . ($pruefungsFormat->isPTM() ?"1":"0")
-            );
-        }
 
         if ($pruefungsFormat->isMc()) {
             return Meilenstein::fromCode($pruefungsFormat->getValue() - 10 + 400);
@@ -107,7 +101,8 @@ final class Meilenstein implements DDDValueObject
         if ($pruefungsFormat->isStation()) {
             return Meilenstein::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500);
         }
-        
+
+        return NULL;
 
     }
 
