@@ -36,6 +36,8 @@ doctrine:
         class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
       itemSchwierigkeit:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
+      pruefungsPeriode:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
     mapping_types:
       aggregateId: integer
       aggregateId_AutoIncrement: integer
@@ -46,6 +48,7 @@ doctrine:
       wertung: integer
       clusterCode: string
       itemSchwierigkeit: integer
+      pruefungsPeriode: integer
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'
@@ -53,6 +56,7 @@ doctrine:
     auto_mapping: true
 
     mappings:
+
       CommmonMapping:
         is_bundle:            false
         mapping:              true

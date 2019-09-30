@@ -18,7 +18,7 @@ abstract class AbstractCSVImportCommand extends Command
      * @return array
      * @throws \Exception
      */
-    protected function getParameters(InputInterface $input): array {
+    protected function getParameters(InputInterface $input): ImportOptionenDTO {
         $dateiPfad = $input->getArgument("dateiPfad");
         $delimiter = $input->getArgument("delimiter") ?: ",";
         $encoding = $input->getArgument("encoding") ?: "UTF-8";
@@ -27,7 +27,12 @@ abstract class AbstractCSVImportCommand extends Command
         $this->checkDelimiter($delimiter);
         $this->checkEncoding($encoding);
 
-        return [$dateiPfad, $delimiter, $encoding, $hasHeaders];
+        $importOptionenDTO = new ImportOptionenDTO();
+        $importOptionenDTO->dateiPfad = $dateiPfad;
+        $importOptionenDTO->delimiter = $delimiter;
+        $importOptionenDTO->encoding = $encoding;
+        $importOptionenDTO->hasHeaders = $hasHeaders;
+        return $importOptionenDTO;
     }
 
     protected function addArgumentDateiPfad(): void {

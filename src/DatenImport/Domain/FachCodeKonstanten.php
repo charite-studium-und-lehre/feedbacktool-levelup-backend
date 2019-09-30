@@ -58,6 +58,7 @@ class FachCodeKonstanten
         'T01' => 'A',
         'D1'  => 'S03', // GeWi Biologie, ist aus irgendwelchen Gründen zugeordnetz. TODO:  Daten fixen.
     ];
+
     public const PTM_FACH_KUERZEL = [
         'alg' => 'Allgemeinmedizin',
         'ano' => 'Anästhesiologie, Notfall- und Intensivmedizin',
@@ -87,6 +88,7 @@ class FachCodeKonstanten
         'rec' => 'Rechtsmedizin',
         'uro' => 'Urologie',
     ];
+
     public const PTM_CODE_ZU_FACH_CODE = [
         'alg' => 'F01',
         'ano' => 'F02',
@@ -115,5 +117,15 @@ class FachCodeKonstanten
         'bch' => 'S02',
         'ana' => 'S03',
         'mps' => 'S04',
+    ];
+
+    public const STATION_VK_KURZEL = [
+        'ana'    => 'Anatomie',
+        'bioch'  => 'Biochemie',
+        'medSoz' => 'Medizinische Soziologie',
+        'bio'    => 'Biologie',
+        'medPsy' => 'medizinische Psychologie',
+        'sozMed' => 'Sozialmedizin',
+
     ];
 }

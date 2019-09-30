@@ -2,6 +2,7 @@
 
 namespace Common\Infrastructure\Persistence\DB;
 
+use Common\Domain\TableAutoIncrement;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 
@@ -12,42 +13,65 @@ trait DoctrineAutoIncrementTrait
         return $this->getAndIncreaseAutoIncrementOfTable();
     }
 
-    protected function getAndIncreaseAutoIncrementOfTable(): int {
+    private function getAndIncreaseAutoIncrementOfTable(): int {
         $this->entityManager->beginTransaction();
         $tableName = $this->getTableNameOfRepo();
 
         // Lesen-Schreiben-Lesen um race conditions zu verhindern.
-        $ai1 = $this->getCurrentAutoIncrement($tableName);
+        $ai = $this->getCurrentAutoIncrement($tableName);
+        if (!$ai) {
+            $this->createAutoIncrement($tableName);
+            $ai = $this->getCurrentAutoIncrement($tableName);
+        }
         $this->increaseAutoIncrement($tableName);
-
-
         $this->entityManager->commit();
 
-        return $ai1;
+        return $ai;
     }
 
-    protected function getTableNameOfRepo(): string {
+    private function getTableNameOfRepo(): string {
         $className = $this->doctrineRepo->getClassName();
+
         return $this->entityManager->getClassMetadata($className)->getTableName();
     }
 
-    protected function getCurrentAutoIncrement(string $tableName): int {
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult("AUTO_INCREMENT", "AUTO_INCREMENT", "integer");
-        $sql = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES"
-            . " WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = '$tableName'";
+    private function getCurrentAutoIncrement(string $tableName): int {
+        /** @var TableAutoIncrement $currentAiObject */
+        $currentAiObject = $this->entityManager->getRepository(TableAutoIncrement::class)
+            ->find($tableName);
+        if (!$currentAiObject) {
+            return 0;
+        }
+        $this->entityManager->refresh($currentAiObject);
 
-        $maxId = $this->entityManager->createNativeQuery($sql, $rsm)->getResult()[0]["AUTO_INCREMENT"];
-        $maxId = max([1, $maxId]);
-
-        return $maxId;
+        return $currentAiObject->getAutoIncrement();
     }
 
-    protected function increaseAutoIncrement(string $tableName): void {
+    private function getDbAutoIncrement(string $tableName): int {
+        $dbName = $this->entityManager->getConnection()->getDatabase();
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult("AUTO_INCREMENT", "AUTO_INCREMENT", "integer");
+        $sql = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES
+             WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName'";
+
+        $result = $this->entityManager->createNativeQuery($sql, $rsm)->getResult();
+        if (!$result) {
+            return 1;
+        }
+
+        return max($result[0]["AUTO_INCREMENT"], 1);
+    }
+
+    private function createAutoIncrement(string $tableName): void {
+        $nextAIFromDB = $this->getDbAutoIncrement($tableName);
+        $aiObject = new TableAutoIncrement($tableName, $nextAIFromDB);
+        $this->entityManager->persist($aiObject);
+        $this->entityManager->flush();
+    }
+
+    private function increaseAutoIncrement(string $tableName): void {
         $sql =
-            "SET @ai = (SELECT `AUTO_INCREMENT` + 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA  = DATABASE() AND TABLE_NAME = '$tableName');"
-            . "SET @ai = CONCAT('ALTER TABLE $tableName AUTO_INCREMENT = ', @ai);"
-            . "PREPARE stmt FROM @ai ;EXECUTE stmt;";
+            "UPDATE `__tableAutoIncrement` SET `autoIncrement` = `autoIncrement` + 1 WHERE `tableName` = '$tableName'";
         $this->entityManager->getConnection()->executeUpdate($sql);
     }
 }

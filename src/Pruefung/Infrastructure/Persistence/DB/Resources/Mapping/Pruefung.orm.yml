@@ -10,12 +10,14 @@ Pruefung\Domain\Pruefung:
     format:
       class: Pruefung\Domain\PruefungsFormat
       columnPrefix: false
-    datum:
-      class: Pruefung\Domain\PruefungsDatum
-      columnPrefix: false
 
-#  indexes:
-#    datum:
-#      column: datum
-#    format:
-#      column: format
+  fields:
+    pruefungsPeriode:
+      type: pruefungsPeriode
+      nullable: true
+
+  indexes:
+    pruefungsPeriode:
+      columns: pruefungsPeriode
+    format:
+      columns: format

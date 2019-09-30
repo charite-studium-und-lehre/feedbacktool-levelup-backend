@@ -50,7 +50,7 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     protected function configure() {
         $this->addArgumentDateiPfad();
         $this->addArgument('dateiPfadLzModule', InputArgument::REQUIRED, 'Der volle Pfad zur Lernziel-Modul-CSV-Datei');
-        $this->addArgumentDatum();
+        $this->addArgumentPeriode();
         $this->addArgument('delimiterLzModule', InputArgument::OPTIONAL, 'Das CSV-Trennezichen für die Lernziel-Modul-Datei');
         $this->addAndereArgumente();
 

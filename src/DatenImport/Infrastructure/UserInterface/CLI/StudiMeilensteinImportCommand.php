@@ -41,11 +41,12 @@ class StudiMeilensteinImportCommand extends AbstractCSVImportCommand
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $delimiter, $encoding] = $this->getParameters($input);
+        $importOptionenDTO = $this->getParameters($input);
         $delimiter = $input->getArgument("delimiter") ?: ";";
 
         $studiObjects = $this->chariteStudiStammdatenHIS_CSVImportService->getStudiData(
-            $dateiPfad, $delimiter, TRUE, $encoding);
+            $importOptionenDTO->dateiPfad, $delimiter,
+            $importOptionenDTO->hasHeaders, $importOptionenDTO->encoding);
 
         $output->writeln(count($studiObjects) . " Studis in Datei gefunden!");
         $output->writeln("Persistiere Meilensteine!");

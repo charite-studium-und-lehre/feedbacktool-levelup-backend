@@ -4,7 +4,7 @@ namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\PruefungsdatenImportService;
 use Pruefung\Domain\ItemSchwierigkeit;
-use Pruefung\Domain\PruefungsDatum;
+use Pruefung\Domain\PruefungsPeriode;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
@@ -19,7 +19,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
         string $delimiter = ",",
         bool $hasHeaders = TRUE,
         string $fromEncoding = AbstractCSVImportService::OUT_ENCODING,
-        PruefungsDatum $datum = NULL
+        PruefungsPeriode $periode = NULL
     ): array {
         $data = [];
 
@@ -52,9 +52,9 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             }
 
             try {
-                $pruefungsId = PruefungsId::fromPruefungsformatUndDatum(
+                $pruefungsId = PruefungsId::fromPruefungsformatUndPeriode(
                     PruefungsFormat::getMC($pruefungSemester),
-                    $datum
+                    $periode
                 );
             } catch (\Exception $e) {
                 echo "- Fehler beim Import: Prüfungstitel (Sem): ".$dataLine["Kl_Nr"];

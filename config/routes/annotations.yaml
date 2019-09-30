@@ -1,10 +1,15 @@
 SSOController:
   type: annotation
-  resource: "../../src/SSO/Infrastructure/Web/Controller"
+  resource: "../../src/SSO/Infrastructure"
 
-MeilensteinApiController:
+MeilensteinController:
   type: annotation
-  resource: "../../src/StudiMeilenstein/Infrastructure/Api/Controller"
+  resource: "../../src/StudiMeilenstein/Infrastructure"
+
+StudiPruefungController:
+    type: annotation
+    resource: "../../src/StudiPruefung/Infrastructure"
+
 
 
 #    type: annotation

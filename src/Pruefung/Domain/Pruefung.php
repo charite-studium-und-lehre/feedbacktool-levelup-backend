@@ -12,8 +12,8 @@ class Pruefung
     /** @var PruefungsId */
     private $id;
 
-    /** @var PruefungsDatum */
-    private $datum;
+    /** @var PruefungsPeriode */
+    private $pruefungsPeriode;
 
     /** @var PruefungsFormat */
     private $format;
@@ -23,14 +23,14 @@ class Pruefung
 
     public static function create(
         PruefungsId $id,
-        PruefungsDatum $datum,
+        PruefungsPeriode $pruefungsPeriode,
         PruefungsFormat $format,
         ?Skala $benotungsSakala = NULL
     ): self {
 
         $object = new self();
         $object->id = $id;
-        $object->datum = $datum;
+        $object->pruefungsPeriode = $pruefungsPeriode;
         $object->format = $format;
         $object->benotungsSkala = $benotungsSakala;
 
@@ -41,8 +41,8 @@ class Pruefung
         return PruefungsId::fromString($this->id->getValue());
     }
 
-    public function getDatum(): PruefungsDatum {
-        return $this->datum;
+    public function getPruefungsPeriode(): PruefungsPeriode {
+        return $this->pruefungsPeriode;
     }
 
     public function getFormat(): PruefungsFormat {

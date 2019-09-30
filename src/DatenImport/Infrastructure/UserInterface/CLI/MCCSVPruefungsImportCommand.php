@@ -2,10 +2,9 @@
 
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
-use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
-use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
+use mysql_xdevapi\Exception;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,11 +12,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 {
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    protected static $defaultName = 'levelup:importFile:mcCSVWertung';
 
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'levelup:importFile:mcCSVWertung';
+
+    /** @var PruefungsRepository */
+    private $pruefungsRepository;
 
     /** @var Charite_Ergebnisse_CSVImportService */
     private $chariteMCErgebnisseCSVImportService;
@@ -39,20 +39,23 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     protected function configure() {
         parent::configure();
         $this->setDescription('Datenimport aus Datei: MC-Prüfung in CSV-Datei');
-        $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <Datum>");
+        $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <Prüfungsperiode>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+        $importOptionenDTO = $this->getParameters($input);
+        $this->pruefeHatUnterPeriode($importOptionenDTO->pruefungsPeriode);
 
         foreach (PruefungsFormat::MC_KONSTANTEN_NACH_FACHSEMESTER as $MC_Konstante) {
             $this->erzeugePruefung($output, PruefungsFormat::fromConst($MC_Konstante),
-                                                  $datum, $this->pruefungsRepository
+                                   $importOptionenDTO->pruefungsPeriode, $this->pruefungsRepository
             );
         }
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding, $datum
+            $importOptionenDTO->dateiPfad, $importOptionenDTO->delimiter,
+            $importOptionenDTO->hasHeaders, $importOptionenDTO->encoding,
+            $importOptionenDTO->pruefungsPeriode
         );
         $output->writeln("\n" . count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 

@@ -37,7 +37,7 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
 
     protected function configure() {
         $this->addArgumentDateiPfad();
-        $this->addArgumentDatum();
+        $this->addArgumentPeriode();
         $this->addArgument('stationsTeil', InputArgument::REQUIRED, 'Teil1VK, Teil1K, Teil2 oder Teil3');
         $this->addAndereArgumente();
         $this->setDescription('Datenimport aus Datei: Stationen-Prüfung in CSV-Datei');
@@ -45,16 +45,19 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+        $importOptionenDTO = $this->getParameters($input);
+        $this->pruefeHatUnterPeriode($importOptionenDTO->pruefungsPeriode);
 
         $pruefungsFormat = $this->getPruefungsFormat($input);
 
         $pruefungsId = $this->erzeugePruefung($output, $pruefungsFormat,
-                                              $datum, $this->pruefungsRepository
+                                              $importOptionenDTO->pruefungsPeriode,
+                                              $this->pruefungsRepository
         );
 
         $stationsPruefungsDaten = $this->chariteStationenErgebnisseCSVImportService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding
+            $importOptionenDTO->dateiPfad, $importOptionenDTO->delimiter,
+            $importOptionenDTO->hasHeaders, $importOptionenDTO->encoding
         );
         $output->writeln(count($stationsPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 

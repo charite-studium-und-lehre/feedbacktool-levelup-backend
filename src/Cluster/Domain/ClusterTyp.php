@@ -12,9 +12,13 @@ class ClusterTyp implements DDDValueObject
 
     private const TYP_ID_FACH = 100;
     private const TYP_ID_ORGANSYSTEM = 200;
-    private const TYP_ID_MODUL = 500;
 
-    private const TYP_ID_MC_FRAGE_SCHWIERIGKEIT = 1000;
+    private const TYP_ID_MODUL = 500;
+    private const TYP_VERANSTALTUNGS_NUMMER = 510;
+    private const TYP_LERNZIEL_NUMMER = 520;
+    private const TYP_FRAGEN_NUMMER = 530;
+
+    private const TYP_ID_MC_FRAGE_SCHWIERIGKEIT = 600;
 
     private const ALLE_KONSTANTEN = [
         self::TYP_ID_FACH, self::TYP_ID_ORGANSYSTEM, self::TYP_ID_MODUL, self::TYP_ID_MC_FRAGE_SCHWIERIGKEIT

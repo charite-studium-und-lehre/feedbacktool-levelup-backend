@@ -1,6 +1,6 @@
 Common\Application\AbstractEvent\StoredEvent:
   type: entity
-  table: event
+  table: __event
 
   id:
     id:

@@ -2,11 +2,7 @@
 
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
-use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
-use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
-use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Domain\CharitePTMPersistenzService;
-use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
@@ -41,19 +37,22 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     protected function configure() {
         parent::configure();
         $this->setDescription('Datenimport aus Datei: PTM-Prüfung in CSV-Datei');
-        $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <PTM-Pruefungs-ID>");
+        $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <Pruefungsperiode>");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders, ] = $this->getParameters($input);
+        $importOptionenDTO = $this->getParameters($input);
         $delimiter = $input->getArgument("delimiter") ?: ";";
+        $this->pruefeHatKeineUnterPeriode($importOptionenDTO->pruefungsPeriode);
 
         $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getPTM(),
-                                              $datum, $this->pruefungsRepository
+                                              $importOptionenDTO->pruefungsPeriode, $this->pruefungsRepository
         );
 
         $ptmPruefungsDaten = $this->charitePTMCSVImportService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding, $pruefungsId
+            $importOptionenDTO->dateiPfad, $delimiter,
+            $importOptionenDTO->hasHeaders, $importOptionenDTO->encoding,
+            $pruefungsId
         );
         $output->writeln(count($ptmPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 

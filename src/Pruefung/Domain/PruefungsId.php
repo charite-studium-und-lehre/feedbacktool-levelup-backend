@@ -6,12 +6,12 @@ use Common\Domain\AggregateIdString;
 
 class PruefungsId extends AggregateIdString
 {
-    public static function fromPruefungsformatUndDatum(
+    public static function fromPruefungsformatUndPeriode(
         PruefungsFormat $pruefungsFormat,
-        PruefungsDatum $datum,
+        PruefungsPeriode $periode,
         string $suffix = ""
     ): PruefungsId {
-        $idString = $pruefungsFormat->getCode() . "-" . $datum->toIsoString();
+        $idString = $pruefungsFormat->getCode() . "-" . $periode->toInt();
         if ($suffix) {
             $idString .= "-$suffix";
         }

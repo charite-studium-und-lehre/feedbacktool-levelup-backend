@@ -4,14 +4,12 @@ namespace StudiPruefung\Infrastructure\Api\Controller;
 
 use Pruefung\Domain\PruefungsRepository;
 use SSO\Domain\EingeloggterStudiService;
-use StudiMeilenstein\Domain\Meilenstein;
-use StudiMeilenstein\Domain\Service\MeilensteinExportService;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StudiMeilensteinApiController extends AbstractController
+class StudiPruefungApiController extends AbstractController
 {
 
     /** @var EingeloggterStudiService */
@@ -34,7 +32,7 @@ class StudiMeilensteinApiController extends AbstractController
     }
 
     /**
-     * @Route("/api/meilensteine")
+     * @Route("/api/pruefung")
      */
     public function jsonStudiPruefungAction() {
         $eingeloggterStudi = $this->eingeloggterStudiService->getEingeloggterStudi();
@@ -45,12 +43,19 @@ class StudiMeilensteinApiController extends AbstractController
         foreach ($studiPruefungen as $studiPruefung) {
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
             $code = $pruefung->getFormat()->getCode();
-            $datum = $pruefung->getDatum();
+            $datum = $pruefung->getPruefungsPeriode();
             $name = $pruefung->getFormat()->getTitel();
+            $returnArray[] = [
+                "typ" => $code,
+                "studiPruefungsId" => $studiPruefung->getId(),
+                "name" => $name,
+                "datum" => $datum->toIsoString(),
+                "ergebnis" => "TODO"
+            ];
         }
 
         return new JsonResponse(
-            ["meilensteine" => $meilensteinArray]
+            ["pruefungen" => $returnArray]
         );
 
     }

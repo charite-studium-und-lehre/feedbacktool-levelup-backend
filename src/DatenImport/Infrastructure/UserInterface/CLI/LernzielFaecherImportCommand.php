@@ -41,14 +41,16 @@ class LernzielFaecherImportCommand extends AbstractCSVImportCommand
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+        $importOptionenDTO = $this->getParameters($input);
+
         $delimiter = $input->getArgument("delimiter") ?: ";";
         $encoding = $input->getArgument("delimiter") ?: "ISO-8859-15";
 
         $this->chariteFaecherAnlegenService->addAlleFaecherZuDB();
 
         $lernzielFaecher = $this->chariteLernzielFachEinleseCSVService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding
+            $importOptionenDTO->dateiPfad, $delimiter,
+            $importOptionenDTO->hasHeaders, $encoding
         );
 
         $output->writeln(count($lernzielFaecher) . " lernziel-Fach-Zeilen gelesen. Persistiere.");
