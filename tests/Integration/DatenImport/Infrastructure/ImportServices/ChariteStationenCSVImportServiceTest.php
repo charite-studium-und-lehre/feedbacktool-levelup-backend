@@ -52,11 +52,11 @@ class ChariteStationenCSVImportServiceTest extends TestCase
         $this->assertEquals("111111", $data[1]["matrikelnummer"]);
         $this->assertIsArray($data[1]["ergebnisse"]);
         $this->assertCount(2, $data[1]["ergebnisse"]);
-        $this->assertEquals("Skala1_erg", array_keys($data[1]["ergebnisse"])[0]);
-        $this->assertEquals("Skala2_erg", array_keys($data[1]["ergebnisse"])[1]);
-        $this->assertEquals(96.6666666666667, $data[1]["ergebnisse"]["Skala1_erg"]);
-        $this->assertEquals(100, $data[1]["ergebnisse"]["Skala2_erg"]);
-        $this->assertEquals("Anatomie", $data[1]["fach"]);
+        $this->assertEquals("Sk1", array_keys($data[1]["ergebnisse"])[0]);
+        $this->assertEquals("Sk2", array_keys($data[1]["ergebnisse"])[1]);
+        $this->assertEquals(96.6666666666667, $data[1]["ergebnisse"]["Sk1"]);
+        $this->assertEquals(100, $data[1]["ergebnisse"]["Sk2"]);
+        $this->assertEquals("ana", $data[1]["fach"]);
         $this->assertEquals("03.08.2018", $data[1]["datum"]->format("d.m.Y"));
         $this->assertEquals("1292", $data[1]["pruefungsCode"]);
     }
@@ -73,11 +73,11 @@ class ChariteStationenCSVImportServiceTest extends TestCase
         $this->assertEquals("111111", $data[1]["matrikelnummer"]);
         $this->assertIsArray($data[1]["ergebnisse"]);
         $this->assertCount(2, $data[1]["ergebnisse"]);
-        $this->assertEquals("Skala1_erg", array_keys($data[1]["ergebnisse"])[0]);
-        $this->assertEquals("Skala2_erg", array_keys($data[1]["ergebnisse"])[1]);
-        $this->assertEquals(50, $data[1]["ergebnisse"]["Skala1_erg"]);
-        $this->assertEquals(50, $data[1]["ergebnisse"]["Skala2_erg"]);
-        $this->assertEquals("Physiologie 2", $data[1]["fach"]);
+        $this->assertEquals("Sk1", array_keys($data[1]["ergebnisse"])[0]);
+        $this->assertEquals("Sk2", array_keys($data[1]["ergebnisse"])[1]);
+        $this->assertEquals(50, $data[1]["ergebnisse"]["Sk1"]);
+        $this->assertEquals(50, $data[1]["ergebnisse"]["Sk2"]);
+        $this->assertEquals("medSoz", $data[1]["fach"]);
         $this->assertEquals("08.09.2018", $data[1]["datum"]->format("d.m.Y"));
         $this->assertEquals("1492", $data[1]["pruefungsCode"]);
     }

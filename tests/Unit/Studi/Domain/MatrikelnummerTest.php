@@ -25,7 +25,7 @@ class MatrikelnummerTest extends TestCase
     public function testFromInt_FalschZuGross() {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(Matrikelnummer::INVALID_STELLEN);
-        Matrikelnummer::fromInt(1234567);
+        Matrikelnummer::fromInt(12345678);
     }
 
     public function testFromInt_FalschString() {

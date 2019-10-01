@@ -11,8 +11,6 @@ class PruefungsPeriode implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    const INVALID_PRUEFUNGSDATUM = "Kein gültiges Datum (d.m.Y): ";
-
     /** @var Zeitsemester */
     private $zeitsemester;
 

@@ -19,6 +19,7 @@ use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
@@ -32,7 +33,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         return [
             'file-based-repos' => [
                 FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
@@ -75,7 +76,6 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         $pruefungsId = PruefungsId::fromString("PT38");
 
         $service = new CharitePTMPersistenzService(
-            $pruefungsId,
             $pruefungsRepository,
             $studiPruefungsRepository,
             $itemWertungsRepository,
@@ -90,7 +90,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
             ";"
         );
 
-        $service->persistierePruefung($data);
+        $service->persistierePruefung($data, $pruefungsId);
 
         //        $clusters = $clusterRepository->all();
         //        $this->assertCount(40, $clusters);

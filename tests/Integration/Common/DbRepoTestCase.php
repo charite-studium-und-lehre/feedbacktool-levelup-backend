@@ -54,7 +54,7 @@ abstract class DbRepoTestCase extends KernelTestCase
         $this->clearDatabase();
     }
 
-    abstract protected function clearDatabase() : void;
+    protected function clearDatabase() {}
 
     protected function deleteIdsFromDB($idsToDelete): void {
         foreach ($idsToDelete as $idToDelete) {
@@ -117,7 +117,11 @@ abstract class DbRepoTestCase extends KernelTestCase
         $entityManager = $this->getDoctrineEntityManager();
         foreach ($entities as $entity) {
             $entityManager->persist($entity);
-            $entityManager->refresh($entity);
+            try {
+                $entityManager->refresh($entity);
+            } catch (\ErrorException $e) {
+
+            }
         }
     }
 

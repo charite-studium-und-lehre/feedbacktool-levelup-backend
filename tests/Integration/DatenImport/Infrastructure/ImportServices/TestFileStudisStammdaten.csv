@@ -1,16 +1,17 @@
-221231;Marika                        ;Heiﬂler                            ;02-03-1984
-211232;Ann-Sophie                    ;Kolwalski                          ;01-07-1983
-221233;Suang                         ;Zhang                              ;15-02-1991
-221234;Petra                         ;Lukas                              ;23-08-1999
-221235;Katharina                     ;Lozano                             ;21-02-1981
-221236;Ada                           ;Monje                              ;26-12-1999
-221237;Lydia Maria                   ;Peris Renggli                      ;05-11-1986
-221238;Pippilotta                    ;Makiy                              ;02-03-1995
-201239;Mohammad                      ;Behrouzi                           ;19-03-1974
-221250;Peter                         ;Schulle                            ;12-01-1992
-221251;Maximilian Egon               ;Gosch                              ;28-09-1994
-211252;Annika                        ;Cierpinsky                         ;29-12-1988
-221253;Johanna                       ;Hammelbeck                         ;01-02-1998
-211254;Wu                            ;Henke                              ;31-03-1985
-211255;Lara-Maria-Lydia-Sophie       ;Mirbagheri                         ;22-03-1991
-211257;Lara Sophie Katharina         ;von der St‰‰ts-L¸denscheid         ;10-12-1991
+mtknr,vorname,nachname,gebdat,hausarb_note,hausarb_best,erste_hilfe,pflege_prakt,fam_reife,m1_eq,m2_vor,stat_prfg,anw_sem1,anw_sem2,anw_sem3,anw_sem4,anw_sem5,anw_sem6,anw_sem7,anw_sem8,anw_sem9,best_sem1,best_sem2,best_sem3,best_sem4,best_sem5,best_sem6,best_sem7,best_sem8,best_sem9,best_sem10,voraus_sem4,voraus_sem5,voraus_sem6,voraus_sem7,voraus_sem8,voraus_sem9
+221231,Marika,Hei√üler,02-03-1984,,0,1,1,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0
+221232,Ann-Sophie,Kolwalski,01-07-1983,,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+221233,Suang,Zhang,15-02-1991,330,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,1,0,0
+221234,Petra,Lukas,23-08-1999,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+221235,Katharina,Lozano,21-02-1981,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+221236,Ada,Monje,26-12-1999,,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+221237,Lydia Maria,Peris Renggli,05-11-1986,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+221238,Pippilotta,Makiy,02-03-1995,130,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1
+221239,Mohammad,Behrouzi,19-03-1974,110,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1
+221250,Peter,Schulle,12-01-1992,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+221251,Maximilian Egon,Gosch,28-09-1994,,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+221252,Annika,Cierpinsky,29-12-1988,,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+221253,Johanna,Hammelbeck,01-02-1998,110,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1
+221254,Wu,Henke,31-03-1985,,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1
+221255,Lara-Maria-Lydia-Sophie,Mirbagheri,22-03-1991,,0,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0
+221257,Lara Sophie Katharina,von der St√§√§ts-L√ºdenscheid,10-12-1991,100,1,1,1,1,0,0,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0

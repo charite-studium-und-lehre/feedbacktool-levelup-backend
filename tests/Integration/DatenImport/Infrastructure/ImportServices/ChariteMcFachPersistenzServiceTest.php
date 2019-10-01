@@ -14,6 +14,7 @@ use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\Filesystem\FileBasedSimpleLernzielFachRepository;
 use Pruefung\Domain\PruefungsId;
+use Pruefung\Domain\PruefungsPeriode;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -47,9 +48,11 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
     ) {
         $this->clearRepos([$clusterRepository, $clusterZuordnungsRepository]);
         (new ChariteFaecherAnlegenService($clusterRepository))->addAlleFaecherZuDB();
+        $clusterZuordnungsRepository->flush();
         LernzielFachPersistenzServiceTest::createLernzielFaecher($clusterRepository, $lernzielFachRepository);
 
         $csvImportService = new Charite_Ergebnisse_CSVImportService();
+
         $zuordnungsService = new ClusterZuordnungsService(
             $clusterZuordnungsRepository,
             $clusterRepository
@@ -61,22 +64,17 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
             $lernzielFachRepository,
         );
 
-        $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
         $data = $csvImportService->getData(
             __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv",
             ",",
             TRUE,
             AbstractCSVImportService::OUT_ENCODING,
-            $pruefungsId
+            PruefungsPeriode::fromInt(201821)
         );
 
         $service->persistiereFachZuordnung($data);
 
-        $this->assertCount(11, $clusterZuordnungsRepository->all());
-
-    }
-
-    protected function clearDatabase(): void {
+        $this->assertCount(15, $clusterZuordnungsRepository->all());
 
     }
 

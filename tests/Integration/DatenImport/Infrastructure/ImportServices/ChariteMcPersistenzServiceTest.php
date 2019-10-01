@@ -8,20 +8,20 @@ use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
-use Pruefung\Domain\PruefungsRepository;
+use Pruefung\Domain\PruefungsPeriode;
 use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsItemRepository;
-use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
-use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
-use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\PunktSkala;
+use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\PunktWertung;
 use Wertung\Domain\Wertung\Punktzahl;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
+use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsWertungRepository;
 
 class ChariteMcPersistenzServiceTest extends DbRepoTestCase
 {
@@ -31,18 +31,18 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
 
         return [
             'file-based-repos' => [
-                FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
-                FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsWertungRepository::createTempFileRepo(),
+                FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
             ],
             'db-repos'         => [
-                $this->currentContainer->get(PruefungsRepository::class),
                 $this->currentContainer->get(StudiPruefungsRepository::class),
                 $this->currentContainer->get(PruefungsItemRepository::class),
-                $this->currentContainer->get(ItemWertungsRepository::class),
                 $this->currentContainer->get(StudiInternRepository::class),
+                $this->currentContainer->get(StudiPruefungsWertungRepository::class),
+                $this->currentContainer->get(ItemWertungsRepository::class),
             ],
         ];
     }
@@ -51,27 +51,25 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
      * @dataProvider getNeededRepos
      */
     public function testPersistierePruefung(
-        PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
-        ItemWertungsRepository $itemWertungsRepository,
-        StudiInternRepository $studiInternRepository
+        StudiInternRepository $studiInternRepository,
+        StudiPruefungsWertungRepository $studiPruefungsWertungRepository,
+        ItemWertungsRepository $itemWertungsRepository
     ) {
         $filename = __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv";
-        $this->clearRepos([$pruefungsRepository, $studiPruefungsRepository,
-                           $pruefungsItemRepository, $itemWertungsRepository, $studiInternRepository]);
+        $this->clearRepos([$studiPruefungsRepository, $pruefungsItemRepository,
+                           $studiPruefungsWertungRepository, $studiInternRepository]);
         $this->createTestStudis($studiInternRepository);
 
         $csvImportService = new Charite_Ergebnisse_CSVImportService();
 
-        $pruefungsId = PruefungsId::fromString("MC-WiSe2018");
-
         $service = new ChariteMCPruefungWertungPersistenzService(
-            $pruefungsRepository,
             $studiPruefungsRepository,
-            $pruefungsItemRepository,
             $itemWertungsRepository,
-            $studiInternRepository
+            $pruefungsItemRepository,
+            $studiInternRepository,
+            $studiPruefungsWertungRepository,
         );
 
         $data = $csvImportService->getData(
@@ -79,41 +77,41 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
             ",",
             TRUE,
             AbstractCSVImportService::OUT_ENCODING,
-            $pruefungsId
+            PruefungsPeriode::fromInt("201821")
         );
 
-        $service->persistierePruefung($data, $pruefungsId);
+        $service->persistierePruefung($data);
 
         $this->assertCount(3, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
-                              ->getPruefungsId()->equals($pruefungsId));
+                              ->getPruefungsId()->equals(PruefungsId::fromString("MC-Sem1-201821")));
 
-        $this->assertCount(200, $pruefungsItemRepository->all());
+        $this->assertCount(137, $pruefungsItemRepository->all());
         $this->assertTrue($pruefungsItemRepository->all()[0]
-                              ->getPruefungsId()->equals($pruefungsId));
+                              ->getPruefungsId()->equals(PruefungsId::fromString("MC-Sem1-201821")));
 
-        $this->assertCount(200, $itemWertungsRepository->all());
+        $this->assertCount(3, $studiPruefungsWertungRepository->all());
 
-        $itemWertung1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
+        $pruefungsGesamtWertung = $studiPruefungsWertungRepository->byStudiPruefungsId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString("MC-WiSe2018-3")
         );
-        $this->assertNotNull($itemWertung1);
-        $this->refreshEntities($itemWertung1);
-        $this->assertTrue($itemWertung1->getWertung()->getSkala()->equals(
-            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1)))
+        $this->assertNotNull($pruefungsGesamtWertung);
+        $this->refreshEntities($pruefungsGesamtWertung);
+
+        $this->assertTrue($pruefungsGesamtWertung->getGesamtErgebnis()->getSkala()->equals(
+            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(57)))
         );
-        $this->assertTrue($itemWertung1->getWertung()->equals(
+        $this->assertTrue($pruefungsGesamtWertung->getGesamtErgebnis()->equals(
             PunktWertung::fromPunktzahlUndSkala(
-                Punktzahl::fromFloat(0),
-                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1)))
+                Punktzahl::fromFloat(52),
+                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(57)))
         ));
 
-        $itemWertung2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
+        $itemWertung = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString("MC-WiSe2018-1")
+            PruefungsItemId::fromString("MC-Sem1-201821-22")
         );
-        $this->assertTrue($itemWertung2->getWertung()->equals(
+        $this->assertTrue($itemWertung->getWertung()->equals(
             PunktWertung::fromPunktzahlUndSkala(
                 Punktzahl::fromFloat(1),
                 PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1)))

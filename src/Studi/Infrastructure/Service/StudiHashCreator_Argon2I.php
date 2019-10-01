@@ -47,9 +47,9 @@ class StudiHashCreator_Argon2I implements StudiHashCreator
         $matrikelnummer = $studiData->getMatrikelnummer();
         $vorname = $studiData->getVorname();
         $nachname = $studiData->getNachname();
-        $geburtsdatum = $studiData->getGeburtsdatum();
+//        $geburtsdatum = $studiData->getGeburtsdatum();
 
-        $hash_string = "$matrikelnummer|$vorname|$nachname|$geburtsdatum";
+        $hash_string = "$matrikelnummer|$vorname|$nachname";
 
         return $hash_string;
     }

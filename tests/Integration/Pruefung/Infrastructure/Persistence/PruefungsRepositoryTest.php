@@ -29,13 +29,13 @@ final class PruefungsRepositoryTest extends DbRepoTestCase
     public function kann_speichern_und_wiederholen(PruefungsRepository $repo) {
         $pruefung1 = Pruefung::create(
             PruefungsId::fromString(123),
-            PruefungsPeriode::fromString("10.12.2018"),
-            PruefungsFormat::fromConst(PruefungsFormat::MC)
+            PruefungsPeriode::fromInt("201811"),
+            PruefungsFormat::fromConst(PruefungsFormat::MC_SEM2)
         );
         $pruefung2 = Pruefung::create(
             PruefungsId::fromString(259),
-            PruefungsPeriode::fromString("31.01.2015"),
-            PruefungsFormat::fromConst(PruefungsFormat::STATION)
+            PruefungsPeriode::fromInt("20152"),
+            PruefungsFormat::fromConst(PruefungsFormat::STATION_TEIL3)
         );
 
         $repo->add($pruefung1);
@@ -45,8 +45,8 @@ final class PruefungsRepositoryTest extends DbRepoTestCase
 
         $this->assertCount(2, $repo->all());
         $pruefung2 = $repo->byId(PruefungsId::fromString(259));
-        $this->assertTrue($pruefung2->getPruefungsPeriode()->equals(PruefungsPeriode::fromString("31.01.2015")));
-        $this->assertTrue($pruefung2->getFormat()->equals(PruefungsFormat::fromConst(PruefungsFormat::STATION)));
+        $this->assertTrue($pruefung2->getPruefungsPeriode()->equals(PruefungsPeriode::fromInt(20152)));
+        $this->assertTrue($pruefung2->getFormat()->equals(PruefungsFormat::fromConst(PruefungsFormat::STATION_TEIL3)));
     }
 
     /**

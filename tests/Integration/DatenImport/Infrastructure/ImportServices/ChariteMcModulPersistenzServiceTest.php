@@ -12,6 +12,7 @@ use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsId;
+use Pruefung\Domain\PruefungsPeriode;
 use Studi\Domain\StudiInternRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
@@ -54,7 +55,7 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
             ",",
             TRUE,
             AbstractCSVImportService::OUT_ENCODING,
-            $pruefungsId
+            PruefungsPeriode::fromInt("201821")
         );
 
         $zuordnungsService = new ClusterZuordnungsService(
@@ -69,9 +70,9 @@ class ChariteMcModulPersistenzServiceTest extends DbRepoTestCase
         $service->persistiereMcModulZuordnung($mcData, $lzModulData);
 
         $clusters = $clusterRepository->all();
-        $this->assertCount(6, $clusters);
+        $this->assertCount(7, $clusters);
 
-        $this->assertCount(140, $clusterZuordnungsRepository->all());
+        $this->assertCount(137, $clusterZuordnungsRepository->all());
 
     }
 

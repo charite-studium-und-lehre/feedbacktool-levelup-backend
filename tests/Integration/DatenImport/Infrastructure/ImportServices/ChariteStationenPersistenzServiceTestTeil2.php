@@ -19,6 +19,7 @@ use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\ProzentSkala;
@@ -33,19 +34,19 @@ class ChariteStationenPersistenzServiceTestTeil2 extends DbRepoTestCase
     public function getNeededRepos() {
 
         return [
+            'file-based-repos' => [
+                FileBasedSimplePruefungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
+                FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
+                FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiInternRepository::createTempFileRepo(),
+            ],
             'db-repos'         => [
                 $this->currentContainer->get(PruefungsRepository::class),
                 $this->currentContainer->get(StudiPruefungsRepository::class),
                 $this->currentContainer->get(PruefungsItemRepository::class),
                 $this->currentContainer->get(ItemWertungsRepository::class),
                 $this->currentContainer->get(StudiInternRepository::class),
-            ],
-            'file-based-repos' => [
-                FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
-                FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
-                FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiInternRepository::createTempFileRepo(),
             ],
         ];
     }
@@ -66,8 +67,8 @@ class ChariteStationenPersistenzServiceTestTeil2 extends DbRepoTestCase
 
         $csvImportService = new ChariteStationenErgebnisse_CSVImportService();
 
+        $pruefungsId = PruefungsId::fromString(1234);
         $service = new ChariteStationenPruefungPersistenzService(
-            PruefungsId::fromString(1234),
             $pruefungsRepository,
             $studiPruefungsRepository,
             $pruefungsItemRepository,
@@ -76,21 +77,21 @@ class ChariteStationenPersistenzServiceTestTeil2 extends DbRepoTestCase
         );
 
         $data = $csvImportService->getData(__DIR__ . "/TEST_Teil2SoSe2018HAUPT.csv");
-        $service->persistierePruefung($data);
+        $service->persistierePruefung($data, $pruefungsId);
 
         $this->assertCount(5, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
-                              ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
+                              ->getPruefungsId()->equals($pruefungsId));
 
-        $this->assertCount(10, $pruefungsItemRepository->all());
+        $this->assertCount(8, $pruefungsItemRepository->all());
         $this->assertTrue($pruefungsItemRepository->all()[0]
-                              ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
+                              ->getPruefungsId()->equals($pruefungsId));
 
         $this->assertCount(40, $itemWertungsRepository->all());
 
         $pruefungsItem1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString(1013599)
+            PruefungsItemId::fromString("1234-ana-Sk1")
         );
         $this->assertNotNull($pruefungsItem1);
         $this->refreshEntities($pruefungsItem1);
@@ -104,7 +105,7 @@ class ChariteStationenPersistenzServiceTestTeil2 extends DbRepoTestCase
         );
         $pruefungsItem2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString(541454)
+            PruefungsItemId::fromString("1234-ana-Sk2")
         );
         $this->assertEquals(
             ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.60))->getRelativeWertung(),

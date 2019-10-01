@@ -29,7 +29,8 @@ class StudiHashCreatorTest extends TestCase
                 Matrikelnummer::fromInt(456789),
                 Vorname::fromString("Petra-Maria"),
                 Nachname::fromString("Meier"),
-                Geburtsdatum::fromStringDeutsch("12.04.1980")
+                Geburtsdatum::fromStringDeutsch("12.04.1980"),
+                []
             )
         );
         $studiHash2 = $hashCreator->createStudiHash(
@@ -37,7 +38,8 @@ class StudiHashCreatorTest extends TestCase
                 Matrikelnummer::fromInt(456789),
                 Vorname::fromString("Petra-Maria"),
                 Nachname::fromString("Maier"),
-                Geburtsdatum::fromStringDeutsch("12.04.1980")
+                Geburtsdatum::fromStringDeutsch("12.04.1980"),
+                []
             )
         );
         $this->assertFalse($studiHash1->equals($studiHash2));

@@ -20,14 +20,14 @@ class PruefungsFormatTest extends TestCase
     }
 
     public function testFromInt_String() {
-        $pruefungsformat = PruefungsFormat::fromConst($format = " " . PruefungsFormat::MC);
+        $pruefungsformat = PruefungsFormat::fromConst($format = " " . PruefungsFormat::MC_SEM2);
         $this->assertEquals($format, $pruefungsformat->getValue());
     }
 
     public function testGetTitel() {
 
-        $pruefungsformat = PruefungsFormat::fromConst(PruefungsFormat::MC);
-        $this->assertEquals(PruefungsFormat::FORMAT_TITEL[PruefungsFormat::MC],
+        $pruefungsformat = PruefungsFormat::fromConst(PruefungsFormat::MC_SEM2);
+        $this->assertEquals(PruefungsFormat::FORMAT_TITEL[PruefungsFormat::MC_SEM2],
                             $pruefungsformat->getTitel()
         );
 

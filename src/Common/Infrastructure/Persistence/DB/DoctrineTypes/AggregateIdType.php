@@ -25,8 +25,10 @@ class AggregateIdType extends Type
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if ($value instanceof AggregateId) {
             return $value->getValue();
+            echo "1";
         } else {
             return $value;
+            echo "2";
         }
     }
 

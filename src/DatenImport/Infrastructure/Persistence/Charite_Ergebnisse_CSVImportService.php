@@ -30,7 +30,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             if (!$matrikelnummer) {
                 continue;
             }
-            $punktzahl = Punktzahl::fromFloat(max(0, $dataLine["richtig"]));
+            $punktzahl = Punktzahl::fromFloat($dataLine["richtig"]);
 
             if (!isset($dataLine["Kl_Nr"]) && !isset($dataLine["Kl_nr"])) {
                 echo "\nKl_Nr nicht gesetzt.";

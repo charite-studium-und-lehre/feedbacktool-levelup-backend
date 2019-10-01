@@ -3,7 +3,6 @@
 namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
 use DatenImport\Domain\ChariteStationenPruefungPersistenzService;
-use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
@@ -11,14 +10,12 @@ use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
 use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsItemRepository;
 use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
-use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
-use Studi\Domain\StudiHash;
-use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\ProzentSkala;
@@ -42,7 +39,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
             ],
             'file-based-repos' => [
                 FileBasedSimplePruefungsRepository::createTempFileRepo(),
-                FileBasedSimpleStudiMeilensteinRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
@@ -67,7 +64,6 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
         $csvImportService = new ChariteStationenErgebnisse_CSVImportService();
 
         $service = new ChariteStationenPruefungPersistenzService(
-            PruefungsId::fromString(1234),
             $pruefungsRepository,
             $studiPruefungsRepository,
             $pruefungsItemRepository,
@@ -76,21 +72,22 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
         );
 
         $data = $csvImportService->getData(__DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv");
-        $service->persistierePruefung($data);
+        $pruefungsId = PruefungsId::fromString(1234);
+        $service->persistierePruefung($data, $pruefungsId);
 
         $this->assertCount(13, $studiPruefungsRepository->all());
         $this->assertTrue($studiPruefungsRepository->all()[0]
-                              ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
+                              ->getPruefungsId()->equals($pruefungsId));
 
         $this->assertCount(12, $pruefungsItemRepository->all());
         $this->assertTrue($pruefungsItemRepository->all()[0]
-                              ->getPruefungsId()->equals(PruefungsId::fromString(1234)));
+                              ->getPruefungsId()->equals($pruefungsId));
 
         $this->assertCount(52, $itemWertungsRepository->all());
 
         $pruefungsItem1 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString(925197)
+            PruefungsItemId::fromString("1234-bioch-Sk1")
         );
         $this->assertNotNull($pruefungsItem1);
         $this->refreshEntities($pruefungsItem1);
@@ -103,7 +100,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
         );
         $pruefungsItem2 = $itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefungsRepository->all()[0]->getId(),
-            PruefungsItemId::fromString(631774)
+            PruefungsItemId::fromString("1234-ana-Sk1")
         );
         $this->assertEquals(
             ProzentWertung::fromProzentzahl(Prozentzahl::fromFloatRunden(.966666666666667))->getRelativeWertung(),
@@ -115,7 +112,5 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
     protected function clearDatabase(): void {
 
     }
-
-
 
 }

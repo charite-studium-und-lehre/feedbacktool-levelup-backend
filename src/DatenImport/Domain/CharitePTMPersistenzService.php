@@ -69,7 +69,7 @@ class CharitePTMPersistenzService
     public function persistierePruefung($ptmPruefungsDaten, PruefungsId $pruefungsId) {
         $counter = 0;
         $lineCount = count($ptmPruefungsDaten);
-        $einProzent = round($lineCount / 100);
+        $einProzent = max(1, round($lineCount / 100));
 
         foreach ($ptmPruefungsDaten as $matrikelnummer => $studiErgebnis) {
             try {

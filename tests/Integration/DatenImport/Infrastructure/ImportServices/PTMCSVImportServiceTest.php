@@ -28,13 +28,13 @@ class PTMCSVImportServiceTest extends TestCase
         $this->assertEquals(0,
                             $data['222222']
                             [ClusterTyp::getOrgansystemTyp()->getConst()]
-                            [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['akl']]
+                            ['akl']
                             [CharitePTMPersistenzService::TYP_RICHTIG]);
 
         $this->assertEquals(19,
                             $data['222222']
                             [ClusterTyp::getOrgansystemTyp()->getConst()]
-                            [CharitePTMCSVImportService::ORGANSYSTEM_KUERZEL['atm']]
+                            ['atm']
                             [CharitePTMPersistenzService::TYP_WEISSNICHT]);
 
         $this->assertEquals(2,

@@ -17,7 +17,7 @@ class PruefungsPeriodeType extends Type
 
     /** @return PruefungsPeriode */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
-        if (is_int($value)) {
+        if (is_numeric($value)) {
             return PruefungsPeriode::fromInt($value);
         }
         return NULL;

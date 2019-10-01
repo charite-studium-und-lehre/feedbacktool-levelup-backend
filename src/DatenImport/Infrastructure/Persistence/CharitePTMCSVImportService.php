@@ -17,7 +17,7 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
         'blu' => 'Blut Lymphe Immun',
         'pso' => 'psychische Erkrankungen',
         'met' => 'Methodik Instrumente',
-        'akl' => 'Allg. Kranmkheitslehre',
+        'akl' => 'Allg. Krankheitslehre',
         'bew' => 'Bewegungsapparat',
         'ngs' => 'Nervensystem Gehirn Sinne',
         'ges' => 'Fortpflanzung',

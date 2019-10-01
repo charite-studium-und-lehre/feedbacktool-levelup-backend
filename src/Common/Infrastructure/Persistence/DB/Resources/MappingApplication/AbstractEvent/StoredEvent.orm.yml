@@ -5,8 +5,6 @@ Common\Application\AbstractEvent\StoredEvent:
   id:
     id:
       type: aggregateId_AutoIncrement
-      generator:
-        strategy: IDENTITY
 
   fields:
     occurredOn:
