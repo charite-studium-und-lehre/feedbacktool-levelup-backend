@@ -1,0 +1,31 @@
+EPA\Domain\SelbstBewertung:
+  type: entity
+  table: epa_selbstBewertung
+
+  id:
+    id:
+      type: aggregateId
+
+  embedded:
+    selbstBewertungsTyp:
+      class: EPA\Domain\SelbstBewertungsTyp
+      columnPrefix: false
+    epaBewertungsDatum:
+      class: EPA\Domain\EPABewertungsDatum
+      columnPrefix: false
+    epaBewertung:
+      class: EPA\Domain\EPABewertung
+      columnPrefix: false
+
+  fields:
+    studiHash:
+      type: studiHash
+      nullable: false
+
+  indexes:
+    studiHash:
+      columns: studiHash
+    datum:
+      columns: datum
+    typ:
+      columns: typ

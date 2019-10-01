@@ -1,0 +1,7 @@
+EPA\Domain\EPABewertung:
+  type: embeddable
+
+  fields:
+    value:
+      type: integer
+      column: wertung

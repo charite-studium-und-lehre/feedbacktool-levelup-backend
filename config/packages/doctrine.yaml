@@ -78,6 +78,13 @@ doctrine:
         dir:                  "%kernel.project_dir%/src/Cluster/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Cluster\\Domain"
 
+      EPA:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping"
+        prefix:               "EPA\\Domain"
+
       Pruefung:
         is_bundle:            false
         mapping:              true

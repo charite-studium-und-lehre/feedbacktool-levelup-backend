@@ -5,6 +5,8 @@ Wertung\Domain\ItemWertung:
   id:
     id:
       type: aggregateId_AutoIncrement
+      generator:
+        strategy: IDENTITY
 
   fields:
     pruefungsItemId:

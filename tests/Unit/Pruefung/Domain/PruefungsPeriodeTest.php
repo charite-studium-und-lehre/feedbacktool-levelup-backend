@@ -38,9 +38,4 @@ class PruefungsPeriodeTest extends TestCase
         $this->assertEquals($pruefungsPeriode->toInt(), 201825);
     }
 
-    public function testFromString_FalscheUnterperiode() {
-        $this->expectExceptionMessage(PruefungsUnterPeriode::INVALID_PRUEFUNGS_UNTER_PERIODE);
-        PruefungsUnterPeriode::fromInt(10);
-    }
-
 }

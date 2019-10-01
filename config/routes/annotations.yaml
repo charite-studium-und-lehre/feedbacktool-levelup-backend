@@ -10,6 +10,10 @@ StudiPruefungController:
     type: annotation
     resource: "../../src/StudiPruefung/Infrastructure"
 
+EPAController:
+  type: annotation
+  resource: "../../src/EPA/Infrastructure"
+
 
 
 #    type: annotation
