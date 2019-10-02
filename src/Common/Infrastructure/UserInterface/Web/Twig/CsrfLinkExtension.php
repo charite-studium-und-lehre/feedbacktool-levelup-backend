@@ -3,7 +3,6 @@
 namespace Common\Infrastructure\UserInterface\Web\Twig;
 
 use Common\Infrastructure\UserInterface\Web\Service\CSRFChecker;
-use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -18,8 +17,8 @@ class CsrfLinkExtension extends AbstractExtension
     public function getFunctions() {
         return [
             new TwigFunction('csrf_link_to', [$this, 'linkToFunction'],
-                                          ['is_safe' => ['html']])
-            ];
+                             ['is_safe' => ['html']]),
+        ];
     }
 
     /**

@@ -63,7 +63,6 @@ class SelbstBewertung implements DDDEntity
         $this->epaBewertungsDatum = EPABewertungsDatum::heute();
     }
 
-
     public function getSelbstBewertungsTyp(): SelbstBewertungsTyp {
         return $this->selbstBewertungsTyp;
     }

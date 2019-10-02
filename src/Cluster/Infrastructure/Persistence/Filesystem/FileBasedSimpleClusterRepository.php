@@ -20,13 +20,13 @@ final class FileBasedSimpleClusterRepository extends AbstractCommonRepository im
         return $this->abstractById($id);
     }
 
-
     public function byCode(ClusterCode $clusterCode): ?Cluster {
         foreach ($this->all() as $cluster) {
             if ($cluster->getCode() && $cluster->getCode()->equals($clusterCode)) {
                 return $cluster;
             }
         }
+
         return NULL;
     }
 
@@ -41,16 +41,19 @@ final class FileBasedSimpleClusterRepository extends AbstractCommonRepository im
                 return $cluster;
             }
         }
+
         return NULL;
     }
 
     public function byClusterTypUndCode(ClusterTyp $clusterTyp, ClusterCode $clusterCode): ?Cluster {
         foreach ($this->all() as $cluster) {
             if ($cluster->getClusterTyp()->equals($clusterTyp)
-                && $cluster->getCode() && $cluster->getCode()->equals($clusterCode)) {
+                && $cluster->getCode()
+                && $cluster->getCode()->equals($clusterCode)) {
                 return $cluster;
             }
         }
+
         return NULL;
     }
 

@@ -32,7 +32,7 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
     public function latestByStudiUndTyp(StudiHash $studiHash, SelbstBewertungsTyp $typ): ?SelbstBewertung {
         return $this->doctrineRepo->findOneBy(
             [
-                "studiHash"           => $studiHash,
+                "studiHash"                 => $studiHash,
                 "selbstBewertungsTyp.value" => $typ->getValue(),
             ],
             [

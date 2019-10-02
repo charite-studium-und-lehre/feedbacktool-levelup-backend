@@ -24,5 +24,4 @@ class ImportOptionenDTO
     /** @var PruefungsPeriode */
     public $pruefungsPeriode;
 
-
 }

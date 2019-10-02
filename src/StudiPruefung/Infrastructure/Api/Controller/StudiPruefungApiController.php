@@ -46,11 +46,11 @@ class StudiPruefungApiController extends AbstractController
             $datum = $pruefung->getPruefungsPeriode();
             $name = $pruefung->getFormat()->getTitel();
             $returnArray[] = [
-                "typ" => $code,
+                "typ"              => $code,
                 "studiPruefungsId" => $studiPruefung->getId(),
-                "name" => $name,
-                "datum" => $datum->toIsoString(),
-                "ergebnis" => "TODO"
+                "name"             => $name,
+                "datum"            => $datum->toIsoString(),
+                "ergebnis"         => "TODO",
             ];
         }
 

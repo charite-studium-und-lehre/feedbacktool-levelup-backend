@@ -31,6 +31,7 @@ class SelbstBewertungsTyp implements DDDValueObject
     public static function getGemachtObject(): self {
         return self::fromInt(self::GEMACHT);
     }
+
     public static function getZutrauenObject(): self {
         return self::fromInt(self::ZUTRAUEN);
     }

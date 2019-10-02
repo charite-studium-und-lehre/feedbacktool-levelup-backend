@@ -32,8 +32,8 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
     public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung {
         return $this->doctrineRepo->findOneBy(
             [
-                "studiHash" => $studiHash,
-                "pruefungsId.id" => $pruefungsId->getValue()
+                "studiHash"      => $studiHash,
+                "pruefungsId.id" => $pruefungsId->getValue(),
             ]
         );
     }
@@ -42,7 +42,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
     public function allByStudiHash(StudiHash $studiHash): array {
         return $this->doctrineRepo->findBy(
             [
-                "studiHash" => $studiHash
+                "studiHash" => $studiHash,
             ]
         );
     }

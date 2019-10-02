@@ -4,6 +4,8 @@ namespace FBToolCommon\Domain;
 
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;
+use DateTime;
+use DateTimeImmutable;
 
 class Zeitsemester
 {
@@ -56,8 +58,8 @@ class Zeitsemester
         return self::fromInts($zeitsemesterInt % 10, $zeitsemesterInt / 10);
     }
 
-    public static function createAktuellesZeitsemester(): Zeitsemester{
-        $jetzt = new \DateTimeImmutable();
+    public static function createAktuellesZeitsemester(): Zeitsemester {
+        $jetzt = new DateTimeImmutable();
         $jahr = (int) $jetzt->format("Y");
         $monat = (int) $jetzt->format("m");
         if ($monat < 4) {
@@ -68,27 +70,26 @@ class Zeitsemester
             // SoSe dieses Jahres
             return self::fromInts(self::SOSE, $jahr);
         }
+
         return self::fromInts(self::WISE, $jahr);
 
-
     }
 
-    public function getStartDatum(): \DateTime {
+    public function getStartDatum(): DateTime {
         if ($this->halbjahr == self::SOSE) {
-            return new \DateTime($this->jahr . "-04-01 00:00:00");
+            return new DateTime($this->jahr . "-04-01 00:00:00");
         } else {
-            return new \DateTime($this->jahr . "-10-01 00:00:00");
+            return new DateTime($this->jahr . "-10-01 00:00:00");
         }
     }
 
-    public function getEndDatum(): \DateTime {
+    public function getEndDatum(): DateTime {
         if ($this->halbjahr == self::SOSE) {
-            return new \DateTime($this->jahr . "-09-30 23:59:59");
+            return new DateTime($this->jahr . "-09-30 23:59:59");
         } else {
-            return new \DateTime(($this->jahr + 1) . "-03-31 23:59:59");
+            return new DateTime(($this->jahr + 1) . "-03-31 23:59:59");
         }
     }
-
 
     /**
      * @return int

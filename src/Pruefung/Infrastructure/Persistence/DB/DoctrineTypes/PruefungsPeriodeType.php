@@ -20,6 +20,7 @@ class PruefungsPeriodeType extends Type
         if (is_numeric($value)) {
             return PruefungsPeriode::fromInt($value);
         }
+
         return NULL;
     }
 

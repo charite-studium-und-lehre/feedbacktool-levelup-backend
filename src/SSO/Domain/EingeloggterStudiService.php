@@ -4,6 +4,7 @@ namespace SSO\Domain;
 
 use Studi\Domain\Studi;
 
-interface EingeloggterStudiService {
+interface EingeloggterStudiService
+{
     public function getEingeloggterStudi(): ?Studi;
 }

@@ -3,7 +3,6 @@
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
 use DatenImport\Domain\StudiMeilensteinPersistenzService;
-use DatenImport\Domain\StudiStammdatenPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService;
 use Studi\Domain\Service\StudiHashCreator;
 use Symfony\Component\Console\Input\InputInterface;

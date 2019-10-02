@@ -4,7 +4,6 @@ namespace DatenImport\Infrastructure\UserInterface\CLI;
 
 use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
-use mysql_xdevapi\Exception;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputInterface;

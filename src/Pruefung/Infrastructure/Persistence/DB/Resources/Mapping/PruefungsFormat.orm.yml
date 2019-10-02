@@ -1,6 +1,6 @@
 Pruefung\Domain\PruefungsFormat:
-    type: embeddable
-    fields:
-        value:
-          type: integer
-          column: format
+  type: embeddable
+  fields:
+    value:
+      type: integer
+      column: format

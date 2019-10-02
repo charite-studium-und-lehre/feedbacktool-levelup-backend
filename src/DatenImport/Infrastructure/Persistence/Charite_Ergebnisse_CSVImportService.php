@@ -3,11 +3,12 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\PruefungsdatenImportService;
+use Exception;
 use Pruefung\Domain\ItemSchwierigkeit;
-use Pruefung\Domain\PruefungsPeriode;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
+use Pruefung\Domain\PruefungsPeriode;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Wertung\Domain\Wertung\Punktzahl;
@@ -56,8 +57,8 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                     PruefungsFormat::getMC($pruefungSemester),
                     $periode
                 );
-            } catch (\Exception $e) {
-                echo "- Fehler beim Import: Prüfungstitel (Sem): ".$dataLine["Kl_Nr"];
+            } catch (Exception $e) {
+                echo "- Fehler beim Import: Prüfungstitel (Sem): " . $dataLine["Kl_Nr"];
             }
 
             $fragenNr = $dataLine["FragenNr"];
@@ -69,11 +70,11 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             $fragenAnzahl = is_numeric($dataLine["fr_anz"]) ? $dataLine["fr_anz"] : NULL;
             $gesamtErreichtePunktzahl = is_numeric($dataLine["punkte"]) ? $dataLine["punkte"] : NULL;
             $bestehensGrenze = is_numeric($dataLine["best_gr"]) ? $dataLine["best_gr"] : NULL;
-            $schwierigkeitsWert =  is_numeric($dataLine["p"]) ? $dataLine["p"] : NULL;
+            $schwierigkeitsWert = is_numeric($dataLine["p"]) ? $dataLine["p"] : NULL;
             $schwierigkeit = NULL;
             if ($schwierigkeitsWert < .4) {
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_SCHWER;
-            } elseif($schwierigkeitsWert > .8) {
+            } elseif ($schwierigkeitsWert > .8) {
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_LEICHT;
             } elseif ($schwierigkeitsWert) {
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_NORMAL;

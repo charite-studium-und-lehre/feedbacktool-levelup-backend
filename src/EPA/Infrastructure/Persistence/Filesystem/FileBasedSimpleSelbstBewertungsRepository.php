@@ -10,7 +10,7 @@ use EPA\Domain\SelbstBewertungsRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use Studi\Domain\StudiHash;
 
-/** @method SelbstBewertung[] all()   */
+/** @method SelbstBewertung[] all() */
 final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepository implements SelbstBewertungsRepository
 {
     use FileBasedRepoTrait;
@@ -37,6 +37,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
                 $gefundeneBewertung = $bewertung;
             }
         }
+
         return $gefundeneBewertung;
     }
 
@@ -48,6 +49,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
                 $resultArray[] = $bewertung;
             }
         }
+
         return $resultArray;
     }
 }

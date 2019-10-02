@@ -2,6 +2,7 @@
 
 namespace Common\Infrastructure\Export\Service;
 
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -10,7 +11,7 @@ class ExcelExportService
 {
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public static function createExportFile(array $inputData, array $headers, ?string $filename = NULL):
     StreamedResponse {
@@ -29,7 +30,6 @@ class ExcelExportService
         foreach (range("A", $sheet->getHighestColumn()) as $columnID) {
             $sheet->getColumnDimension((string) $columnID)->setAutoSize(TRUE);
         }
-
 
         //Tabelle füllen
         $row = 2;

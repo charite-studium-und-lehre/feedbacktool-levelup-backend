@@ -29,8 +29,6 @@ class EPABewertung
     /** @var epa */
     private $epa;
 
-
-
     public static function fromInt(string $bewertung): self {
         Assertion::integerish($bewertung, self::INVALID);
         Assertion::between($bewertung, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);

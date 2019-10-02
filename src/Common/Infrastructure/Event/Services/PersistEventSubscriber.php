@@ -31,6 +31,6 @@ class PersistEventSubscriber implements DomainEventSubscriber
 
     public function isSubscribedTo(DomainEvent $domainEvent): bool {
         // Interessiert sich für alle Events.
-        return true;
+        return TRUE;
     }
 }

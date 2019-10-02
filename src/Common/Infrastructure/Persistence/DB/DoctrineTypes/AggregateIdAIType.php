@@ -2,9 +2,7 @@
 
 namespace Common\Infrastructure\Persistence\DB\DoctrineTypes;
 
-use Common\Domain\AggregateId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Type;
 
 class AggregateIdAIType extends AggregateIdType
 {

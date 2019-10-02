@@ -17,14 +17,15 @@ class AggregateIdStringType extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (!$value) {
-            return null;
+            return NULL;
         }
+
         return AggregateIdString::fromString($value);
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value) {
-            return null;
+            return NULL;
         }
         if ($value instanceof AggregateIdString) {
             return $value->getValue();

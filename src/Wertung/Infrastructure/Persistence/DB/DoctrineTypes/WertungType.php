@@ -6,6 +6,7 @@ use Common\lib\Math\FloatToIntKodierer;
 use Common\lib\Math\IntsToIntKodierer;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use Exception;
 use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
@@ -60,14 +61,14 @@ class WertungType extends Type
             case self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG:
                 return $this->dekodiereRichtigFalschWeissnichtWertung($wertungsWert);
             default:
-                throw new \Exception("Wertungsart '" . $value % 100 . "'nicht bekannt!'");
+                throw new Exception("Wertungsart '" . $value % 100 . "'nicht bekannt!'");
         }
     }
 
     /** @return integer */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value instanceof Wertung) {
-            throw new \Exception("Wertung muss Interface 'Wertung' implementieren!");
+            throw new Exception("Wertung muss Interface 'Wertung' implementieren!");
         }
         if ($value instanceof PunktWertung) {
             return $this->kodierePunktWertung($value);
@@ -77,7 +78,7 @@ class WertungType extends Type
         } elseif ($value instanceof RichtigFalschWeissnichtWertung) {
             return $this->kodiereRichtigFalschWeissnichtWertung($value);
         }
-        throw new \Exception("Wertungs-Typ '" . get_class($value) . "'ist unbekannt!");
+        throw new Exception("Wertungs-Typ '" . get_class($value) . "'ist unbekannt!");
     }
 
     public function getName() {
@@ -88,11 +89,11 @@ class WertungType extends Type
         return TRUE;
     }
 
-
     private function kodiereRichtigFalschWeissnichtWertung($value): int {
         $stellenzahlVon = 0;
         $stellenzahlBis = self::TYP_STELLEN;
-        $typSummand = IntsToIntKodierer::erzeugeSummand(self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG, $stellenzahlVon, $stellenzahlBis);
+        $typSummand = IntsToIntKodierer::erzeugeSummand(self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG, $stellenzahlVon,
+                                                        $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
@@ -118,7 +119,6 @@ class WertungType extends Type
         return $typSummand + $richtigSummand + $falschSummand + $weissnichtSummand;
     }
 
-
     private function kodiereProzentWertung(ProzentWertung $value): int {
         $typSummand = IntsToIntKodierer::erzeugeSummand(self::PROZENT_WERTUNG, 0, self::TYP_STELLEN);
         $prozentZahlint = FloatToIntKodierer::toInt($value->getProzentzahl()->getValue(),
@@ -127,7 +127,6 @@ class WertungType extends Type
 
         return $typSummand + $prozentZahlSummand;
     }
-
 
     private function kodierePunktWertung(PunktWertung $value): int {
         $typSummand = IntsToIntKodierer::erzeugeSummand(self::PUNKT_WERTUNG, 0, self::TYP_STELLEN);
@@ -142,7 +141,6 @@ class WertungType extends Type
 
         return $typSummand + $maxPunktzahlSummand + $punktzahlSummand;
     }
-
 
     private function dekodierePunktWertung(int $wertungsWert): PunktWertung {
         $maxPunktzahlInt = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert, 0,
@@ -159,14 +157,12 @@ class WertungType extends Type
         return PunktWertung::fromPunktzahlUndSkala($punktzahl, $punktSkala);
     }
 
-
     private function dekodiereProzentWertung(int $wertungsWert): ProzentWertung {
         $prozentZahlFloat = FloatToIntKodierer::fromInt($wertungsWert, self::PROZENT_SKALA_NACHKOMMASTELLEN);
         $prozentZahl = Prozentzahl::fromFloat($prozentZahlFloat);
 
         return ProzentWertung::fromProzentzahl($prozentZahl);
     }
-
 
     private function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
         $stellenzahlVon = 0;
@@ -179,14 +175,14 @@ class WertungType extends Type
         $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
 
         $falschPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
-                                                                     $stellenzahlVon,
-                                                                     $stellenzahlBis);
+                                                                    $stellenzahlVon,
+                                                                    $stellenzahlBis);
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
 
         $weissnichtPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
-                                                                    $stellenzahlVon,
-                                                                    $stellenzahlBis);
+                                                                        $stellenzahlVon,
+                                                                        $stellenzahlBis);
 
         return RichtigFalschWeissnichtWertung::fromPunktzahlen(
             Punktzahl::fromFloat($richtigPunktzahl),

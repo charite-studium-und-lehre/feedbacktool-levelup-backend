@@ -5,8 +5,8 @@ namespace StudiMeilenstein\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use Exception;
 use Pruefung\Domain\Pruefung;
-use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsId;
 
 final class Meilenstein implements DDDValueObject
@@ -57,12 +57,12 @@ final class Meilenstein implements DDDValueObject
         "best_sem9"  => 209,
         "best_sem10" => 210,
 
-        "voraus_sem4"  => 304,
-        "voraus_sem5"  => 305,
-        "voraus_sem6"  => 306,
-        "voraus_sem7"  => 307,
-        "voraus_sem8"  => 308,
-        "voraus_sem9"  => 309,
+        "voraus_sem4" => 304,
+        "voraus_sem5" => 305,
+        "voraus_sem6" => 306,
+        "voraus_sem7" => 307,
+        "voraus_sem8" => 308,
+        "voraus_sem9" => 309,
 
         "MC-Sem1"  => 401,
         "MC-Sem2"  => 402,
@@ -76,9 +76,9 @@ final class Meilenstein implements DDDValueObject
         "MC-Sem10" => 410,
 
         "stat_prfg_sem2_vorklinik" => 501,
-        "stat_prfg_sem2_klinik" => 502,
-        "stat_prfg_sem4" => 504,
-        "stat_prfg_sem9" => 509,
+        "stat_prfg_sem2_klinik"    => 502,
+        "stat_prfg_sem4"           => 504,
+        "stat_prfg_sem9"           => 509,
 
     ];
 
@@ -113,6 +113,7 @@ final class Meilenstein implements DDDValueObject
 
     public static function fromKuerzel(string $value): self {
         Assertion::keyIsset(self::MEILENSTEINE_KUERZEL_ZU_CODE, $value, self::UNGUELTIG_KUERZEL . $value);
+
         return self::fromCode(self::MEILENSTEINE_KUERZEL_ZU_CODE[$value]);
     }
 
@@ -127,8 +128,6 @@ final class Meilenstein implements DDDValueObject
     public function getStudiPruefungsId(): ?StudiPruefungsId {
         return $this->studiPruefungsId;
     }
-
-
 
     public function getTitel() {
         if (isset(self::MEILENSTEINE[$this->code])) {
@@ -155,6 +154,7 @@ final class Meilenstein implements DDDValueObject
             if ($this->code == 502) {
                 return "Stationen-Prüfung Sem. 2 Klinik";
             }
+
             return "Stationen-Prüfung Sem. $fachsemester";
         }
     }
@@ -164,23 +164,31 @@ final class Meilenstein implements DDDValueObject
         foreach (self::MEILENSTEINE_KUERZEL_ZU_CODE as $code) {
             $alleTitel[$code] = Meilenstein::fromCode($code)->getTitel();
         }
+
         return $alleTitel;
     }
 
     public function getFachsemester(): int {
         switch ($this->code) {
-            case 10: return 6;
-            case 20: return 3;
-            case 30: return 3;
-            case 40: return 4;
-            case 50: return 6;
-            case 60: return 10;
-            case 70: return 9;
+            case 10:
+                return 6;
+            case 20:
+                return 3;
+            case 30:
+                return 3;
+            case 40:
+                return 4;
+            case 50:
+                return 6;
+            case 60:
+                return 10;
+            case 70:
+                return 9;
         }
         if ($this->code > 100) {
             return $this->code % 100;
         }
-        throw new \Exception("Fachsemester unbekannt für Code " . $this->code);
+        throw new Exception("Fachsemester unbekannt für Code " . $this->code);
     }
 
     public function __toString(): string {

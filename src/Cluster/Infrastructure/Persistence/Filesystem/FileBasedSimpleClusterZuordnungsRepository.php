@@ -3,7 +3,6 @@
 namespace Cluster\Infrastructure\Persistence\Filesystem;
 
 use Cluster\Domain\ClusterId;
-use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
@@ -17,12 +16,6 @@ final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRep
     public function addZuordnung(ClusterZuordnung $clusterZuordnung): void {
         if (!$this->sucheAktuelleZuordnung($clusterZuordnung)) {
             $this->add($clusterZuordnung);
-        }
-    }
-
-    public function delete($clusterZuordnung): void {
-        if ($this->sucheAktuelleZuordnung($clusterZuordnung)) {
-            parent::delete($clusterZuordnung);
         }
     }
 
@@ -52,6 +45,12 @@ final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRep
         return $resultArray;
     }
 
+    public function delete($clusterZuordnung): void {
+        if ($this->sucheAktuelleZuordnung($clusterZuordnung)) {
+            parent::delete($clusterZuordnung);
+        }
+    }
+
     private function sucheAktuelleZuordnung(ClusterZuordnung $clusterZuordnung): ?ClusterZuordnung {
         foreach ($this->all() as $aktuelleZuordnung) {
             /* @var $aktuelleZuordnung ClusterZuordnung */
@@ -62,6 +61,5 @@ final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRep
 
         return NULL;
     }
-
 
 }

@@ -1,8 +1,8 @@
 Cluster\Domain\ClusterTitel:
-    type: embeddable
-    fields:
-        value:
-          type: string
-          length: 100
-          nullable: false
-          column: clusterTitel
+  type: embeddable
+  fields:
+    value:
+      type: string
+      length: 100
+      nullable: false
+      column: clusterTitel

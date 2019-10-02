@@ -5,6 +5,7 @@ namespace DatenImport\Domain;
 use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemRepository;
+use Studi\Domain\StudiHash;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
@@ -130,12 +131,12 @@ class ChariteMCPruefungWertungPersistenzService
     }
 
     /**
-     * @param \Studi\Domain\StudiHash $studiHash
+     * @param StudiHash $studiHash
      * @param $pruefungsId
      * @return StudiPruefung|null
      */
     private function holeOderErzeugeStudiPruefung(
-        \Studi\Domain\StudiHash $studiHash,
+        StudiHash $studiHash,
         $pruefungsId,
         $gesamtPunktzahl = NULL,
         $bestehensgrenze = NULL

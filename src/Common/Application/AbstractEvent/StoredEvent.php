@@ -3,7 +3,7 @@
 namespace Common\Application\AbstractEvent;
 
 use Common\Application\DomainEvent\DomainEvent;
-use Common\Application\DomainEvent\DomainEventTrait;
+use DateTimeImmutable;
 
 class StoredEvent implements DomainEvent
 {
@@ -22,7 +22,7 @@ class StoredEvent implements DomainEvent
         StoredEventId $id,
         StoredEventClass $eventClass,
         StoredEventBody $eventBody,
-        \DateTimeImmutable $occurredOn,
+        DateTimeImmutable $occurredOn,
         ?int $byUserId = NULL
     ) {
         $object = new static();

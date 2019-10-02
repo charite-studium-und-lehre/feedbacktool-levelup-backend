@@ -16,10 +16,6 @@ class PruefungsUnterPeriode implements DDDValueObject
     /** @var int */
     private $value;
 
-    public function getValue(): int {
-        return $this->value;
-    }
-
     public static function fromInt(string $value): self {
         Assertion::integerish($value, self::INVALID_PRUEFUNGS_UNTER_PERIODE);
         Assertion::between($value, 1, 9, self::INVALID_PRUEFUNGS_UNTER_PERIODE);
@@ -28,6 +24,10 @@ class PruefungsUnterPeriode implements DDDValueObject
         $object->value = $value;
 
         return $object;
+    }
+
+    public function getValue(): int {
+        return $this->value;
     }
 
     public function __toString(): string {

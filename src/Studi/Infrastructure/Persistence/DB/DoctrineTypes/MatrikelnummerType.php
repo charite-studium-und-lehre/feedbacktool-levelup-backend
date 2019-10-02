@@ -5,7 +5,6 @@ namespace Studi\Infrastructure\Persistence\DB\DoctrineTypes;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Studi\Domain\Matrikelnummer;
-use Studi\Domain\StudiHash;
 
 class MatrikelnummerType extends Type
 {

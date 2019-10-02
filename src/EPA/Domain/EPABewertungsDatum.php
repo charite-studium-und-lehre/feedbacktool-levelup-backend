@@ -4,6 +4,8 @@ namespace EPA\Domain;
 
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;
+use DateTimeImmutable;
+use InvalidArgumentException;
 
 class EPABewertungsDatum
 {
@@ -11,19 +13,19 @@ class EPABewertungsDatum
 
     const INVALID = "Ist kein gültiges Datum";
 
-    /** @var \DateTimeImmutable */
+    /** @var DateTimeImmutable */
     private $value;
 
     public static function fromString(string $value): self {
-        $datetimeImmutable = \DateTimeImmutable::createFromFormat("d.m.Y", $value);
+        $datetimeImmutable = DateTimeImmutable::createFromFormat("d.m.Y", $value);
         if (!$datetimeImmutable) {
-            throw new \InvalidArgumentException(self::INVALID . $value);
+            throw new InvalidArgumentException(self::INVALID . $value);
         }
 
         return self::fromDateTimeImmutable($datetimeImmutable);
     }
 
-    public static function fromDateTimeImmutable(\DateTimeImmutable $value): self {
+    public static function fromDateTimeImmutable(DateTimeImmutable $value): self {
 
         $object = new self();
         Assertion::greaterThan($value->format("Y"), "2010",
@@ -31,7 +33,7 @@ class EPABewertungsDatum
         Assertion::lessThan($value->format("Y"), "2100",
                             self::INVALID . $value->format("d.m.Y"));
 
-        $object->value = \DateTimeImmutable::createFromFormat(
+        $object->value = DateTimeImmutable::createFromFormat(
             "d.m.Y H:i:s",
             $value->format("d.m.Y") . " 00:00:00"
         );
@@ -40,10 +42,10 @@ class EPABewertungsDatum
     }
 
     public static function heute(): self {
-        return self::fromDateTimeImmutable(new \DateTimeImmutable());
+        return self::fromDateTimeImmutable(new DateTimeImmutable());
     }
 
-    public function toDateTimeImmutable(): \DateTimeImmutable {
+    public function toDateTimeImmutable(): DateTimeImmutable {
         return clone $this->value;
     }
 

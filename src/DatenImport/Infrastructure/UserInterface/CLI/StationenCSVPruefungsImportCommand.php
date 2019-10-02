@@ -4,6 +4,7 @@ namespace DatenImport\Infrastructure\UserInterface\CLI;
 
 use DatenImport\Domain\ChariteStationenPruefungPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportService;
+use Exception;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputArgument;
@@ -83,7 +84,7 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
             case 'Teil3':
                 return PruefungsFormat::getStationTeil3();
             default:
-                throw new \Exception("Falsches Format: $pruefungsTeil");
+                throw new Exception("Falsches Format: $pruefungsTeil");
         }
     }
 

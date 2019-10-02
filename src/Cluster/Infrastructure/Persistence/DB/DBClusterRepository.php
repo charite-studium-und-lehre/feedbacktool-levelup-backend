@@ -40,7 +40,7 @@ final class DBClusterRepository implements ClusterRepository
         return $this->doctrineRepo->findOneBy(
             [
                 "clusterTyp.const" => $clusterTyp->getConst(),
-                "titel.value" => $clusterTitel->getValue(),
+                "titel.value"      => $clusterTitel->getValue(),
             ]
         );
     }
@@ -49,7 +49,7 @@ final class DBClusterRepository implements ClusterRepository
         return $this->doctrineRepo->findOneBy(
             [
                 "clusterTyp.const" => $clusterTyp->getConst(),
-                "code" => $clusterCode,
+                "code"             => $clusterCode,
             ]
         );
     }
@@ -62,8 +62,5 @@ final class DBClusterRepository implements ClusterRepository
             ]
         );
     }
-
-
-
 
 }

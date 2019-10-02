@@ -9,8 +9,8 @@ namespace Common\Domain;
  * @method delete($object)
  * @method byId($objectId)
  * @method flush() void
- *
  */
-interface DDDRepository {
+interface DDDRepository
+{
     public function all();
 }

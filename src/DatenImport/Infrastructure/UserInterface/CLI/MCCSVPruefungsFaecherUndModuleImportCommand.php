@@ -6,7 +6,6 @@ use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
-use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,9 +50,9 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
         $this->addArgumentDateiPfad();
         $this->addArgument('dateiPfadLzModule', InputArgument::REQUIRED, 'Der volle Pfad zur Lernziel-Modul-CSV-Datei');
         $this->addArgumentPeriode();
-        $this->addArgument('delimiterLzModule', InputArgument::OPTIONAL, 'Das CSV-Trennezichen für die Lernziel-Modul-Datei');
+        $this->addArgument('delimiterLzModule', InputArgument::OPTIONAL,
+                           'Das CSV-Trennezichen für die Lernziel-Modul-Datei');
         $this->addAndereArgumente();
-
 
         $this->setDescription('Datenimport aus Datei: Modul- und Fächerzuordnung MC-Prüfung in CSV-Datei');
         $this->setHelp("Aufruf: bin/console l:i:mc <MC-CSV-Dateipfad> <Lernziel-Modul-CSV-Dateipfad>");
@@ -66,10 +65,10 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
             $dateiPfad, $delimiter, $hasHeaders, $encoding, $datum,
-        );
+            );
 
         $lzModulDaten = $this->chariteLernzielModulImportCSVService->getLernzielZuModulData(
-            $dateiPfadLzModule,$delimiterLzModule, $hasHeaders, $encoding
+            $dateiPfadLzModule, $delimiterLzModule, $hasHeaders, $encoding
         );
 
         $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. ");

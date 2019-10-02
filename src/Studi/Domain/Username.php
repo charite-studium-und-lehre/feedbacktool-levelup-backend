@@ -17,7 +17,6 @@ final class Username implements DDDValueObject
 
     private $value;
 
-
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);
         Assertion::alnum($value, self::UNGUELTIG . $value);

@@ -2,17 +2,20 @@
 
 namespace Common\Application\AbstractEvent;
 
+use DateTimeImmutable;
+
 trait AbstractEventTrait
 {
-    /** @var \DateTimeImmutable */
+    /** @var DateTimeImmutable */
     public $occurredOn;
 
     /** @var int */
     public $byUserId;
 
-    public function getOccurredOn(): \DateTimeImmutable {
+    public function getOccurredOn(): DateTimeImmutable {
         return $this->occurredOn;
     }
+
     public function getByUserId(): int {
         return $this->byUserId;
     }
@@ -23,6 +26,6 @@ trait AbstractEventTrait
     }
 
     private function setOccuredOn() {
-        $this->occurredOn = new \DateTimeImmutable();
+        $this->occurredOn = new DateTimeImmutable();
     }
 }

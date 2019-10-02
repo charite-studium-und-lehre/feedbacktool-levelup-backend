@@ -5,6 +5,7 @@ namespace Studi\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use DateTimeImmutable;
 
 final class Geburtsdatum implements DDDValueObject
 {
@@ -17,10 +18,10 @@ final class Geburtsdatum implements DDDValueObject
     const DATUMS_FORMAT_DEUTSCH = "d.m.Y";
     const DATUMS_FORMAT_DEUTSCH_MINUS = "d-m-Y";
 
-    /** @var \DateTimeImmutable */
+    /** @var DateTimeImmutable */
     private $value;
 
-    public static function fromDateTimeImmutable(\DateTimeImmutable $date): self {
+    public static function fromDateTimeImmutable(DateTimeImmutable $date): self {
         Assertion::min($date->format("Y"), self::MIN_JAHR, self::UNGUELTIG_JAHR . $date->format("d.m.Y"));
         Assertion::max($date->format("Y"), self::MAX_JAHR, self::UNGUELTIG_JAHR . $date->format("d.m.Y"));
 
@@ -34,7 +35,7 @@ final class Geburtsdatum implements DDDValueObject
         Assertion::date($dateString, self::DATUMS_FORMAT_DEUTSCH, self::UNGUELTIG . $dateString);
 
         return self::fromDateTimeImmutable(
-            \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH, $dateString)
+            DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH, $dateString)
         );
     }
 
@@ -42,11 +43,11 @@ final class Geburtsdatum implements DDDValueObject
         Assertion::date($dateString, self::DATUMS_FORMAT_DEUTSCH_MINUS, self::UNGUELTIG . $dateString);
 
         return self::fromDateTimeImmutable(
-            \DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH_MINUS, $dateString)
+            DateTimeImmutable::createFromFormat(self::DATUMS_FORMAT_DEUTSCH_MINUS, $dateString)
         );
     }
 
-    public function getValue(): \DateTimeImmutable {
+    public function getValue(): DateTimeImmutable {
         return $this->value;
     }
 

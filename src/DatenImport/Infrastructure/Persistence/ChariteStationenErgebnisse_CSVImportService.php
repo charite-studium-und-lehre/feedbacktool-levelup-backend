@@ -4,6 +4,8 @@ namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\FachCodeKonstanten;
 use DatenImport\Domain\PruefungsdatenImportService;
+use DateTimeImmutable;
+use Exception;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
@@ -44,7 +46,7 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
             } elseif (isset($dataLine["matr"])) {
                 $matrikel = $dataLine["matr"];
             } else {
-                throw new \Exception("Keine Spalte 'matrikel' gefunden!");
+                throw new Exception("Keine Spalte 'matrikel' gefunden!");
             }
             $matrikelnummer = Matrikelnummer::fromInt((int) $matrikel);
             $resultLine = [
@@ -57,7 +59,7 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                 : "";
 
             $resultLine["datum"] = !empty($dataLine["Datum"])
-                ? \DateTimeImmutable::createFromFormat("d.m.Y", $dataLine["Datum"])
+                ? DateTimeImmutable::createFromFormat("d.m.Y", $dataLine["Datum"])
                 : NULL;
 
             $resultLine["pruefungsCode"] = !empty($dataLine["HIS"])

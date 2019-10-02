@@ -2,7 +2,6 @@
 
 namespace Wertung\Domain\Wertung;
 
-use Assert\Assertion;
 use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Skala\Skala;
 
@@ -10,6 +9,7 @@ class PunktWertung extends AbstractWertung
 {
     /** @var Punktzahl */
     protected $punktzahl;
+
     /** @var PunktSkala */
     protected $skala;
 
@@ -23,7 +23,7 @@ class PunktWertung extends AbstractWertung
 
     /**
      * @return float
-     *@see Wertung::getRelativeWertung()
+     * @see Wertung::getRelativeWertung()
      */
     public function getRelativeWertung(): float {
         return $this->punktzahl->getAnteilVon($this->skala->getMaxPunktzahl());
@@ -31,7 +31,7 @@ class PunktWertung extends AbstractWertung
 
     /**
      * @return PunktSkala
-     *@see Wertung::getSkala()
+     * @see Wertung::getSkala()
      */
     public function getSkala(): Skala {
         return $this->skala;

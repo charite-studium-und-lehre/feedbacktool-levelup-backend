@@ -16,10 +16,6 @@ class AbstractCommonRepository
         $this->persistEntities($entities);
     }
 
-    protected function persistEntities(array $entities) {
-        $this->persistedEntities = $entities;
-    }
-
     public function delete($entity): void {
         $all = $this->all();
         $newArray = [];
@@ -50,6 +46,10 @@ class AbstractCommonRepository
      */
     public function flush(): void {
         $this->persistEntities($this->all());
+    }
+
+    protected function persistEntities(array $entities) {
+        $this->persistedEntities = $entities;
     }
 
 }

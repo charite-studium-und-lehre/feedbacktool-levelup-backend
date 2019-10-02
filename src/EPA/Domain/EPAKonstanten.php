@@ -2,8 +2,6 @@
 
 namespace EPA\Domain;
 
-use Common\Domain\DefaultValueObjectComparison;
-
 class EPAKonstanten
 {
     const EBENE_1 = [

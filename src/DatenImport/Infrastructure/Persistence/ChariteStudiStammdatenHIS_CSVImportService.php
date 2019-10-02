@@ -3,6 +3,7 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\StudiStammdatenImportService;
+use InvalidArgumentException;
 use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
@@ -26,7 +27,7 @@ class ChariteStudiStammdatenHIS_CSVImportService extends AbstractCSVImportServic
             as $dataLine) {
             try {
                 $matrikelnummer = Matrikelnummer::fromInt($dataLine["mtknr"]);
-            } catch (\InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
                 echo "Fehler: " . $e->getMessage() . " -> Ignoriere Eintrag;\n";
                 continue;
             }

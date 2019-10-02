@@ -4,5 +4,5 @@ namespace Common\Application\Command;
 
 interface CommandBus
 {
-    public function execute(DomainCommand $command) : void;
+    public function execute(DomainCommand $command): void;
 }

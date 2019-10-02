@@ -15,6 +15,7 @@ class PruefungsId extends AggregateIdString
         if ($suffix) {
             $idString .= "-$suffix";
         }
+
         return PruefungsId::fromString($idString);
     }
 }

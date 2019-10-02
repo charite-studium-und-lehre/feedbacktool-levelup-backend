@@ -43,7 +43,7 @@ class Punktzahl
             / (10 ** (2 * self::NACHKOMMASTELLEN));
     }
 
-    public function getValue() : float {
+    public function getValue(): float {
         return $this->value;
     }
 }

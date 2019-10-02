@@ -21,7 +21,7 @@ class ClusterTyp implements DDDValueObject
     private const TYP_ID_MC_FRAGE_SCHWIERIGKEIT = 600;
 
     private const ALLE_KONSTANTEN = [
-        self::TYP_ID_FACH, self::TYP_ID_ORGANSYSTEM, self::TYP_ID_MODUL, self::TYP_ID_MC_FRAGE_SCHWIERIGKEIT
+        self::TYP_ID_FACH, self::TYP_ID_ORGANSYSTEM, self::TYP_ID_MODUL, self::TYP_ID_MC_FRAGE_SCHWIERIGKEIT,
     ];
 
     const INVALID = "Der Clustertyp ist nicht bekannt: ";
@@ -36,7 +36,6 @@ class ClusterTyp implements DDDValueObject
 
         return $object;
     }
-    
 
     public static function getFachTyp(): ClusterTyp {
         return self::fromConst(self::TYP_ID_FACH);

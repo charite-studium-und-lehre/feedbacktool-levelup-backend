@@ -36,10 +36,11 @@ final class DBClusterZuordnungsRepository implements ClusterZuordnungsRepository
         foreach ($zuordnungen as $zuordnung) {
             $clusterIds[] = $zuordnung->getClusterId();
         }
+
         return $clusterIds;
     }
 
-    /** @return \Pruefung\Domain\PruefungsItemId[] */
+    /** @return PruefungsItemId[] */
     public function allePruefungsItemsVonCluster(ClusterId $clusterId): array {
         return $this->doctrineRepo
             ->findBy(

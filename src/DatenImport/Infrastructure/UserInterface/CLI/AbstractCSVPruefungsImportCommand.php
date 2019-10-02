@@ -2,7 +2,7 @@
 
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
-use mysql_xdevapi\Exception;
+use Exception;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
@@ -24,7 +24,7 @@ abstract class AbstractCSVPruefungsImportCommand extends AbstractCSVImportComman
     /**
      * @param InputInterface $input
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getParameters(InputInterface $input): ImportOptionenDTO {
         $periode = PruefungsPeriode::fromInt((int) $input->getArgument("periode"));
@@ -81,7 +81,6 @@ abstract class AbstractCSVPruefungsImportCommand extends AbstractCSVImportComman
             throw new InvalidArgumentException("Parameter Periode: Dieser Import darf keine Unterperiode haben (5-stellige Periode) (Periode <Jahr><Halbjahr>)");
         }
     }
-
 
     private function computeFileNameToPruefungsId(string $filename): PruefungsId {
         $filename = basename($filename);

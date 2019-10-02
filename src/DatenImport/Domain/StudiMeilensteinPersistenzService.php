@@ -60,7 +60,6 @@ class StudiMeilensteinPersistenzService
                 }
             }
 
-
             $alleMeilensteineDesStudis = $this->studiMeilensteinRepository->allByStudiHash(
                 $existierenderStudiIntern->getStudiHash()
             );
@@ -73,7 +72,7 @@ class StudiMeilensteinPersistenzService
                 } else {
                     $meilensteinCodesHinzuzufuegen =
                         array_diff($meilensteinCodesHinzuzufuegen,
-                                    [$existierenderMeilenstein->getMeilenstein()->getCode()]
+                                   [$existierenderMeilenstein->getMeilenstein()->getCode()]
                         );
                 }
             }

@@ -18,9 +18,7 @@ class ClusterTitel implements DDDValueObject
 
     const INVALID_ZU_LANG = "Der Clustertitel darf maximal " . self::MAX_TAG_LAENGE . " Zeichen enthalten: ";
 
-
     private $value;
-
 
     public static function fromString(string $value): self {
         Assertion::minLength($value, self::MIN_TAG_LAENGE, self::INVALID_ZU_KURZ . $value);

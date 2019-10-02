@@ -81,7 +81,7 @@ class ChariteStationenPruefungPersistenzService
             foreach ($ergebnisse as $ergebnisKey => $ergebnis) {
                 $itemCode = $fach . "-" . $ergebnisKey;
 
-                $pruefungsItemId = PruefungsItemId::fromString( $pruefungsId->getValue() . "-" . $itemCode);
+                $pruefungsItemId = PruefungsItemId::fromString($pruefungsId->getValue() . "-" . $itemCode);
 
                 $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
                 if (!$pruefungsItem) {

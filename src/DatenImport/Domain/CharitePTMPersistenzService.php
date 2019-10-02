@@ -7,6 +7,7 @@ use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
+use Exception;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
@@ -74,7 +75,7 @@ class CharitePTMPersistenzService
         foreach ($ptmPruefungsDaten as $matrikelnummer => $studiErgebnis) {
             try {
                 $matrikelnummerVO = Matrikelnummer::fromInt($matrikelnummer);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 echo "\n" . $e->getMessage() . " --- Skipping!";
                 continue;
             }

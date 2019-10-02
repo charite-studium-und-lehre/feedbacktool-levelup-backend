@@ -17,8 +17,9 @@ class AggregateIdType extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (!$value) {
-            return null;
+            return NULL;
         }
+
         return AggregateId::fromInt($value);
     }
 

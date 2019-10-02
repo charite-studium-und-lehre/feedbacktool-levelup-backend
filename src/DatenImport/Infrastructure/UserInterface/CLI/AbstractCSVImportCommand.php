@@ -2,6 +2,7 @@
 
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +17,7 @@ abstract class AbstractCSVImportCommand extends Command
     /**
      * @param InputInterface $input
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getParameters(InputInterface $input): ImportOptionenDTO {
         $dateiPfad = $input->getArgument("dateiPfad");
@@ -32,6 +33,7 @@ abstract class AbstractCSVImportCommand extends Command
         $importOptionenDTO->delimiter = $delimiter;
         $importOptionenDTO->encoding = $encoding;
         $importOptionenDTO->hasHeaders = $hasHeaders;
+
         return $importOptionenDTO;
     }
 
@@ -52,18 +54,18 @@ abstract class AbstractCSVImportCommand extends Command
         $success = FALSE;
         try {
             $success = iconv($encoding, "UTF-8", "a");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
         if (!$success) {
             if (strlen($encoding) !== 1) {
-                throw new \Exception("'$encoding' nicht als Kodierung erkannt! Ein Liste aller verfügbaren Kodierungen erhalten Sie durch 'iconv -l'");
+                throw new Exception("'$encoding' nicht als Kodierung erkannt! Ein Liste aller verfügbaren Kodierungen erhalten Sie durch 'iconv -l'");
             }
         }
     }
 
     private function checkDelimiter(string $delimiter): void {
         if (strlen($delimiter) !== 1) {
-            throw new \Exception("'$delimiter' ist als Zeichentrenner nicht gültig!");
+            throw new Exception("'$delimiter' ist als Zeichentrenner nicht gültig!");
         }
     }
 

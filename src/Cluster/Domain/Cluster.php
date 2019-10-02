@@ -57,13 +57,12 @@ class Cluster implements DDDEntity
         return $this->titel;
     }
 
-    public function getCode(): ?ClusterCode {
-        return $this->code;
-    }
-
     public function setTitel(ClusterTitel $titel): void {
         $this->titel = $titel;
     }
 
+    public function getCode(): ?ClusterCode {
+        return $this->code;
+    }
 
 }

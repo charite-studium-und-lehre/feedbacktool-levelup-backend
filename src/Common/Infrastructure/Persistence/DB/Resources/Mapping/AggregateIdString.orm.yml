@@ -1,6 +1,6 @@
 Common\Domain\AggregateIdString:
-    type: embeddable
-    fields:
-        id:
-          type: string
-          length: 30
+  type: embeddable
+  fields:
+    id:
+      type: string
+      length: 30

@@ -6,7 +6,6 @@ use Common\Application\Command\DomainCommand;
 use Common\Application\CommandHandler\CommandHandler;
 use Common\Application\CommandHandler\CommandHandlerTrait;
 use EPA\Domain\EPABewertung;
-use EPA\Domain\EPABewertungsDatum;
 use EPA\Domain\SelbstBewertung;
 use EPA\Domain\SelbstBewertungsRepository;
 use EPA\Domain\SelbstBewertungsTyp;

@@ -36,16 +36,16 @@ class SSOController extends AbstractController
 
         return $this->render("sso.html.twig", ["results" =>
                                                    [
-                                                       "email"         => $email,
-                                                       "username"      => $username,
-                                                       "iat"           => $iat,
-                                                       "exp"           => $exp,
-                                                       "auth_time"     => $auth_time,
-                                                       "access_token"  => print_r($oidc->getAccessToken(), 1),
-                                                       "id_header" => print_r($oidc->getIdTokenHeader(), 1),
-                                                       "id_payload" => print_r($oidc->getIdTokenPayload(), 1),
-                                                       "refreshToken" =>print_r( $oidc->getRefreshToken(), 1),
-                                                   ]
+                                                       "email"        => $email,
+                                                       "username"     => $username,
+                                                       "iat"          => $iat,
+                                                       "exp"          => $exp,
+                                                       "auth_time"    => $auth_time,
+                                                       "access_token" => print_r($oidc->getAccessToken(), 1),
+                                                       "id_header"    => print_r($oidc->getIdTokenHeader(), 1),
+                                                       "id_payload"   => print_r($oidc->getIdTokenPayload(), 1),
+                                                       "refreshToken" => print_r($oidc->getRefreshToken(), 1),
+                                                   ],
                                             ]
         );
     }

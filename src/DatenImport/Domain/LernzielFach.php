@@ -2,7 +2,6 @@
 
 namespace DatenImport\Domain;
 
-use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Common\Domain\DefaultValueObjectComparison;
 
@@ -23,7 +22,6 @@ final class LernzielFach
 
         return $object;
     }
-
 
     public function getLernzielNummer(): LernzielNummer {
         return LernzielNummer::fromInt($this->lernzielNummer);

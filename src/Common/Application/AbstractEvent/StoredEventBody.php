@@ -13,7 +13,8 @@ class StoredEventBody
     const INVALID_ZU_KURZ = "Der serialisierte DomainEvent-Body muss mindestens " . self::MIN_LAENGE
     . " Zeichen enthalten!";
 
-    const INVALID_ZU_LANG = "Der serialisierte DomainEvent-Body darf maximal " . self::MAX_LAENGE . " Zeichen enthalten!";
+    const INVALID_ZU_LANG = "Der serialisierte DomainEvent-Body darf maximal " . self::MAX_LAENGE
+    . " Zeichen enthalten!";
 
     private $value;
 

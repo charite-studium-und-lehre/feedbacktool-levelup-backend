@@ -2,15 +2,17 @@
 
 namespace Common\Domain;
 
+use DateInterval;
+use DateTime;
 use DateTimeImmutable;
 
 final class EntityZeitstempel
 {
 
-    /** @var \DateTimeImmutable */
+    /** @var DateTimeImmutable */
     private $erzeugungsZeit;
 
-    /** @var \DateTimeImmutable|NULL */
+    /** @var DateTimeImmutable|NULL */
     private $aenderungsZeit = NULL;
 
     public static function createErzeugungsZeitstempel(): EntityZeitstempel {
@@ -39,8 +41,8 @@ final class EntityZeitstempel
 
     public function setzeErzeugungRelativ_fuerTest(int $sekunden) {
         $this->erzeugungsZeit = DateTimeImmutable::createFromMutable(
-            (new \DateTime())
-                ->add(new \DateInterval("PT$sekunden" . "S"))
+            (new DateTime())
+                ->add(new DateInterval("PT$sekunden" . "S"))
         );
     }
 }

@@ -4,7 +4,6 @@ namespace SSO\Infrastructure\Web\Service;
 
 use SSO\Domain\EingeloggterStudiService;
 use Studi\Domain\Studi;
-use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;
 
 class WebEingeloggterStudiService implements EingeloggterStudiService

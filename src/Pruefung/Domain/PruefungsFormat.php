@@ -164,5 +164,4 @@ class PruefungsFormat implements DDDValueObject
         return $this->isPTM();
     }
 
-
 }

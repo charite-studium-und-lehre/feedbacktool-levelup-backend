@@ -67,6 +67,7 @@ class PruefungsPeriode implements DDDValueObject
             $value *= 10;
             $value += $this->unterPeriode->getValue();
         }
+
         return $value;
     }
 }

@@ -16,6 +16,7 @@ trait FileBasedRepoTrait
     public static function createTempFileRepo() {
         return new static(tempnam(sys_get_temp_dir(), static::class));
     }
+
     public static function createFixedFileRepo($fileSuffix) {
         return new static(sys_get_temp_dir() . DIRECTORY_SEPARATOR . static::class . $fileSuffix);
     }

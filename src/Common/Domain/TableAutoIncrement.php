@@ -5,6 +5,7 @@ namespace Common\Domain;
 class TableAutoIncrement
 {
     private $tableName;
+
     private $autoIncrement;
 
     public function __construct(string $tableName, int $autoIncrement) {

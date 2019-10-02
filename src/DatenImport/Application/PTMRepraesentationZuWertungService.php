@@ -2,6 +2,7 @@
 
 namespace DatenImport\Application;
 
-class PTMRepraesentationZuWertungService {
+class PTMRepraesentationZuWertungService
+{
     // TODO
 }

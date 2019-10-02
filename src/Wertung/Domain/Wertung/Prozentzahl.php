@@ -24,7 +24,7 @@ class Prozentzahl
         $integerDifferenz = (round($prozentWert * 100 * (10 ** self::NACHKOMMASTELLEN)))
             - $prozentWert * 100 * (10 ** self::NACHKOMMASTELLEN);
         Assertion::false($integerDifferenz > 0.0000000001,
-                      self::INVALID_WERT_ZU_GENAU . $prozentWert . " - " . $integerDifferenz
+                         self::INVALID_WERT_ZU_GENAU . $prozentWert . " - " . $integerDifferenz
         );
 
         $object = new self();
@@ -35,6 +35,7 @@ class Prozentzahl
 
     public static function fromFloatRunden(float $prozentWert): Prozentzahl {
         $prozentWert = round($prozentWert, self::NACHKOMMASTELLEN + 2);
+
         return self::fromFloat($prozentWert);
     }
 

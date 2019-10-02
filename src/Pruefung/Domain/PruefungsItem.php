@@ -39,7 +39,7 @@ class PruefungsItem
         return PruefungsId::fromString($this->pruefungsId);
     }
 
-   public function getItemSchwierigkeit(): ?ItemSchwierigkeit {
+    public function getItemSchwierigkeit(): ?ItemSchwierigkeit {
         return $this->itemSchwierigkeit;
     }
 

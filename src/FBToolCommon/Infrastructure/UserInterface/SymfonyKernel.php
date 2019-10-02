@@ -34,6 +34,17 @@ class SymfonyKernel extends BaseKernel
         }
     }
 
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function build(ContainerBuilder $container) {
+        $container->registerForAutoconfiguration(DomainEventSubscriber::class)
+            ->addTag('ddd.domainEventSubscriber');
+        $container
+            ->registerForAutoconfiguration(CommandHandler::class)
+            ->addTag('ddd.domainCommandHandler');
+    }
+
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader) {
         $container->setParameter('container.autowiring.strict_mode', TRUE);
         $container->setParameter('container.dumper.inline_class_loader', TRUE);
@@ -55,16 +66,5 @@ class SymfonyKernel extends BaseKernel
             $routes->import($confDir . '/routes/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
         }
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    protected function build(ContainerBuilder $container) {
-        $container->registerForAutoconfiguration(DomainEventSubscriber::class)
-            ->addTag('ddd.domainEventSubscriber');
-        $container
-            ->registerForAutoconfiguration(CommandHandler::class)
-            ->addTag('ddd.domainCommandHandler');
     }
 }

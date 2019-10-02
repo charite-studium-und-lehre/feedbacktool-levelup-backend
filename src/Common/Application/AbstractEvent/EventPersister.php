@@ -3,6 +3,7 @@
 namespace Common\Application\AbstractEvent;
 
 use Common\Application\DomainEvent\DomainEvent;
+use ReflectionObject;
 
 class EventPersister
 {
@@ -52,7 +53,7 @@ class EventPersister
 
     private function createEventValuesDict(DomainEvent $domainEvent): array {
         $valuesDict = [];
-        foreach ((new \ReflectionObject($domainEvent))->getProperties() as $property) {
+        foreach ((new ReflectionObject($domainEvent))->getProperties() as $property) {
             if (strpos($property->getName(), "_") === 0) {
                 continue;
             }

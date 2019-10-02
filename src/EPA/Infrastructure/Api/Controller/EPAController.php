@@ -4,13 +4,10 @@ namespace EPA\Infrastructure\Api\Controller;
 
 use Common\Application\Command\CommandBus;
 use EPA\Application\Command\SelbstBewertungErhoehenCommand;
-use EPA\Domain\EPA;
-use EPA\Domain\SelbstBewertung;
 use EPA\Domain\SelbstBewertungsTyp;
+use Exception;
 use SSO\Domain\EingeloggterStudiService;
-use StudiMeilenstein\Domain\Meilenstein;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +39,7 @@ class EPAController extends AbstractController
 
         $commandBus->execute($erhoehenCommand);
         try {
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new Response($e->getMessage(), 400);
         }
 

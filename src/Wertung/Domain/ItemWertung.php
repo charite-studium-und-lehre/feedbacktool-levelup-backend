@@ -2,7 +2,6 @@
 
 namespace Wertung\Domain;
 
-
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsItemId;
@@ -54,11 +53,11 @@ class ItemWertung implements DDDEntity
         return $this->wertung;
     }
 
-    public function getStudiPruefungsId(): StudiPruefungsId {
-        return StudiPruefungsId::fromInt($this->studiPruefungsId);
-    }
-
     public function setWertung(Wertung $wertung): void {
         $this->wertung = $wertung;
+    }
+
+    public function getStudiPruefungsId(): StudiPruefungsId {
+        return StudiPruefungsId::fromInt($this->studiPruefungsId);
     }
 }

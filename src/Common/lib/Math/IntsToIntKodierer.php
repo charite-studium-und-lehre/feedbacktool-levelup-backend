@@ -11,11 +11,16 @@ use Assert\Assertion;
 class IntsToIntKodierer
 {
     const MAX_STELLENZAHL = 20;
+
     /**
      * Verschiebt die Stellen einer Zahl so weit nach Links, dass das Ergebnis verwendet werden kann,
      * um durch Addition mehrere Werte, die versch. Stellen benutzen, zu einer Zahl zu machen
      */
-    public static function erzeugeSummand(int $zahlZuKodieren, int $vonStelle, int $bisStelle = self::MAX_STELLENZAHL): int {
+    public static function erzeugeSummand(
+        int $zahlZuKodieren,
+        int $vonStelle,
+        int $bisStelle = self::MAX_STELLENZAHL
+    ): int {
         self::checkAssertions($zahlZuKodieren, $vonStelle, $bisStelle);
         $stellenZahl = $bisStelle - $vonStelle + 1;
         Assertion::lessThan($zahlZuKodieren, 10 ** $stellenZahl);
@@ -23,7 +28,11 @@ class IntsToIntKodierer
         return (int) (10 ** $vonStelle) * $zahlZuKodieren;
     }
 
-    public static function extrahiereIntAusSumme(int $zahlZuDeKodieren, int $vonStelle, int $bisStelle = self::MAX_STELLENZAHL): int {
+    public static function extrahiereIntAusSumme(
+        int $zahlZuDeKodieren,
+        int $vonStelle,
+        int $bisStelle = self::MAX_STELLENZAHL
+    ): int {
         self::checkAssertions($zahlZuDeKodieren, $vonStelle, $bisStelle);
         $zahlAnRichtigerStelle = $zahlZuDeKodieren / (10 ** $vonStelle);
 
