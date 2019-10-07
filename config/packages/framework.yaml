@@ -8,6 +8,7 @@ framework:
     # Remove or comment this section to explicitly disable session support.
     session:
         handler_id: ~
+        name: LEVELUP
 
     #esi: true
     #fragments: true

@@ -1,0 +1,14 @@
+parameters:
+    # Adds a fallback if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(SSO_OPENID_CLIENT_ID): ''
+    env(SSO_OPENID_CLIENT_SECRET): ''
+    env(SSO_OPENID_REDIRECT_URL): ''
+    env(SSO_OPENID_PROVIDER_URL): 'https://sso.charite.de/adfs'
+    env(SSO_OPENID_TOKEN_ENDPOINT): 'https://sso.charite.de/adfs/oauth2/token/'
+    env(SSO_OPENID_USERINFO_ENDPOINT): 'https://sso.charite.de/adfs/userinfo'
+    env(SSO_OPENID_END_SESSION_ENDPOINT): 'https://sso.charite.de/adfs/oauth2/logout'
+    env(SSO_OPENID_AUTHORIZATION_ENDPOINT): 'https://sso.charite.de/adfs/oauth2/authorize/'
+

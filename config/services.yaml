@@ -41,3 +41,14 @@ services:
 
     SSO\Domain\EingeloggterStudiService:
         class: SSO\Infrastructure\Web\Service\WebEingeloggterStudiService
+
+    Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService:
+        arguments:
+            - '%env(SSO_OPENID_CLIENT_ID)%'
+            - '%env(SSO_OPENID_CLIENT_SECRET)%'
+            - '%env(SSO_OPENID_REDIRECT_URL)%'
+            - '%env(SSO_OPENID_PROVIDER_URL)%'
+            - '%env(SSO_OPENID_TOKEN_ENDPOINT)%'
+            - '%env(SSO_OPENID_USERINFO_ENDPOINT)%'
+            - '%env(SSO_OPENID_END_SESSION_ENDPOINT)%'
+            - '%env(SSO_OPENID_AUTHORIZATION_ENDPOINT)%'
