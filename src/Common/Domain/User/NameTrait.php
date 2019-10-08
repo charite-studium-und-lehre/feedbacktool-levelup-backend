@@ -1,6 +1,6 @@
 <?php
 
-namespace Studi\Domain;
+namespace Common\Domain\User;
 
 use Assert\Assertion;
 

@@ -3,8 +3,9 @@
 namespace Studi\Domain;
 
 use Common\Domain\DefaultEntityComparison;
+use Common\Domain\User\LoginUser;
 
-class Studi
+class Studi extends LoginUser
 {
     /** @var StudiHash */
     private $studiHash;
@@ -21,6 +22,18 @@ class Studi
         return $object;
     }
 
+    public function macheZuLoginUser(LoginUser $loginUser): Studi {
+        $object = new self();
+        $object->studiHash = $this->studiHash;
+        $object->vorname = $loginUser->vorname;
+        $object->nachname = $loginUser->nachname;
+        $object->usernameVO = $loginUser->usernameVO;
+        $object->istAdmin = $loginUser->istAdmin;
+        $object->email = $loginUser->email;
+        return $object;
+    }
+
+
     public function getStudiHash(): StudiHash {
         return $this->studiHash;
     }
@@ -35,6 +48,10 @@ class Studi
 
     public function removeLoginHash(): void {
         $this->loginHash = NULL;
+    }
+
+    public function getUsername() {
+        return parent::getUsername() . "^" . $this->studiHash->getValue();
     }
 
 }

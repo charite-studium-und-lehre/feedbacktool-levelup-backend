@@ -2,14 +2,14 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
+use Common\Domain\User\Nachname;
+use Common\Domain\User\Vorname;
 use DatenImport\Domain\StudiStammdatenImportService;
 use InvalidArgumentException;
 use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
-use Studi\Domain\Nachname;
 use Studi\Domain\StudiData;
-use Studi\Domain\Vorname;
 
 class ChariteStudiStammdatenHIS_CSVImportService extends AbstractCSVImportService implements StudiStammdatenImportService
 {

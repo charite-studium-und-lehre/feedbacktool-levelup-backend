@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Studi\Domain;
 
+use Common\Domain\User\Nachname;
 use PHPUnit\Framework\TestCase;
-use Studi\Domain\Nachname;
 
 class NachnameTest extends TestCase
 {
@@ -40,7 +40,7 @@ class NachnameTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(Nachname::UNGUELTIG_ZU_LANG);
         $value = "Meier-Lüdenscheidt-Müller-Schulze-Lehmann-Schunk-Glöckner";
-        Nachname::fromString($value);
+        \Common\Domain\User\Nachname::fromString($value);
     }
 
     public function test_FalschZuKurz() {

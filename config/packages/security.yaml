@@ -1,0 +1,35 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        chariteLDAPUserProvider:
+            id: SSO\Infrastructure\Web\Service\StudiUserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            # this firewall applies to all URLs
+            pattern: ^/
+
+            # but the firewall does not require login on every page
+            # denying access is done in access_control or in your controllers
+            anonymous: true
+
+            guard:
+                authenticators:
+                    - SSO\Infrastructure\Web\Service\ChariteGuardAuthenticator
+
+            logout:
+                # The route name the user can go to in order to logout
+                path: logout
+                # The name of the route to redirect to after logging out
+                target: switchToFrontend
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # this is a catch-all for the admin area
+        # additional security lives in the controllers
+        - { path: '^/api', roles: ROLE_USER }
+        - { path: '^/admin', roles: ROLE_ADMIN }

@@ -2,13 +2,13 @@
 
 namespace Studi\Infrastructure\Service;
 
+use Common\Domain\User\Nachname;
+use Common\Domain\User\Vorname;
 use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
-use Studi\Domain\Nachname;
 use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiHash;
-use Studi\Domain\Vorname;
 
 class StudiHashCreator_Argon2I implements StudiHashCreator
 {
@@ -38,7 +38,7 @@ class StudiHashCreator_Argon2I implements StudiHashCreator
     /**
      * @param Matrikelnummer $matrikelnummer
      * @param Vorname $vorname
-     * @param Nachname $nachname
+     * @param \Common\Domain\User\Nachname $nachname
      * @param Geburtsdatum $geburtsdatum
      * @return string
      */

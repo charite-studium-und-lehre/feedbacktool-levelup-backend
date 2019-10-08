@@ -52,3 +52,11 @@ services:
             - '%env(SSO_OPENID_USERINFO_ENDPOINT)%'
             - '%env(SSO_OPENID_END_SESSION_ENDPOINT)%'
             - '%env(SSO_OPENID_AUTHORIZATION_ENDPOINT)%'
+
+    Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService:
+        arguments:
+            - '%env(LDAP_HOST)%'
+            - '%env(LDAP_PORT)%'
+            - '%env(LDAP_TLS)%'
+            - '%env(LDAP_BASE_DN)%'
+            - '%env(LDAP_BIND_DN)%'

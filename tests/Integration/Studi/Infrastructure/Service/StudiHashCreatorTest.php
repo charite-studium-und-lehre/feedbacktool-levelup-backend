@@ -2,13 +2,13 @@
 
 namespace Tests\Integration\Studi\Infrastructure;
 
+use Common\Domain\User\Nachname;
+use Common\Domain\User\Vorname;
 use PHPUnit\Framework\TestCase;
 use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
-use Studi\Domain\Nachname;
 use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
-use Studi\Domain\Vorname;
 use Studi\Infrastructure\Service\StudiHashCreator_Argon2I;
 
 class StudiHashCreatorTest extends TestCase

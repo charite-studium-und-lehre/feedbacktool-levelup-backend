@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Studi\Domain;
 
+use Common\Domain\User\Vorname;
 use PHPUnit\Framework\TestCase;
-use Studi\Domain\Vorname;
 
 class VornameTest extends TestCase
 {

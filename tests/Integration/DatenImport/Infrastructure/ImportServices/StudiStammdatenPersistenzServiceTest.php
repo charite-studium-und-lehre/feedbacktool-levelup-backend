@@ -2,16 +2,16 @@
 
 namespace Tests\Integration\DatenImport\Infrastructure\ImportServices;
 
+use Common\Domain\User\Nachname;
+use Common\Domain\User\Vorname;
 use DatenImport\Domain\StudiStammdatenPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService;
 use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
-use Studi\Domain\Nachname;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiInternRepository;
 use Studi\Domain\StudiRepository;
-use Studi\Domain\Vorname;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiRepository;
 use Studi\Infrastructure\Service\StudiHashCreator_Argon2I;

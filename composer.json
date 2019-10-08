@@ -8,8 +8,13 @@
   },
   "require": {
     "php": "^7.3.0",
+    "ext-ldap": "*",
+    "ext-pdo_mysql": "*",
     "beberlei/assert": "^3.2",
+    "doctrine/doctrine-migrations-bundle": "^2.0",
+    "jumbojett/openid-connect-php": "^0.8",
     "matthiasnoback/convenient-immutability": "^0.2.1",
+    "sensio/framework-extra-bundle": "^5.4",
     "sensiolabs/security-checker": "^6.0",
     "symfony/asset": "^4.3",
     "symfony/console": "^4.3",
@@ -23,13 +28,12 @@
     "symfony/orm-pack": "^1.0",
     "symfony/profiler-pack": "^1.0",
     "symfony/requirements-checker": "^1.1",
+    "symfony/security-bundle": "^4.3",
     "symfony/security-csrf": "^4.3",
     "symfony/templating": "^4.3",
     "symfony/web-profiler-bundle": "^4.3",
     "symfony/web-server-bundle": "^4.3",
-    "symfony/yaml": "^4.3",
-    "doctrine/doctrine-migrations-bundle": "^2.0",
-    "jumbojett/openid-connect-php": "^0.8"
+    "symfony/yaml": "^4.3"
   },
 
   "require-dev": {

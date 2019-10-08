@@ -4,6 +4,8 @@ namespace Studi\Domain;
 
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use Common\Domain\User\Nachname;
+use Common\Domain\User\Vorname;
 
 final class StudiData implements DDDValueObject
 {
