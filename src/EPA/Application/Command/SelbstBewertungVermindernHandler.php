@@ -14,13 +14,13 @@ use Lehrberechtigung\Domain\Service\LehrberechtigungValidatorService;
 use LLPCommon\Domain\Zeitsemester;
 use Person\Domain\PersonId;
 
-final class SelbstBewertungErhoehenHandler implements CommandHandler
+final class SelbstBewertungVermindernHandler implements CommandHandler
 {
     use CommandHandlerTrait;
     use SelbstBewerungsHandlerTrait;
 
     private function aendereBewertung(SelbstBewertung $selbstBewertung): void {
-        $selbstBewertung->erhoeheBewertung();
+        $selbstBewertung->vermindereBewertung();
     }
 
 }

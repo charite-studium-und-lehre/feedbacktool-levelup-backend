@@ -29,22 +29,33 @@ class EPABewertung
     /** @var epa */
     private $epa;
 
-    public static function fromInt(string $bewertung): self {
+    public function getEpa(): epa {
+        return $this->epa;
+    }
+
+    public static function fromValues(string $bewertung, EPA $epa): self {
         Assertion::integerish($bewertung, self::INVALID);
         Assertion::between($bewertung, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);
 
         $object = new self();
+        $object->epa = $epa;
         $object->bewertung = $bewertung;
 
         return $object;
     }
 
     public function erhoeheStufe(): self {
-        return self::fromInt(min($this->bewertung + 1, self::BEWERTUNG_MAX));
+        return self::fromValues(
+            min($this->bewertung + 1, self::BEWERTUNG_MAX),
+            $this->epa
+            );
     }
 
     public function vermindereStufe(): self {
-        return self::fromInt(max($this->bewertung - 1, self::BEWERTUNG_MIN));
+        return self::fromValues(
+            max($this->bewertung - 1, self::BEWERTUNG_MIN),
+            $this->epa
+        );
     }
 
     public function getBewertung(): int {
