@@ -4,9 +4,7 @@ StudiMeilenstein\Domain\StudiMeilenstein:
 
   id:
     id:
-      type: aggregateId_AutoIncrement
-      generator:
-        strategy: IDENTITY
+      type: aggregateId
 
   fields:
     studiHash:

@@ -10,14 +10,16 @@ class EPABewertungsDatumTest extends TestCase
 
     public function testFromDateTimeImmutable() {
         $date = new \DateTimeImmutable();
+        $dateOhneZeit =\DateTimeImmutable::createFromFormat("d.m.Y H:i",$date->format("d.m.Y") . "00:00");
         $EPABewertungsDatum = EPABewertungsDatum::fromDateTimeImmutable($date);
-        $this->assertEquals($EPABewertungsDatum->toDateTimeImmutable(), $date);
+        $this->assertEquals($dateOhneZeit, $EPABewertungsDatum->toDateTimeImmutable());
     }
 
     public function testFromDateTimeImmutable_FestesDatum() {
         $date = \DateTimeImmutable::createFromFormat("d.m.Y H:i:s", "2.9.2015 10:30:00");
+        $dateOhneZeit = \DateTimeImmutable::createFromFormat("d.m.Y H:i:s", "2.9.2015 00:00:00");
         $EPABewertungsDatum = EPABewertungsDatum::fromDateTimeImmutable($date);
-        $this->assertEquals($EPABewertungsDatum->toDateTimeImmutable(), $date);
+        $this->assertEquals($EPABewertungsDatum->toDateTimeImmutable(), $dateOhneZeit);
     }
 
     public function testFromString_FalschesFormat() {
@@ -29,8 +31,8 @@ class EPABewertungsDatumTest extends TestCase
     public function testFromString() {
         $dateString = "2.9.2015";
         $EPABewertungsDatum = EPABewertungsDatum::fromString($dateString);
-        $date = \DateTimeImmutable::createFromFormat("d.m.Y", $dateString);
-        $this->assertEquals($EPABewertungsDatum->toDateTimeImmutable()->getTimestamp(), $date->getTimestamp());
+        $date = \DateTimeImmutable::createFromFormat("d.m.Y H:i", $dateString . " 00:00");
+        $this->assertEquals($date, $EPABewertungsDatum->toDateTimeImmutable());
     }
 
     public function testFromDateTimeImmutable_Falsch_ZuFrueh() {

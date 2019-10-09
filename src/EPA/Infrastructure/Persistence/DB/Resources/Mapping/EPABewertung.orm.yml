@@ -2,6 +2,11 @@ EPA\Domain\EPABewertung:
   type: embeddable
 
   fields:
-    value:
+    bewertung:
       type: integer
-      column: wertung
+      column: bewertung
+
+  embedded:
+    epa:
+      class: EPA\Domain\EPA
+      columnPrefix: false

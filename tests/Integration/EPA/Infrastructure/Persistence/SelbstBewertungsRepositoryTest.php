@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\EPA\Infrastructure\Persistence;
 
+use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
 use EPA\Domain\EPABewertungsDatum;
 use EPA\Domain\SelbstBewertung;
@@ -30,16 +31,17 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
      * @dataProvider getAllRepositories
      */
     public function kann_speichern_und_wiederholen(SelbstBewertungsRepository $repo) {
+        $epa = EPA::fromInt(111);
         $selbstbewertung1 = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(123),
             StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
-            EPABewertung::fromInt(3),
+            EPABewertung::fromValues(3, $epa),
             SelbstBewertungsTyp::getGemachtObject()
         );
         $selbstbewertung1b = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(124),
             StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
-            EPABewertung::fromInt(4),
+            EPABewertung::fromValues(4, $epa),
             SelbstBewertungsTyp::getGemachtObject()
         );
         SelbstBewertungsTest::setzeDatumMitReflectionAuf(
@@ -49,7 +51,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         $selbstbewertung2 = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(456),
             StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
-            EPABewertung::fromInt(0),
+            EPABewertung::fromValues(0, $epa),
             SelbstBewertungsTyp::getZutrauenObject()
         );
 
@@ -84,7 +86,8 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         $selbstbewertung->erhoeheBewertung();
         $repo->flush();
         $this->refreshEntities($selbstbewertung);
-        $this->assertEquals(EPABewertung::fromInt(4), $selbstbewertung->getEpaBewertung());
+        $this->assertEquals(EPABewertung::fromValues(4, EPA::fromInt(111)),
+                            $selbstbewertung->getEpaBewertung());
     }
 
     /**

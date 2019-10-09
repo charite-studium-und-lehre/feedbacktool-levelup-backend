@@ -4,9 +4,7 @@ Cluster\Domain\Cluster:
 
   id:
     id:
-      type: aggregateId_AutoIncrement
-      generator:
-        strategy: IDENTITY
+      type: aggregateId
 
   fields:
     parentId:

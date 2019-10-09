@@ -1,0 +1,7 @@
+EPA\Domain\EPA:
+  type: embeddable
+
+  fields:
+    value:
+      type: integer
+      column: epaId
