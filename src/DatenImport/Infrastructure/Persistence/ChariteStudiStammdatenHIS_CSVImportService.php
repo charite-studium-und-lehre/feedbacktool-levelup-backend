@@ -6,7 +6,6 @@ use Common\Domain\User\Nachname;
 use Common\Domain\User\Vorname;
 use DatenImport\Domain\StudiStammdatenImportService;
 use InvalidArgumentException;
-use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\StudiData;
@@ -34,13 +33,11 @@ class ChariteStudiStammdatenHIS_CSVImportService extends AbstractCSVImportServic
 
             $vorname = Vorname::fromString($dataLine["vorname"]);
             $nachname = Nachname::fromString($dataLine["nachname"]);
-            $geburtsdatum = Geburtsdatum::fromStringDeutschMinus($dataLine["gebdat"]);
 
             $studiDataObjects[] = StudiData::fromValues(
                 $matrikelnummer,
                 $vorname,
                 $nachname,
-                $geburtsdatum,
                 $dataLine
             );
         }

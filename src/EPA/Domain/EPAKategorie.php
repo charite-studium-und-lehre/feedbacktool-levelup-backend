@@ -50,13 +50,13 @@ class EPAKategorie implements EPAElement, DDDValueObject
     public static function getEPAStrukturFlach(): array {
         $returnArray = [];
         foreach (array_keys(EPAKonstanten::EBENE_1) as $epaKatInt) {
-            $returnArray[EPAKategorie::fromInt($epaInt)];
+            $returnArray[] = EPAKategorie::fromInt($epaKatInt);
         }
         foreach (array_keys(EPAKonstanten::EBENE_2) as $epaKatInt) {
-            $returnArray[EPAKategorie::fromInt($epaInt)];
+            $returnArray[] = EPAKategorie::fromInt($epaKatInt);
         }
         foreach (array_keys(EPAKonstanten::EPAS) as $epaInt) {
-            $returnArray[EPA::fromInt($epaInt)];
+            $returnArray[] = EPA::fromInt($epaInt);
         }
 
         return $returnArray;

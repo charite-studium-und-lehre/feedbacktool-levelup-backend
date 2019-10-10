@@ -59,7 +59,7 @@ class ChariteMcPersistenzServiceTest extends DbRepoTestCase
     ) {
         $filename = __DIR__ . "/TestFileMCErgebnisse_WiSe201819_1.csv";
         $this->clearRepos([$studiPruefungsRepository, $pruefungsItemRepository,
-                           $studiPruefungsWertungRepository, $studiInternRepository]);
+                           $studiPruefungsWertungRepository, $studiInternRepository, $itemWertungsRepository]);
         $this->createTestStudis($studiInternRepository);
 
         $csvImportService = new Charite_Ergebnisse_CSVImportService();

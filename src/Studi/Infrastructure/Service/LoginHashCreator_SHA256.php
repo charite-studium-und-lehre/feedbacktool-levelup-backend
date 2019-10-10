@@ -6,7 +6,7 @@ use Common\Domain\User\Username;
 use Studi\Domain\LoginHash;
 use Studi\Domain\Service\LoginHashCreator;
 
-class LoginHashCreator_Argon2I extends AbstractHashCreator implements LoginHashCreator
+class LoginHashCreator_SHA256 extends AbstractHashCreator implements LoginHashCreator
 {
     public function createLoginHash(Username $username): LoginHash {
         return LoginHash::fromString(
@@ -17,4 +17,6 @@ class LoginHashCreator_Argon2I extends AbstractHashCreator implements LoginHashC
     public function isCorrectLoginHash(LoginHash $loginHash, Username $username): bool {
         return $this->verifyHash($username->getValue(), $loginHash->getValue());
     }
+
+
 }

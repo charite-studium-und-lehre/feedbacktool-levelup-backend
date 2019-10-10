@@ -34,13 +34,13 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         $epa = EPA::fromInt(111);
         $selbstbewertung1 = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(123),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
+            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
             EPABewertung::fromValues(3, $epa),
             SelbstBewertungsTyp::getGemachtObject()
         );
         $selbstbewertung1b = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(124),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
+            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
             EPABewertung::fromValues(4, $epa),
             SelbstBewertungsTyp::getGemachtObject()
         );
@@ -50,7 +50,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         );
         $selbstbewertung2 = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(456),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
+            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
             EPABewertung::fromValues(0, $epa),
             SelbstBewertungsTyp::getZutrauenObject()
         );
@@ -97,7 +97,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
     public function testGetLatest(SelbstBewertungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $latestObject = $repo->latestByStudiUndTyp(
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
+            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
             SelbstBewertungsTyp::getGemachtObject()
         );
         $this->assertTrue($latestObject->getId()->equals(SelbstBewertungsId::fromInt(123)));
@@ -110,7 +110,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
     public function testByStudiId(SelbstBewertungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $all =
-            $repo->allByStudi(StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'));
+            $repo->allByStudi(StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'));
         $this->assertCount(3, $all);
     }
 

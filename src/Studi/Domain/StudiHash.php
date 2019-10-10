@@ -19,7 +19,7 @@ final class StudiHash implements DDDValueObject
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);
-        Assertion::startsWith($value, "$", self::UNGUELTIG . $value);
+        Assertion::base64($value, self::UNGUELTIG . $value);
         Assertion::false(strstr($value, "'"), self::UNGUELTIG);
         Assertion::false(strstr($value, '"'), self::UNGUELTIG);
         Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG . $value);

@@ -14,7 +14,7 @@ class StudiPruefungTest extends TestCase
     public function testCreate() {
 
         $id = StudiPruefungsId::fromInt("12345");
-        $studiHash = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
+        $studiHash = StudiHash::fromString(hash("sha256","test"));
         $pruefungsId = PruefungsId::fromString("789");
 
         $studiPruefung = StudiPruefung::fromValues(

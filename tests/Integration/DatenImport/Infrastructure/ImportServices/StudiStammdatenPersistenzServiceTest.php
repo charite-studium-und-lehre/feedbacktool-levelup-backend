@@ -6,7 +6,6 @@ use Common\Domain\User\Nachname;
 use Common\Domain\User\Vorname;
 use DatenImport\Domain\StudiStammdatenPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService;
-use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\StudiData;
@@ -14,7 +13,7 @@ use Studi\Domain\StudiInternRepository;
 use Studi\Domain\StudiRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiRepository;
-use Studi\Infrastructure\Service\StudiHashCreator_Argon2I;
+use Studi\Infrastructure\Service\StudiHashCreator_SHA256;
 use Tests\Integration\Common\DbRepoTestCase;
 
 class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
@@ -43,7 +42,7 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
         StudiRepository $studiRepository
     ) {
 
-        $studiHashCreator = new StudiHashCreator_Argon2I();
+        $studiHashCreator = new StudiHashCreator_SHA256("test");
         $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService();
 
         $studiStammdatenPersistenzService = new StudiStammdatenPersistenzService(
@@ -52,10 +51,7 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
             $studiHashCreator
         );
 
-        foreach ($studiInternRepository->all() as $object) {
-            $studiInternRepository->delete($object);
-        }
-        $studiInternRepository->flush();
+        $this->clearRepos([$studiInternRepository, $studiRepository]);
 
         $this->assertCount(0, $studiInternRepository->all());
 
@@ -77,9 +73,7 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
                     Matrikelnummer::fromInt(221231),
                     Vorname::fromString("Marika"),
                     Nachname::fromString("Heißler"),
-                    Geburtsdatum::fromStringDeutschMinus("02-03-1984"),
-                    []
-                ))
+                    ))
         );
 
     }

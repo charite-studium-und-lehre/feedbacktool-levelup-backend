@@ -6,7 +6,6 @@ use Common\Domain\User\Nachname;
 use Common\Domain\User\Vorname;
 use DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService;
 use PHPUnit\Framework\TestCase;
-use Studi\Domain\Geburtsdatum;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 use Studi\Domain\StudiData;
@@ -67,7 +66,6 @@ class StudiStammdatenCSVImportServiceTest extends TestCase
                 Matrikelnummer::fromInt(221231),
                 Vorname::fromString("Marika"),
                 Nachname::fromString("Heißler"),
-                Geburtsdatum::fromStringDeutschMinus("02-03-1984"),
                 $dataLine
             )
         ));

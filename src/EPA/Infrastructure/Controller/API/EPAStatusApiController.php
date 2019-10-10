@@ -6,6 +6,7 @@ use Common\Application\Command\CommandBus;
 use EPA\Application\Command\SelbstBewertungErhoehenCommand;
 use EPA\Application\Command\SelbstBewertungVermindernCommand;
 use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\Service\EpasFuerStudiService;
 use SSO\Domain\EingeloggterStudiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,8 @@ class EPAStatusApiController extends AbstractController
     /**
      * @Route("/api/epa/meine", name="api_selbstbewertung_erhoehen")
      */
-    public function meineEpas(Request $request, CommandBus $commandBus, $vermindern=FALSE) {
+    public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
+        $epasFuerStudiService->getEpaStudiData();
 
     }
 

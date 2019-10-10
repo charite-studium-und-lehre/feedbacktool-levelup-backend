@@ -16,15 +16,14 @@ class EpasFuerStudiService
 
     public function __construct(
         StudiRepository $studiRepository,
-        SelbstBewertungsRepository $selbstBewertungsRepository,
-        LoginHash $loginHash
+        SelbstBewertungsRepository $selbstBewertungsRepository
     ) {
         $this->studiRepository = $studiRepository;
         $this->selbstBewertungsRepository = $selbstBewertungsRepository;
     }
 
-    public function getEpaStudiData() {
-        $studi = $this->studiRepository->byHash();
+    public function getEpaStudiData(LoginHash $loginHash) {
+        $studi = $this->studiRepository->byStudiHash($loginHash);
     }
 
 }

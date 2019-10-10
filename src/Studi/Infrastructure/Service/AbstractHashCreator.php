@@ -5,11 +5,7 @@ namespace Studi\Infrastructure\Service;
 abstract class AbstractHashCreator
 {
     const SEPARATOR = "|";
-    const OPTIONS = [
-        'memory_cost' => 1 << 12, // 4 KB
-        'time_cost'   => 10,
-        'threads'     => 2,
-    ];
+
 
     /** @var string */
     private $appSecret;
@@ -18,23 +14,19 @@ abstract class AbstractHashCreator
         $this->appSecret = $appSecret;
     }
 
+    protected function getStringToHashWithSecret(string $stringToHash): string {
+        return $stringToHash . self::SEPARATOR . $this->appSecret;
+    }
+
     protected function createHash(string $stringToHash): string {
-        return password_hash(
-            $this->getStringToHashWithSecret($stringToHash),
-            PASSWORD_ARGON2I,
-            self::OPTIONS
+        return hash(
+            "sha256",
+            $this->getStringToHashWithSecret($stringToHash)
         );
     }
 
     protected function verifyHash(string $stringToHash, string $hash): bool {
-        return password_verify(
-            $this->getStringToHashWithSecret($stringToHash),
-            $hash
-        );
-    }
-
-    private function getStringToHashWithSecret(string $stringToHash): string {
-        return $stringToHash . "-" . $this->appSecret;
+        return $this->createHash($stringToHash) == $hash;
     }
 
 }

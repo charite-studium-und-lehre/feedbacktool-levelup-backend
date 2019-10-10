@@ -25,6 +25,7 @@ class Studi extends LoginUser
     public function macheZuLoginUser(LoginUser $loginUser): Studi {
         $object = new self();
         $object->studiHash = $this->studiHash;
+        $object->loginHash = $this->loginHash;
         $object->vorname = $loginUser->vorname;
         $object->nachname = $loginUser->nachname;
         $object->usernameVO = $loginUser->usernameVO;

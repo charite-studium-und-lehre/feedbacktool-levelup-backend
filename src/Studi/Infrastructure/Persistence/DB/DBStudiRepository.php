@@ -3,6 +3,7 @@
 namespace Studi\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
+use Studi\Domain\LoginHash;
 use Studi\Domain\Studi;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;
@@ -22,7 +23,13 @@ final class DBStudiRepository implements StudiRepository
         $this->abstractAdd($object);
     }
 
-    public function byHash(StudiHash $studiHash): ?Studi {
+    public function byStudiHash(StudiHash $studiHash): ?Studi {
         return $this->abstractById($studiHash->getValue());
+    }
+
+    public function byLoginHash(LoginHash $loginHash): ?Studi {
+        return $this->doctrineRepo->findOneBy(
+            ["loginHash" => $loginHash]
+        );
     }
 }

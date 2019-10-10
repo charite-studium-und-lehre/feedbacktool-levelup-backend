@@ -8,7 +8,7 @@ use Studi\Domain\StudiHash;
 class StudiHashTest extends TestCase
 {
     public function testFromString() {
-        $value = '$argon2i$v=19$m=1024,t=2,p=2$UzVMRDgucWZCcHpteWE5UA$KS47cztpT3SAzMWRyaIz1sX9uUa6GQ4KT0GSNMXzJ2I';
+        $value = '0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace';
         $object = StudiHash::fromString($value);
 
         $this->assertEquals($value, $object->getValue());
@@ -17,21 +17,21 @@ class StudiHashTest extends TestCase
     public function testUngueltigeZeichen() {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(StudiHash::UNGUELTIG);
-        $value = '$argon2"i$v=19$m=1024,t=2,p=2$UzVMRDgucWZCcHpteWE5UA$KS47cztpT3SAzMWRyaIz1sX9uUa6GQ4KT0GSNMXzJ2I';
+        $value = '%0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace';
         StudiHash::fromString($value);
     }
 
     public function test_FalschZuLang() {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(StudiHash::UNGUELTIG);
-        $value = '$argon2i$v=19$m=1024,t=2,p=2$UzVMRDgucWZCcHpteWE5UA$KS47cztpT3SAzMWRyaIz1sX9uUa6GQ4KT0GSNMXzJ2I2$UzVMRDgucWZCcHpteWE5UA$KS47cztpT3SAzMWRyaIz1sX9uUa6GQ4KT0GSNMXzJ2I';
+        $value = '0062a008dbcd86fa8d0738e1f6e0738e1f6e0f50f5daefe9fd2a7a9dddcace0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace';
         StudiHash::fromString($value);
     }
 
     public function test_FalschZuKurz() {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(StudiHash::UNGUELTIG);
-        $value = '$argon2i$v=19$m=1024';
+        $value = '0062a008db';
         StudiHash::fromString($value);
     }
 }

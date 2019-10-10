@@ -31,7 +31,7 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
      * @dataProvider getAllRepositories
      */
     public function kann_speichern_und_wiederholen(StudiPruefungsRepository $repo) {
-        $this->studiHash1 = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
+        $this->studiHash1 = StudiHash::fromString(hash("sha256","test"));
         $studiPruefung1 = StudiPruefung::fromValues(
             StudiPruefungsId::fromInt(123),
             $this->studiHash1,
@@ -39,7 +39,7 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
         );
         $studiPruefung2 = StudiPruefung::fromValues(
             StudiPruefungsId::fromInt(457),
-            StudiHash::fromString(password_hash("test2", PASSWORD_ARGON2I)),
+            StudiHash::fromString(hash("sha256","test2")),
             PruefungsId::fromString(9876)
         );
         $studiPruefung3 = StudiPruefung::fromValues(
@@ -58,7 +58,7 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
         $studiPruefung2 = $repo->byId(StudiPruefungsId::fromInt(457));
 
         $this->assertEquals(457, $studiPruefung2->getId()->getValue());
-        $this->assertTrue(password_verify("test2", $studiPruefung2->getStudiHash()->getValue()));
+        $this->assertEquals(hash("sha256","test2"), $studiPruefung2->getStudiHash()->getValue());
         $this->assertEquals(9876, $studiPruefung2->getPruefungsId()->getValue());
     }
 

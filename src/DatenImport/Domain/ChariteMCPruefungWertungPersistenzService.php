@@ -141,11 +141,13 @@ class ChariteMCPruefungWertungPersistenzService
         $gesamtPunktzahl = NULL,
         $bestehensgrenze = NULL
     ) {
+        $bestanden = $gesamtPunktzahl && $bestehensgrenze && $gesamtPunktzahl > $bestehensgrenze;
+
         $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
             $studiHash,
             $pruefungsId,
             );
-        $bestanden = $gesamtPunktzahl && $bestehensgrenze && $gesamtPunktzahl > $bestehensgrenze;
+
         if (!$studiPruefung) {
             $studiPruefung = StudiPruefung::fromValues(
                 $this->studiPruefungsRepository->nextIdentity(),

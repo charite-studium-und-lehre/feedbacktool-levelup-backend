@@ -10,18 +10,18 @@ use Studi\Domain\StudiHash;
 class StudiTest extends TestCase
 {
     public function testCreate() {
-        $pwHash = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
+        $pwHash = StudiHash::fromString(hash("sha256","test"));
         $studi = Studi::fromStudiHash($pwHash);
         $this->assertEquals($pwHash, $studi->getStudiHash());
         $this->assertEquals(NULL, $studi->getLoginHash());
     }
 
     public function testLoginHash() {
-        $pwHash = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
+        $pwHash = StudiHash::fromString(hash("sha256","test",));
         $studi = Studi::fromStudiHash($pwHash);
         $this->assertEquals(NULL, $studi->getLoginHash());
 
-        $loginHash = LoginHash::fromString(password_hash("test2", PASSWORD_ARGON2I));
+        $loginHash = LoginHash::fromString(hash("sha256","test2"));
         $studi->setLoginHash($loginHash);
         $this->assertEquals($loginHash, $studi->getLoginHash());
 

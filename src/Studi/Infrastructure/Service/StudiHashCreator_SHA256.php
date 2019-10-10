@@ -6,7 +6,7 @@ use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiHash;
 
-class StudiHashCreator_Argon2I extends AbstractHashCreator implements StudiHashCreator
+class StudiHashCreator_SHA256 extends AbstractHashCreator implements StudiHashCreator
 {
     public function createStudiHash(StudiData $studiData): StudiHash {
         $stringToHash = $this->getStringToHash($studiData);
@@ -23,11 +23,9 @@ class StudiHashCreator_Argon2I extends AbstractHashCreator implements StudiHashC
     }
 
     private function getStringToHash(StudiData $studiData): string {
-        // TODO: App-Secret verwenden
         $matrikelnummer = $studiData->getMatrikelnummer();
         $vorname = $studiData->getVorname();
         $nachname = $studiData->getNachname();
-        //        $geburtsdatum = $studiData->getGeburtsdatum();
 
         $hash_string = $matrikelnummer
             . self::SEPARATOR . $vorname

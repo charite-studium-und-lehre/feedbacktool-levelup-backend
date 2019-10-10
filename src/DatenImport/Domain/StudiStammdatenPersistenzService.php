@@ -78,7 +78,7 @@ class StudiStammdatenPersistenzService
 
         foreach ($matrikelZuLoeschen as $matrikelValue => $studiInternAktuell) {
             $this->studiInternRepository->delete($studiInternAktuell);
-            $this->studiRepository->delete($this->studiRepository->byHash($studiInternAktuell->getStudiHash()));
+            $this->studiRepository->delete($this->studiRepository->byStudiHash($studiInternAktuell->getStudiHash()));
             echo "-";
             $this->geloescht++;
         }
@@ -103,7 +103,7 @@ class StudiStammdatenPersistenzService
                     $studiDataObject)
                 ) {
                     $this->studiInternRepository->delete($existierenderStudiIntern);
-                    $studi = $this->studiRepository->byHash($existierenderStudiIntern->getStudiHash());
+                    $studi = $this->studiRepository->byStudiHash($existierenderStudiIntern->getStudiHash());
                     if ($studi) {
                         $this->studiRepository->delete($studi);
                     }

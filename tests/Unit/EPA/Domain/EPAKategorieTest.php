@@ -28,10 +28,10 @@ class EPAKategorieTest extends TestCase
     }
 
     public function testGetEPASTruktur() {
-        $struktur = EPAKategorie::getEPAStruktur();
+        $struktur = EPAKategorie::getEPAStrukturFlach();
 
-        $this->assertEquals(111, $struktur[100][110][111]->getValue());
-        $this->assertEquals(201, $struktur[200][201]->getValue());
+        $this->assertEquals(100, $struktur[0]->getValue());
+        $this->assertEquals(122, $struktur[20]->getValue());
     }
 
 }

@@ -42,7 +42,7 @@ class StudiUserProvider extends ChariteLDAPUserProvider
         if (!$studiHash) {
             return $loginUser;
         }
-        $studi = $this->studiRepository->byHash(StudiHash::fromString($studiHash));
+        $studi = $this->studiRepository->byStudiHash(StudiHash::fromString($studiHash));
         $studi = $studi->macheZuLoginUser($loginUser);
 
         return $studi;

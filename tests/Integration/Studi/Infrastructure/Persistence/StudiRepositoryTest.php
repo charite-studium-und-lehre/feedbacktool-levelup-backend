@@ -21,17 +21,19 @@ final class StudiRepositoryTest extends DbRepoTestCase
         ];
     }
 
+    private $loginHash;
+
     /**
      * @test
      * @dataProvider getAllRepositories
      */
     public function kann_speichern_und_wiederholen(StudiRepository $repo) {
-        $hash1 = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
+        $hash1 = StudiHash::fromString(hash("sha256","test"));
         $studi1 = Studi::fromStudiHash($hash1);
-        $hash2 = StudiHash::fromString(password_hash("test2", PASSWORD_ARGON2I));
+        $hash2 = StudiHash::fromString(hash("sha256","test2"));
         $studi2 = Studi::fromStudiHash($hash2);
-        $loginHash = LoginHash::fromString(password_hash("login", PASSWORD_ARGON2I));
-        $studi2->setLoginHash($loginHash);
+        $this->loginHash = LoginHash::fromString(hash("sha256", "login"));
+        $studi2->setLoginHash($this->loginHash);
 
         $repo->add($studi1);
         $repo->add($studi2);
@@ -39,11 +41,21 @@ final class StudiRepositoryTest extends DbRepoTestCase
         $this->refreshEntities($studi1, $studi2);
 
         $this->assertCount(2, $repo->all());
-        $studi1 = $repo->byHash($hash1);
+        $studi1 = $repo->byStudiHash($hash1);
         $this->assertEquals($hash1->getValue(), $studi1->getStudiHash()->getValue());
         $this->assertNull($studi1->getLoginHash());
-        $studi2 = $repo->byHash($hash2);
-        $this->assertEquals($loginHash->getValue(), $studi2->getLoginHash()->getValue());
+        $studi2 = $repo->byStudiHash($hash2);
+        $this->assertEquals($this->loginHash->getValue(), $studi2->getLoginHash()->getValue());
+    }
+
+    /**
+     * @test
+     * @dataProvider getAllRepositories
+     */
+    public function byLoginHash(StudiRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $studiByLoginHash = $repo->byLoginHash($this->loginHash);
+        $this->assertTrue($studiByLoginHash->getLoginHash()->equals($this->loginHash));
     }
 
     /**
@@ -54,6 +66,7 @@ final class StudiRepositoryTest extends DbRepoTestCase
         $this->kann_speichern_und_wiederholen($repo);
         $this->assertCount(2, $repo->all());
         foreach ($repo->all() as $entity) {
+            $this->refreshEntities($entity);
             $repo->delete($entity);
         }
         $repo->flush();

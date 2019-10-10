@@ -28,7 +28,7 @@ class SelbstBewertungsTest extends TestCase
     public function testCreate() {
         $object = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(123),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E'),
+            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
             EPABewertung::fromValues(3, EPA::fromInt(111)),
             SelbstBewertungsTyp::getZutrauenObject()
         );

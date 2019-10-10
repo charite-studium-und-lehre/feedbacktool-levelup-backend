@@ -20,9 +20,6 @@ final class StudiData implements DDDValueObject
     /** @var Nachname */
     private $nachname;
 
-    /** @var Geburtsdatum */
-    private $geburtsdatum;
-
     /** @var array */
     private $dataLine;
 
@@ -30,14 +27,12 @@ final class StudiData implements DDDValueObject
         Matrikelnummer $matrikelnummer,
         Vorname $vorname,
         Nachname $nachname,
-        Geburtsdatum $geburtsdatum,
-        array $dataLine
+        array $dataLine = []
     ): self {
         $object = new self();
         $object->matrikelnummer = $matrikelnummer;
         $object->vorname = $vorname;
         $object->nachname = $nachname;
-        $object->geburtsdatum = $geburtsdatum;
         $object->dataLine = $dataLine;
 
         return $object;
@@ -56,11 +51,6 @@ final class StudiData implements DDDValueObject
     /** @return Nachname */
     public function getNachname(): Nachname {
         return $this->nachname;
-    }
-
-    /** @return Geburtsdatum */
-    public function getGeburtsdatum(): Geburtsdatum {
-        return $this->geburtsdatum;
     }
 
     public function getDataLine(): array {

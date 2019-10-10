@@ -13,14 +13,14 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 abstract class DbRepoTestCase extends KernelTestCase
 {
+    const CONTAINER_ALREADY_PRESENT = "containerAlreadyPresent";
+
     /** @var DDDRepository */
     protected $dbRepo;
 
     protected $currentContainer;
 
     protected $dbRepoInterface;
-
-    const CONTAINER_ALREADY_PRESENT = "containerAlreadyPresent";
 
     public function __construct(?string $name = NULL, array $data = [], string $dataName = '') {
         parent::__construct($name, $data, $dataName);
@@ -32,7 +32,7 @@ abstract class DbRepoTestCase extends KernelTestCase
     }
 
     /** @return static */
-    public static function createWithContainer($container) : object {
+    public static function createWithContainer($container): object {
         $object = new static(self::CONTAINER_ALREADY_PRESENT);
         $object->currentContainer = $container;
         $object->setDbRepo();
@@ -50,11 +50,12 @@ abstract class DbRepoTestCase extends KernelTestCase
         }
     }
 
-    public function setUp() : void {
+    public function setUp(): void {
         $this->clearDatabase();
     }
 
-    protected function clearDatabase() {}
+    protected function clearDatabase() {
+    }
 
     protected function deleteIdsFromDB($idsToDelete): void {
         foreach ($idsToDelete as $idToDelete) {
@@ -67,25 +68,26 @@ abstract class DbRepoTestCase extends KernelTestCase
         }
     }
 
-    protected function emptyRepositoryWithTruncate() : void {
+    protected function emptyRepositoryWithTruncate(): void {
         $connection = $this->getDoctrineEntityManager()->getConnection();
         $platform = $connection->getDatabasePlatform();
         $truncateSql = $platform->getTruncateTableSQL($this->getTableName()) . ";";
         $this->executeSQL($truncateSql);
     }
 
-    protected function emptyRepoTableWithDelete() : void {
+    protected function emptyRepoTableWithDelete(): void {
         $tableName = $this->getTableName();
         $this->emptyTableWithDeleteByName($tableName);
     }
 
-    protected function emptyTableWithDeleteByName($tableName) : void {
+    protected function emptyTableWithDeleteByName($tableName): void {
         $sql = "DELETE FROM `$tableName`";
         $this->executeSQL($sql);
     }
 
     protected function getTableName(): string {
         $className = $this->getDoctrineRepository()->getClassName();
+
         return $this->getDoctrineEntityManager()
             ->getClassMetadata($className)
             ->getTableName();
@@ -98,6 +100,7 @@ abstract class DbRepoTestCase extends KernelTestCase
         $ref = new \ReflectionObject($this->dbRepo);
         $entityManagerRef = $ref->getProperty('entityManager');
         $entityManagerRef->setAccessible(TRUE);
+
         return $entityManagerRef->getValue($this->dbRepo);
     }
 
@@ -125,14 +128,6 @@ abstract class DbRepoTestCase extends KernelTestCase
         }
     }
 
-    private function executeSQL($sql) : void {
-        $connection = $this->getDoctrineEntityManager()->getConnection();
-        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
-        $connection->executeUpdate($sql);
-        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
-
-    }
-
     protected function clearRepos($repositories): void {
         if (!is_array($repositories)) {
             $repositories = [$repositories];
@@ -142,8 +137,8 @@ abstract class DbRepoTestCase extends KernelTestCase
             foreach ($repo->all() as $object) {
                 $repo->delete($object);
             }
+            $repo->flush();
         }
-        $repo->flush();
     }
 
     protected function createTestStudis(StudiInternRepository $studiInternRepo): void {
@@ -154,27 +149,35 @@ abstract class DbRepoTestCase extends KernelTestCase
         }
         $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
             Matrikelnummer::fromInt("222222"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7edgpaO8E')
+            StudiHash::fromString('9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08')
         ));
         $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
             Matrikelnummer::fromInt("444444"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$LkhXWG5HRS9hWm1kWWx0VA$qSA8yS4/Zdsm0zeWajL3uw3188zkk/HCPZic0KlweCs')
+            StudiHash::fromString('60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752')
         ));
         $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
             Matrikelnummer::fromInt("555555"),
-            StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$anh4WFZZc3VDdExCdEMzdg$Zfy1+698erxOxiqG0RhUqiZ7uHt59nrR9llJMlsJXOY')
+            StudiHash::fromString('7f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08')
         ));
 
         foreach (range(111111, 111234) as $matrikelnummer) {
             $studiInternRepo->add(StudiIntern::fromMatrikelUndStudiHash(
                 Matrikelnummer::fromInt($matrikelnummer),
-                StudiHash::fromString('$argon2i$v=19$m=1024,t=2,p=2$SjNFNWJPNXVFTkVoaEEwcQ$xrpCKHbfjfjRLrn0K1keYfk6SCFlGQfWuT7ed'
+                StudiHash::fromString('8f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0'
                                       . $matrikelnummer)
             ));
 
         }
 
         $studiInternRepo->flush();
+
+    }
+
+    private function executeSQL($sql): void {
+        $connection = $this->getDoctrineEntityManager()->getConnection();
+        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
+        $connection->executeUpdate($sql);
+        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
 
     }
 

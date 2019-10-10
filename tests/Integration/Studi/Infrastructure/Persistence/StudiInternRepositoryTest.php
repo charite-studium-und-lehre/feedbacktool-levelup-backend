@@ -27,10 +27,10 @@ final class StudiInternRepositoryTest extends DbRepoTestCase
      */
     public function kann_speichern_und_wiederholen(StudiInternRepository $repo) {
         $matrikelnummer1 = Matrikelnummer::fromInt(123456);
-        $hash1 = StudiHash::fromString(password_hash("test", PASSWORD_ARGON2I));
+        $hash1 = StudiHash::fromString(hash("sha256","test"));
         $studiIntern1 = StudiIntern::fromMatrikelUndStudiHash($matrikelnummer1, $hash1);
         $matrikelnummer2 = Matrikelnummer::fromInt(456789);
-        $hash2 = StudiHash::fromString(password_hash("test2", PASSWORD_ARGON2I));
+        $hash2 = StudiHash::fromString(hash("sha256","test2"));
         $studiIntern2 = StudiIntern::fromMatrikelUndStudiHash($matrikelnummer2, $hash2);
 
         $repo->add($studiIntern1);
