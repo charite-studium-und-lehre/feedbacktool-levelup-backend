@@ -1,6 +1,6 @@
 <?php
 
-namespace StudiMeilenstein\Domain;
+namespace Studienfortschritt\Domain;
 
 use Common\Domain\DefaultEntityComparison;
 use Studi\Domain\StudiHash;
@@ -15,10 +15,10 @@ class StudiMeilenstein
     /** @var StudiHash */
     private $studiHash;
 
-    /** @var Meilenstein */
+    /** @var FortschrittsItem */
     private $meilenstein;
 
-    public static function fromValues(StudiMeilensteinId $id, StudiHash $studiHash, Meilenstein $meilenstein) {
+    public static function fromValues(StudiMeilensteinId $id, StudiHash $studiHash, FortschrittsItem $meilenstein) {
         $object = new self();
         $object->id = $id;
         $object->studiHash = $studiHash;
@@ -35,7 +35,7 @@ class StudiMeilenstein
         return $this->studiHash;
     }
 
-    public function getMeilenstein(): Meilenstein {
+    public function getMeilenstein(): FortschrittsItem {
         return $this->meilenstein;
     }
 

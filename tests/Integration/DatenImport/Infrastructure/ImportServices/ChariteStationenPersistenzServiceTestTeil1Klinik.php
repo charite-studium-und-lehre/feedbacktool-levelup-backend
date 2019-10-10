@@ -18,7 +18,7 @@ use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
-use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiMeilensteinRepository;
+use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudienfortschrittRepository;
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;

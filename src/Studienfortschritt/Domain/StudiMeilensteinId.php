@@ -1,6 +1,6 @@
 <?php
 
-namespace StudiMeilenstein\Domain;
+namespace Studienfortschritt\Domain;
 
 use Common\Domain\AggregateId;
 

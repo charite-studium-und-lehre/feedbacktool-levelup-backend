@@ -12,3 +12,10 @@ services:
 
     Studi\Domain\Service\StudiHashCreator:
         class: Studi\Infrastructure\Service\StudiHashCreator_Argon2I
+        arguments:
+            - '%env(APP_SECRET)%'
+
+    Studi\Domain\Service\LoginHashCreator:
+        class: Studi\Infrastructure\Service\LoginHashCreator_Argon2I
+        arguments:
+            - '%env(APP_SECRET)%'

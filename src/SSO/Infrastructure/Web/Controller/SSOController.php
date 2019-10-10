@@ -24,18 +24,23 @@ class SSOController extends AbstractController
      * @Route("/ssoSuccess")
      */
     public function ssoLogin(
+        Request $request,
         ChariteSSOService $chariteSSOService,
         ChariteLDAPUserProvider $chariteLDAPUserProvider,
         TokenStorageInterface $tokenStorage
     ) {
+        if ($request->get("code") && !$chariteSSOService->hasPendingSSOAuth()) {
+            return new Response("Fehler: Kann code ohne gestartetem SSO-Request nicht verarbeiten", 400);
+        }
         if (!$tokenStorage->getToken()->getUser() instanceof LoginUser) {
-            $username = $chariteSSOService->ssoGetUsername();
+            $username = $chariteSSOService->ssoTryAuthPhase2AndGetUsername();
             if (!$username) {
-                return new Response($chariteSSOService->getErrorMessage(), 404);
+                $chariteSSOService->deletePendingSSOAuth();
+                return new Response($chariteSSOService->getErrorMessage(), 400);
             }
             $loginUser = $chariteLDAPUserProvider->loadUserByUsername($username);
             if (!$loginUser) {
-                return new Response("Benutzer '$username' im LDAP nicht gefunden!", 404);
+                return new Response("Benutzer '$username' im LDAP nicht gefunden!", 400);
             }
 
             $this->loginUser($tokenStorage, $loginUser);

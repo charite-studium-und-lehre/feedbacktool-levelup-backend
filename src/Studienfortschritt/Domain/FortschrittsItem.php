@@ -1,6 +1,6 @@
 <?php
 
-namespace StudiMeilenstein\Domain;
+namespace Studienfortschritt\Domain;
 
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
@@ -9,7 +9,7 @@ use Exception;
 use Pruefung\Domain\Pruefung;
 use StudiPruefung\Domain\StudiPruefungsId;
 
-final class Meilenstein implements DDDValueObject
+class FortschrittsItem implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -27,7 +27,7 @@ final class Meilenstein implements DDDValueObject
 
     ];
 
-    const MEILENSTEINE_KUERZEL_ZU_CODE = [
+    const FORTSCHRITT_KUERZEL_ZU_CODE = [
         "hausarb_best" => 10,
         "erste_hilfe"  => 20,
         "pflege_prakt" => 30,
@@ -86,11 +86,14 @@ final class Meilenstein implements DDDValueObject
 
     private $studiPruefungsId;
 
-    public static function fromCode(int $value, ?StudiPruefungsId $studiPruefungsId = NULL): self {
-        Assertion::inArray($value, self::MEILENSTEINE_KUERZEL_ZU_CODE, self::UNGUELTIG . $value);
+    public static function fromCode(int $code, ?StudiPruefungsId $studiPruefungsId = NULL): self {
+        Assertion::inArray($code, self::FORTSCHRITT_KUERZEL_ZU_CODE, self::UNGUELTIG . $code);
+        if ($code < 100 && $studiPruefungsId) {
+            throw new InvalidArgumentException("Ein Meilenstein kann keinen Bezug zu einer Prüfung haben");
+        }
 
         $object = new self();
-        $object->code = $value;
+        $object->code = $code;
         $object->studiPruefungsId = $studiPruefungsId;
 
         return $object;
@@ -100,11 +103,11 @@ final class Meilenstein implements DDDValueObject
         $pruefungsFormat = $pruefung->getFormat();
 
         if ($pruefungsFormat->isMc()) {
-            return Meilenstein::fromCode($pruefungsFormat->getValue() - 10 + 400, $studiPruefungsId);
+            return FortschrittsItem::fromCode($pruefungsFormat->getValue() - 10 + 400, $studiPruefungsId);
         }
 
         if ($pruefungsFormat->isStation()) {
-            return Meilenstein::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500, $studiPruefungsId);
+            return FortschrittsItem::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500, $studiPruefungsId);
         }
 
         return NULL;
@@ -112,9 +115,9 @@ final class Meilenstein implements DDDValueObject
     }
 
     public static function fromKuerzel(string $value): self {
-        Assertion::keyIsset(self::MEILENSTEINE_KUERZEL_ZU_CODE, $value, self::UNGUELTIG_KUERZEL . $value);
+        Assertion::keyIsset(self::FORTSCHRITT_KUERZEL_ZU_CODE, $value, self::UNGUELTIG_KUERZEL . $value);
 
-        return self::fromCode(self::MEILENSTEINE_KUERZEL_ZU_CODE[$value]);
+        return self::fromCode(self::FORTSCHRITT_KUERZEL_ZU_CODE[$value]);
     }
 
     public function getCode() {
@@ -122,7 +125,7 @@ final class Meilenstein implements DDDValueObject
     }
 
     public function getKuerzel() {
-        return array_flip(self::MEILENSTEINE_KUERZEL_ZU_CODE)[$this->code];
+        return array_flip(self::FORTSCHRITT_KUERZEL_ZU_CODE)[$this->code];
     }
 
     public function getStudiPruefungsId(): ?StudiPruefungsId {
@@ -161,8 +164,8 @@ final class Meilenstein implements DDDValueObject
 
     public function alleTitelNachCode(): array {
         $alleTitel = [];
-        foreach (self::MEILENSTEINE_KUERZEL_ZU_CODE as $code) {
-            $alleTitel[$code] = Meilenstein::fromCode($code)->getTitel();
+        foreach (self::FORTSCHRITT_KUERZEL_ZU_CODE as $code) {
+            $alleTitel[$code] = FortschrittsItem::fromCode($code)->getTitel();
         }
 
         return $alleTitel;

@@ -1,4 +1,4 @@
-StudiMeilenstein\Domain\StudiMeilenstein:
+Studienfortschritt\Domain\StudiMeilenstein:
   type: entity
   table: studi_meilenstein
 
@@ -12,11 +12,11 @@ StudiMeilenstein\Domain\StudiMeilenstein:
 
   embedded:
     meilenstein:
-      class: Meilenstein
+      class: FortschrittsItem
       columnPrefix: false
 
   uniqueConstraints:
-    studiMeilenstein:
+    Studienfortschritt:
       columns: studiHash, meilenstein
 
   indexes:

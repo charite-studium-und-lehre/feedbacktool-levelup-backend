@@ -7,6 +7,8 @@ use Studi\Domain\StudiHash;
 
 interface StudiHashCreator
 {
+    public function __construct(string $appSecret);
+
     public function createStudiHash(
         StudiData $studiData
     ): StudiHash;

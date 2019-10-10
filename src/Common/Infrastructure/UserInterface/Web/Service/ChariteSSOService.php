@@ -45,11 +45,19 @@ class ChariteSSOService
         $this->authorizationEndpoint = $authorizationEndpoint;
     }
 
+    public function hasPendingSSOAuth(): bool {
+        return (!empty($_SESSION["openid_connect_state"]));
+    }
+    public function deletePendingSSOAuth(): void {
+        unset ($_SESSION["openid_connect_state"]);
+        unset ($_SESSION["openid_connect_nonce"]);
+    }
+
     /**
      * Returns Username of logged in user on success, NULL on error.
      * If user is not logged in, a redirect will be done directly in this service without Symfony
      */
-    public function ssoGetUsername(): ?string {
+    public function ssoTryAuthPhase2AndGetUsername(): ?string {
         $oidc = $this->initializeOpenid();
 
         try {

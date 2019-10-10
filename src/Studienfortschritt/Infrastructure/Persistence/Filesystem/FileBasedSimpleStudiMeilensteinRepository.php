@@ -1,16 +1,16 @@
 <?php
 
-namespace StudiMeilenstein\Infrastructure\Persistence\Filesystem;
+namespace Studienfortschritt\Infrastructure\Persistence\Filesystem;
 
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Studi\Domain\StudiHash;
-use StudiMeilenstein\Domain\Meilenstein;
-use StudiMeilenstein\Domain\StudiMeilenstein;
-use StudiMeilenstein\Domain\StudiMeilensteinId;
-use StudiMeilenstein\Domain\StudiMeilensteinRepository;
+use Studienfortschritt\Domain\FortschrittsItem;
+use Studienfortschritt\Domain\StudiMeilenstein;
+use Studienfortschritt\Domain\StudiMeilensteinId;
+use Studienfortschritt\Domain\StudiMeilensteinRepository;
 
-/** @method StudiMeilenstein[] all() */
+/** @method Studienfortschritt[] all() */
 final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepository implements StudiMeilensteinRepository
 {
     use FileBasedRepoTrait;
@@ -23,7 +23,7 @@ final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepo
         return StudiMeilensteinId::fromInt($this->abstractNextIdentity());
     }
 
-    /** @return StudiMeilenstein[] */
+    /** @return Studienfortschritt[] */
     public function allByStudiHash(StudiHash $studiHash): array {
         $all = [];
         foreach ($this->all() as $studiMeilenstein) {
@@ -35,7 +35,7 @@ final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepo
         return $all;
     }
 
-    public function byStudiIdUndMeilenstein(StudiHash $studiHash, Meilenstein $meilenstein): ?StudiMeilenstein {
+    public function byStudiIdUndMeilenstein(StudiHash $studiHash, FortschrittsItem $meilenstein): ?StudiMeilenstein {
         foreach ($this->all() as $studiMeilenstein) {
             if ($studiMeilenstein->getStudiHash()->equals($studiHash)
                 && $studiMeilenstein->getMeilenstein()->equals($meilenstein)) {

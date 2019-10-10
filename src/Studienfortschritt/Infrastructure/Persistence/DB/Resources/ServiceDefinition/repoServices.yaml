@@ -9,15 +9,15 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
-    StudiMeilenstein-Domain-StudiMeilensteinRepository-DoctrineRepo:
+    Studienfortschritt-Domain-StudiMeilensteinRepository-DoctrineRepo:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - StudiMeilenstein\Domain\StudiMeilenstein
+            - Studienfortschritt\Domain\StudiMeilenstein
 
-    StudiMeilenstein\Domain\StudiMeilensteinRepository:
-        class: StudiMeilenstein\Infrastructure\Persistence\DB\DBStudiMeilensteinRepository
+    Studienfortschritt\Domain\StudiMeilensteinRepository:
+        class: Studienfortschritt\Infrastructure\Persistence\DB\DBStudiMeilensteinRepository
         arguments:
-          - "@StudiMeilenstein-Domain-StudiMeilensteinRepository-DoctrineRepo"
+          - "@Studienfortschritt-Domain-StudiMeilensteinRepository-DoctrineRepo"
           - "@doctrine.orm.entity_manager"
         public: true

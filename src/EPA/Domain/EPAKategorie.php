@@ -6,7 +6,7 @@ use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-class EPAKategorie implements DDDValueObject
+class EPAKategorie implements EPAElement, DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -30,20 +30,36 @@ class EPAKategorie implements DDDValueObject
         return $object;
     }
 
-    public static function getEPAStruktur(): array {
-        $resultArray = [];
+//    private static function getEPAStruktur(): array {
+//        $resultArray = [];
+//        foreach (array_keys(EPAKonstanten::EPAS) as $epaInt) {
+//            $epa = EPA::fromInt($epaInt);
+//            if ($epa->getParent()->getParent()) {
+//                $resultArray
+//                [$epa->getParent()->getParent()->getValue()][$epa->getParent()->getValue()][$epa->getValue()] = $epa;
+//            } else {
+//                $resultArray
+//                [$epa->getParent()->getValue()][$epa->getValue()] = $epa;
+//            }
+//        }
+//
+//        return $resultArray;
+//    }
+
+    /** @return EPAElement[] */
+    public static function getEPAStrukturFlach(): array {
+        $returnArray = [];
+        foreach (array_keys(EPAKonstanten::EBENE_1) as $epaKatInt) {
+            $returnArray[EPAKategorie::fromInt($epaInt)];
+        }
+        foreach (array_keys(EPAKonstanten::EBENE_2) as $epaKatInt) {
+            $returnArray[EPAKategorie::fromInt($epaInt)];
+        }
         foreach (array_keys(EPAKonstanten::EPAS) as $epaInt) {
-            $epa = EPA::fromInt($epaInt);
-            if ($epa->getParent()->getParent()) {
-                $resultArray
-                [$epa->getParent()->getParent()->getValue()][$epa->getParent()->getValue()][$epa->getValue()] = $epa;
-            } else {
-                $resultArray
-                [$epa->getParent()->getValue()][$epa->getValue()] = $epa;
-            }
+            $returnArray[EPA::fromInt($epaInt)];
         }
 
-        return $resultArray;
+        return $returnArray;
     }
 
     public function getValue(): int {
@@ -66,4 +82,7 @@ class EPAKategorie implements DDDValueObject
         return self::fromInt(floor($this->value / 100) * 100);
     }
 
+    public function istBlatt(): bool {
+        return FALSE;
+    }
 }

@@ -4,9 +4,9 @@ namespace DatenImport\Domain;
 
 use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiInternRepository;
-use StudiMeilenstein\Domain\Meilenstein;
-use StudiMeilenstein\Domain\StudiMeilenstein;
-use StudiMeilenstein\Domain\StudiMeilensteinRepository;
+use Studienfortschritt\Domain\FortschrittsItem;
+use Studienfortschritt\Domain\StudiMeilenstein;
+use Studienfortschritt\Domain\StudiMeilensteinRepository;
 
 class StudiMeilensteinPersistenzService
 {
@@ -17,7 +17,7 @@ class StudiMeilensteinPersistenzService
     private $studiHashCreator;
 
     /** @var StudiMeilensteinRepository */
-    private $studiMeilensteinRepository;
+    private $StudiMeilensteinRepository;
 
     /** @var int */
     private $hinzugefuegt = 0;
@@ -28,11 +28,11 @@ class StudiMeilensteinPersistenzService
     public function __construct(
         StudiInternRepository $studiInternRepository,
         StudiHashCreator $studiHashCreator,
-        StudiMeilensteinRepository $studiMeilensteinRepository
+        StudiMeilensteinRepository $StudiMeilensteinRepository
     ) {
         $this->studiInternRepository = $studiInternRepository;
         $this->studiHashCreator = $studiHashCreator;
-        $this->studiMeilensteinRepository = $studiMeilensteinRepository;
+        $this->StudiMeilensteinRepository = $StudiMeilensteinRepository;
     }
 
     public function persistiereStudiListe($studiDataObjectsToImport) {
@@ -48,7 +48,7 @@ class StudiMeilensteinPersistenzService
 
             $dataLine = $studiDataObject->getDataLine();
             $meilensteinCodesHinzuzufuegen = [];
-            foreach (Meilenstein::MEILENSTEINE_KUERZEL_ZU_CODE as $kuerzel => $codeExistierend) {
+            foreach (FortschrittsItem::FORTSCHRITT_KUERZEL_ZU_CODE as $kuerzel => $codeExistierend) {
                 if (!isset($dataLine[$kuerzel])) {
                     if ($codeExistierend < 400) {
                         echo "\n Fehler: Kürzel nicht gefunden:  $kuerzel";
@@ -60,7 +60,7 @@ class StudiMeilensteinPersistenzService
                 }
             }
 
-            $alleMeilensteineDesStudis = $this->studiMeilensteinRepository->allByStudiHash(
+            $alleMeilensteineDesStudis = $this->StudiMeilensteinRepository->allByStudiHash(
                 $existierenderStudiIntern->getStudiHash()
             );
 
@@ -93,20 +93,20 @@ class StudiMeilensteinPersistenzService
             echo $zuLoeschen ? "-" : "";
 
             foreach ($meilensteinCodesHinzuzufuegen as $hinzufuegenCode) {
-                $studiMeilenstein = StudiMeilenstein::fromValues(
-                    $this->studiMeilensteinRepository->nextIdentity(),
+                $StudiMeilenstein = StudiMeilenstein::fromValues(
+                    $this->StudiMeilensteinRepository->nextIdentity(),
                     $existierenderStudiIntern->getStudiHash(),
-                    Meilenstein::fromCode($hinzufuegenCode)
+                    FortschrittsItem::fromCode($hinzufuegenCode)
                 );
-                $this->studiMeilensteinRepository->add($studiMeilenstein);
+                $this->StudiMeilensteinRepository->add($StudiMeilenstein);
                 $this->hinzugefuegt++;
             }
 
             foreach ($zuLoeschen as $meilensteinZuLoeschen) {
-                $this->studiMeilensteinRepository->delete($meilensteinZuLoeschen);
+                $this->StudiMeilensteinRepository->delete($meilensteinZuLoeschen);
                 $this->geloescht++;
             }
-            $this->studiMeilensteinRepository->flush();
+            $this->StudiMeilensteinRepository->flush();
         }
 
     }

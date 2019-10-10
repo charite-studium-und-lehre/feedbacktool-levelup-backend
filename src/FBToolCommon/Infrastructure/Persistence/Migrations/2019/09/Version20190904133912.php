@@ -21,7 +21,7 @@ final class Version20190904133912 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
                        'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE UNIQUE INDEX studiMeilenstein ON studi_meilenstein (studiHash, meilenstein)');
+        $this->addSql('CREATE UNIQUE INDEX Studienfortschritt ON studi_meilenstein (studiHash, meilenstein)');
         $this->addSql("ALTER TABLE `pruefung_studiPruefung` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '(DC2Type:aggregateId)'");
         $this->addSql("ALTER TABLE `pruefung_itemWertung` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '(DC2Type:aggregateId)';");
         $this->addSql("ALTER TABLE `cluster` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '(DC2Type:aggregateId)';");;
@@ -32,6 +32,6 @@ final class Version20190904133912 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
                        'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX studiMeilenstein ON studi_meilenstein');
+        $this->addSql('DROP INDEX Studienfortschritt ON studi_meilenstein');
     }
 }

@@ -1,4 +1,4 @@
-StudiMeilenstein\Domain\Meilenstein:
+Studienfortschritt\Domain\FortschrittsItem:
   type: embeddable
   fields:
     code:

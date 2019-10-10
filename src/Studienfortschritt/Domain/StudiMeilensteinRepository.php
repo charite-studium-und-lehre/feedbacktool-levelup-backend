@@ -1,6 +1,6 @@
 <?php
 
-namespace StudiMeilenstein\Domain;
+namespace Studienfortschritt\Domain;
 
 use Common\Domain\DDDRepository;
 use Common\Domain\FlushableRepository;
@@ -20,7 +20,7 @@ interface StudiMeilensteinRepository extends DDDRepository, FlushableRepository
     /** @return StudiMeilenstein[] */
     public function allByStudiHash(StudiHash $studiHash): array;
 
-    public function byStudiIdUndMeilenstein(StudiHash $studiHash, Meilenstein $meilenstein): ?StudiMeilenstein;
+    public function byStudiIdUndMeilenstein(StudiHash $studiHash, FortschrittsItem $meilenstein): ?StudiMeilenstein;
 
     public function nextIdentity(): StudiMeilensteinId;
 

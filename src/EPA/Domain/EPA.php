@@ -6,7 +6,7 @@ use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-class EPA implements DDDValueObject
+class EPA implements EPAElement, DDDValueObject
 {
     use DefaultValueObjectComparison;
 
@@ -38,5 +38,9 @@ class EPA implements DDDValueObject
 
     public function getParent(): EPAKategorie {
         return EPAKategorie::fromInt(floor($this->value / 10) * 10);
+    }
+
+    public function istBlatt(): bool {
+        return TRUE;
     }
 }

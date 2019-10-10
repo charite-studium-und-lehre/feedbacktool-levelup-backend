@@ -1,26 +1,26 @@
 <?php
 
-namespace StudiMeilenstein\Infrastructure\Api\Controller;
+namespace Studienfortschritt\Infrastructure\Api\Controller;
 
 use SSO\Domain\EingeloggterStudiService;
-use StudiMeilenstein\Domain\Meilenstein;
-use StudiMeilenstein\Domain\Service\MeilensteinExportService;
+use Studienfortschritt\Domain\FortschrittsItem;
+use Studienfortschritt\Domain\Service\StudienFortschrittExportService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StudiMeilensteinApiController extends AbstractController
+class StudienfortschrittApiController extends AbstractController
 {
 
     /** @var EingeloggterStudiService */
     private $eingeloggterStudiService;
 
-    /** @var MeilensteinExportService */
+    /** @var StudienFortschrittExportService */
     private $meilensteinExportService;
 
     public function __construct(
         EingeloggterStudiService $eingeloggterStudiService,
-        MeilensteinExportService $meilensteinExportService
+        StudienFortschrittExportService $meilensteinExportService
     ) {
         $this->eingeloggterStudiService = $eingeloggterStudiService;
         $this->meilensteinExportService = $meilensteinExportService;
@@ -28,10 +28,11 @@ class StudiMeilensteinApiController extends AbstractController
 
     /**
      * @Route("/api/meilensteine")
+     * @Route("/api/studienfortschritt", name="studienfortschritt")
      */
     public function jsonMeilensteineAction() {
         $eingeloggterStudi = $this->eingeloggterStudiService->getEingeloggterStudi();
-        $meilensteine = $this->meilensteinExportService->alleMeilensteineFuerStudi(
+        $meilensteine = $this->meilensteinExportService->alleFortschrittsItemsFuerStudi(
             $eingeloggterStudi->getStudiHash()
         );
         $studiCodes = [];
@@ -39,8 +40,8 @@ class StudiMeilensteinApiController extends AbstractController
             $studiCodes[] = $meilenstein->getCode();
         }
 
-        foreach (Meilenstein::MEILENSTEINE_KUERZEL_ZU_CODE as $code) {
-            $meilenstein = Meilenstein::fromCode($code);
+        foreach (FortschrittsItem::FORTSCHRITT_KUERZEL_ZU_CODE as $code) {
+            $meilenstein = FortschrittsItem::fromCode($code);
             $meilensteinArray[] = [
                 "code"             => $code,
                 "kuerzel"          => $meilenstein->getKuerzel(),

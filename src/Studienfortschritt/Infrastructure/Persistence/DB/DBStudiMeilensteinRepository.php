@@ -1,13 +1,14 @@
 <?php
 
-namespace StudiMeilenstein\Infrastructure\Persistence\DB;
+namespace Studienfortschritt\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use Studi\Domain\StudiHash;
-use StudiMeilenstein\Domain\Meilenstein;
-use StudiMeilenstein\Domain\StudiMeilenstein;
-use StudiMeilenstein\Domain\StudiMeilensteinId;
-use StudiMeilenstein\Domain\StudiMeilensteinRepository;
+use Studienfortschritt\Domain\FortschrittsItem;
+use Studienfortschritt\Domain\Studienfortschritt;
+use Studienfortschritt\Domain\StudiMeilenstein;
+use Studienfortschritt\Domain\StudiMeilensteinId;
+use Studienfortschritt\Domain\StudiMeilensteinRepository;
 
 final class DBStudiMeilensteinRepository implements StudiMeilensteinRepository
 {
@@ -38,7 +39,7 @@ final class DBStudiMeilensteinRepository implements StudiMeilensteinRepository
         );
     }
 
-    public function byStudiIdUndMeilenstein(StudiHash $studiHash, Meilenstein $meilenstein): ?StudiMeilenstein {
+    public function byStudiIdUndMeilenstein(StudiHash $studiHash, FortschrittsItem $meilenstein): ?StudiMeilenstein {
         return $this->doctrineRepo->findOneBy(
             [
                 "studiHash"   => $studiHash,

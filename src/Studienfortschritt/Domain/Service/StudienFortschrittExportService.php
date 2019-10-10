@@ -1,15 +1,15 @@
 <?php
 
-namespace StudiMeilenstein\Domain\Service;
+namespace Studienfortschritt\Domain\Service;
 
 use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\StudiHash;
-use StudiMeilenstein\Domain\Meilenstein;
-use StudiMeilenstein\Domain\StudiMeilensteinRepository;
+use Studienfortschritt\Domain\FortschrittsItem;
+use Studienfortschritt\Domain\StudiMeilensteinRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 
-/** Vereint abgespeicherte Meilensteine und indirekt, durch Prüfungsteilnahmen, erworbene Meilensteine */
-class MeilensteinExportService
+/** Vereint abgespeicherte Meilsteine und indirekt, durch Prüfungsteilnahmen, erworbene Fortschritts-Items */
+class StudienFortschrittExportService
 {
     /** @var StudiMeilensteinRepository */
     private $studiMeilensteinRepository;
@@ -31,23 +31,23 @@ class MeilensteinExportService
     }
 
     /** return Meilenstein[] */
-    public function alleMeilensteineFuerStudi(StudiHash $studiHash): array {
-        $alleMeilensteine = [];
+    public function alleFortschrittsItemsFuerStudi(StudiHash $studiHash): array {
+        $alleItems = [];
         foreach ($this->studiMeilensteinRepository->allByStudiHash($studiHash) as $meilenstein) {
-            $alleMeilensteine[] = $meilenstein->getMeilenstein();
+            $alleItems[] = $meilenstein->getMeilenstein();
         }
         foreach ($this->studiPruefungsRepository->allByStudiHash($studiHash) as $studiPruefung) {
             if (!$studiPruefung->isBestanden()) {
                 continue;
             }
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-            $meilenstein = Meilenstein::fromPruefung($pruefung, $studiPruefung->getId());
+            $meilenstein = FortschrittsItem::fromPruefung($pruefung, $studiPruefung->getId());
             if ($meilenstein) {
-                $alleMeilensteine[] = $meilenstein;
+                $alleItems[] = $meilenstein;
             }
         }
 
-        return $alleMeilensteine;
+        return $alleItems;
 
     }
 

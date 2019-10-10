@@ -2,9 +2,9 @@ SSOController:
   type: annotation
   resource: "../../src/SSO/Infrastructure"
 
-MeilensteinController:
+StudienfortschrittController:
   type: annotation
-  resource: "../../src/StudiMeilenstein/Infrastructure"
+  resource: "../../src/Studienfortschritt/Infrastructure"
 
 StudiPruefungController:
     type: annotation
