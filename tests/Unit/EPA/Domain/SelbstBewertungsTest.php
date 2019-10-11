@@ -9,7 +9,7 @@ use EPA\Domain\SelbstBewertung;
 use EPA\Domain\SelbstBewertungsId;
 use EPA\Domain\SelbstBewertungsTyp;
 use PHPUnit\Framework\TestCase;
-use Studi\Domain\StudiHash;
+use Studi\Domain\LoginHash;
 
 class SelbstBewertungsTest extends TestCase
 {
@@ -28,7 +28,7 @@ class SelbstBewertungsTest extends TestCase
     public function testCreate() {
         $object = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(123),
-            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
+            LoginHash::fromString('a008dbcd86fa8d0738e1f6e0738e1f6e0f50f5daefe9fd2a7a9dddcace0062a0'),
             EPABewertung::fromValues(3, EPA::fromInt(111)),
             SelbstBewertungsTyp::getZutrauenObject()
         );

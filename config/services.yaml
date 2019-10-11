@@ -39,9 +39,6 @@ services:
     Common\Domain\Services\CurrentUserIdService:
         class: FBToolCommon\Infrastructure\UserInterface\Web\Service\CurrentWebUserIdService
 
-    SSO\Domain\EingeloggterStudiService:
-        class: SSO\Infrastructure\Web\Service\WebEingeloggterStudiService
-
     Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService:
         arguments:
             - '%env(SSO_OPENID_CLIENT_ID)%'

@@ -2,6 +2,7 @@
 
 namespace Common\Infrastructure\UserInterface\Web\Service;
 
+use Common\Domain\User\Username;
 use Jumbojett\OpenIDConnectClient;
 
 class ChariteSSOService
@@ -57,7 +58,7 @@ class ChariteSSOService
      * Returns Username of logged in user on success, NULL on error.
      * If user is not logged in, a redirect will be done directly in this service without Symfony
      */
-    public function ssoTryAuthPhase2AndGetUsername(): ?string {
+    public function ssoTryAuthPhase2AndGetUsername(): ?Username {
         $oidc = $this->initializeOpenid();
 
         try {
@@ -77,7 +78,7 @@ class ChariteSSOService
         }
         $username = substr($username, 8);
 
-        return $username;
+        return Username::fromString($username);
     }
 
     /** returns TRUE on success, FALSE on error */

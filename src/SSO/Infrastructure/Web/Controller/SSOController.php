@@ -6,6 +6,7 @@ use Common\Domain\User\LoginUser;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use SSO\Infrastructure\Web\Service\UserSwitcher;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\Service\LoginHashCreator;
 use Studi\Domain\Service\StudiHashCreator;
@@ -34,8 +35,10 @@ class SSOController extends AbstractController
         ChariteSSOService $chariteSSOService,
         StudiRepository $studiRepository,
         ChariteLDAPUserProvider $chariteLDAPUserProvider,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        UserSwitcher $userSwitcher
     ) {
+        $userSwitcher->unsetUserSwitched();
         if ($request->get("code") && !$chariteSSOService->hasPendingSSOAuth()) {
             return new Response("Fehler: Kann code ohne gestartetem SSO-Request nicht verarbeiten", 400);
         }
@@ -55,29 +58,30 @@ class SSOController extends AbstractController
             $studiByLoginHash = $studiRepository->byLoginHash($loginHash);
 
             if ($studiByLoginHash) {
-                $this->loginUser($tokenStorage, $studiByLoginHash);
-
-                return new JsonResponse(
-                    [
-                        "vorname"             => $loginUser->getVorname(),
-                        "nachname"            => $loginUser->getNachname(),
-                        "stammdatenVorhanden" => TRUE,
-                    ], 200
-                );
+                $this->loginUser($tokenStorage, $studiByLoginHash->macheZuLoginUser($loginUser));
             } else {
                 $this->loginUser($tokenStorage, $loginUser);
-
-                return new JsonResponse(
-                    [
-                        "vorname"             => $loginUser->getVorname(),
-                        "nachname"            => $loginUser->getNachname(),
-                        "stammdatenVorhanden" => FALSE,
-                    ], 200
-                );
             }
         }
 
-        return new Response("Eingeloggt als " . $tokenStorage->getToken()->getUser()->getUsername(), 200);
+        return $this->redirect("/app/loggedIn");
+    }
+
+    /** @Route("/isLoggedIn", name="isLoggedIn") */
+    public function isLoggedInAction() {
+        /** @var $loginUser LoginUser */
+        $loginUser = $this->getUser();
+        if ($this->getUser()) {
+            return new JsonResponse(
+                [
+                    "vorname"             => $loginUser->getVorname()->getValue(),
+                    "nachname"            => $loginUser->getNachname()->getValue(),
+                    "stammdatenVorhanden" => $loginUser instanceof Studi,
+                ], 200
+            );
+        }
+
+        return new Response(NULL, 401);
     }
 
     /** @Route("/api/stammdaten", name="stammdaten") */
@@ -115,13 +119,14 @@ class SSOController extends AbstractController
     }
 
     /** @Route("/logout", name="logout") */
-    public function logoutAction(Session $session) {
+    public function logoutAction(Session $session, UserSwitcher $userSwitcher) {
+        $userSwitcher->unsetUserSwitched();
         $session->set("eingeloggterUser", NULL);
 
         return new Response("OK", 200);
     }
 
-    /** @Route("/api/ssoLogout", name="apiLogout") */
+    /** @Route("/ssoLogout", name="apiLogout") */
     public function ssoLogoutAction(ChariteSSOService $chariteSSOService) {
         $chariteSSOService->signOut(NULL);
     }
@@ -158,8 +163,12 @@ class SSOController extends AbstractController
     public function switchUser(
         Request $request,
         StudiRepository $studiRepository,
-        TokenStorageInterface $tokenStorage
+        LoginHashCreator $loginHashCreator,
+        TokenStorageInterface $tokenStorage,
+        UserSwitcher $userSwitcher
     ) {
+        /** @var LoginUser $currentUser */
+        $currentUser = $this->getUser();
         $studiHash = $request->get("studiHash");
         if ($studiHash) {
             $studi = $studiRepository->byStudiHash(StudiHash::fromString($studiHash));
@@ -169,6 +178,7 @@ class SSOController extends AbstractController
 
             $switchedUser = $studi->macheZuLoginUser($this->getUser());
             $this->loginUser($tokenStorage, $switchedUser);
+            $userSwitcher->setUserSwitched($currentUser->getUsernameVO());
 
             return $this->redirectToRoute("userInfo");
 

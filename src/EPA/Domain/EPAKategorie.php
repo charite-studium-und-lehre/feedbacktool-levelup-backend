@@ -13,7 +13,7 @@ class EPAKategorie implements EPAElement, DDDValueObject
     const INVALID = "Ist keine gültige ID für eine EPA-Kategorie: ";
 
     /** @var int */
-    private $value;
+    private $nummer;
 
     public static function fromInt(string $value): self {
         $intVal = (int) $value;
@@ -25,7 +25,7 @@ class EPAKategorie implements EPAElement, DDDValueObject
         );
 
         $object = new self();
-        $object->value = $intVal;
+        $object->nummer = $intVal;
 
         return $object;
     }
@@ -62,24 +62,24 @@ class EPAKategorie implements EPAElement, DDDValueObject
         return $returnArray;
     }
 
-    public function getValue(): int {
-        return $this->value;
+    public function getNummer(): int {
+        return $this->nummer;
     }
 
     public function getBeschreibung(): string {
-        return isset(EPAKonstanten::EBENE_1[$this->value])
-            ? EPAKonstanten::EBENE_1[$this->value]
+        return isset(EPAKonstanten::EBENE_1[$this->nummer])
+            ? EPAKonstanten::EBENE_1[$this->nummer]
             :
-            EPAKonstanten::EBENE_2[$this->value];
+            EPAKonstanten::EBENE_2[$this->nummer];
     }
 
     public function getParent(): ?self {
-        $isSubCategory = $this->value % 100 >= 10;
+        $isSubCategory = $this->nummer % 100 >= 10;
         if (!$isSubCategory) {
             return NULL;
         }
 
-        return self::fromInt(floor($this->value / 100) * 100);
+        return self::fromInt(floor($this->nummer / 100) * 100);
     }
 
     public function istBlatt(): bool {

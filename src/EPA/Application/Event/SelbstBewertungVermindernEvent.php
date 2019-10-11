@@ -10,7 +10,7 @@ class SelbstBewertungVermindernEvent implements DomainEvent
     use DomainEventTrait;
 
     /** @var string */
-    public $studiHash;
+    public $loginHash;
 
     /** @var int */
     public $selbstBewertungsTyp;

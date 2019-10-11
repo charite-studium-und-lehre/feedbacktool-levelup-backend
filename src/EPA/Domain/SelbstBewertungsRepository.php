@@ -4,7 +4,7 @@ namespace EPA\Domain;
 
 use Common\Domain\DDDRepository;
 use Common\Domain\FlushableRepository;
-use Studi\Domain\StudiHash;
+use Studi\Domain\LoginHash;
 
 interface SelbstBewertungsRepository extends DDDRepository, FlushableRepository
 {
@@ -19,9 +19,17 @@ interface SelbstBewertungsRepository extends DDDRepository, FlushableRepository
 
     public function nextIdentity(): SelbstBewertungsId;
 
-    public function latestByStudiUndTyp(StudiHash $studiHash, SelbstBewertungsTyp $typ): ?SelbstBewertung;
+    /** @return SelbstBewertung[] */
+    public function allLatestByStudiUndTyp(LoginHash $loginHash, SelbstBewertungsTyp $typ): array;
 
     /** @return SelbstBewertung[] */
-    public function allByStudi(StudiHash $studiHash): array;
+    public function latestByStudiUndTypUndEpa(
+        LoginHash $loginHash,
+        SelbstBewertungsTyp $typ,
+        EPA $epa
+    ): ?SelbstBewertung;
+
+    /** @return SelbstBewertung[] */
+    public function allByStudi(LoginHash $loginHash): array;
 
 }

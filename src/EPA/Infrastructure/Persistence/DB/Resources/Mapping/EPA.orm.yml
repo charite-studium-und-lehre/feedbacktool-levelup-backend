@@ -2,6 +2,6 @@ EPA\Domain\EPA:
   type: embeddable
 
   fields:
-    value:
+    nummer:
       type: integer
       column: epaId

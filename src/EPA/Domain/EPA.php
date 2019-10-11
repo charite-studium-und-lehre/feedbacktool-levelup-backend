@@ -13,31 +13,31 @@ class EPA implements EPAElement, DDDValueObject
     const INVALID = "Ist keine gültige ID für eine EPA: ";
 
     /** @var int */
-    private $value;
+    private $nummer;
 
-    public static function fromInt(string $value): self {
-        $intVal = (int) $value;
-        Assertion::integerish($intVal, self::INVALID . $value);
+    public static function fromInt(string $nummer): self {
+        $intVal = (int) $nummer;
+        Assertion::integerish($intVal, self::INVALID . $nummer);
         Assertion::inArray(
             $intVal,
             array_keys(EPAKonstanten::EPAS),
-            self::INVALID . $value);
+            self::INVALID . $nummer);
         $object = new self();
-        $object->value = $intVal;
+        $object->nummer = $intVal;
 
         return $object;
     }
 
-    public function getValue(): int {
-        return $this->value;
+    public function getNummer(): int {
+        return $this->nummer;
     }
 
     public function getBeschreibung(): string {
-        return EPAKonstanten::EPAS[$this->value];
+        return EPAKonstanten::EPAS[$this->nummer];
     }
 
     public function getParent(): EPAKategorie {
-        return EPAKategorie::fromInt(floor($this->value / 10) * 10);
+        return EPAKategorie::fromInt(floor($this->nummer / 10) * 10);
     }
 
     public function istBlatt(): bool {

@@ -4,6 +4,7 @@ namespace EPA\Domain;
 
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
+use Studi\Domain\LoginHash;
 use Studi\Domain\StudiHash;
 
 class SelbstBewertung implements DDDEntity
@@ -13,8 +14,8 @@ class SelbstBewertung implements DDDEntity
     /** @var SelbstBewertungsId */
     private $id;
 
-    /** @var StudiHash */
-    private $studiHash;
+    /** @var LoginHash */
+    private $loginHash;
 
     /** @var EPABewertung */
     private $epaBewertung;
@@ -27,13 +28,13 @@ class SelbstBewertung implements DDDEntity
 
     public static function create(
         SelbstBewertungsId $id,
-        StudiHash $studiHash,
+        LoginHash $loginHash,
         EPABewertung $epaBewertung,
         SelbstBewertungsTyp $selbstBewertungsTyp
     ): self {
         $object = new self();
         $object->id = $id;
-        $object->studiHash = $studiHash;
+        $object->loginHash = $loginHash;
         $object->epaBewertung = $epaBewertung;
         $object->selbstBewertungsTyp = $selbstBewertungsTyp;
         $object->epaBewertungsDatum = EPABewertungsDatum::heute();
@@ -45,8 +46,8 @@ class SelbstBewertung implements DDDEntity
         return SelbstBewertungsId::fromInt($this->id);
     }
 
-    public function getStudiHash(): StudiHash {
-        return $this->studiHash;
+    public function getLoginHash(): LoginHash {
+        return $this->loginHash;
     }
 
     public function getEpaBewertung(): EPABewertung {

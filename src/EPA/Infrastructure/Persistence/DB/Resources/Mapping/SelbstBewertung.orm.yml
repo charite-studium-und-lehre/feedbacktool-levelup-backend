@@ -18,13 +18,13 @@ EPA\Domain\SelbstBewertung:
       columnPrefix: false
 
   fields:
-    studiHash:
-      type: studiHash
+    loginHash:
+      type: loginHash
       nullable: false
 
   indexes:
-    studiHash:
-      columns: studiHash
+    loginHash:
+      columns: loginHash
     datum:
       columns: datum
     typ:

@@ -8,7 +8,7 @@ use Studi\Domain\StudiHash;
 class StudiHashTest extends TestCase
 {
     public function testFromString() {
-        $value = '0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace';
+        $value = '0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcacea008dbcd276d86';
         $object = StudiHash::fromString($value);
 
         $this->assertEquals($value, $object->getValue());

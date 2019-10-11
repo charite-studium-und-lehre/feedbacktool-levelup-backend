@@ -12,17 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudienfortschrittApiController extends AbstractController
 {
 
-    /** @var EingeloggterStudiService */
-    private $eingeloggterStudiService;
-
     /** @var StudienFortschrittExportService */
     private $meilensteinExportService;
 
-    public function __construct(
-        EingeloggterStudiService $eingeloggterStudiService,
-        StudienFortschrittExportService $meilensteinExportService
-    ) {
-        $this->eingeloggterStudiService = $eingeloggterStudiService;
+    public function __construct(StudienFortschrittExportService $meilensteinExportService) {
         $this->meilensteinExportService = $meilensteinExportService;
     }
 
@@ -31,7 +24,7 @@ class StudienfortschrittApiController extends AbstractController
      * @Route("/api/studienfortschritt", name="studienfortschritt")
      */
     public function jsonMeilensteineAction() {
-        $eingeloggterStudi = $this->eingeloggterStudiService->getEingeloggterStudi();
+        $eingeloggterStudi = $this->getUser();
         $meilensteine = $this->meilensteinExportService->alleFortschrittsItemsFuerStudi(
             $eingeloggterStudi->getStudiHash()
         );

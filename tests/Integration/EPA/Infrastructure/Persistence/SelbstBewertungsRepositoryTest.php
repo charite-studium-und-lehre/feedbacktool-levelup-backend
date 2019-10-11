@@ -10,12 +10,14 @@ use EPA\Domain\SelbstBewertungsId;
 use EPA\Domain\SelbstBewertungsRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Infrastructure\Persistence\Filesystem\FileBasedSimpleSelbstBewertungsRepository;
-use Studi\Domain\StudiHash;
+use Studi\Domain\LoginHash;
 use Tests\Integration\Common\DbRepoTestCase;
 use Tests\Unit\EPA\Domain\SelbstBewertungsTest;
 
 final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
 {
+
+    const LOGIN_HASH = '0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcacefd2a7a9dddcace';
     protected $dbRepoInterface = SelbstBewertungsRepository::class;
 
     public function getAllRepositories() {
@@ -34,14 +36,14 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         $epa = EPA::fromInt(111);
         $selbstbewertung1 = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(123),
-            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
-            EPABewertung::fromValues(3, $epa),
+            LoginHash::fromString(self::LOGIN_HASH),
+            EPABewertung::fromValues(4, $epa),
             SelbstBewertungsTyp::getGemachtObject()
         );
         $selbstbewertung1b = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(124),
-            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
-            EPABewertung::fromValues(4, $epa),
+            LoginHash::fromString(self::LOGIN_HASH),
+            EPABewertung::fromValues(3, $epa),
             SelbstBewertungsTyp::getGemachtObject()
         );
         SelbstBewertungsTest::setzeDatumMitReflectionAuf(
@@ -50,7 +52,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         );
         $selbstbewertung2 = SelbstBewertung::create(
             SelbstBewertungsId::fromInt(456),
-            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
+            LoginHash::fromString(self::LOGIN_HASH),
             EPABewertung::fromValues(0, $epa),
             SelbstBewertungsTyp::getZutrauenObject()
         );
@@ -65,8 +67,8 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         $selbstbewertung = $repo->byId(SelbstBewertungsId::fromInt(123));
         $this->assertTrue($selbstbewertung->getId()
                               ->equals($selbstbewertung1->getId()));
-        $this->assertTrue($selbstbewertung->getStudiHash()
-                              ->equals($selbstbewertung1->getStudiHash()));
+        $this->assertTrue($selbstbewertung->getLoginHash()
+                              ->equals($selbstbewertung1->getLoginHash()));
         $this->assertTrue($selbstbewertung->getEpaBewertung()
                               ->equals($selbstbewertung1->getEpaBewertung()));
         $this->assertTrue($selbstbewertung->getSelbstBewertungsTyp()
@@ -86,7 +88,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
         $selbstbewertung->erhoeheBewertung();
         $repo->flush();
         $this->refreshEntities($selbstbewertung);
-        $this->assertEquals(EPABewertung::fromValues(4, EPA::fromInt(111)),
+        $this->assertEquals(EPABewertung::fromValues(5, EPA::fromInt(111)),
                             $selbstbewertung->getEpaBewertung());
     }
 
@@ -96,11 +98,23 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
      */
     public function testGetLatest(SelbstBewertungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
-        $latestObject = $repo->latestByStudiUndTyp(
-            StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'),
+        $latestObjectsGemacht = $repo->allLatestByStudiUndTyp(
+            LoginHash::fromString(self::LOGIN_HASH),
             SelbstBewertungsTyp::getGemachtObject()
         );
-        $this->assertTrue($latestObject->getId()->equals(SelbstBewertungsId::fromInt(123)));
+        $latestObjectsZutrauen = $repo->allLatestByStudiUndTyp(
+            LoginHash::fromString(self::LOGIN_HASH),
+            SelbstBewertungsTyp::getZutrauenObject()
+        );
+
+        $this->assertCount(1, $latestObjectsGemacht);
+        $this->assertCount(1, $latestObjectsZutrauen);
+        $this->assertTrue(
+            $latestObjectsGemacht[0]->getEpaBewertung()->getEpa()->equals(
+                EPA::fromInt(111))
+        );
+        $this->assertEquals(4, $latestObjectsGemacht[0]->getEpaBewertung()->getBewertung());
+        $this->assertEquals(0, $latestObjectsZutrauen[0]->getEpaBewertung()->getBewertung());
     }
 
     /**
@@ -110,7 +124,7 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
     public function testByStudiId(SelbstBewertungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $all =
-            $repo->allByStudi(StudiHash::fromString('0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace'));
+            $repo->allByStudi(LoginHash::fromString(self::LOGIN_HASH));
         $this->assertCount(3, $all);
     }
 

@@ -7,28 +7,54 @@ use EPA\Application\Command\SelbstBewertungErhoehenCommand;
 use EPA\Application\Command\SelbstBewertungVermindernCommand;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
-use SSO\Domain\EingeloggterStudiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EPAStatusApiController extends AbstractController
 {
-
-    /** @var EingeloggterStudiService */
-    private $eingeloggterStudiService;
-
-    public function __construct(EingeloggterStudiService $eingeloggterStudiService) {
-        $this->eingeloggterStudiService = $eingeloggterStudiService;
+    /**
+     * @Route("/api/epa/meine", name="meine_epas")
+     */
+    public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
+        $data = $epasFuerStudiService->getEpaStudiData($this->getUser()->getLoginHash());
+        return new JsonResponse($data, 200);
     }
 
     /**
+     * @Route("/api/epa/selbstbewertung/erhoehen", name="api_selbstbewertung_erhoehen")
      * @Route("/api/epa/meine", name="api_selbstbewertung_erhoehen")
      */
-    public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
-        $epasFuerStudiService->getEpaStudiData();
+    public function erhoeheSelbstbewertungAction(Request $request, CommandBus $commandBus, $vermindern=FALSE) {
+        $eingeloggterStudi = $this->getUser();
+        $epaId = $request->get("epaID");
+        if ($request->get("typ") == "gemacht") {
+            $typ = SelbstBewertungsTyp::GEMACHT;
+        } elseif ($request->get("typ") == "zutrauen") {
+            $typ = SelbstBewertungsTyp::ZUTRAUEN;
+        } else {
+            return new Response("Parameter 'typ' muss gegeben werden als 'gemacht' oder 'zutrauen'", 400);
+        }
 
+        if ($vermindern) {
+            $command = new SelbstBewertungVermindernCommand();
+        } else {
+            $command = new SelbstBewertungErhoehenCommand();
+        }
+
+        $command->studiHash = $eingeloggterStudi->getStudiHash();
+        $command->selbstBewertungsTyp = $typ;
+        $command->epaId = $epaId;
+
+        try {
+            $commandBus->execute($command);
+        } catch (\Throwable $e) {
+            return new Response($e->getMessage(), 400);
+        }
+
+        return new Response("Erfolg", 200);
     }
 
     /**
@@ -36,7 +62,6 @@ class EPAStatusApiController extends AbstractController
      */
     public function vermindereSelbstbewertungAction(Request $request, CommandBus $commandBus) {
         return $this->erhoeheSelbstbewertungAction($request, $commandBus, TRUE);
-
     }
 
 }

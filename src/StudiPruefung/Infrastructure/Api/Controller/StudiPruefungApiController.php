@@ -3,7 +3,6 @@
 namespace StudiPruefung\Infrastructure\Api\Controller;
 
 use Pruefung\Domain\PruefungsRepository;
-use SSO\Domain\EingeloggterStudiService;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,9 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudiPruefungApiController extends AbstractController
 {
 
-    /** @var EingeloggterStudiService */
-    private $eingeloggterStudiService;
-
     /** @var StudiPruefungsRepository */
     private $studiPruefungsRepository;
 
@@ -22,11 +18,9 @@ class StudiPruefungApiController extends AbstractController
     private $pruefungsRepository;
 
     public function __construct(
-        EingeloggterStudiService $eingeloggterStudiService,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsRepository $pruefungsRepository
     ) {
-        $this->eingeloggterStudiService = $eingeloggterStudiService;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->pruefungsRepository = $pruefungsRepository;
     }
@@ -35,7 +29,7 @@ class StudiPruefungApiController extends AbstractController
      * @Route("/api/pruefung")
      */
     public function jsonStudiPruefungAction() {
-        $eingeloggterStudi = $this->eingeloggterStudiService->getEingeloggterStudi();
+        $eingeloggterStudi = $this->getUser();
         $studiPruefungen = $this->studiPruefungsRepository->allByStudiHash(
             $eingeloggterStudi->getStudiHash()
         );

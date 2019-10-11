@@ -15,12 +15,17 @@ class StudiUserProvider extends ChariteLDAPUserProvider
     /** @var StudiRepository */
     private $studiRepository;
 
+    /** @var UserSwitcher */
+    private $userSwitcher;
+
     public function __construct(
-        ChariteLDAPService $chariteLDAPService,
-        StudiRepository $studiRepository
+        StudiRepository $studiRepository,
+        UserSwitcher $userSwitcher,
+        ChariteLDAPService $chariteLDAPService
     ) {
-        parent::__construct( $chariteLDAPService);
+        parent::__construct($chariteLDAPService);
         $this->studiRepository = $studiRepository;
+        $this->userSwitcher = $userSwitcher;
     }
 
     /**
@@ -43,6 +48,11 @@ class StudiUserProvider extends ChariteLDAPUserProvider
             return $loginUser;
         }
         $studi = $this->studiRepository->byStudiHash(StudiHash::fromString($studiHash));
+        if ($this->userSwitcher->userIsSwiched()) {
+            $studi = clone $studi;
+            // setze LoginHash nicht auf von Doctrine verwaltetem Studi
+            $studi->setLoginHash($this->userSwitcher->getSwitchedLoginHash());
+        }
         $studi = $studi->macheZuLoginUser($loginUser);
 
         return $studi;

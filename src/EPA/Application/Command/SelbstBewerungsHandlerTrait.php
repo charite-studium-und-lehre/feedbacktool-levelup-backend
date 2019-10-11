@@ -3,7 +3,6 @@
 namespace EPA\Application\Command;
 
 use Common\Application\Command\DomainCommand;
-use Common\Application\CommandHandler\SelbstBewertungErhoehenCommand;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
 use EPA\Domain\SelbstBewertung;
@@ -17,11 +16,11 @@ use Lehrberechtigung\Domain\LehrberechtigungsUmfang;
 use Lehrberechtigung\Domain\Service\LehrberechtigungValidatorService;
 use LLPCommon\Domain\Zeitsemester;
 use Person\Domain\PersonId;
-use Studi\Domain\StudiHash;
+use Studi\Domain\LoginHash;
 
 trait SelbstBewerungsHandlerTrait
 {
-   /**
+    /**
      * @var SelbstBewertungsRepository
      */
     private $selbstBewertungsRepository;
@@ -32,19 +31,19 @@ trait SelbstBewerungsHandlerTrait
 
     /** @param SelbstBewertungErhoehenCommand $command */
     public function handle(DomainCommand $command): void {
-        $studiHash = StudiHash::fromString($command->studiHash);
+        $loginHash = LoginHash::fromString($command->loginHash);
         $selbstBewertungsTyp = SelbstBewertungsTyp::fromInt($command->selbstBewertungsTyp);
         $epa = EPA::fromInt($command->epaId);
 
-        $selbstBewertung = $this->selbstBewertungsRepository->latestByStudiUndTyp(
-            $studiHash, $selbstBewertungsTyp
+        $selbstBewertung = $this->selbstBewertungsRepository->latestByStudiUndTypUndEpa(
+            $loginHash, $selbstBewertungsTyp, $epa
         );
         if ($selbstBewertung) {
             $this->aendereBewertung($selbstBewertung);
         } else {
             $neueBewertung = SelbstBewertung::create(
                 $this->selbstBewertungsRepository->nextIdentity(),
-                $studiHash,
+                $loginHash,
                 EPABewertung::fromValues(1, $epa),
                 $selbstBewertungsTyp
             );
