@@ -59,25 +59,27 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        [$dateiPfad, $datum, $delimiter, $encoding, $hasHeaders] = $this->getParameters($input);
+        $importOptionen = $this->getParameters($input);
         $dateiPfadLzModule = $input->getArgument("dateiPfadLzModule");
         $delimiterLzModule = $input->getArgument("delimiterLzModule") ?: ";";
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
-            $dateiPfad, $delimiter, $hasHeaders, $encoding, $datum,
+            $importOptionen->dateiPfad, $importOptionen->delimiter,
+            $importOptionen->hasHeaders, $importOptionen->encoding,
+            $importOptionen->pruefungsPeriode,
             );
 
         $lzModulDaten = $this->chariteLernzielModulImportCSVService->getLernzielZuModulData(
-            $dateiPfadLzModule, $delimiterLzModule, $hasHeaders, $encoding
+            $dateiPfadLzModule, $delimiterLzModule, $importOptionen->hasHeaders, $importOptionen->encoding
         );
 
         $output->writeln(count($mcPruefungsDaten) . " Zeilen gelesen. ");
         $output->writeln("");
         $output->writeln("Persistiere Module...");
 
-        $this->chariteMCPruefungLernzielModulPersistenz->persistiereMcModulZuordnung(
-            $mcPruefungsDaten, $lzModulDaten
-        );
+//        $this->chariteMCPruefungLernzielModulPersistenz->persistiereMcModulZuordnung(
+//            $mcPruefungsDaten, $lzModulDaten
+//        );
 
         $output->writeln("");
         $output->writeln("Persistiere Fächer...");

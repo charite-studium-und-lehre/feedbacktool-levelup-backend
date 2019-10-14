@@ -41,9 +41,9 @@ class StudiStammdatenPersistenzService
 
     public function persistiereStudiListe($studiDataObjectsToImport) {
 
+        $this->neueStudisInternHinzufuegenOderUpdate($studiDataObjectsToImport);
         $this->loescheObsoleteStudis($studiDataObjectsToImport);
 
-        $this->neueStudisInternHinzufuegenOderUpdate($studiDataObjectsToImport);
 
     }
 
@@ -103,6 +103,7 @@ class StudiStammdatenPersistenzService
                     $studiDataObject)
                 ) {
                     $this->studiInternRepository->delete($existierenderStudiIntern);
+                    $this->studiInternRepository->flush();
                     $studi = $this->studiRepository->byStudiHash($existierenderStudiIntern->getStudiHash());
                     if ($studi) {
                         $this->studiRepository->delete($studi);
