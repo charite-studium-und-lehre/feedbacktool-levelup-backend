@@ -39,6 +39,12 @@ abstract class AbstractCSVImportService
                 continue;
             }
             if ($hasHeaders) {
+                if (count($headers) != count($dataLineFixed)) {
+                    dump($headers);
+                    dump($dataLineFixed);
+                    echo "\nZeile: $counter";
+                    throw new \Exception("Header-Anzahl passt nicht zu Daten!");
+                }
                 $dataLineFixed = array_combine($headers, $dataLineFixed);
             }
 

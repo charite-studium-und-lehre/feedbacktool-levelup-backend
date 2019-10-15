@@ -22,6 +22,20 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
         foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
             as $dataLine) {
 
+            if (isset($dataLine["matrikel"])) {
+                $matrikel = $dataLine["matrikel"];
+            } elseif (isset($dataLine["matr"])) {
+                $matrikel = $dataLine["matr"];
+            } elseif (isset($dataLine["mat"])) {
+                $matrikel = $dataLine["mat"];
+            } else {
+                throw new Exception("Keine Spalte 'matrikel' gefunden!");
+            }
+            if (!$matrikel) {
+                continue;
+            }
+            $matrikelnummer = Matrikelnummer::fromInt((int) $matrikel);
+
             $ergebnisse = [];
             foreach ($dataLine as $key => $dataCell) {
                 $ergebnis = str_replace(",", ".", $dataCell);
@@ -29,6 +43,10 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                         || in_array($key, ["Skala1_erg", "Skala2_erg"]))
                     && is_numeric($ergebnis)
                     && $ergebnis > 0) {
+                    if ($ergebnis > 100) {
+                        echo "Fehler bei Matr. $matrikel: Prozentzahl ist > 100: $ergebnis -> Überspringe\n";
+                        continue;
+                    }
 
                     if ($key == "Skala1_erg") {
                         $key = "Sk1";
@@ -41,21 +59,20 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                 }
             }
 
-            if (isset($dataLine["matrikel"])) {
-                $matrikel = $dataLine["matrikel"];
-            } elseif (isset($dataLine["matr"])) {
-                $matrikel = $dataLine["matr"];
-            } else {
-                throw new Exception("Keine Spalte 'matrikel' gefunden!");
-            }
-            $matrikelnummer = Matrikelnummer::fromInt((int) $matrikel);
+
             $resultLine = [
                 "matrikelnummer" => $matrikelnummer,
                 "ergebnisse"     => $ergebnisse,
             ];
 
-            $resultLine["fach"] = !empty($dataLine["Fach"])
-                ? array_flip(FachCodeKonstanten::STATION_VK_KURZEL)[$dataLine["Fach"]]
+            $fach = isset($dataLine["Fach"]) ? $dataLine["Fach"] : NULL;
+            if (!$fach) {
+                $fach = isset($dataLine["HIS_Nr"]) ? $dataLine["HIS_Nr"] : NULL;
+            }
+            $fach = explode(" 1", $fach)[0];
+            $fach = explode(" 2", $fach)[0];
+            $resultLine["fach"] = $fach
+                ? FachCodeKonstanten::STATION_VK_KURZEL[$fach]
                 : "";
 
             $resultLine["datum"] = !empty($dataLine["Datum"])

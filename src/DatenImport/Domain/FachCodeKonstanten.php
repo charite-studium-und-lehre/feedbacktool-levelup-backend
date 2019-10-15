@@ -120,12 +120,24 @@ class FachCodeKonstanten
     ];
 
     public const STATION_VK_KURZEL = [
-        'ana'    => 'Anatomie',
-        'bioch'  => 'Biochemie',
-        'medSoz' => 'Medizinische Soziologie',
-        'bio'    => 'Biologie',
-        'medPsy' => 'medizinische Psychologie',
-        'sozMed' => 'Sozialmedizin',
+        'Anatomie'                 => 'ana',
+        'Biochemie'                => 'bioch',
+        'Medizinische Soziologie'  => 'medSoz',
+        'Biologie'                 => 'bio',
+        'medizinische Psychologie' => 'medPsy',
+        'Sozialmedizin'            => 'sozMed',
+
+        'Physiologie' => 'phys',
+
+        'Med.Psych/Anatomie/Biologie/Med.Soz./Sozialmedizin' => 'div',
+        'NA' => 'div',
+
+        '1291_Bio'       => 'bioch',
+        '1292_Bio'       => 'bio',
+        '1292_Med_Psych' => 'medPsy',
+        '1292_Med_Soz'   => 'medSoz',
+        '1292_Anatomie'  => 'ana',
+        '1292_Sozialmed' => 'sozMed',
 
     ];
 }

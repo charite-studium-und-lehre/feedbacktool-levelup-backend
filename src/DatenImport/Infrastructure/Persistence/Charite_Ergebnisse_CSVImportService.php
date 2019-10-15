@@ -33,12 +33,18 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             }
             $punktzahl = Punktzahl::fromFloat($dataLine["richtig"]);
 
-            if (!isset($dataLine["Kl_Nr"]) && !isset($dataLine["Kl_nr"])) {
-                echo "\nKl_Nr nicht gesetzt.";
+            $pruefungSemester = isset($dataLine["Kl_Nr"])
+                ? $dataLine["Kl_Nr"]
+                : (isset($dataLine["Kl_nr"])
+                    ? $dataLine["Kl_nr"]
+                    : $dataLine["Klausur"]
+                );
+            if (!$pruefungSemester) {
+                echo "\nKl_Nr oder Klausur nicht gesetzt.";
                 print_r($dataLine);
                 continue;
             }
-            $pruefungSemester = isset($dataLine["Kl_Nr"]) ? $dataLine["Kl_Nr"] : $dataLine["Kl_nr"];
+
             if ($pruefungSemester == "3D-MC") {
                 continue;
             } else {
@@ -65,7 +71,12 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $fragenNr;
 
             $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdString);
-            $lzNummer = is_numeric($dataLine["LZNummer"]) ? $dataLine["LZNummer"] : NULL;
+            $lzNummer = isset($dataLine["LZNummer"]) ? $dataLine["LZNummer"] : $dataLine["LZnummer"];
+            if (is_numeric($lzNummer)) {
+                $lzNummer = (int) $lzNummer;
+            } else {
+                $lzNummer = NULL;
+            }
 
             $fragenAnzahl = is_numeric($dataLine["fr_anz"]) ? $dataLine["fr_anz"] : NULL;
             $gesamtErreichtePunktzahl = is_numeric($dataLine["punkte"]) ? $dataLine["punkte"] : NULL;
