@@ -3,6 +3,7 @@
 namespace StudiPruefung\Infrastructure\Api\Controller;
 
 use Pruefung\Domain\PruefungsRepository;
+use Studi\Domain\Studi;
 use StudiPruefung\Domain\Service\StudiPruefungErgebnisService;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +32,9 @@ class StudiPruefungApiController extends AbstractController
      */
     public function jsonStudiPruefungAction(StudiPruefungErgebnisService $ergebnisService) {
         $eingeloggterStudi = $this->getUser();
+        if (!$eingeloggterStudi instanceof Studi) {
+            return new JsonResponse(["pruefungen" => []], 200);
+        }
         $studiPruefungen = $this->studiPruefungsRepository->allByStudiHash(
             $eingeloggterStudi->getStudiHash()
         );
@@ -54,9 +58,7 @@ class StudiPruefungApiController extends AbstractController
             ];
         }
 
-        return new JsonResponse(
-            ["pruefungen" => $returnArray]
-        );
+        return new JsonResponse(["pruefungen" => $returnArray], 200);
 
     }
 
