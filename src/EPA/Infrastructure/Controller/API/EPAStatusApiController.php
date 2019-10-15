@@ -7,19 +7,30 @@ use EPA\Application\Command\SelbstBewertungErhoehenCommand;
 use EPA\Application\Command\SelbstBewertungVermindernCommand;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
+use Studi\Domain\Service\LoginHashCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EPAStatusApiController extends AbstractController
+class EPAStatusApiController extends BaseController
 {
+    /** @var LoginHashCreator */
+    private $loginHashCreator;
+
+    public function __construct(LoginHashCreator $loginHashCreator) {
+        $this->loginHashCreator = $loginHashCreator;
+    }
+
     /**
      * @Route("/api/epa/meine", name="meine_epas")
      */
     public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
-        $data = $epasFuerStudiService->getEpaStudiData($this->getUser()->getLoginHash());
+        $data = $epasFuerStudiService->getEpaStudiData(
+            $this->getCurrentUserLoginHash($this->loginHashCreator)
+        );
+
         return new JsonResponse($data, 200);
     }
 
@@ -27,8 +38,7 @@ class EPAStatusApiController extends AbstractController
      * @Route("/api/epa/selbstbewertung/erhoehen", name="api_selbstbewertung_erhoehen")
      * @Route("/api/epa/meine", name="api_selbstbewertung_erhoehen")
      */
-    public function erhoeheSelbstbewertungAction(Request $request, CommandBus $commandBus, $vermindern=FALSE) {
-        $eingeloggterStudi = $this->getUser();
+    public function erhoeheSelbstbewertungAction(Request $request, CommandBus $commandBus, $vermindern = FALSE) {
         $epaId = $request->get("epaID");
         if ($request->get("typ") == "gemacht") {
             $typ = SelbstBewertungsTyp::GEMACHT;
@@ -44,7 +54,7 @@ class EPAStatusApiController extends AbstractController
             $command = new SelbstBewertungErhoehenCommand();
         }
 
-        $command->studiHash = $eingeloggterStudi->getStudiHash();
+        $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
         $command->selbstBewertungsTyp = $typ;
         $command->epaId = $epaId;
 

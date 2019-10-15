@@ -61,3 +61,32 @@ bin/console levelup:importFile:stationen ~/prfg/Stationenprüfung\ und\ OSCE\ 9\
 bin/console levelup:importFile:studi /home/studidaten/StudisStammdaten.csv
 bin/console levelup:importFile:StudiMeilenstein /home/studidaten/StudisStammdaten.csv
 bin/console levelup:importFile:mcCSVWertung
+
+
+
+
+
+
+
+
+
+
+
+
+
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_Wise18_19_T1_qs.xlsx.csv 201821
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_WiSe1819_T2_qs.xlsx.csv 201822
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe18_T1_qs.xlsx.csv 201811
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe18_T2_qs.xlsx.csv 201812
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_WiSe17_18_T1_qs.xlsx.csv 201721
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_Wise17_18_T2_qs.xlsx.csv 201722
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe17_T1_qs.xlsx.csv 201711
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe17_T2_qs.xlsx.csv 201712
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_WiSe16_17_T1_qs.xlsx.csv 201621
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_WiSe16_17_T2_qs.xlsx.csv 201622
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe16_T1_qs.xlsx.csv 201611
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe16_T2_qs.xlsx.csv 201612
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_WiSe15_16_T1_qs.xlsx.csv 201521
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_WiSe15_16_T2_qs.xlsx.csv 201522
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe15_T1_qs.xlsx.csv 201511
+bin/console levelup:importFile:mcCSVWertung /data01/uploadData/MC/gesamtergebnisse_SoSe15_T2_qs.xlsx.csv 201512
