@@ -164,4 +164,15 @@ class PruefungsFormat implements DDDValueObject
         return $this->isPTM();
     }
 
-}
+    public function getFormatAbstrakt(): string {
+        if ($this->isStation()) {
+            return "station";
+        } elseif ($this->isPTM()) {
+            return "ptm";
+        } elseif ($this->isMc()) {
+            return "mc";
+        }
+        throw new \Exception("Format nicht bekannt: " . $this->value);
+    }
+
+    }

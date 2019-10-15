@@ -23,5 +23,8 @@ interface StudiPruefungsRepository extends DDDRepository, FlushableRepository
     /** @return StudiPruefung[] */
     public function allByStudiHash(StudiHash $studiHash): array;
 
+    /** @return StudiPruefung[] */
+    public function allByPruefungsId(PruefungsId $pruefungsId): array;
+
     public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung;
 }

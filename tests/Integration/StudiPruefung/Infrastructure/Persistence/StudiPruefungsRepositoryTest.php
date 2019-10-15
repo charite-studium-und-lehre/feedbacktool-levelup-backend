@@ -98,6 +98,13 @@ final class StudiPruefungsRepositoryTest extends DbRepoTestCase
         $this->assertCount(2, $studiPruefungen);
     }
 
+    /** * @dataProvider getAllRepositories */
+    public function testAllByPruefungsId(StudiPruefungsRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $studiPruefungen = $repo->allByPruefungsId(PruefungsId::fromString(7890));
+        $this->assertCount(1, $studiPruefungen);
+    }
+
     protected function clearDatabase(): void {
         // use $this->deleteIdsFromDB or $this->emptyRepositoryWithTruncate()
         $this->emptyRepositoryWithTruncate();

@@ -22,6 +22,33 @@ class PunktWertung extends AbstractWertung
     }
 
     /**
+     * @param PunktWertung[] $wertungen
+     * @return PunktWertung
+     */
+    public static function getDurchschnittsWertung(array $wertungen) {
+        $punktzahlen = [];
+        $ersteWertung = $wertungen[0];
+
+        foreach ($wertungen as $wertung) {
+            if (!$wertung instanceof PunktWertung) {
+                throw new \Exception("Muss Punktwertung sein!" . get_class($wertung));
+            }
+            $punktzahlen[] = $wertung->getPunktzahl()->getValue();
+        }
+
+        return PunktWertung::fromPunktzahlUndSkala(
+
+            Punktzahl::fromFloat(
+                round(
+                    self::getDurchschnittAusZahlen($punktzahlen),
+                    2
+                ),
+                ),
+            $ersteWertung->getSkala()
+        );
+    }
+
+    /**
      * @return float
      * @see Wertung::getRelativeWertung()
      */

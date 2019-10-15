@@ -43,7 +43,17 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
         return $this->doctrineRepo->findBy(
             [
                 "studiHash" => $studiHash,
-            ]
+            ],
+            ["pruefungsId.id" => "DESC"]
+        );
+    }
+
+    /** @return StudiPruefung[] */
+    public function allByPruefungsId(PruefungsId $pruefungsId): array {
+        return $this->doctrineRepo->findBy(
+            [
+                "pruefungsId.id" => $pruefungsId,
+            ],
         );
     }
 }

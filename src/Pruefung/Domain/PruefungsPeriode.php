@@ -59,6 +59,7 @@ class PruefungsPeriode implements DDDValueObject
         }
 
         return $returnString;
+
     }
 
     public function toInt(): int {
@@ -70,4 +71,14 @@ class PruefungsPeriode implements DDDValueObject
 
         return $value;
     }
+
+    public function getPeriodeBeschreibung(): string {
+        $returnString = $this->zeitsemester->getStandardString();
+        if ($this->unterPeriode) {
+            $returnString .= " Prüfungszeitraum " . (string) $this->unterPeriode;
+        }
+
+        return $returnString;
+    }
+
 }

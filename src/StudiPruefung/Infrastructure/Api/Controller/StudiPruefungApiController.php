@@ -3,6 +3,7 @@
 namespace StudiPruefung\Infrastructure\Api\Controller;
 
 use Pruefung\Domain\PruefungsRepository;
+use StudiPruefung\Domain\Service\StudiPruefungErgebnisService;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +29,7 @@ class StudiPruefungApiController extends AbstractController
     /**
      * @Route("/api/pruefung")
      */
-    public function jsonStudiPruefungAction() {
+    public function jsonStudiPruefungAction(StudiPruefungErgebnisService $ergebnisService) {
         $eingeloggterStudi = $this->getUser();
         $studiPruefungen = $this->studiPruefungsRepository->allByStudiHash(
             $eingeloggterStudi->getStudiHash()
@@ -36,15 +37,20 @@ class StudiPruefungApiController extends AbstractController
         $returnArray = [];
         foreach ($studiPruefungen as $studiPruefung) {
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-            $code = $pruefung->getFormat()->getCode();
-            $datum = $pruefung->getPruefungsPeriode();
-            $name = $pruefung->getFormat()->getTitel();
+            $pruefungsPeriode = $pruefung->getPruefungsPeriode();
+            $name = $pruefung->getFormat()->getTitel() . " " . $pruefungsPeriode->getPeriodeBeschreibung();
             $returnArray[] = [
-                "typ"              => $code,
-                "studiPruefungsId" => $studiPruefung->getId(),
                 "name"             => $name,
-                "datum"            => $datum->toIsoString(),
-                "ergebnis"         => "TODO",
+                "typ"              => $pruefung->getFormat()->getCode(),
+                "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
+                "studiPruefungsId" => $studiPruefung->getId()->getValue(),
+                "periodeCode"      => $pruefungsPeriode->toInt(),
+                "periodeText"      => $pruefungsPeriode->toInt(),
+                "ergebnis"         =>
+                    $ergebnisService->getErgebnisAlsJsonArray(
+                        $pruefung,
+                        $studiPruefung->getId()
+                    ),
             ];
         }
 
