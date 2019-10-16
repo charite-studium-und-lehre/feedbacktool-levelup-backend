@@ -10,8 +10,8 @@ bin/console levelup:importFile:lernzielFaecher $BASE_LEVELUP_IMPORT_DIR/LEVELUP-
 
 ### STUDIS ###
 
-bin/console levelup:importFile:studi $BASE_LEVELUP_IMPORT_DIR/StudisStammdaten.csv
-bin/console levelup:importFile:StudiMeilenstein $BASE_LEVELUP_IMPORT_DIR/StudisStammdaten.csv
+#bin/console levelup:importFile:studi $BASE_LEVELUP_IMPORT_DIR/StudisStammdaten.csv
+#bin/console levelup:importFile:StudiMeilenstein $BASE_LEVELUP_IMPORT_DIR/StudisStammdaten.csv
 
 ### MC ###
 
@@ -56,7 +56,6 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT35\ 2016-11-24.csv 20162
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT36\ 2017-06-07.csv 20171
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT37\ 2017-11-29.csv 20172
-bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT37\ 2017-11-29.csv^C0172
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT38\(gesamt\).csv 20181
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT39_ws_1819.csv 20182
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT40\ 2019-06-03.csv 20191
