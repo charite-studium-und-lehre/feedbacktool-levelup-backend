@@ -118,22 +118,32 @@ class SSOController extends AbstractController
         return new Response("OK", 200);
     }
 
+    /** @Route("/redirectToSSO", name="redirectToSSO") */
+    public function redirectToSSO() {
+        return $this->redirectToRoute("login");
+    }
+
     /** @Route("/logout", name="logout") */
-    public function logoutAction(Session $session, UserSwitcher $userSwitcher) {
+    public function ssoLogoutAction(ChariteSSOService $chariteSSOService, UserSwitcher $userSwitcher,
+                                    TokenStorageInterface $storage) {
         $userSwitcher->unsetUserSwitched();
-        $session->set("eingeloggterUser", NULL);
+        $this->logoutUser($storage);
+
+        // Service macht eine Weiterleitung
+        $chariteSSOService->signOut();
+    }
+
+    /** @Route("/levelupLogout", name="levelupLogout") */
+    public function logoutAction(Session $session, UserSwitcher $userSwitcher, TokenStorageInterface $storage) {
+        $userSwitcher->unsetUserSwitched();
+        $this->logoutUser($storage);
 
         return new Response("OK", 200);
     }
 
-    /** @Route("/ssoLogout", name="apiLogout") */
-    public function ssoLogoutAction(ChariteSSOService $chariteSSOService) {
-        $chariteSSOService->signOut(NULL);
-    }
-
-    /** @Route("/redirectToSSO", name="redirectToSSO") */
-    public function redirectToSSO() {
-        return $this->redirectToRoute("login");
+    /** @Route("/redirectToLogout", name="redirectToLogout") */
+    public function redirectToLogout() {
+        return $this->redirectToRoute("/logout");
     }
 
     /** @Route("/switchToFrontend", name="switchToFrontend") */
@@ -193,6 +203,10 @@ class SSOController extends AbstractController
 
     private function loginUser(TokenStorageInterface $tokenStorage, LoginUser $loginUser): void {
         $token = new UsernamePasswordToken($loginUser, [], "main", $loginUser->getRoles());
+        $tokenStorage->setToken($token);
+    }
+    private function logoutUser(TokenStorageInterface $tokenStorage): void {
+        $token = new UsernamePasswordToken(NULL, [], "main", []);
         $tokenStorage->setToken($token);
     }
 
