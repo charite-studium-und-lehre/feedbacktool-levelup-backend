@@ -43,6 +43,7 @@ class ChariteLDAPUserProvider implements UserProviderInterface
                          "franzann",
                          "remdeh",
                          "linkea",
+                         "domansmo",
                      ]
         )) {
             $loginUser = $loginUser->macheZuAdmin();
