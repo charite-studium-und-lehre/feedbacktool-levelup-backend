@@ -67,6 +67,9 @@ class WertungType extends Type
 
     /** @return integer */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
+        if (!$value) {
+            return NULL;
+        }
         if (!$value instanceof Wertung) {
             throw new Exception("Wertung muss Interface 'Wertung' implementieren!");
         }

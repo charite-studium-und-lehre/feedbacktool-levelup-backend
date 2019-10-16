@@ -25,10 +25,12 @@ class Punktzahl
                            self::MAX_PUNKTZAHL,
                            self::INVALID_WERT . $punktzahl
         );
-        Assertion::eq(0,
-                      ((int) ($punktzahl * (10 ** self::NACHKOMMASTELLEN))) -
-                      ($punktzahl * (10 ** self::NACHKOMMASTELLEN)),
-                      self::INVALID_WERT_ZU_GENAU . $punktzahl
+        $nachkommastellenArray = explode(".", (string) $punktzahl);
+        $anzahlNachkommastellen = isset($nachkommastellenArray[1]) ? strlen($nachkommastellenArray[1]) : 0;
+        Assertion::max(
+            $anzahlNachkommastellen,
+            2,
+            self::INVALID_WERT_ZU_GENAU . $anzahlNachkommastellen . "-" . $punktzahl
         );
 
         $object = new self();

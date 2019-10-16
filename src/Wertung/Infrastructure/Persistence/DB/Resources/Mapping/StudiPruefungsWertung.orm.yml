@@ -12,3 +12,6 @@ Wertung\Domain\StudiPruefungsWertung:
     bestehensGrenze:
       type: wertung
       nullable: true
+    kohortenWertung:
+      type: wertung
+      nullable: true

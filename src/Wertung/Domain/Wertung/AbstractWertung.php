@@ -33,7 +33,7 @@ abstract class AbstractWertung implements Wertung
     /**
      * @param float[] $zahlen
      */
-    protected function getDurchschnittAusZahlen(array $zahlen): float {
+    protected static function getDurchschnittAusZahlen(array $zahlen): float {
         return array_sum ($zahlen) / count($zahlen);
     }
 

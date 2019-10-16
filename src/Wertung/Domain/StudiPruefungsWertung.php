@@ -20,15 +20,20 @@ class StudiPruefungsWertung implements DDDEntity
     /** @var ?Wertung */
     private $bestehensGrenze;
 
+    /** @var ?Wertung */
+    private $kohortenWertung;
+
     public static function create(
         StudiPruefungsId $studiPruefungsId,
         Wertung $gesamtErgebnis,
-        ?Wertung $bestehensGrenze
+        ?Wertung $bestehensGrenze = NULL,
+        ?Wertung $kohortenWertung = NULL
     ): self {
         $object = new self();
         $object->studiPruefungsId = $studiPruefungsId;
         $object->gesamtErgebnis = $gesamtErgebnis;
         $object->bestehensGrenze = $bestehensGrenze;
+        $object->kohortenWertung = $kohortenWertung;
 
         return $object;
     }
@@ -52,4 +57,14 @@ class StudiPruefungsWertung implements DDDEntity
     public function setBestehensGrenze($bestehensGrenze): void {
         $this->bestehensGrenze = $bestehensGrenze;
     }
+
+    public function getKohortenWertung(): ?Wertung {
+        return $this->kohortenWertung;
+    }
+
+    public function setKohortenWertung(?Wertung $kohortenWertung = NULL): void {
+        $this->kohortenWertung = $kohortenWertung;
+    }
+
+
 }

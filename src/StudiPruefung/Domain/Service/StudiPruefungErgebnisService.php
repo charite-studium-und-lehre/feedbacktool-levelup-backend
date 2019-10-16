@@ -31,16 +31,6 @@ class StudiPruefungErgebnisService
     }
 
     public function getErgebnisAlsJsonArray(Pruefung $pruefung, StudiPruefungsId $studiPruefungsId): array {
-        $studiPruefung = $this->studiPruefungsRepository->byId($studiPruefungsId);
-        $alleStudiPruefungen = $this->studiPruefungsRepository->allByPruefungsId($studiPruefung->getPruefungsId());
-        $kohortenWertungen = [];
-        foreach ($alleStudiPruefungen as $studiPruefung) {
-            $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());
-            if (!$pruefungsWertung) {
-                continue;
-            }
-            $kohortenWertungen[] = $pruefungsWertung->getGesamtErgebnis();
-        }
         $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefungsId);
         if (!$pruefungsWertung){
             return [];
@@ -54,8 +44,9 @@ class StudiPruefungErgebnisService
                     ->getSkala()->getMaxPunktzahl()->getValue(),
                 "bestehensGrenze" => $pruefungsWertung->getBestehensGrenze()
                     ->getPunktWertung()->getPunktzahl()->getValue(),
-                "durchschnitt"    => PunktWertung::getDurchschnittsWertung($kohortenWertungen)
-                    ->getPunktzahl()->getValue(),
+                "durchschnitt"    => $pruefungsWertung->getKohortenWertung()
+                    ? $pruefungsWertung->getKohortenWertung()->getPunktWertung()->getPunktzahl()->getValue()
+                    : NULL,
             ];
         } elseif ($pruefung->getFormat()->isStation()) {
             return ["TODO" => "TODO"];
