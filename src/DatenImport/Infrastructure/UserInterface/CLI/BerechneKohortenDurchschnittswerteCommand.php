@@ -8,9 +8,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BerechneKohortenDurchschnisswerteCommand extends Command
+class BerechneKohortenDurchschnittswerteCommand extends Command
 {
-    protected static $defaultName = 'levelup:importFile:berechneKohortenDurchschnisswerte';
+    protected static $defaultName = 'levelup:importFile:berechneKohortenDurchschnittswerte';
 
     // the name of the command (the part after "bin/console")
 

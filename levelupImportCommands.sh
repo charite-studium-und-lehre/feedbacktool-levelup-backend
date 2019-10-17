@@ -3,6 +3,8 @@ if [ -z "$BASE_LEVELUP_IMPORT_DIR" ]; then
   export BASE_LEVELUP_IMPORT_DIR=~/prfg/
 fi;
 
+cd `dirname $0`
+
 echo "--- START ---"
 date;
 
@@ -139,7 +141,7 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 #bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
 
 # berechne Kohorten-Mittelwerte
-bin/console levelup:importFile:berechneKohortenDurchschnisswerte
+bin/console levelup:importFile:berechneKohortenDurchschnittsswerte
 
 date;
 echo "--- ENDE ---"
