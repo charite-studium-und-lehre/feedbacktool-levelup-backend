@@ -14,6 +14,8 @@ use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
+use Wertung\Domain\StudiPruefungsWertung;
+use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
 
@@ -35,18 +37,23 @@ class ChariteStationenPruefungPersistenzService
     /** @var StudiInternRepository */
     private $studiInternRepository;
 
+    /** @var StudiPruefungsWertungRepository */
+    private $studiPruefungsWertungRepository;
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
-        StudiInternRepository $studiInternRepository
+        StudiInternRepository $studiInternRepository,
+        StudiPruefungsWertungRepository $studiPruefungsWertungRepository
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->pruefungsItemRepository = $pruefungsItemRepository;
         $this->studiInternRepository = $studiInternRepository;
+        $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
     /** @param StudiIntern[] $studiInternArray */
@@ -62,7 +69,6 @@ class ChariteStationenPruefungPersistenzService
             }
             $studiHash = $studiIntern->getStudiHash();
             $fach = $dataLine["fach"];
-            $datum = $dataLine["datum"];
 
             $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
                 $studiHash,
@@ -78,6 +84,7 @@ class ChariteStationenPruefungPersistenzService
                 $this->studiPruefungsRepository->flush();
             }
 
+            $einzelWertungen = [];
             foreach ($ergebnisse as $ergebnisKey => $ergebnis) {
                 $itemCode = $fach . "-" . $ergebnisKey;
 
@@ -103,6 +110,7 @@ class ChariteStationenPruefungPersistenzService
                 $prozentWertung = ProzentWertung::fromProzentzahl(
                     Prozentzahl::fromFloatRunden($ergebnis)
                 );
+                $einzelWertungen[] = $prozentWertung;
 
                 if (!$itemWertung
                     || !$itemWertung->getWertung()->equals($prozentWertung)) {
@@ -117,12 +125,38 @@ class ChariteStationenPruefungPersistenzService
                     );
                     $this->itemWertungsRepository->add($itemWertung);
                 }
-
+            }
+            if ($einzelWertungen) {
+                $this->createOrUpdateGesamtWertung($studiPruefung, $einzelWertungen);
             }
         }
         $this->pruefungsItemRepository->flush();
         $this->itemWertungsRepository->flush();
 
+    }
+
+    private function createOrUpdateGesamtWertung(
+        StudiPruefung $studiPruefung,
+        array $einzelWertungen
+    ): void {
+        if (!$studiPruefung) {
+            return;
+        }
+        $gesamtWertung = ProzentWertung::getDurchschnittsWertung($einzelWertungen);
+
+        $studiPruefungsWertung = $this->studiPruefungsWertungRepository
+            ->byStudiPruefungsId($studiPruefung->getId());
+
+        if (!$studiPruefungsWertung) {
+            $studiPruefungsWertung = StudiPruefungsWertung::create(
+                $studiPruefung->getId(),
+                $gesamtWertung
+            );
+            $this->studiPruefungsWertungRepository->add($studiPruefungsWertung);
+        } else {
+            $studiPruefungsWertung->setGesamtErgebnis($gesamtWertung);
+        }
+        $this->studiPruefungsWertungRepository->flush();
     }
 
 }

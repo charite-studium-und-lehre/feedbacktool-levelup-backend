@@ -6,8 +6,11 @@ use Pruefung\Domain\PruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\StudiPruefungsWertungRepository;
+use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\PunktWertung;
+use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
+/** @TODO Tests */
 class StudiPruefungDurchschnittPersistenzService
 {
     /** @var ItemWertungsRepository */
@@ -42,6 +45,10 @@ class StudiPruefungDurchschnittPersistenzService
         }
         if ($kohortenWertungen && ($kohortenWertungen[0] instanceof PunktWertung)) {
             $kohortenWertung = PunktWertung::getDurchschnittsWertung($kohortenWertungen);
+        } elseif ($kohortenWertungen && ($kohortenWertungen[0] instanceof ProzentWertung)) {
+            $kohortenWertung = ProzentWertung::getDurchschnittsWertung($kohortenWertungen);
+        } elseif ($kohortenWertungen && ($kohortenWertungen[0] instanceof RichtigFalschWeissnichtWertung)) {
+            $kohortenWertung = RichtigFalschWeissnichtWertung::getDurchschnittsWertung($kohortenWertungen);
         }
         foreach ($alleStudiPruefungen as $studiPruefung) {
             $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());

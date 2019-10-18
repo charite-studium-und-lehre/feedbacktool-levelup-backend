@@ -19,6 +19,8 @@ use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
+use Wertung\Domain\StudiPruefungsWertung;
+use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\Punktzahl;
 use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
@@ -49,6 +51,9 @@ class CharitePTMPersistenzService
     /** @var ClusterZuordnungsRepository */
     private $clusterZuordnungsRepository;
 
+    /** @var StudiPruefungsWertungRepository */
+    private $studiPruefungsWertungRepository;
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
@@ -56,7 +61,8 @@ class CharitePTMPersistenzService
         PruefungsItemRepository $pruefungsItemRepository,
         StudiInternRepository $studiInternRepository,
         ClusterRepository $clusterRepository,
-        ClusterZuordnungsRepository $clusterZuordnungsRepository
+        ClusterZuordnungsRepository $clusterZuordnungsRepository,
+        StudiPruefungsWertungRepository $studiPruefungsWertungRepository
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
@@ -65,6 +71,7 @@ class CharitePTMPersistenzService
         $this->studiInternRepository = $studiInternRepository;
         $this->clusterRepository = $clusterRepository;
         $this->clusterZuordnungsRepository = $clusterZuordnungsRepository;
+        $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
     public function persistierePruefung($ptmPruefungsDaten, PruefungsId $pruefungsId) {
@@ -84,9 +91,18 @@ class CharitePTMPersistenzService
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
             }
             foreach ($studiErgebnis as $clusterTypValue => $clusterTypErgebnis) {
-                foreach ($clusterTypErgebnis as $clusterPTMCode => $bewertungsTyp) {
+                foreach ($clusterTypErgebnis as $clusterPTMCode => $bewertungsTypArray) {
 
-                    $this->createOrUpdateWertung($matrikelnummer, $clusterPTMCode, $bewertungsTyp, $pruefungsId);
+                    if ($clusterTypValue == "gesamtergebnis") {
+                        $this->createOrUpdateGesamtWertung(
+                            $matrikelnummerVO,
+                            $clusterTypErgebnis["all"],
+                            $pruefungsId
+                        );
+                        continue;
+                    }
+
+                    $this->createOrUpdateWertung($matrikelnummerVO, $clusterPTMCode, $bewertungsTypArray, $pruefungsId);
                     if ($counter == 1) {
                         $this->createFachClusterZuordnung($clusterTypValue, $clusterPTMCode, $pruefungsId);
                     }
@@ -103,49 +119,30 @@ class CharitePTMPersistenzService
 
     }
 
-    private function createOrUpdateWertung($matrikelnummer, $clusterPTMCode, $bewertungsTyp, PruefungsId $pruefungsId):
+    private function createOrUpdateWertung(
+        Matrikelnummer $matrikelnummer,
+        $clusterPTMCode,
+        $bewertungsTypArray,
+        PruefungsId $pruefungsId
+    ):
     void {
-        $studiIntern = $this->studiInternRepository->byMatrikelnummer(
-            Matrikelnummer::fromInt($matrikelnummer)
-        );
-        if (!$studiIntern) {
-            return;
-        }
-        $studiHash = $studiIntern->getStudiHash();
-        $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
-            $studiHash,
-            $pruefungsId
-        );
+        $studiPruefung = $this->getOrAddStudiPruefung($pruefungsId, $matrikelnummer);
         if (!$studiPruefung) {
-            $studiPruefung = StudiPruefung::fromValues(
-                $this->studiPruefungsRepository->nextIdentity(),
-                $studiHash,
-                $pruefungsId
-            );
-            $this->studiPruefungsRepository->add($studiPruefung);
-            echo "+";
-            $this->studiPruefungsRepository->flush();
+            return;
         }
 
         $pruefungsItemId = $this->getPruefungsItemId($clusterPTMCode, $pruefungsId);
 
-        $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
-        if (!$pruefungsItem) {
-            $pruefungsItem = PruefungsItem::create(
-                $pruefungsItemId,
-                $pruefungsId
-            );
-            $this->pruefungsItemRepository->add($pruefungsItem);
-        }
+        $this->checkAddPruefungsItem($pruefungsId, $pruefungsItemId);
 
         $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefung->getId(),
             $pruefungsItemId
         );
         $richtigFalschWeissnichtWertung = RichtigFalschWeissnichtWertung::fromPunktzahlen(
-            Punktzahl::fromFloat($bewertungsTyp[SELF::TYP_RICHTIG]),
-            Punktzahl::fromFloat($bewertungsTyp[SELF::TYP_FALSCH]),
-            Punktzahl::fromFloat($bewertungsTyp[SELF::TYP_WEISSNICHT])
+            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_RICHTIG]),
+            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_FALSCH]),
+            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_WEISSNICHT])
         );
         if (!$itemWertung
             || !$itemWertung->getWertung()->equals($richtigFalschWeissnichtWertung)) {
@@ -220,6 +217,76 @@ class CharitePTMPersistenzService
             );
             $this->clusterZuordnungsRepository->addZuordnung($clusterZuordnung);
         }
+    }
+
+    private function getOrAddStudiPruefung(PruefungsId $pruefungsId, Matrikelnummer $matrikelnummer): ?StudiPruefung {
+        static $nichtGefundeneNummern = [];
+        $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
+        if (!$studiIntern) {
+            if (!in_array($matrikelnummer, $nichtGefundeneNummern)) {
+                echo "\nMatrikelnummer nicht gefunden: $matrikelnummer -> überspringe;";
+                $nichtGefundeneNummern[] = $matrikelnummer;
+            }
+            return NULL;
+        }
+        $studiHash = $studiIntern->getStudiHash();
+        $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId($studiHash, $pruefungsId);
+
+        if (!$studiPruefung) {
+            $studiPruefung = StudiPruefung::fromValues(
+                $this->studiPruefungsRepository->nextIdentity(),
+                $studiHash,
+                $pruefungsId
+            );
+            $this->studiPruefungsRepository->add($studiPruefung);
+            echo "+";
+            $this->studiPruefungsRepository->flush();
+        }
+
+        return $studiPruefung;
+    }
+
+    /**
+     * @param PruefungsId $pruefungsId
+     * @param PruefungsItemId $pruefungsItemId
+     */
+    private function checkAddPruefungsItem(PruefungsId $pruefungsId, PruefungsItemId $pruefungsItemId): void {
+        $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
+        if (!$pruefungsItem) {
+            $pruefungsItem = PruefungsItem::create(
+                $pruefungsItemId,
+                $pruefungsId
+            );
+            $this->pruefungsItemRepository->add($pruefungsItem);
+        }
+    }
+
+    private function createOrUpdateGesamtWertung(
+        Matrikelnummer $matrikelnummer,
+        array $bewertungsTypArray,
+        PruefungsId $pruefungsId
+    ): void {
+        $studiPruefung = $this->getOrAddStudiPruefung($pruefungsId, $matrikelnummer);
+        if (!$studiPruefung) {
+            return;
+        }
+
+        $richtigFalschWeissnichtWertung = RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_RICHTIG]),
+            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_FALSCH]),
+            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_WEISSNICHT])
+        );
+        $studiPruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());
+        if (!$studiPruefungsWertung) {
+            $studiPruefungsWertung = StudiPruefungsWertung::create(
+                $studiPruefung->getId(),
+                $richtigFalschWeissnichtWertung
+            );
+            $this->studiPruefungsWertungRepository->add($studiPruefungsWertung);
+        } else {
+            $studiPruefungsWertung->setGesamtErgebnis($richtigFalschWeissnichtWertung);
+        }
+        $this->studiPruefungsWertungRepository->flush();
     }
 
 }

@@ -141,7 +141,7 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 #bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
 
 # berechne Kohorten-Mittelwerte
-bin/console levelup:importFile:berechneKohortenDurchschnittsswerte
+bin/console levelup:importFile:berechneKohortenDurchschnittswerte
 
 date;
 echo "--- ENDE ---"

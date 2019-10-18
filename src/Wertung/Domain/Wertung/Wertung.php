@@ -19,4 +19,8 @@ interface Wertung extends DDDValueObject
 
     public function getProzentWertung(): ProzentWertung;
 
+    public function istRichtigFalschWeissnichtWertung(): bool;
+
+    public function getRichtigFalschWeissnichtWertung(): RichtigFalschWeissnichtWertung;
+
 }

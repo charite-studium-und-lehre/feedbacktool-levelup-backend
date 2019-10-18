@@ -42,6 +42,37 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
         return $object;
     }
 
+    /**
+     * @param RichtigFalschWeissnichtWertung[] $wertungen
+     * @return RichtigFalschWeissnichtWertung
+     */
+    public static function getDurchschnittsWertung(array $wertungen) {
+        $richtigWertungen = [];
+        $falschWertungen = [];
+        $weissnichtWertungen = [];
+
+        foreach ($wertungen as $wertung) {
+            if (!$wertung instanceof RichtigFalschWeissnichtWertung) {
+                throw new \Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
+            }
+            $richtigWertungen[] = $wertung->getPunktzahlRichtig()->getValue();
+            $falschWertungen[] = $wertung->getPunktzahlFalsch()->getValue();
+            $weissnichtWertungen[] = $wertung->getPunktzahlWeissnicht()->getValue();
+        }
+
+        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat(
+                round(self::getDurchschnittAusZahlen($richtigWertungen), 2),
+                ),
+            Punktzahl::fromFloat(
+                round(self::getDurchschnittAusZahlen($falschWertungen), 2),
+                ),
+            Punktzahl::fromFloat(
+                round(self::getDurchschnittAusZahlen($weissnichtWertungen), 2),
+                ),
+            );
+    }
+
     public function getPunktzahlRichtig(): Punktzahl {
         return $this->punktzahlRichtig;
     }

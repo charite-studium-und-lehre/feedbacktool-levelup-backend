@@ -30,6 +30,17 @@ abstract class AbstractWertung implements Wertung
         throw new \Exception("Ist keine Prozentwertung!");
     }
 
+    public function istRichtigFalschWeissnichtWertung(): bool {
+        return $this instanceof RichtigFalschWeissnichtWertung;
+    }
+
+    public function getRichtigFalschWeissnichtWertung(): RichtigFalschWeissnichtWertung {
+        if ($this->istRichtigFalschWeissnichtWertung()) {
+            return $this;
+        }
+        throw new \Exception("Ist keine RichtigFalschWeissnichtWertung!");
+    }
+
     /**
      * @param float[] $zahlen
      */

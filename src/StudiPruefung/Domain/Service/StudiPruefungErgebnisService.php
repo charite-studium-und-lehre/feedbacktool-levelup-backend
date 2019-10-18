@@ -7,7 +7,6 @@ use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\StudiPruefungsWertungRepository;
-use Wertung\Domain\Wertung\PunktWertung;
 
 class StudiPruefungErgebnisService
 {
@@ -32,7 +31,7 @@ class StudiPruefungErgebnisService
 
     public function getErgebnisAlsJsonArray(Pruefung $pruefung, StudiPruefungsId $studiPruefungsId): array {
         $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefungsId);
-        if (!$pruefungsWertung){
+        if (!$pruefungsWertung) {
             return [];
         }
         if ($pruefung->getFormat()->isMc()) {
@@ -49,7 +48,31 @@ class StudiPruefungErgebnisService
                     : NULL,
             ];
         } elseif ($pruefung->getFormat()->isStation()) {
-            return ["TODO" => "TODO"];
+            return [
+                "ergebnisProzent"     => $pruefungsWertung->getGesamtErgebnis()
+                    ->getProzentWertung()->getProzentzahl()->getValue(),
+                "durchschnittProzent" => $pruefungsWertung->getKohortenWertung()
+                    ? $pruefungsWertung->getKohortenWertung()->getProzentWertung()->getProzentzahl()->getValue()
+                    : NULL,
+            ];
+        } elseif ($pruefung->getFormat()->isPTM()) {
+            return [
+                "antwortenRichtig"    => $pruefungsWertung->getGesamtErgebnis()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
+                "antwortenFalsch"     => $pruefungsWertung->getGesamtErgebnis()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
+                "antwortenWeissNicht" => $pruefungsWertung->getGesamtErgebnis()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
+                "kohorteRichtig"      => $pruefungsWertung->getKohortenWertung()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
+                "kohorteFalsch"       => $pruefungsWertung->getKohortenWertung()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
+                "kohorteWeissNicht"   => $pruefungsWertung->getKohortenWertung()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
+
+            ];
+        } else {
+            return $pruefung->getFormat()->getValue();
         }
 
     }

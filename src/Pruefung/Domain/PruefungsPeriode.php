@@ -57,9 +57,7 @@ class PruefungsPeriode implements DDDValueObject
         if ($this->unterPeriode) {
             $returnString .= "-" . (string) $this->unterPeriode;
         }
-
-        return $returnString;
-
+        return "$returnString";
     }
 
     public function toInt(): int {

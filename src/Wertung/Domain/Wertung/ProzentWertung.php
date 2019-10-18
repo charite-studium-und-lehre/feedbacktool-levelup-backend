@@ -19,6 +19,31 @@ class ProzentWertung extends AbstractWertung
     }
 
     /**
+     * @param ProzentWertung[] $wertungen
+     * @return ProzentWertung
+     */
+    public static function getDurchschnittsWertung(array $wertungen) {
+        $prozentzahlen = [];
+
+        foreach ($wertungen as $wertung) {
+            if (!$wertung instanceof ProzentWertung) {
+                throw new \Exception("Muss ProzentWertung sein!" . get_class($wertung));
+            }
+            $prozentzahlen[] = $wertung->getProzentzahl()->getValue();
+        }
+
+        return ProzentWertung::fromProzentzahl(
+
+            Prozentzahl::fromFloat(
+                round(
+                    self::getDurchschnittAusZahlen($prozentzahlen),
+                    2
+                ),
+                )
+        );
+    }
+
+    /**
      * @return float
      * @see Wertung::getRelativeWertung()
      */
@@ -42,11 +67,7 @@ class ProzentWertung extends AbstractWertung
         return $this->prozentzahl->equals($otherObject->getProzentzahl());
     }
 
-    /**
-     * @return Prozentzahl
-     */
-    public
-    function getProzentzahl(): Prozentzahl {
+    public function getProzentzahl(): Prozentzahl {
         return $this->prozentzahl;
     }
 

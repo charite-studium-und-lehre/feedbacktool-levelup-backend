@@ -151,7 +151,6 @@ class ChariteMCPruefungWertungPersistenzService
         if (!$studiPruefung) {
             $studiPruefung = StudiPruefung::fromValues(
                 $this->studiPruefungsRepository->nextIdentity(),
-                $studiHash,
                 $pruefungsId,
                 $bestanden
             );
@@ -190,13 +189,15 @@ class ChariteMCPruefungWertungPersistenzService
         $studiPruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId(
             $studiPruefung->getId()
         );
-        if (!$studiPruefungsWertung && $gesamtErreichtePunktzahl) {
-            $gesamtErgebnis = PunktWertung::fromPunktzahlUndSkala(
+
+        if ($gesamtErreichtePunktzahl) {
+            $gesamtErgebnisWertung = PunktWertung::fromPunktzahlUndSkala(
                 Punktzahl::fromFloat($gesamtErreichtePunktzahl),
                 PunktSkala::fromMaxPunktzahl(
                     Punktzahl::fromFloat($fragenAnzahl)
                 )
             );
+            $bestehensGrenzeWertung = NULL;
             if ($bestehensGrenze) {
                 $bestehensGrenzeWertung = PunktWertung::fromPunktzahlUndSkala(
                     Punktzahl::fromFloat($bestehensGrenze),
@@ -205,14 +206,20 @@ class ChariteMCPruefungWertungPersistenzService
                     )
                 );
             }
-            $studiPruefungsWertung = StudiPruefungsWertung::create(
-                $studiPruefung->getId(),
-                $gesamtErgebnis,
-                $bestehensGrenzeWertung
-            );
-            $this->studiPruefungsWertungRepository->add($studiPruefungsWertung);
+            if (!$studiPruefungsWertung) {
+                $studiPruefungsWertung = StudiPruefungsWertung::create(
+                    $studiPruefung->getId(),
+                    $gesamtErgebnisWertung,
+                    $bestehensGrenzeWertung
+                );
+                $this->studiPruefungsWertungRepository->add($studiPruefungsWertung);
+            } else {
+                $studiPruefungsWertung->setGesamtErgebnis($gesamtErgebnisWertung);
+                $studiPruefungsWertung->setBestehensGrenze($bestehensGrenzeWertung);
+            }
+
             $this->studiPruefungsWertungRepository->flush();
-        }
+        } elseif ($studiPruefungsWertung)
         if ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
             $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
             $this->studiPruefungsWertungRepository->flush();
