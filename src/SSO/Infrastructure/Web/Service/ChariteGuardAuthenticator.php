@@ -24,7 +24,7 @@ final class ChariteGuardAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private const LOGIN_ROUTE = 'redirectToSSO';
+    private const LOGIN_ROUTE = 'notLoggedIn';
 
     private $router;
 

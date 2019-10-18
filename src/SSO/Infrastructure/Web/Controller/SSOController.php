@@ -118,9 +118,9 @@ class SSOController extends AbstractController
         return new Response("OK", 200);
     }
 
-    /** @Route("/redirectToSSO", name="redirectToSSO") */
-    public function redirectToSSO() {
-        return $this->redirectToRoute("login");
+    /** @Route("/notLoggedIn", name="notLoggedIn") */
+    public function notLoggedIn() {
+        return new Response();
     }
 
     /** @Route("/logout", name="logout") */
