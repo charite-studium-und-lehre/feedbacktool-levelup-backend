@@ -18,7 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -123,27 +122,26 @@ class SSOController extends AbstractController
         return new Response();
     }
 
-    /** @Route("/logout", name="logout") */
-    public function ssoLogoutAction(ChariteSSOService $chariteSSOService, UserSwitcher $userSwitcher,
-                                    TokenStorageInterface $storage) {
+    /** @Route("/logoutFromSSO", name="logoutFromSSO") */
+    public function ssoLogoutAction(ChariteSSOService $chariteSSOService, UserSwitcher $userSwitcher) {
         $userSwitcher->unsetUserSwitched();
-        $this->logoutUser($storage);
 
         // Service macht eine Weiterleitung
         $chariteSSOService->signOut();
     }
 
-    /** @Route("/levelupLogout", name="levelupLogout") */
-    public function logoutAction(Session $session, UserSwitcher $userSwitcher, TokenStorageInterface $storage) {
-        $userSwitcher->unsetUserSwitched();
-        $this->logoutUser($storage);
-
-        return new Response("OK", 200);
-    }
+    //    /** @Route("/levelupLogout", name="levelupLogout") */
+    //    public function logoutAction(Session $session, UserSwitcher $userSwitcher, TokenStorageInterface $storage) {
+    //        $userSwitcher->unsetUserSwitched();
+    //        $this->logoutUser($storage);
+    //
+    //        return new Response("OK", 200);
+    //    }
 
     /** @Route("/redirectToLogout", name="redirectToLogout") */
+    /** @Route("/logout", name="logout") */
     public function redirectToLogout() {
-        return $this->redirectToRoute("/logout");
+        return $this->redirectToRoute("logoutFromSSO");
     }
 
     /** @Route("/switchToFrontend", name="switchToFrontend") */
@@ -203,10 +201,6 @@ class SSOController extends AbstractController
 
     private function loginUser(TokenStorageInterface $tokenStorage, LoginUser $loginUser): void {
         $token = new UsernamePasswordToken($loginUser, [], "main", $loginUser->getRoles());
-        $tokenStorage->setToken($token);
-    }
-    private function logoutUser(TokenStorageInterface $tokenStorage): void {
-        $token = new UsernamePasswordToken(NULL, [], "main", []);
         $tokenStorage->setToken($token);
     }
 
