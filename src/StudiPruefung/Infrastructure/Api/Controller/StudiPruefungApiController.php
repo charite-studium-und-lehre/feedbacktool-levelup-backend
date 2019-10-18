@@ -48,8 +48,9 @@ class StudiPruefungApiController extends AbstractController
                 "typ"              => $pruefung->getFormat()->getCode(),
                 "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
                 "studiPruefungsId" => $studiPruefung->getId()->getValue(),
+                "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
                 "periodeCode"      => $pruefungsPeriode->toInt(),
-                "periodeText"      => $pruefungsPeriode->toInt(),
+                "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
                 "ergebnis"         =>
                     $ergebnisService->getErgebnisAlsJsonArray(
                         $pruefung,

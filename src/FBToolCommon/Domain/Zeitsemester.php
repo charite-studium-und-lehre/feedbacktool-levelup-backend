@@ -105,8 +105,13 @@ class Zeitsemester
         return $this->halbjahr;
     }
 
+    /** @return z.B. "WiSe2019 */
     public function getStandardString(): string {
         return self::SEMESTER_STRING[$this->halbjahr] . $this->jahr;
+    }
+    /** @return z.B. "WiSe 2019 */
+    public function getStandardStringLesbar(): string {
+        return self::SEMESTER_STRING[$this->halbjahr] . " " . $this->jahr;
     }
 
     /** z.B. 20192 für WiSe2019 */
