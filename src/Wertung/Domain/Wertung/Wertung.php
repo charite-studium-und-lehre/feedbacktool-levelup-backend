@@ -23,4 +23,6 @@ interface Wertung extends DDDValueObject
 
     public function getRichtigFalschWeissnichtWertung(): RichtigFalschWeissnichtWertung;
 
+    public static function getDurchschnittsWertung(array $wertungen);
+
 }

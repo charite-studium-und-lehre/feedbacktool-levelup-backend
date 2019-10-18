@@ -122,6 +122,15 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
     /**
      * @dataProvider getAllRepositories
      */
+    public function testAllByStudiPruefungsId(ItemWertungsRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $itemWertungen = $repo->allByPruefungssItemId(PruefungsItemId::fromString(456));
+        $this->assertCount(1, $itemWertungen);
+    }
+
+    /**
+     * @dataProvider getAllRepositories
+     */
     public function testDelete(ItemWertungsRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $this->assertCount(3, $repo->all());

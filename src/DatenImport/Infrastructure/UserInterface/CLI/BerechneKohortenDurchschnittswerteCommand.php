@@ -3,6 +3,7 @@
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
 use Pruefung\Domain\PruefungsRepository;
+use StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService;
 use StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,17 +18,20 @@ class BerechneKohortenDurchschnittswerteCommand extends Command
     /** @var PruefungsRepository */
     private $pruefungsRepository;
 
-
-
     /** @var StudiPruefungDurchschnittPersistenzService */
     private $studiPruefungDurchschnittPersistenzService;
 
+    /** @var ItemWertungDurchschnittPersistenzService */
+    private $itemWertungDurchschnittPersistenzService;
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
-        StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService
+        StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService,
+        ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungDurchschnittPersistenzService = $studiPruefungDurchschnittPersistenzService;
+        $this->itemWertungDurchschnittPersistenzService = $itemWertungDurchschnittPersistenzService;
         parent::__construct();
     }
 
@@ -37,11 +41,10 @@ class BerechneKohortenDurchschnittswerteCommand extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $allePruefungen = $this->pruefungsRepository->all();
-        foreach ($allePruefungen as $pruefung) {
             $this->studiPruefungDurchschnittPersistenzService
-                ->berechneUndPersistiereDurchschnitt($pruefung->getId());
-        }
+                ->berechneUndPersistiereGesamtDurchschnitt();
+            $this->itemWertungDurchschnittPersistenzService
+                ->berechneUndPersistiereDurchschnitt();
 
     }
 

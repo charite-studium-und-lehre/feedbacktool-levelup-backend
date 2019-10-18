@@ -3,6 +3,7 @@
 namespace Pruefung\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
+use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
@@ -23,8 +24,14 @@ final class DBPruefungsItemRepository implements PruefungsItemRepository
         return $this->abstractById($studiHash->getValue());
     }
 
+
     public function nextIdentity(): PruefungsItemId {
         return PruefungsItem::fromInt($this->abstractNextIdentityAsInt());
     }
 
+    public function allByPruefungsId(PruefungsId $id): array {
+        return $this->doctrineRepo->findBy(
+            ["pruefungsId" => $id]
+        );
+    }
 }

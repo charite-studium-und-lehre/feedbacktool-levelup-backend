@@ -40,4 +40,11 @@ final class DBItemWertungsRepository implements ItemWertungsRepository
             ]
         );
     }
+
+    /** @return ItemWertung[] */
+    public function allByPruefungssItemId(PruefungsItemId $pruefungsItemId): array {
+        return $this->doctrineRepo->findBy(
+            ["pruefungsItemId"  => $pruefungsItemId]
+        );
+    }
 }

@@ -39,4 +39,15 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
 
         return NULL;
     }
+
+    /** @return ItemWertung[] */
+    public function allByPruefungssItemId(PruefungsItemId $pruefungsItemId): array {
+        $resultArray = [];
+        foreach ($this->all() as $wertung) {
+            if ($wertung->getPruefungsItemId()->equals($pruefungsItemId)) {
+                $resultArray[] = $wertung;
+            }
+        }
+        return $resultArray;
+    }
 }
