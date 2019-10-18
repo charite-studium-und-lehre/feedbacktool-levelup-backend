@@ -13,6 +13,9 @@ Wertung\Domain\ItemWertung:
       type: aggregateId
     wertung:
       type: wertung
+    kohortenWertung:
+      type: wertung
+      nullable: true
 
   indexes:
     pruefungsItemId:

@@ -57,6 +57,11 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
                 Punktzahl::fromFloat(10)
             )
         );
+        $itemWertungRichtigFalschWeissnicht->setKohortenWertung(RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat(10),
+            Punktzahl::fromFloat(11),
+            Punktzahl::fromFloat(12)
+        ));
 
         $repo->add($itemWertungPunktzahl);
         $repo->add($itemWertungProzent);
@@ -91,6 +96,8 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
         $this->assertEquals($object3->getId()->getValue(), 456);
         $this->assertTrue($object3Wertung->equals($itemWertungRichtigFalschWeissnicht->getWertung()));
         $this->assertEquals(37, $object3Wertung->getSkala()->getMaxPunktzahl()->getValue());
+        $this->assertEquals(12, $object3->getKohortenWertung()
+            ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue());
 
     }
 

@@ -24,6 +24,9 @@ class ItemWertung implements DDDEntity
     /** @var Wertung */
     private $wertung;
 
+    /** @var ?Wertung */
+    private $kohortenWertung;
+
     public static function create(
         ItemWertungsId $id,
         PruefungsItemId $pruefungsItemId,
@@ -39,6 +42,17 @@ class ItemWertung implements DDDEntity
         $object->istGesamtErgebnis = $istGesamtErgebnis;
 
         return $object;
+    }
+
+    public function getKohortenWertung(): ?Wertung {
+        return $this->kohortenWertung;
+    }
+
+    public function setKohortenWertung(?Wertung $kohortenWertung): void {
+        if (get_class($kohortenWertung) != get_class($this->wertung)) {
+            throw new \Exception("Kohortenwertung muss gleiche Wertungsart sein wie Wertung selbst!");
+        }
+        $this->kohortenWertung = $kohortenWertung;
     }
 
     public function getId(): ItemWertungsId {
