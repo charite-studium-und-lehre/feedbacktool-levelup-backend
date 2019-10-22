@@ -35,6 +35,10 @@ class StudienFortschrittExportService
         $alleItems = [];
         foreach ($this->studiMeilensteinRepository->allByStudiHash($studiHash) as $meilenstein) {
             $alleItems[] = $meilenstein->getMeilenstein();
+            foreach ($meilenstein->getMeilenstein()->getImplizierteFortschrittsItems() as $item) {
+                $alleItems[] = $meilenstein->getMeilenstein();
+            }
+
         }
         foreach ($this->studiPruefungsRepository->allByStudiHash($studiHash) as $studiPruefung) {
             if (!$studiPruefung->isBestanden()) {

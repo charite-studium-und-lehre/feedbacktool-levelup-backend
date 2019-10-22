@@ -63,6 +63,7 @@ class FortschrittsItem implements DDDValueObject
         "voraus_sem7" => 307,
         "voraus_sem8" => 308,
         "voraus_sem9" => 309,
+        "voraus_sem10" => 310, // das ergibt sich direkt aus voraus_sem9
 
         "MC-Sem1"  => 401,
         "MC-Sem2"  => 402,
@@ -80,6 +81,10 @@ class FortschrittsItem implements DDDValueObject
         "stat_prfg_sem4"           => 503,
         "stat_prfg_sem9"           => 504,
 
+    ];
+
+    const IMPLIZIERT = [
+        309 => [310],  // wer 309 hat, hat immer auch 310
     ];
 
     private $code;
@@ -144,8 +149,7 @@ class FortschrittsItem implements DDDValueObject
             return "Abgeschlossen Sem. $fachsemester";
         }
         if ($this->code > 300 && $this->code <= 310) {
-            return "Voraussetzung erfüllt Sem. " .
-                ($fachsemester < 9 ? $fachsemester : "9+10");
+            return "Voraussetzung erfüllt Sem. $fachsemester";
         }
         if ($this->code > 400 && $this->code <= 410) {
             return "MC-Prüfung Sem. $fachsemester";
@@ -196,6 +200,27 @@ class FortschrittsItem implements DDDValueObject
 
     public function __toString(): string {
         return $this->code;
+    }
+
+    /** @return FortschrittsItem[] */
+    public function getImplizierteFortschrittsItems(): array {
+        $impliziteFortschrittsItems = [];
+        if (array_key_exists($this->code, self::IMPLIZIERT)) {
+            foreach (self::IMPLIZIERT[$this->code] as $fortschrittsItemCode) {
+                $impliziteFortschrittsItems[] = FortschrittsItem::fromCode($fortschrittsItemCode);
+            }
+        }
+        return $impliziteFortschrittsItems;
+    }
+
+    public function getPruefungsTyp(): ?string {
+        if ($this->code >= 400 && $this->code < 500) {
+            return "mc";
+        }
+        if ($this->code >= 500 && $this->code < 600) {
+            return "station";
+        }
+        return NULL;
     }
 
 }

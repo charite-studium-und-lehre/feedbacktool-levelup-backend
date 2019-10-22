@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StudienfortschrittApiController extends AbstractController
+class StudienFortschrittApiController extends AbstractController
 {
 
     /** @var StudienFortschrittExportService */
@@ -19,6 +19,7 @@ class StudienfortschrittApiController extends AbstractController
 
     public function __construct(StudienFortschrittExportService $meilensteinExportService) {
         $this->meilensteinExportService = $meilensteinExportService;
+
     }
 
     /**
@@ -40,6 +41,9 @@ class StudienfortschrittApiController extends AbstractController
 
         foreach (FortschrittsItem::FORTSCHRITT_KUERZEL_ZU_CODE as $code) {
             $meilenstein = FortschrittsItem::fromCode($code);
+
+            $pruefungsTyp = NULL;
+
             $meilensteinArray[] = [
                 "code"             => $code,
                 "kuerzel"          => $meilenstein->getKuerzel(),
@@ -47,6 +51,7 @@ class StudienfortschrittApiController extends AbstractController
                 "fachsemester"     => $meilenstein->getFachsemester(),
                 "erfuellt"         => in_array($code, $studiCodes),
                 "studiPruefungsId" => $meilenstein->getStudiPruefungsId(),
+                "pruefungsTyp"     => $meilenstein->getPruefungsTyp(),
             ];
         }
 
