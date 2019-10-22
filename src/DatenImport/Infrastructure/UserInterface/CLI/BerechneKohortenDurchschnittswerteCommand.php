@@ -41,10 +41,12 @@ class BerechneKohortenDurchschnittswerteCommand extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-            $this->studiPruefungDurchschnittPersistenzService
-                ->berechneUndPersistiereGesamtDurchschnitt();
-            $this->itemWertungDurchschnittPersistenzService
-                ->berechneUndPersistiereDurchschnitt();
+        $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen");
+        $this->studiPruefungDurchschnittPersistenzService
+            ->berechneUndPersistiereGesamtDurchschnitt();
+        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items");
+        $this->itemWertungDurchschnittPersistenzService
+            ->berechneUndPersistiereDurchschnitt();
 
     }
 
