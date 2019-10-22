@@ -77,8 +77,8 @@ class FortschrittsItem implements DDDValueObject
 
         "stat_prfg_sem2_vorklinik" => 501,
         "stat_prfg_sem2_klinik"    => 502,
-        "stat_prfg_sem4"           => 504,
-        "stat_prfg_sem9"           => 509,
+        "stat_prfg_sem4"           => 503,
+        "stat_prfg_sem9"           => 504,
 
     ];
 

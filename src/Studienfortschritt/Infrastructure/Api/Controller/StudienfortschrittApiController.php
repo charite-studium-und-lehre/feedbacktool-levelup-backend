@@ -3,10 +3,12 @@
 namespace Studienfortschritt\Infrastructure\Api\Controller;
 
 use SSO\Domain\EingeloggterStudiService;
+use Studi\Domain\Studi;
 use Studienfortschritt\Domain\FortschrittsItem;
 use Studienfortschritt\Domain\Service\StudienFortschrittExportService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class StudienfortschrittApiController extends AbstractController
@@ -25,6 +27,9 @@ class StudienfortschrittApiController extends AbstractController
      */
     public function jsonMeilensteineAction() {
         $eingeloggterStudi = $this->getUser();
+        if (!$eingeloggterStudi instanceof Studi) {
+            return new Response("Nicht als 'echter' Studi eingeloggt (switchUser).", 403);
+        }
         $meilensteine = $this->meilensteinExportService->alleFortschrittsItemsFuerStudi(
             $eingeloggterStudi->getStudiHash()
         );
