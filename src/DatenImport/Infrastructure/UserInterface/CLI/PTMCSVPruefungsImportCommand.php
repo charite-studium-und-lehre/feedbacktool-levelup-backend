@@ -6,6 +6,8 @@ use DatenImport\Domain\CharitePTMPersistenzService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
+use StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService;
+use StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -23,14 +25,24 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     /** @var CharitePTMPersistenzService */
     private $charitePTMPersistenzService;
 
+    /** @var StudiPruefungDurchschnittPersistenzService */
+    private $studiPruefungDurchschnittPersistenzService;
+
+    /** @var ItemWertungDurchschnittPersistenzService */
+    private $itemWertungDurchschnittPersistenzService;
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         CharitePTMCSVImportService $charitePTMCSVImportService,
-        CharitePTMPersistenzService $charitePTMPersistenzService
+        CharitePTMPersistenzService $charitePTMPersistenzService,
+        StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService,
+        ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->charitePTMCSVImportService = $charitePTMCSVImportService;
         $this->charitePTMPersistenzService = $charitePTMPersistenzService;
+        $this->studiPruefungDurchschnittPersistenzService = $studiPruefungDurchschnittPersistenzService;
+        $this->itemWertungDurchschnittPersistenzService = $itemWertungDurchschnittPersistenzService;
         parent::__construct();
     }
 
@@ -57,6 +69,15 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
         $output->writeln(count($ptmPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 
         $this->charitePTMPersistenzService->persistierePruefung($ptmPruefungsDaten, $pruefungsId);
+
+        $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen");
+        $this->studiPruefungDurchschnittPersistenzService
+            ->berechneUndPersistiereGesamtDurchschnitt($pruefungsId);
+
+        $output->writeln("");
+        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items");
+        $this->itemWertungDurchschnittPersistenzService
+            ->berechneUndPersistiereDurchschnitt($pruefungsId);
 
         $output->writeln("\nFertig. ");
 

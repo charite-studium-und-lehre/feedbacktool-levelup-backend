@@ -7,6 +7,8 @@ use DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportS
 use Exception;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
+use StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService;
+use StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,14 +27,24 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
     /** @var ChariteStationenPruefungPersistenzService */
     private $chariteStationenPruefungPersistenzService;
 
+    /** @var StudiPruefungDurchschnittPersistenzService */
+    private $studiPruefungDurchschnittPersistenzService;
+
+    /** @var ItemWertungDurchschnittPersistenzService */
+    private $itemWertungDurchschnittPersistenzService;
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         ChariteStationenErgebnisse_CSVImportService $chariteStationenErgebnisseCSVImportService,
-        ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService
+        ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService,
+        StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService,
+        ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->chariteStationenErgebnisseCSVImportService = $chariteStationenErgebnisseCSVImportService;
         $this->chariteStationenPruefungPersistenzService = $chariteStationenPruefungPersistenzService;
+        $this->studiPruefungDurchschnittPersistenzService = $studiPruefungDurchschnittPersistenzService;
+        $this->itemWertungDurchschnittPersistenzService = $itemWertungDurchschnittPersistenzService;
         parent::__construct();
     }
 
@@ -64,6 +76,14 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
 
         $this->chariteStationenPruefungPersistenzService
             ->persistierePruefung($stationsPruefungsDaten, $pruefungsId);
+
+        $output->writeln("");
+        $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen...");
+        $this->studiPruefungDurchschnittPersistenzService
+            ->berechneUndPersistiereGesamtDurchschnitt($pruefungsId);
+        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items...");
+        $this->itemWertungDurchschnittPersistenzService
+            ->berechneUndPersistiereDurchschnitt($pruefungsId);
 
         $output->writeln("\nFertig. ");
 

@@ -2,6 +2,7 @@
 
 namespace StudiPruefung\Domain\Service;
 
+use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\StudiPruefungsWertungRepository;
@@ -31,34 +32,31 @@ class StudiPruefungDurchschnittPersistenzService
         $this->studiPruefungsRepository = $studiPruefungsRepository;
     }
 
-    public function berechneUndPersistiereGesamtDurchschnitt(): void {
-        $allePruefungen = $this->pruefungsRepository->all();
-        foreach ($allePruefungen as $pruefung) {
-            $alleGesamtWertungen = [];
-            $alleStudiPruefungsWertungen = [];
-            $alleStudiPruefungen = $this->studiPruefungsRepository->allByPruefungsId($pruefung->getId());
-            foreach ($alleStudiPruefungen as $studiPruefung) {
-                $studiPruefungsWertung = $this->studiPruefungsWertungRepository
-                    ->byStudiPruefungsId($studiPruefung->getId());
-                if (!$studiPruefungsWertung) {
-                    continue;
-                }
-                $alleStudiPruefungsWertungen[] = $studiPruefungsWertung;
-                $alleGesamtWertungen[] = $studiPruefungsWertung->getGesamtErgebnis();
-            }
-            if ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof PunktWertung)) {
-                $kohortenWertung = PunktWertung::getDurchschnittsWertung($alleGesamtWertungen);
-            } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof ProzentWertung)) {
-                $kohortenWertung = ProzentWertung::getDurchschnittsWertung($alleGesamtWertungen);
-            } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof RichtigFalschWeissnichtWertung)) {
-                $kohortenWertung = RichtigFalschWeissnichtWertung::getDurchschnittsWertung($alleGesamtWertungen);
-            }
-            foreach ($alleStudiPruefungsWertungen as $studiPruefungsWertung) {
-                $studiPruefungsWertung->setKohortenWertung($kohortenWertung);
-            }
-            echo ".";
-            $this->studiPruefungsWertungRepository->flush();
+    public function berechneUndPersistiereGesamtDurchschnitt(PruefungsId $pruefungsId): void {
+        $pruefung = $this->pruefungsRepository->byId($pruefungsId);
 
+        $alleGesamtWertungen = [];
+        $alleStudiPruefungsWertungen = [];
+        $alleStudiPruefungen = $this->studiPruefungsRepository->allByPruefungsId($pruefung->getId());
+        foreach ($alleStudiPruefungen as $studiPruefung) {
+            $studiPruefungsWertung = $this->studiPruefungsWertungRepository
+                ->byStudiPruefungsId($studiPruefung->getId());
+            if (!$studiPruefungsWertung) {
+                continue;
+            }
+            $alleStudiPruefungsWertungen[] = $studiPruefungsWertung;
+            $alleGesamtWertungen[] = $studiPruefungsWertung->getGesamtErgebnis();
         }
+        if ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof PunktWertung)) {
+            $kohortenWertung = PunktWertung::getDurchschnittsWertung($alleGesamtWertungen);
+        } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof ProzentWertung)) {
+            $kohortenWertung = ProzentWertung::getDurchschnittsWertung($alleGesamtWertungen);
+        } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof RichtigFalschWeissnichtWertung)) {
+            $kohortenWertung = RichtigFalschWeissnichtWertung::getDurchschnittsWertung($alleGesamtWertungen);
+        }
+        foreach ($alleStudiPruefungsWertungen as $studiPruefungsWertung) {
+            $studiPruefungsWertung->setKohortenWertung($kohortenWertung);
+        }
+        $this->studiPruefungsWertungRepository->flush();
    }
 }

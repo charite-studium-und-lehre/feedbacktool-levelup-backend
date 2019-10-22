@@ -3,6 +3,7 @@
 namespace DatenImport\Domain;
 
 use Pruefung\Domain\ItemSchwierigkeit;
+use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemRepository;
 use Studi\Domain\StudiHash;
@@ -130,17 +131,12 @@ class ChariteMCPruefungWertungPersistenzService
         return $this->nichtZuzuordnen;
     }
 
-    /**
-     * @param StudiHash $studiHash
-     * @param $pruefungsId
-     * @return StudiPruefung|null
-     */
     private function holeOderErzeugeStudiPruefung(
         StudiHash $studiHash,
-        $pruefungsId,
+        PruefungsId $pruefungsId,
         $gesamtPunktzahl = NULL,
         $bestehensgrenze = NULL
-    ) {
+    ): StudiPruefung {
         $bestanden = $gesamtPunktzahl && $bestehensgrenze && $gesamtPunktzahl > $bestehensgrenze;
 
         $studiPruefung = $this->studiPruefungsRepository->byStudiHashUndPruefungsId(
@@ -151,6 +147,7 @@ class ChariteMCPruefungWertungPersistenzService
         if (!$studiPruefung) {
             $studiPruefung = StudiPruefung::fromValues(
                 $this->studiPruefungsRepository->nextIdentity(),
+                $studiHash,
                 $pruefungsId,
                 $bestanden
             );
@@ -181,7 +178,7 @@ class ChariteMCPruefungWertungPersistenzService
     }
 
     private function erzeugeStudiPruefungsWertung(
-        ?StudiPruefung $studiPruefung,
+        StudiPruefung $studiPruefung,
         $gesamtErreichtePunktzahl,
         $fragenAnzahl,
         $bestehensGrenze
@@ -244,7 +241,7 @@ class ChariteMCPruefungWertungPersistenzService
         $pruefungsItem->setItemSchwierigkeit(ItemSchwierigkeit::fromConst($schwierigkeit));
     }
 
-    private function pruefeOderErzeugeItemWertung(?StudiPruefung $studiPruefung, $pruefungsItemId, $punktzahl): void {
+    private function pruefeOderErzeugeItemWertung(StudiPruefung $studiPruefung, $pruefungsItemId, $punktzahl): void {
         $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefung->getId(),
             $pruefungsItemId

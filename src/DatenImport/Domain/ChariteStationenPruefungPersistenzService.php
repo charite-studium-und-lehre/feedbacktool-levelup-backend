@@ -58,7 +58,6 @@ class ChariteStationenPruefungPersistenzService
 
     /** @param StudiIntern[] $studiInternArray */
     public function persistierePruefung($pruefungsDaten, PruefungsId $pruefungsId) {
-
         foreach ($pruefungsDaten as $dataLine) {
             $ergebnisse = $dataLine["ergebnisse"];
             $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikelnummer"]);
@@ -128,6 +127,8 @@ class ChariteStationenPruefungPersistenzService
             }
             if ($einzelWertungen) {
                 $this->createOrUpdateGesamtWertung($studiPruefung, $einzelWertungen);
+            } else {
+                echo "Err";
             }
         }
         $this->pruefungsItemRepository->flush();

@@ -6,6 +6,8 @@ use DatenImport\Domain\ChariteMCPruefungWertungPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsRepository;
+use StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService;
+use StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,14 +26,25 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     /** @var ChariteMCPruefungWertungPersistenzService */
     private $chariteMCPruefungWertungPersistenzService;
 
+    /** @var StudiPruefungDurchschnittPersistenzService */
+    private $studiPruefungDurchschnittPersistenzService;
+
+    /** @var ItemWertungDurchschnittPersistenzService */
+    private $itemWertungDurchschnittPersistenzService;
+
+
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService,
-        ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService
+        ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService,
+        StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService,
+        ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->chariteMCErgebnisseCSVImportService = $chariteMCErgebnisseCSVImportService;
         $this->chariteMCPruefungWertungPersistenzService = $chariteMCPruefungWertungPersistenzService;
+        $this->studiPruefungDurchschnittPersistenzService = $studiPruefungDurchschnittPersistenzService;
+        $this->itemWertungDurchschnittPersistenzService = $itemWertungDurchschnittPersistenzService;
         parent::__construct();
     }
 
@@ -59,6 +72,29 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
         $output->writeln("\n" . count($mcPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 
         $this->chariteMCPruefungWertungPersistenzService->persistierePruefung($mcPruefungsDaten);
+
+        $allePruefungsIds = [];
+        foreach ($mcPruefungsDaten as [$matrikelnummer, $punktzahl, $pruefungsId]) {
+            if (!in_array($pruefungsId, $allePruefungsIds)) {
+                $allePruefungsIds[] = $pruefungsId;
+            }
+        }
+
+        $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen");
+        foreach ($allePruefungsIds as $pruefungsId) {
+            $this->studiPruefungDurchschnittPersistenzService
+                ->berechneUndPersistiereGesamtDurchschnitt($pruefungsId);
+            echo ".";
+        }
+
+        $output->writeln("");
+        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items");
+        foreach ($allePruefungsIds as $pruefungsId) {
+            $this->itemWertungDurchschnittPersistenzService
+                ->berechneUndPersistiereDurchschnitt($pruefungsId);
+            echo ".";
+        }
+
 
         $output->writeln("\nFertig. "
                          . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
