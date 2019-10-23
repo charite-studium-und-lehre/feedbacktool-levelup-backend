@@ -51,7 +51,7 @@ class StudienFortschrittApiController extends AbstractController
                 "fachsemester"     => $meilenstein->getFachsemester(),
                 "erfuellt"         => in_array($code, $studiCodes),
                 "studiPruefungsId" => $meilenstein->getStudiPruefungsId(),
-                "pruefungsTyp"     => $meilenstein->getPruefungsTyp(),
+                "format"           => $meilenstein->getPruefungsTyp(),
             ];
         }
 
