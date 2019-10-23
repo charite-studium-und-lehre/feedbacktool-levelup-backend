@@ -5,6 +5,7 @@ namespace StudiPruefung\Infrastructure\Api\Controller;
 use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\Studi;
 use StudiPruefung\Domain\Service\StudiPruefungErgebnisService;
+use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +29,7 @@ class StudiPruefungApiController extends AbstractController
     }
 
     /**
-     * @Route("/api/pruefungen")
+     * @Route("/api/pruefungen/")
      * @Route("/api/pruefung")
      */
     public function jsonStudiPruefungAction(StudiPruefungErgebnisService $ergebnisService) {
@@ -43,7 +44,7 @@ class StudiPruefungApiController extends AbstractController
         foreach ($studiPruefungen as $studiPruefung) {
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
             $pruefungsPeriode = $pruefung->getPruefungsPeriode();
-            $name = $pruefung->getFormat()->getTitel() . " " . $pruefungsPeriode->getPeriodeBeschreibung();
+            $name = $pruefung->getName();
             $returnArray[] = [
                 "name"             => $name,
                 "typ"              => $pruefung->getFormat()->getCode(),
@@ -53,14 +54,37 @@ class StudiPruefungApiController extends AbstractController
                 "periodeCode"      => $pruefungsPeriode->toInt(),
                 "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
                 "gesamtErgebnis"   =>
-                    $ergebnisService->getErgebnisAlsJsonArray(
-                        $pruefung,
-                        $studiPruefung->getId()
-                    ),
+                    $ergebnisService->getErgebnisAlsJsonArray($studiPruefung),
             ];
         }
 
         return new JsonResponse(["pruefungen" => $returnArray], 200);
+
+    }
+
+    /**
+     * @Route("/api/pruefungen/{studiPruefungsIdKInt}")
+     */
+    public function jsonStudiPruefungsDetailsAction(
+        StudiPruefungErgebnisService $ergebnisService,
+        int $studiPruefungsIdInt
+    ) {
+        $studiPruefungsId = StudiPruefungsId::fromInt($studiPruefungsIdInt);
+        $studiPruefung = $this->studiPruefungsRepository->byId($studiPruefungsId);
+        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
+        $pruefungsPeriode = $pruefung->getPruefungsPeriode();
+
+        $returnArray[] = [
+            "typ"              => $pruefung->getFormat()->getCode(),
+            "studiPruefungsId" => $studiPruefung->getId()->getValue(),
+            "name"             => $pruefung->getName(),
+            "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
+            "periodeCode"      => $pruefungsPeriode->toInt(),
+            "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
+            "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
+            "gesamtErgebnis"   =>
+                $ergebnisService->getErgebnisDetailsAlsJsonArray($studiPruefung),
+        ];
 
     }
 

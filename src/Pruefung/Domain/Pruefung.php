@@ -49,4 +49,8 @@ class Pruefung
         return $this->format;
     }
 
+    public function getName(): string {
+        return $this->getFormat()->getTitel() . " " . $this->getPruefungsPeriode()->getPeriodeBeschreibung();
+    }
+
 }

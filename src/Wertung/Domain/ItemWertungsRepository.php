@@ -28,4 +28,7 @@ interface ItemWertungsRepository extends DDDRepository, FlushableRepository
     /** @return ItemWertung[] */
     public function allByPruefungssItemId(PruefungsItemId $pruefungsItemId): array;
 
+    /** @return ItemWertung[] */
+    public function allByStudiPruefungsId(StudiPruefungsId $studiPruefungsId): array;
+
 }
