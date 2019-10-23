@@ -34,23 +34,27 @@ class StudienFortschrittApiController extends AbstractController
         $meilensteine = $this->meilensteinExportService->alleFortschrittsItemsFuerStudi(
             $eingeloggterStudi->getStudiHash()
         );
-        $studiCodes = [];
+        $studiCodesZuMeilenstein = [];
         foreach ($meilensteine as $meilenstein) {
-            $studiCodes[] = $meilenstein->getCode();
+            $studiCodesZuMeilenstein[$meilenstein->getCode()] = $meilenstein;
         }
 
         foreach (FortschrittsItem::FORTSCHRITT_KUERZEL_ZU_CODE as $code) {
-            $meilenstein = FortschrittsItem::fromCode($code);
-
-            $pruefungsTyp = NULL;
+            if (array_key_exists($code, $studiCodesZuMeilenstein)) {
+                $meilenstein = $studiCodesZuMeilenstein[$code];
+            } else {
+                $meilenstein = FortschrittsItem::fromCode($code);
+            }
 
             $meilensteinArray[] = [
                 "code"             => $code,
                 "kuerzel"          => $meilenstein->getKuerzel(),
                 "beschreibung"     => $meilenstein->getTitel(),
                 "fachsemester"     => $meilenstein->getFachsemester(),
-                "erfuellt"         => in_array($code, $studiCodes),
-                "studiPruefungsId" => $meilenstein->getStudiPruefungsId(),
+                "erfuellt"         => array_key_exists($code, $studiCodesZuMeilenstein),
+                "studiPruefungsId" => $meilenstein->getStudiPruefungsId()
+                    ? $meilenstein->getStudiPruefungsId()->getValue()
+                    : NULL,
                 "format"           => $meilenstein->getPruefungsTyp(),
             ];
         }

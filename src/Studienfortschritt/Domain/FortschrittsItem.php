@@ -57,12 +57,12 @@ class FortschrittsItem implements DDDValueObject
         "best_sem9"  => 209,
         "best_sem10" => 210,
 
-        "voraus_sem4" => 304,
-        "voraus_sem5" => 305,
-        "voraus_sem6" => 306,
-        "voraus_sem7" => 307,
-        "voraus_sem8" => 308,
-        "voraus_sem9" => 309,
+        "voraus_sem4"  => 304,
+        "voraus_sem5"  => 305,
+        "voraus_sem6"  => 306,
+        "voraus_sem7"  => 307,
+        "voraus_sem8"  => 308,
+        "voraus_sem9"  => 309,
         "voraus_sem10" => 310, // das ergibt sich direkt aus voraus_sem9
 
         "MC-Sem1"  => 401,
@@ -87,8 +87,10 @@ class FortschrittsItem implements DDDValueObject
         309 => [310],  // wer 309 hat, hat immer auch 310
     ];
 
+    /** @var int */
     private $code;
 
+    /** @var ?StudiPruefungsId */
     private $studiPruefungsId;
 
     public static function fromCode(int $code, ?StudiPruefungsId $studiPruefungsId = NULL): self {
@@ -110,7 +112,6 @@ class FortschrittsItem implements DDDValueObject
         if ($pruefungsFormat->isMc()) {
             return FortschrittsItem::fromCode($pruefungsFormat->getValue() - 10 + 400, $studiPruefungsId);
         }
-
         if ($pruefungsFormat->isStation()) {
             return FortschrittsItem::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500, $studiPruefungsId);
         }
@@ -123,6 +124,13 @@ class FortschrittsItem implements DDDValueObject
         Assertion::keyIsset(self::FORTSCHRITT_KUERZEL_ZU_CODE, $value, self::UNGUELTIG_KUERZEL . $value);
 
         return self::fromCode(self::FORTSCHRITT_KUERZEL_ZU_CODE[$value]);
+    }
+
+    public function mitStudiPruefungsId(StudiPruefungsId $studiPruefungsId): self {
+        $newObject = clone $this;
+        $newObject->studiPruefungsId = $studiPruefungsId;
+
+        return $newObject;
     }
 
     public function getCode() {
@@ -210,6 +218,7 @@ class FortschrittsItem implements DDDValueObject
                 $impliziteFortschrittsItems[] = FortschrittsItem::fromCode($fortschrittsItemCode);
             }
         }
+
         return $impliziteFortschrittsItems;
     }
 
@@ -220,6 +229,7 @@ class FortschrittsItem implements DDDValueObject
         if ($this->code >= 500 && $this->code < 600) {
             return "station";
         }
+
         return NULL;
     }
 
