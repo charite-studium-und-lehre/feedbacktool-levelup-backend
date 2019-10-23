@@ -28,6 +28,7 @@ class StudiPruefungApiController extends AbstractController
     }
 
     /**
+     * @Route("/api/pruefungen")
      * @Route("/api/pruefung")
      */
     public function jsonStudiPruefungAction(StudiPruefungErgebnisService $ergebnisService) {
@@ -51,7 +52,7 @@ class StudiPruefungApiController extends AbstractController
                 "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
                 "periodeCode"      => $pruefungsPeriode->toInt(),
                 "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
-                "gesamtErgebnis"         =>
+                "gesamtErgebnis"   =>
                     $ergebnisService->getErgebnisAlsJsonArray(
                         $pruefung,
                         $studiPruefung->getId()
