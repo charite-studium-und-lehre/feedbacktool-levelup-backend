@@ -29,8 +29,7 @@ class StudiPruefungApiController extends AbstractController
     }
 
     /**
-     * @Route("/api/pruefungen/")
-     * @Route("/api/pruefung")
+     * @Route("/api/pruefungen")
      */
     public function jsonStudiPruefungAction(StudiPruefungErgebnisService $ergebnisService) {
         $eingeloggterStudi = $this->getUser();
