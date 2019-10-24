@@ -3,6 +3,7 @@
 namespace DatenImport\Domain;
 
 use Cluster\Domain\Cluster;
+use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
@@ -53,21 +54,24 @@ class ChariteMCPruefungLernzielModulPersistenzService
                 continue;
             }
 
-            $fragenModul = isset($lzModulDaten[$lzNummer]) ? $lzModulDaten[$lzNummer] : NULL;
-            if (!$fragenModul) {
+            $modulCode = isset($lzModulDaten[$lzNummer]) ? $lzModulDaten[$lzNummer] : NULL;
+            if (!$modulCode) {
                 if (!in_array("$lzNummer-$pruefungsItemId", $nichtGefunden)) {
                     echo "\nFehler: Lernziel-Nummer nicht gefunden zu Frage $pruefungsItemId: $lzNummer";
                     $nichtGefunden[] = "$lzNummer-$pruefungsItemId";
                 }
                 continue;
             }
+            $titelString = str_replace("M", "Modul ", $modulCode->getValue());
+            $titelString = str_replace(" 0", " ", $titelString);
+            $modulTitel = ClusterTitel::fromString($titelString);
 
             $cluster = $this->clusterRepository->byClusterTypUndTitel(
                 ClusterTyp::getModulTyp(),
-                $fragenModul
+                $modulTitel
             );
             if (!$cluster) {
-                $clusterId = $this->clusterHinzufuegen($fragenModul);
+                $clusterId = $this->clusterHinzufuegen($modulCode, $modulTitel);
             } else {
                 $clusterId = $cluster->getId();
             }
@@ -81,13 +85,15 @@ class ChariteMCPruefungLernzielModulPersistenzService
 
     }
 
-    private function clusterHinzufuegen(ClusterTitel $fragenModul): ClusterId {
+    private function clusterHinzufuegen(ClusterCode $modulCode, ClusterTitel $modulTitel): ClusterId {
         $clusterId = $this->clusterRepository->nextIdentity();
         $this->clusterRepository->add(
             Cluster::create(
                 $clusterId,
                 ClusterTyp::getModulTyp(),
-                $fragenModul
+                $modulTitel,
+                NULL,
+                $modulCode
             )
         );
         $this->clusterRepository->flush();

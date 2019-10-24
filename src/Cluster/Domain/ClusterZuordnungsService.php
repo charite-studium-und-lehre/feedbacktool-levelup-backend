@@ -56,7 +56,7 @@ class ClusterZuordnungsService
             echo "-";
             $this->clusterZuordnungsRepository->delete(
                 ClusterZuordnung::byIds(
-                    $clusterIdNeuZuzuordnen,
+                    $clusterIdZuLoeschen,
                     $pruefungsItemId
                 )
             );
@@ -79,6 +79,9 @@ class ClusterZuordnungsService
         $gefilterteClusterIds = [];
         foreach ($vorhandeneClusterIds as $vorhandenerClusterId) {
             $cluster = $this->clusterRepository->byId($vorhandenerClusterId);
+            if (!$cluster) {
+                continue;
+            }
             if ($cluster->getClusterTyp()->equals($clusterTypId)) {
                 $gefilterteClusterIds[] = $vorhandenerClusterId;
             }

@@ -2,6 +2,7 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
+use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterTitel;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
@@ -28,7 +29,7 @@ class ChariteLernzielModulImportCSVService extends AbstractCSVImportService
         foreach ($this->getCSVDataAsArray($inputFile, $delimiter, $hasHeaders, $fromEncoding)
             as $dataLine) {
             $lernzielNummer = (int) $dataLine["lernzielNummer"];
-            $modulCode = ClusterTitel::fromString($dataLine["modulNummer"]);
+            $modulCode = ClusterCode::fromString($dataLine["modulNummer"]);
 
             $data[$lernzielNummer] = $modulCode;
         }
