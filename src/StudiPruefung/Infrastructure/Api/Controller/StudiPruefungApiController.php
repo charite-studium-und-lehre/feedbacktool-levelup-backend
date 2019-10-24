@@ -46,7 +46,7 @@ class StudiPruefungApiController extends AbstractController
             $name = $pruefung->getName();
             $gesamtErgebnis = $ergebnisService->getErgebnisAlsJsonArray($studiPruefung);
             $einzelErgebnisse = $ergebnisService->getErgebnisDetailsAlsJsonArray($studiPruefung);
-            $returnArray[] = [
+            $insertArray = [
                 "name"             => $name,
                 "typ"              => $pruefung->getFormat()->getCode(),
                 "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
@@ -55,8 +55,9 @@ class StudiPruefungApiController extends AbstractController
                 "periodeCode"      => $pruefungsPeriode->toInt(),
                 "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
                 "gesamtErgebnis"   => $gesamtErgebnis,
-                "ergebnisse"       => $einzelErgebnisse,
             ];
+            $insertArray = $insertArray + $einzelErgebnisse;
+            $returnArray[] = $insertArray;
         }
 
         return new JsonResponse(["pruefungen" => $returnArray], 200);
@@ -78,7 +79,7 @@ class StudiPruefungApiController extends AbstractController
         $gesamtErgebnis = $ergebnisService->getErgebnisAlsJsonArray($studiPruefung);
         $einzelErgebnisse = $ergebnisService->getErgebnisDetailsAlsJsonArray($studiPruefung);
 
-        $returnArray[] = [
+        $returnArray = [
             "typ"              => $pruefung->getFormat()->getCode(),
             "studiPruefungsId" => $studiPruefung->getId()->getValue(),
             "name"             => $pruefung->getName(),
@@ -86,9 +87,9 @@ class StudiPruefungApiController extends AbstractController
             "periodeCode"      => $pruefungsPeriode->toInt(),
             "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
             "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
-            "gesamtErgebnis"   => $gesamtErgebnis,
-            "ergebnisse"       => $einzelErgebnisse,
+            "gesamtErgebnis"   => $gesamtErgebnis
         ];
+        $returnArray = $returnArray + $einzelErgebnisse;
 
         return new JsonResponse($returnArray, 200);
 
