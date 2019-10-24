@@ -107,6 +107,9 @@ class StudiPruefungErgebnisService
     public function getErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
+        if (!$pruefung->getFormat()->isMc()) {
+            return [];
+        }
 
         $itemsNachFach = [];
         $itemsNachModul = [];

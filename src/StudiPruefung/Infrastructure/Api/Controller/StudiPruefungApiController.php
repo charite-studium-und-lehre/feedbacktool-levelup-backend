@@ -44,6 +44,8 @@ class StudiPruefungApiController extends AbstractController
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
             $pruefungsPeriode = $pruefung->getPruefungsPeriode();
             $name = $pruefung->getName();
+            $gesamtErgebnis = $ergebnisService->getErgebnisAlsJsonArray($studiPruefung);
+            $einzelErgebnisse = $ergebnisService->getErgebnisDetailsAlsJsonArray($studiPruefung);
             $returnArray[] = [
                 "name"             => $name,
                 "typ"              => $pruefung->getFormat()->getCode(),
@@ -52,8 +54,8 @@ class StudiPruefungApiController extends AbstractController
                 "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
                 "periodeCode"      => $pruefungsPeriode->toInt(),
                 "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
-                "gesamtErgebnis"   =>
-                    $ergebnisService->getErgebnisAlsJsonArray($studiPruefung),
+                "gesamtErgebnis"   => $gesamtErgebnis,
+                "ergebnisse"       => $einzelErgebnisse,
             ];
         }
 
