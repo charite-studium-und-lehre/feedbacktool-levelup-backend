@@ -77,9 +77,9 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
         $output->writeln("");
         $output->writeln("Persistiere Module...");
 
-//        $this->chariteMCPruefungLernzielModulPersistenz->persistiereMcModulZuordnung(
-//            $mcPruefungsDaten, $lzModulDaten
-//        );
+        $this->chariteMCPruefungLernzielModulPersistenz->persistiereMcModulZuordnung(
+            $mcPruefungsDaten, $lzModulDaten
+        );
 
         $output->writeln("");
         $output->writeln("Persistiere Fächer...");

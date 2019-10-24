@@ -138,6 +138,5 @@ class FachCodeKonstanten
         '1292_Med_Soz'   => 'medSoz',
         '1292_Anatomie'  => 'ana',
         '1292_Sozialmed' => 'sozMed',
-
     ];
 }

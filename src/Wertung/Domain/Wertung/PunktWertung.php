@@ -25,7 +25,7 @@ class PunktWertung extends AbstractWertung
      * @param PunktWertung[] $wertungen
      * @return PunktWertung
      */
-    public static function getDurchschnittsWertung(array $wertungen) {
+    public static function getDurchschnittsWertung(array $wertungen): PunktWertung {
         $punktzahlen = [];
         $ersteWertung = $wertungen[0];
 
