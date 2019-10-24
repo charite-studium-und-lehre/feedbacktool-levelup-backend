@@ -86,7 +86,12 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
     }
 
     public function getGesamtPunktzahl(): Punktzahl {
-        return $this->punktzahlRichtig + $this->punktzahlFalsch + $this->punktzahlWeissnicht;
+        return
+            Punktzahl::fromFloat(
+                $this->punktzahlRichtig->getValue()
+                + $this->punktzahlFalsch->getValue()
+                + $this->punktzahlWeissnicht->getValue()
+            );
     }
 
     public function getSkala(): Skala {

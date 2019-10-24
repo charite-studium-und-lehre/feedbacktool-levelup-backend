@@ -90,7 +90,7 @@ class StudiPruefungErgebnisService
                 "ergebnisWeissnichtPunktzahl"     => $pruefungsWertung->getGesamtErgebnis()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
                 "maximalPunktzahl"                => $pruefungsWertung->getGesamtErgebnis()
-                    ->getRichtigFalschWeissnichtWertung()->getGesamtPunktzahl(),
+                    ->getRichtigFalschWeissnichtWertung()->getGesamtPunktzahl()->getValue(),
                 "durchschnittRichtigPunktzahl"    => $pruefungsWertung->getKohortenWertung()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
                 "durchschnittFalschPunktzahl"     => $pruefungsWertung->getKohortenWertung()
