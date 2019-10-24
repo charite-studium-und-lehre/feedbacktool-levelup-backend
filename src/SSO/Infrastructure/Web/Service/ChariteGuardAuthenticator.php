@@ -24,7 +24,7 @@ final class ChariteGuardAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private const LOGIN_ROUTE = 'notLoggedIn';
+    private const LOGIN_ROUTE = 'login';
 
     private $router;
 
