@@ -25,4 +25,6 @@ interface Wertung extends DDDValueObject
 
     public static function getDurchschnittsWertung(array $wertungen);
 
+    public static function getSummenWertung(array $wertungen);
+
 }

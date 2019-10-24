@@ -101,4 +101,8 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
     public function getRelativeWertung(): float {
         return $this->punktzahlRichtig->getValue() / $this->skala->getMaxPunktzahl();
     }
+
+    public static function getSummenWertung(array $wertungen) {
+        throw new \Exception("Nicht implementiert");
+    }
 }

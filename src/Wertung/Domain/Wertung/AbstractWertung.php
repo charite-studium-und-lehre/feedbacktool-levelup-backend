@@ -48,4 +48,11 @@ abstract class AbstractWertung implements Wertung
         return array_sum ($zahlen) / count($zahlen);
     }
 
+    /**
+     * @param float[] $zahlen
+     */
+    protected static function getSummeAusZahlen(array $zahlen): float {
+        return array_sum ($zahlen);
+    }
+
 }

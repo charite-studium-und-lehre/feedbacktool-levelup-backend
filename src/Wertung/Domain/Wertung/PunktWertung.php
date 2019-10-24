@@ -26,25 +26,41 @@ class PunktWertung extends AbstractWertung
      * @return PunktWertung
      */
     public static function getDurchschnittsWertung(array $wertungen): PunktWertung {
+        $punktSummenWertung = self::getSummenWertung($wertungen)->getPunktWertung();
+
+        return PunktWertung::fromPunktzahlUndSkala(
+            Punktzahl::fromFloat(
+                $punktSummenWertung->getPunktzahl()->getValue() / count($wertungen)),
+            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(count($wertungen)))
+        );
+    }
+
+    public static function getSummenWertung(array $wertungen) {
         $punktzahlen = [];
         $ersteWertung = $wertungen[0];
+        $skalaMaxPunkte = [];
 
         foreach ($wertungen as $wertung) {
             if (!$wertung instanceof PunktWertung) {
                 throw new \Exception("Muss Punktwertung sein!" . get_class($wertung));
             }
             $punktzahlen[] = $wertung->getPunktzahl()->getValue();
+            $skalaMaxPunkte[] = $wertung->getSkala()->getMaxPunktzahl()->getValue();
         }
 
         return PunktWertung::fromPunktzahlUndSkala(
-
             Punktzahl::fromFloat(
                 round(
-                    self::getDurchschnittAusZahlen($punktzahlen),
+                    self::getSummeAusZahlen($punktzahlen),
                     2
-                ),
-                ),
-            $ersteWertung->getSkala()
+                )
+            ),
+            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(
+                round(
+                    self::getSummeAusZahlen($skalaMaxPunkte),
+                    2
+                ))
+            )
         );
     }
 
@@ -67,4 +83,5 @@ class PunktWertung extends AbstractWertung
     public function getPunktzahl(): Punktzahl {
         return $this->punktzahl;
     }
+
 }

@@ -71,4 +71,7 @@ class ProzentWertung extends AbstractWertung
         return $this->prozentzahl;
     }
 
+    public static function getSummenWertung(array $wertungen) {
+        throw new \Exception("Macht hier keinen Sinn!");
+    }
 }
