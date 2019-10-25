@@ -96,6 +96,18 @@ class StudiPruefungErgebnisService
             return [];
         }
         if ($pruefung->getFormat()->isMc()) {
+            $kohortenWertungen = [];
+            $alleStudiPruefungen = $this->studiPruefungsRepository->allByPruefungsId($pruefung->getId());
+            foreach ($alleStudiPruefungen as $kohortenStudiPruefung) {
+                $kohortenStudiPruefungsWertung = $this->studiPruefungsWertungRepository
+                    ->byStudiPruefungsId($kohortenStudiPruefung->getId());
+                if (!$kohortenStudiPruefungsWertung) {
+                    continue;
+                }
+                $kohortenWertungen[] = $kohortenStudiPruefungsWertung->getGesamtErgebnis()->getPunktWertung()
+                        ->getPunktzahl()->getValue();
+            }
+
             return [
                 "ergebnisPunktzahl"        => $pruefungsWertung->getGesamtErgebnis()
                     ->getPunktWertung()->getPunktzahl()->getValue(),
@@ -106,6 +118,7 @@ class StudiPruefungErgebnisService
                     ->getPunktWertung()->getSkala()->getMaxPunktzahl()->getValue(),
                 "bestehensgrenzePunktzahl" => $pruefungsWertung->getBestehensGrenze()
                     ->getPunktWertung()->getPunktzahl()->getValue(),
+                "kohortenPunktzahlen" => $kohortenWertungen
             ];
         } elseif ($pruefung->getFormat()->isStation()) {
             return [
