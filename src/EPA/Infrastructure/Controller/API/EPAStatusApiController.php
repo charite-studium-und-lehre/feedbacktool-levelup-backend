@@ -4,7 +4,7 @@ namespace EPA\Infrastructure\Controller\API;
 
 use Common\Application\Command\CommandBus;
 use EPA\Application\Command\SelbstBewertungErhoehenCommand;
-use EPA\Application\Command\SelbstBewertungVermindernCommand;
+use EPA\Application\Command\SelbstBewertungAendernCommand;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
 use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
@@ -24,7 +24,7 @@ class EPAStatusApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epa/meine", name="meine_epas")
+     * @Route("/api/epas", name="meine_epas")
      */
     public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
         $data = $epasFuerStudiService->getEpaStudiData(
@@ -35,43 +35,25 @@ class EPAStatusApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epa/selbstbewertung/erhoehen", name="api_selbstbewertung_erhoehen")
-     * @Route("/api/epa/meine", name="api_selbstbewertung_erhoehen")
+     * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen")
      */
-    public function erhoeheSelbstbewertungAction(Request $request, CommandBus $commandBus, $vermindern = FALSE) {
-        $epaId = $request->get("epaID");
-        if ($request->get("typ") == "gemacht") {
-            $typ = SelbstBewertungsTyp::GEMACHT;
-        } elseif ($request->get("typ") == "zutrauen") {
-            $typ = SelbstBewertungsTyp::ZUTRAUEN;
-        } else {
-            return new Response("Parameter 'typ' muss gegeben werden als 'gemacht' oder 'zutrauen'", 400);
-        }
+    public function aendereSelbstBewertung(Request $request, CommandBus $commandBus, int $epaID) {
+        $zutrauen = $request->get("zutrauen");
+        $gemacht = $request->get("gemacht");
 
-        if ($vermindern) {
-            $command = new SelbstBewertungVermindernCommand();
-        } else {
-            $command = new SelbstBewertungErhoehenCommand();
-        }
+        $command = new SelbstBewertungAendernCommand();
 
         $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
-        $command->selbstBewertungsTyp = $typ;
-        $command->epaId = $epaId;
-
-        try {
-            $commandBus->execute($command);
-        } catch (\Throwable $e) {
-            return new Response($e->getMessage(), 400);
+        if (!$command->loginHash) {
+            throw new \Exception("Kein Login-Hash gegeben!");
         }
+        $command->epaId = $epaID;
+        $command->zutrauen = $zutrauen;
+        $command->gemacht = $gemacht;
+
+        $commandBus->execute($command);
 
         return new Response("Erfolg", 200);
-    }
-
-    /**
-     * @Route("/api/epa/selbstbewertung/vermindern", name="api_selbstbewertung_vermindern")
-     */
-    public function vermindereSelbstbewertungAction(Request $request, CommandBus $commandBus) {
-        return $this->erhoeheSelbstbewertungAction($request, $commandBus, TRUE);
     }
 
 }

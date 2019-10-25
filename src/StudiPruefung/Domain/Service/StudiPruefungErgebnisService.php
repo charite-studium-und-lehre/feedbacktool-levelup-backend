@@ -57,6 +57,40 @@ class StudiPruefungErgebnisService
 
     public function getErgebnisAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
+
+        $gesamtErgebnis = $this->getStudiPruefungGesamtWertung($studiPruefung);
+        $einzelErgebnisse = $this->getErgebnisDetailsAlsJsonArray($studiPruefung);
+        $pruefungsPeriode = $pruefung->getPruefungsPeriode();
+        $returnArray = [
+            "name"             => $pruefung->getName(),
+            "typ"              => $pruefung->getFormat()->getCode(),
+            "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
+            "studiPruefungsId" => $studiPruefung->getId()->getValue(),
+            "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
+            "periodeCode"      => $pruefungsPeriode->toInt(),
+            "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
+            "gesamtErgebnis"   => $gesamtErgebnis,
+        ];
+        $returnArray = $returnArray + $einzelErgebnisse;
+
+        return $returnArray;
+    }
+
+    private function getErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
+        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
+        if ($pruefung->getFormat()->isMc()) {
+            return $this->getMCErgebnisDetailsAlsJsonArray($studiPruefung);
+        } elseif ($pruefung->getFormat()->isStation()) {
+            return [];
+        } elseif ($pruefung->getFormat()->isPTM()) {
+            return [];
+        }
+
+        return [];
+    }
+
+    private function getStudiPruefungGesamtWertung(StudiPruefung $studiPruefung): array {
+        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());
         if (!$pruefungsWertung) {
             return [];
@@ -100,20 +134,8 @@ class StudiPruefungErgebnisService
 
             ];
         } else {
-            return $pruefung->getFormat()->getValue();
+            throw new \Exception("Unbekanntes Format: " . $pruefung->getFormat()->getTitel());
         }
-    }
-
-    public function getErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
-        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-        if ($pruefung->getFormat()->isMc()) {
-            return $this->getMCErgebnisDetailsAlsJsonArray($studiPruefung);
-        } elseif ($pruefung->getFormat()->isStation()) {
-            return [];
-        } elseif ($pruefung->getFormat()->isPTM()) {
-            return [];
-        }
-        return [];
     }
 
     private function getStationsErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {

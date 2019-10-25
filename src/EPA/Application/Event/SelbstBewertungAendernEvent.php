@@ -5,7 +5,7 @@ namespace EPA\Application\Event;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventTrait;
 
-class SelbstBewertungVermindernEvent implements DomainEvent
+class SelbstBewertungAendernEvent implements DomainEvent
 {
     use DomainEventTrait;
 
@@ -13,8 +13,11 @@ class SelbstBewertungVermindernEvent implements DomainEvent
     public $loginHash;
 
     /** @var int */
-    public $selbstBewertungsTyp;
+    public $epaId;
 
     /** @var int */
-    public $epaId;
+    public $zutrauen;
+
+    /** @var int */
+    public $gemacht;
 }

@@ -5,9 +5,9 @@ namespace EPA\Application\Command;
 use Common\Application\Command\CommandHandler;
 use Common\Application\Command\DomainCommand;
 use Common\Application\Command\DomainCommandTrait;
-use EPA\Application\Event\SelbstBewertungErhoehenEvent;
+use EPA\Application\Event\SelbstBewertungAendernEvent;
 
-class SelbstBewertungErhoehenCommand extends SelbstBewertungErhoehenEvent implements DomainCommand
+class SelbstBewertungAendernCommand extends SelbstBewertungAendernEvent implements DomainCommand
 {
     use DomainCommandTrait;
 

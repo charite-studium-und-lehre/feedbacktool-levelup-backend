@@ -54,6 +54,11 @@ class SelbstBewertung implements DDDEntity
         return $this->epaBewertung;
     }
 
+    public function setzeBewertung(int $bewertung): void {
+        $this->epaBewertung = $this->epaBewertung->setzeStufe($bewertung);
+        $this->epaBewertungsDatum = EPABewertungsDatum::heute();
+    }
+
     public function erhoeheBewertung(): void {
         $this->epaBewertung = $this->epaBewertung->erhoeheStufe();
         $this->epaBewertungsDatum = EPABewertungsDatum::heute();

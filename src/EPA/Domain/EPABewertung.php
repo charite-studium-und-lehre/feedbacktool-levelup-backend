@@ -44,6 +44,12 @@ class EPABewertung
         return $object;
     }
 
+    public function setzeStufe(int $stufe): self {
+        $stufe = min($stufe, self::BEWERTUNG_MAX);
+        $stufe = max($stufe, self::BEWERTUNG_MIN);
+        return self::fromValues($stufe, $this->epa);
+    }
+
     public function erhoeheStufe(): self {
         return self::fromValues(
             min($this->bewertung + 1, self::BEWERTUNG_MAX),

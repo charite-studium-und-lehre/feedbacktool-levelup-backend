@@ -4,7 +4,7 @@ namespace EPA\Infrastructure\Controller\API;
 
 use Common\Application\Command\CommandBus;
 use EPA\Application\Command\SelbstBewertungErhoehenCommand;
-use EPA\Application\Command\SelbstBewertungVermindernCommand;
+use EPA\Application\Command\SelbstBewertungAendernCommand;
 use EPA\Domain\SelbstBewertungsTyp;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +29,7 @@ class SelbstbewertungApiController extends AbstractController
         }
 
         if ($vermindern) {
-            $command = new SelbstBewertungVermindernCommand();
+            $command = new SelbstBewertungAendernCommand();
         } else {
             $command = new SelbstBewertungErhoehenCommand();
         }

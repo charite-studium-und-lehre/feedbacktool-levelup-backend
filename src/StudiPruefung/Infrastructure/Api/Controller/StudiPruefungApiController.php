@@ -20,44 +20,33 @@ class StudiPruefungApiController extends AbstractController
     /** @var PruefungsRepository */
     private $pruefungsRepository;
 
+    /** @var StudiPruefungErgebnisService */
+    private $studiPruefungsErgebnisService;
+
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,
-        PruefungsRepository $pruefungsRepository
+        PruefungsRepository $pruefungsRepository,
+        StudiPruefungErgebnisService $studiPruefungsErgebnisService
     ) {
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->pruefungsRepository = $pruefungsRepository;
+        $this->studiPruefungsErgebnisService = $studiPruefungsErgebnisService;
     }
 
     /**
      * @Route("/api/pruefungen")
      */
-    public function jsonStudiPruefungAction(StudiPruefungErgebnisService $ergebnisService) {
+    public function jsonStudiPruefungAction() {
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
-            return new JsonResponse(["pruefungen" => []], 200);
+            return new JsonResponse(["pruefungen" => []], 404);
         }
         $studiPruefungen = $this->studiPruefungsRepository->allByStudiHash(
             $eingeloggterStudi->getStudiHash()
         );
         $returnArray = [];
         foreach ($studiPruefungen as $studiPruefung) {
-            $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-            $pruefungsPeriode = $pruefung->getPruefungsPeriode();
-            $name = $pruefung->getName();
-            $gesamtErgebnis = $ergebnisService->getErgebnisAlsJsonArray($studiPruefung);
-            $einzelErgebnisse = $ergebnisService->getErgebnisDetailsAlsJsonArray($studiPruefung);
-            $insertArray = [
-                "name"             => $name,
-                "typ"              => $pruefung->getFormat()->getCode(),
-                "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
-                "studiPruefungsId" => $studiPruefung->getId()->getValue(),
-                "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
-                "periodeCode"      => $pruefungsPeriode->toInt(),
-                "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
-                "gesamtErgebnis"   => $gesamtErgebnis,
-            ];
-            $insertArray = $insertArray + $einzelErgebnisse;
-            $returnArray[] = $insertArray;
+            $returnArray[] = $this->studiPruefungsErgebnisService->getErgebnisAlsJsonArray($studiPruefung);
         }
 
         return new JsonResponse(["pruefungen" => $returnArray], 200);
@@ -71,27 +60,19 @@ class StudiPruefungApiController extends AbstractController
         StudiPruefungErgebnisService $ergebnisService,
         int $studiPruefungsIdInt
     ) {
+        $eingeloggterStudi = $this->getUser();
+        if (!$eingeloggterStudi instanceof Studi) {
+            return new JsonResponse(["pruefungen" => []], 200);
+        }
         $studiPruefungsId = StudiPruefungsId::fromInt($studiPruefungsIdInt);
         $studiPruefung = $this->studiPruefungsRepository->byId($studiPruefungsId);
-        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-        $pruefungsPeriode = $pruefung->getPruefungsPeriode();
+        if (!$studiPruefung->getStudiHash()->equals($eingeloggterStudi->getStudiHash())) {
+            return new JsonResponse("Studiprüfungs-ID entspricht nicht eringeloggtem Studi.", 400);
+        }
 
         $gesamtErgebnis = $ergebnisService->getErgebnisAlsJsonArray($studiPruefung);
-        $einzelErgebnisse = $ergebnisService->getErgebnisDetailsAlsJsonArray($studiPruefung);
 
-        $returnArray = [
-            "typ"              => $pruefung->getFormat()->getCode(),
-            "studiPruefungsId" => $studiPruefung->getId()->getValue(),
-            "name"             => $pruefung->getName(),
-            "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
-            "periodeCode"      => $pruefungsPeriode->toInt(),
-            "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
-            "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
-            "gesamtErgebnis"   => $gesamtErgebnis
-        ];
-        $returnArray = $returnArray + $einzelErgebnisse;
-
-        return new JsonResponse($returnArray, 200);
+        return new JsonResponse($gesamtErgebnis, 200);
 
     }
 

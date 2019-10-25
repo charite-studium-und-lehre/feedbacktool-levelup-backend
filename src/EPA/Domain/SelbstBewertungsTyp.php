@@ -40,4 +40,11 @@ class SelbstBewertungsTyp implements DDDValueObject
         return $this->value;
     }
 
+    public function istGemacht(): bool {
+        return $this->value == self::GEMACHT;
+    }
+    public function istZutrauen(): bool {
+        return !$this->istGemacht();
+    }
+
 }
