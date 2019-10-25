@@ -30,7 +30,7 @@ class PunktWertung extends AbstractWertung
 
         return PunktWertung::fromPunktzahlUndSkala(
             Punktzahl::fromFloat(
-                $punktSummenWertung->getPunktzahl()->getValue() / count($wertungen)),
+                round($punktSummenWertung->getPunktzahl()->getValue() / count($wertungen), 2)),
             PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(count($wertungen)))
         );
     }
