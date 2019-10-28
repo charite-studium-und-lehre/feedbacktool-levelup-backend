@@ -27,6 +27,9 @@ class EPAStatusApiController extends BaseController
      * @Route("/api/epas", name="meine_epas")
      */
     public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
+        if (!$this->getCurrentUserLoginHash()) {
+            return new Response("Nicht eingeloggt?", 401);
+        }
         $data = $epasFuerStudiService->getEpaStudiData(
             $this->getCurrentUserLoginHash($this->loginHashCreator)
         );
@@ -49,7 +52,7 @@ class EPAStatusApiController extends BaseController
 
         $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
         if (!$command->loginHash) {
-            throw new \Exception("Kein Login-Hash gegeben!");
+            return new Response("Nicht eingeloggt?", 401);
         }
         $command->epaId = $epaID;
         $command->zutrauen = $zutrauen;
