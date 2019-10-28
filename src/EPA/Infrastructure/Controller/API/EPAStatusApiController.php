@@ -38,6 +38,9 @@ class EPAStatusApiController extends BaseController
      * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen")
      */
     public function aendereSelbstBewertung(Request $request, CommandBus $commandBus, int $epaID) {
+        if ($request->getMethod() == "OPTIONS") {
+            return new Response("", 200);
+        }
         $zutrauen = $request->get("zutrauen");
         $gemacht = $request->get("gemacht");
 
