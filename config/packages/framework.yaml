@@ -9,6 +9,8 @@ framework:
     session:
         handler_id: ~
         name: LEVELUP
+        cookie_lifetime: 604800 # (1 Woche)
+        gc_probability: null
 
     #esi: true
     #fragments: true

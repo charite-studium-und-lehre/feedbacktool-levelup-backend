@@ -19,9 +19,11 @@ use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPrue
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\Skala\ProzentSkala;
+use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\ProzentWertung;
 use Wertung\Domain\Wertung\Prozentzahl;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
+use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsWertungRepository;
 
 class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
 {
@@ -33,6 +35,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
             'db-repos'         => [
                 $this->currentContainer->get(PruefungsRepository::class),
                 $this->currentContainer->get(StudiPruefungsRepository::class),
+                $this->currentContainer->get(StudiPruefungsWertungRepository::class),
                 $this->currentContainer->get(PruefungsItemRepository::class),
                 $this->currentContainer->get(ItemWertungsRepository::class),
                 $this->currentContainer->get(StudiInternRepository::class),
@@ -40,6 +43,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
             'file-based-repos' => [
                 FileBasedSimplePruefungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsWertungRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
@@ -53,6 +57,7 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
     public function testImportStudiInternPersistenz(
         PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
+        StudiPruefungWertungsRepository $studiPruefungWertungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         StudiInternRepository $studiInternRepository
@@ -68,7 +73,8 @@ class ChariteStationenPersistenzServiceTestTeil1VK extends DbRepoTestCase
             $studiPruefungsRepository,
             $pruefungsItemRepository,
             $itemWertungsRepository,
-            $studiInternRepository
+            $studiInternRepository,
+            $studiPruefungWertungsRepository
         );
 
         $data = $csvImportService->getData(__DIR__ . "/TEST_Teil1VK_SoSe2018HAUPT.csv");

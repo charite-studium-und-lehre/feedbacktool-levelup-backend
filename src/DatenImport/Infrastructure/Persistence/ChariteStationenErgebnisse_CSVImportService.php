@@ -40,7 +40,8 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
             foreach ($dataLine as $key => $dataCell) {
                 $ergebnis = str_replace(",", ".", $dataCell);
                 if ((strstr($key, "#") !== FALSE
-                        || in_array($key, ["Skala1_erg", "Skala2_erg", "ergebnis", "skala1_proz", "skala2_proz", "Proz"]))
+                        || in_array($key, ["Skala1_erg", "Skala2_erg", "skala1_proz", "skala2_proz",
+                                           "ergebnis", "Proz"]))
                     && is_numeric($ergebnis)
                     && $ergebnis > 0) {
                     if ($ergebnis > 100) {
@@ -52,14 +53,21 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                         $key = "Sk1";
                     } elseif (in_array($key, ["Skala2_erg", "skala2_proz"])) {
                         $key = "Sk2";
-                    } elseif (in_array($key, ["ergebnis", "Proz"])) {
+                    } elseif (in_array($key, ["ergebnis"])) {
                         $key = "erg";
+                    } elseif (in_array($key, ["Proz"])) {
+                        if (isset($dataLine["Perma"])) {
+                            $key = $dataLine["Perma"];
+                        } elseif (isset($dataLine["Permadummy"])) {
+                            $key = $dataLine["Permadummy"];
+                        } else {
+                            $key = "erg";
+                        }
                     }
 
                     $ergebnisse[$key] = $ergebnis;
                 }
             }
-
 
             $resultLine = [
                 "matrikelnummer" => $matrikelnummer,

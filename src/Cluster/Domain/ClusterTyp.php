@@ -13,15 +13,19 @@ class ClusterTyp implements DDDValueObject
     private const TYP_ID_FACH = 100;
     private const TYP_ID_ORGANSYSTEM = 200;
 
+    private const TYP_ID_STATIONS_FACH = 300;
+    private const TYP_ID_STATION_MODUL = 310;
+    private const TYP_ID_STATION_WISSENS_TYP = 320;
+
     private const TYP_ID_MODUL = 500;
     private const TYP_VERANSTALTUNGS_NUMMER = 510;
     private const TYP_LERNZIEL_NUMMER = 520;
     private const TYP_FRAGEN_NUMMER = 530;
 
-    private const TYP_ID_MC_FRAGE_SCHWIERIGKEIT = 600;
-
     private const ALLE_KONSTANTEN = [
-        self::TYP_ID_FACH, self::TYP_ID_ORGANSYSTEM, self::TYP_ID_MODUL, self::TYP_ID_MC_FRAGE_SCHWIERIGKEIT,
+        self::TYP_ID_FACH, self::TYP_ID_ORGANSYSTEM, self::TYP_ID_MODUL,
+        self::TYP_ID_STATIONS_FACH, self::TYP_ID_STATION_MODUL, self::TYP_ID_STATION_WISSENS_TYP,
+        self::TYP_VERANSTALTUNGS_NUMMER, self::TYP_LERNZIEL_NUMMER, self::TYP_FRAGEN_NUMMER
     ];
 
     const INVALID = "Der Clustertyp ist nicht bekannt: ";
@@ -49,8 +53,17 @@ class ClusterTyp implements DDDValueObject
         return self::fromConst(self::TYP_ID_MODUL);
     }
 
-    public static function getMcFragenSchwierigkeitTyp(): ClusterTyp {
-        return self::fromConst(self::TYP_ID_MC_FRAGE_SCHWIERIGKEITL);
+
+    public static function getStationsFachTyp(): ClusterTyp {
+        return self::fromConst(self::TYP_ID_STATIONS_FACH);
+    }
+
+    public static function getStationsModulTyp(): ClusterTyp {
+        return self::fromConst(self::TYP_ID_STATION_MODUL);
+    }
+
+    public static function getStationsWissensTyp(): ClusterTyp {
+        return self::fromConst(self::TYP_ID_STATION_WISSENS_TYP);
     }
 
     public function getConst(): int {
@@ -66,11 +79,19 @@ class ClusterTyp implements DDDValueObject
     }
 
     public function isModulTyp(): bool {
-        return $this->getConst() == self::TYP_ID_MODUL();
+        return $this->getConst() == self::TYP_ID_MODUL;
     }
 
-    public function isMcFragenSchwierigkeitTyp(): bool {
-        return $this->getConst() == self::TYP_ID_MC_FRAGE_SCHWIERIGKEIT();
+    public function isStationsFachTyp(): bool {
+        return $this->getConst() == self::TYP_ID_STATIONS_FACH;
+    }
+
+    public function isStationsModulTyp(): bool {
+        return $this->getConst() == self::TYP_ID_STATION_MODUL;
+    }
+
+    public function isStationsWissenTyp(): bool {
+        return $this->getConst() == self::TYP_ID_STATION_WISSENS_TYP;
     }
 
 }

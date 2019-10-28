@@ -2,6 +2,7 @@
 
 namespace DatenImport\Domain;
 
+use DatenImport\Infrastructure\UserInterface\CLI\MCCSVPruefungsFaecherUndModuleImportCommand;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
@@ -56,9 +57,16 @@ class ChariteStationenPruefungPersistenzService
         $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
+    public static function getPruefungsItemId(PruefungsId $pruefungsId, $fach, $ergebnisKey): PruefungsItemId {
+        $itemCode = $fach . "-" . $ergebnisKey;
+        $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $itemCode;
+
+        return PruefungsItemId::fromString($pruefungsItemIdString);
+    }
+
     /** @param StudiIntern[] $studiInternArray */
     public function persistierePruefung($pruefungsDaten, PruefungsId $pruefungsId) {
-        foreach ($pruefungsDaten as $dataLine) {
+        foreach ($pruefungsDaten as $key => $dataLine) {
             $ergebnisse = $dataLine["ergebnisse"];
             $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikelnummer"]);
             $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
@@ -85,9 +93,7 @@ class ChariteStationenPruefungPersistenzService
 
             $einzelWertungen = [];
             foreach ($ergebnisse as $ergebnisKey => $ergebnis) {
-                $itemCode = $fach . "-" . $ergebnisKey;
-
-                $pruefungsItemId = PruefungsItemId::fromString($pruefungsId->getValue() . "-" . $itemCode);
+                $pruefungsItemId = self::getPruefungsItemId($pruefungsId, $fach, $ergebnisKey);
 
                 $pruefungsItem = $this->pruefungsItemRepository->byId($pruefungsItemId);
                 if (!$pruefungsItem) {
@@ -103,7 +109,7 @@ class ChariteStationenPruefungPersistenzService
                     $studiPruefung->getId(),
                     $pruefungsItemId
                 );
-                if (strstr($itemCode, "#") == FALSE) {
+                if ($ergebnis > 1) {
                     $ergebnis /= 100;
                 }
                 $prozentWertung = ProzentWertung::fromProzentzahl(

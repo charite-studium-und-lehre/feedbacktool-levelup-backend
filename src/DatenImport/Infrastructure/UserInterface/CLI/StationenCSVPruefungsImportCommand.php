@@ -3,6 +3,7 @@
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
 use DatenImport\Domain\ChariteStationenPruefungPersistenzService;
+use DatenImport\Domain\ChariteStationsClusterungPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportService;
 use Exception;
 use Pruefung\Domain\PruefungsFormat;
@@ -33,18 +34,33 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
     /** @var ItemWertungDurchschnittPersistenzService */
     private $itemWertungDurchschnittPersistenzService;
 
+    /** @var ChariteStationsClusterungPersistenzService */
+    private $chariteStationsClusterungPersistenzService;
+
+    /**
+     * StationenCSVPruefungsImportCommand constructor.
+     *
+     * @param PruefungsRepository $pruefungsRepository
+     * @param ChariteStationenErgebnisse_CSVImportService $chariteStationenErgebnisseCSVImportService
+     * @param ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService
+     * @param StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService
+     * @param ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService
+     * @param ChariteStationsClusterungPersistenzService $chariteStationsClusterungPersistenzService
+     */
     public function __construct(
         PruefungsRepository $pruefungsRepository,
         ChariteStationenErgebnisse_CSVImportService $chariteStationenErgebnisseCSVImportService,
         ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService,
         StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService,
-        ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService
+        ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService,
+        ChariteStationsClusterungPersistenzService $chariteStationsClusterungPersistenzService
     ) {
         $this->pruefungsRepository = $pruefungsRepository;
         $this->chariteStationenErgebnisseCSVImportService = $chariteStationenErgebnisseCSVImportService;
         $this->chariteStationenPruefungPersistenzService = $chariteStationenPruefungPersistenzService;
         $this->studiPruefungDurchschnittPersistenzService = $studiPruefungDurchschnittPersistenzService;
         $this->itemWertungDurchschnittPersistenzService = $itemWertungDurchschnittPersistenzService;
+        $this->chariteStationsClusterungPersistenzService = $chariteStationsClusterungPersistenzService;
         parent::__construct();
     }
 
@@ -84,6 +100,10 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
         $output->writeln("Persistiere Durchschnittswerte der Einzel-Items...");
         $this->itemWertungDurchschnittPersistenzService
             ->berechneUndPersistiereDurchschnitt($pruefungsId);
+
+        $output->writeln("Persistiere Cluster-Zuordnungen...");
+        $this->chariteStationsClusterungPersistenzService
+            ->persistiereClusterZuordnungen($stationsPruefungsDaten, $pruefungsId);
 
         $output->writeln("\nFertig. ");
 

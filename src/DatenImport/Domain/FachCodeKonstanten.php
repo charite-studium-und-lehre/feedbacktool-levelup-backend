@@ -130,7 +130,7 @@ class FachCodeKonstanten
         'Physiologie' => 'phys',
 
         'Med.Psych/Anatomie/Biologie/Med.Soz./Sozialmedizin' => 'div',
-        'NA' => 'div',
+        'NA'                                                 => 'div',
 
         '1291_Bio'       => 'bioch',
         '1292_Bio'       => 'bio',
@@ -138,5 +138,74 @@ class FachCodeKonstanten
         '1292_Med_Soz'   => 'medSoz',
         '1292_Anatomie'  => 'ana',
         '1292_Sozialmed' => 'sozMed',
+    ];
+
+    public const STATION_VK_TITEL = [
+        'ana'    => 'Anatomie',
+        'bioch'  => 'Biochemie',
+        'medSoz' => 'Medizinische Soziologie',
+        'bio'    => 'Biologie',
+        'medPsy' => 'Medizinische Psychologie',
+        'sozMed' => 'Sozialmedizin',
+        'phys'   => 'Physiologie',
+        'div'    => 'Med.Psych/Anatomie/Biologie/Med.Soz./Sozialmedizin',
+    ];
+
+    public const STATIONS_BEZEICHNUNGEN = [
+        # OSCE 2. FS (Stationsprüfung Teil 1)
+        'S1#N1' => 'Notfallstation',
+        'S1#N2' => 'Notfallstation',
+        'S1#N3' => 'Notfallstation',
+        'S1#N4' => 'Notfallstation',
+        'S1#U1' => 'Untersuchungskursstation ',
+        'S1#U2' => 'Untersuchungskursstation ',
+        'S1#U3' => 'Untersuchungskursstation ',
+        'S1#U4' => 'Untersuchungskursstation ',
+
+        # OSCE 4. FS (Stationsprüfung Teil 3)
+        '00#03' => 'KIT Gesprächstechnik ',
+        '09#01' => 'Haut M09',
+        '10#01' => 'Bewegung M10',
+        '10#02' => 'Bewegung M10',
+        '10#03' => 'Bewegung M10',
+        '11#01' => 'Herz Kreislauf M11',
+        '11#02' => 'Herz Kreislauf M11',
+        '12#01' => 'Ern./Verd./Stoffw. M12 ',
+        '12#02' => 'Ern./Verd./Stoffw. M12 ',
+        '13#01' => 'Atmung M13',
+        '13#02' => 'Atmung M13',
+        '14#01' => 'Niere/Elektrolyte M14',
+        '14#02' => 'Niere/Elektrolyte M14',
+        '14#04' => 'Niere/Elektrolyte M14',
+        '15#01' => 'Nervensystem M15',
+        '15#02' => 'Nervensystem M15',
+        '15#03' => 'Nervensystem M15',
+        '16#01' => 'Sinnesorgane M16',
+        '16#02' => 'Sinnesorgane M16',
+        '16#03' => 'Sinnesorgane M16',
+        '16#04' => 'Sinnesorgane M16',
+
+        # OSCE 9. FS
+        '00#04' => 'KIT Gesprächstechnik ',
+        '27#01' => 'Erkrankungen der Extremitäten M27',
+        '27#02' => 'Erkrankungen der Extremitäten M27',
+        '30#01' => 'Neurologische Erkrankungen M30',
+        '31#02' => 'Psychiatrische Erkrankungen M31',
+        '31#05' => 'Psychiatrische Erkrankungen M31',
+        '33#01' => 'Schwangerschaft/Geburt M33',
+        '34#01' => 'Kindesalter/ Adoleszenz M34',
+        '34#02' => 'Kindesalter/ Adoleszenz M34',
+        '34#03' => 'Kindesalter/ Adoleszenz M34',
+        '35#01' => 'Geschlechtsspezifische Erkrankungen M35',
+        '36#01' => 'Alter/Tod/Sterben M36',
+        '36#02' => 'Alter/Tod/Sterben M36',
+        '51#N3' => '(unbekannt)'
+    ];
+
+    public const STATION_WISSENS_TYP_FAKTEN = "fakten";
+    public const STATION_WISSENS_TYP_ZUSAMMENHANG = "zusamm";
+    public const STATION_WISSENS_TYPEN = [
+        self::STATION_WISSENS_TYP_FAKTEN => "Faktenwissen",
+        self::STATION_WISSENS_TYP_ZUSAMMENHANG => "Zusammenhangswissen",
     ];
 }
