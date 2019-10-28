@@ -63,11 +63,11 @@ class SSOController extends AbstractController
             }
         }
 
-        return $this->redirect("/app/loggedIn");
+        return $this->redirect("/app-develop");
     }
 
-    /** @Route("/isLoggedIn", name="isLoggedIn") */
-    public function isLoggedInAction() {
+    /** @Route("/api/stammdaten", name="isLoggedIn", methods="GET") */
+    public function checkStammdatenAction() {
         /** @var $loginUser LoginUser */
         $loginUser = $this->getUser();
         if ($this->getUser()) {
@@ -83,8 +83,8 @@ class SSOController extends AbstractController
         return new Response(NULL, 401);
     }
 
-    /** @Route("/api/stammdaten", name="stammdaten") */
-    public function stammdatenAction(
+    /** @Route("/api/stammdaten", name="stammdaten", methods="POST") */
+    public function getStammdatenAction(
         Request $request,
         StudiRepository $studiRepository,
         LoginHashCreator $loginHashCreator,
