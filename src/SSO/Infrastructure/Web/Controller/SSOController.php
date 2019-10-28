@@ -5,6 +5,7 @@ namespace SSO\Infrastructure\Web\Controller;
 use Common\Domain\User\LoginUser;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
+use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use SSO\Infrastructure\Web\Service\UserSwitcher;
 use Studi\Domain\Matrikelnummer;
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class SSOController extends AbstractController
+class SSOController extends BaseController
 {
     /**
      * @Route("/login", name="login")
@@ -84,7 +85,7 @@ class SSOController extends AbstractController
         return new Response(NULL, 401);
     }
 
-    /** @Route("/api/stammdaten", name="stammdaten", methods="POST") */
+    /** @Route("/api/stammdaten", name="stammdaten", methods={"POST", "OPTIONS"}) */
     public function getStammdatenAction(
         Request $request,
         StudiRepository $studiRepository,
@@ -92,9 +93,13 @@ class SSOController extends AbstractController
         StudiHashCreator $studiHashCreator,
         TokenStorageInterface $tokenStorage
     ) {
-        $matrikelnummer = $request->get("matrikelnummer");
+        if ($request->getMethod() == "OPTIONS") {
+            return new Response("", 200);
+        }
+        $params = $this->getJsonContentParams($request);
+        $matrikelnummer = $params->get("matrikelnummer");
         if (!$matrikelnummer) {
-            return new Response("'matrikelnummer' muss als POST-Param gg. werden!", 400);
+            return new Response("'matrikelnummer' muss als POST-Param gg. werden! -> Content:" . $request->getContent(), 400);
         }
 
         /** @var LoginUser $loginUser */
@@ -156,6 +161,7 @@ class SSOController extends AbstractController
         dump($this->getUser());
         dump($this->getUser()->getRoles());
         dump($tokenStorage);
+        dump($_SESSION);
         if ($user instanceof Studi) {
             dump($user->getStudiHash());
         }

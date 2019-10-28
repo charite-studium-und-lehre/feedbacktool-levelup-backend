@@ -41,8 +41,9 @@ class EPAStatusApiController extends BaseController
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
-        $zutrauen = $request->get("zutrauen") ?: 0;
-        $gemacht = $request->get("gemacht") ?: 0;
+        $params = $this->getJsonContentParams($request);
+        $zutrauen = $params->get("zutrauen") ?: 0;
+        $gemacht = $params->get("gemacht") ?: 0;
 
         $command = new SelbstBewertungAendernCommand();
 
