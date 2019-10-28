@@ -2,6 +2,7 @@
 
 namespace StudiPruefung\Domain\Service;
 
+use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
@@ -13,6 +14,7 @@ use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\StudiPruefungsWertungRepository;
+use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
 class StudiPruefungErgebnisService
 {
@@ -83,7 +85,7 @@ class StudiPruefungErgebnisService
         } elseif ($pruefung->getFormat()->isStation()) {
             return [];
         } elseif ($pruefung->getFormat()->isPTM()) {
-            return [];
+            return $this->getPTMErgebnisDetailsAlsJsonArray($studiPruefung);
         }
 
         return [];
@@ -136,14 +138,14 @@ class StudiPruefungErgebnisService
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
                 "ergebnisWeissnichtPunktzahl"     => $pruefungsWertung->getGesamtErgebnis()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
-                "maximalPunktzahl"                => $pruefungsWertung->getGesamtErgebnis()
-                    ->getRichtigFalschWeissnichtWertung()->getGesamtPunktzahl()->getValue(),
                 "durchschnittRichtigPunktzahl"    => $pruefungsWertung->getKohortenWertung()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
                 "durchschnittFalschPunktzahl"     => $pruefungsWertung->getKohortenWertung()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
                 "durchschnittWeissnichtPunktzahl" => $pruefungsWertung->getKohortenWertung()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
+                "maximalPunktzahl"                => $pruefungsWertung->getGesamtErgebnis()
+                    ->getRichtigFalschWeissnichtWertung()->getGesamtPunktzahl()->getValue(),
 
             ];
         } else {
@@ -152,130 +154,68 @@ class StudiPruefungErgebnisService
     }
 
     private function getStationsErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
-        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-        $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
+        [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isStation()) {
             return [];
         }
     }
 
     private function getPTMErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
-        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-        $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
+        [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isPTM()) {
             return [];
         }
 
-        $itemsNachFach = [];
-        $itemsNachModul = [];
-        foreach ($itemWertungen as $itemWertung) {
-            $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
-                $itemWertung->getPruefungsItemId(),
-                ClusterTyp::getFachTyp()
-            );
-            if ($clusterIds) {
-                $fachClusterId = $clusterIds[0];
-                $itemsNachFach[$fachClusterId->getValue()][] = $itemWertung;
-            }
-        }
+        $itemsNachFach = $this->getItemsNachFach($itemWertungen);
 
         $fachAggregate = [];
         foreach ($itemsNachFach as $clusterId => $itemWertungen) {
             $fach = $this->clusterRepository->byId(ClusterId::fromInt($clusterId));
-            $alleMeineWertungen = [];
-            $alleKohortenWertungen = [];
-            foreach ($itemWertungen as $itemWertung) {
-                $alleMeineWertungen[] = $itemWertung->getWertung();
-                $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
-            }
-            $meinDurchschnitt = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleMeineWertungen);
-            $kohortenDurchschnitt = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
-            $fachChar = substr($fach->getCode()->getValue(), 0, 1);
 
-            switch ($fachChar) {
-                case "F":
-                    $gruppe = "Klinische Fächer";
-                    break;
-                case "Q":
-                    $gruppe = "Querschnittsfächer";
-                    break;
-                case "S":
-                    $gruppe = "Vorklinische Fächer";
-                    break;
-                default:
-                    $gruppe = "Andere";
-            }
+            [$alleMeineWertungen, $alleKohortenWertungen] = $this->getWertungen($itemWertungen);
+
+            /** @var RichtigFalschWeissnichtWertung $meinDurchschnitt */
+            $meinDurchschnitt = $itemWertungen[0]->getWertung()::getSummenWertung($alleMeineWertungen);
+            /** @var RichtigFalschWeissnichtWertung $kohortenDurchschnitt */
+            $kohortenDurchschnitt = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
+
+            $gruppe = $this->getFachGruppeByFach($fach);
             $fachAggregate[] = [
                 "code"                   => $fach->getCode()->getValue(),
                 "titel"                  => $fach->getTitel()->getValue(),
                 "gruppe"                 => $gruppe,
-                "ergebnisPunktzahl"      => $meinDurchschnitt->getPunktWertung()->getPunktzahl()->getValue(),
-                "durchschnittsPunktzahl" => $kohortenDurchschnitt->getPunktWertung()->getPunktzahl()->getValue(),
-                "maximalPunktzahl"       => $meinDurchschnitt->getPunktWertung()
-                    ->getSkala()
-                    ->getMaxPunktzahl()
-                    ->getValue(),
+                "ergebnisRichtigPunktzahl"      => $meinDurchschnitt->getPunktzahlRichtig()->getValue(),
+                "ergebnisFalschPunktzahl"      => $meinDurchschnitt->getPunktzahlFalsch()->getValue(),
+                "ergebnisWeissnichtPunktzahl"      => $meinDurchschnitt->getPunktzahlWeissnicht()->getValue(),
+
+                "durchschnittRichtigPunktzahl" => $kohortenDurchschnitt->getPunktzahlRichtig()->getValue(),
+                "durchschnittFalschPunktzahl" => $kohortenDurchschnitt->getPunktzahlFalsch()->getValue(),
+                "durchschnittWeissnichtPunktzahl" => $kohortenDurchschnitt->getPunktzahlWeissnicht()->getValue(),
+
+                "maximalPunktzahl"       => $meinDurchschnitt->getGesamtPunktzahl()->getValue(),
             ];
         }
+        return [
+            "faecher" => $fachAggregate,
+        ];
     }
 
     private function getMCErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
-        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-        $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
+        [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isMc()) {
             return [];
         }
 
-        $itemsNachFach = [];
-        $itemsNachModul = [];
-        foreach ($itemWertungen as $itemWertung) {
-            $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
-                $itemWertung->getPruefungsItemId(),
-                ClusterTyp::getFachTyp()
-            );
-            if ($clusterIds) {
-                $fachClusterId = $clusterIds[0];
-                $itemsNachFach[$fachClusterId->getValue()][] = $itemWertung;
-            }
-        }
-
-        foreach ($itemWertungen as $itemWertung) {
-            $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
-                $itemWertung->getPruefungsItemId(),
-                ClusterTyp::getModulTyp()
-            );
-            if ($clusterIds) {
-                $modulClusterId = $clusterIds[0];
-                $itemsNachModul[$modulClusterId->getValue()][] = $itemWertung;
-            }
-        }
+        $itemsNachFach = $this->getItemsNachFach($itemWertungen);
+        $itemsNachModul = $this->getItemsNachModul($itemWertungen);
 
         $fachAggregate = [];
         foreach ($itemsNachFach as $clusterId => $itemWertungen) {
             $fach = $this->clusterRepository->byId(ClusterId::fromInt($clusterId));
-            $alleMeineWertungen = [];
-            $alleKohortenWertungen = [];
-            foreach ($itemWertungen as $itemWertung) {
-                $alleMeineWertungen[] = $itemWertung->getWertung();
-                $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
-            }
+            [$alleMeineWertungen, $alleKohortenWertungen] = $this->getWertungen($itemWertungen);
             $meineSumme = $itemWertungen[0]->getWertung()::getSummenWertung($alleMeineWertungen);
             $kohortenSumme = $itemWertungen[0]->getWertung()::getSummenWertung($alleKohortenWertungen);
-            $fachChar = substr($fach->getCode()->getValue(), 0, 1);
-
-            switch ($fachChar) {
-                case "F":
-                    $gruppe = "Klinische Fächer";
-                    break;
-                case "Q":
-                    $gruppe = "Querschnittsfächer";
-                    break;
-                case "S":
-                    $gruppe = "Vorklinische Fächer";
-                    break;
-                default:
-                    $gruppe = "Andere";
-            }
+            $gruppe = $this->getFachGruppeByFach($fach);
             $fachAggregate[] = [
                 "code"                   => $fach->getCode()->getValue(),
                 "titel"                  => $fach->getTitel()->getValue(),
@@ -292,12 +232,7 @@ class StudiPruefungErgebnisService
         $modulAggregate = [];
         foreach ($itemsNachModul as $clusterId => $itemWertungen) {
             $modul = $this->clusterRepository->byId(ClusterId::fromInt($clusterId));
-            $alleMeineWertungen = [];
-            $alleKohortenWertungen = [];
-            foreach ($itemWertungen as $itemWertung) {
-                $alleMeineWertungen[] = $itemWertung->getWertung();
-                $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
-            }
+            [$alleMeineWertungen, $alleKohortenWertungen] = $this->getWertungen($itemWertungen);
             $meineSumme = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleMeineWertungen);
             $kohortenSumme = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
 
@@ -330,6 +265,92 @@ class StudiPruefungErgebnisService
             ->byStudiPruefungsId($studiPruefungsId);
 
         return $pruefungsWertung;
+    }
+
+    private function getFachGruppeByFach(Cluster $fach): string {
+        $fachChar = substr($fach->getCode()->getValue(), 0, 1);
+
+        switch ($fachChar) {
+            case "F":
+                $gruppe = "Klinische Fächer";
+                break;
+            case "Q":
+                $gruppe = "Querschnittsfächer";
+                break;
+            case "S":
+                $gruppe = "Vorklinische Fächer";
+                break;
+            default:
+                $gruppe = "Andere";
+        }
+
+        return $gruppe;
+    }
+
+    /**
+     * @param $itemWertungen
+     * @return array
+     */
+    private function getWertungen($itemWertungen): array {
+        $alleMeineWertungen = [];
+        $alleKohortenWertungen = [];
+        foreach ($itemWertungen as $itemWertung) {
+            $alleMeineWertungen[] = $itemWertung->getWertung();
+            $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
+        }
+
+        return array($alleMeineWertungen, $alleKohortenWertungen);
+    }
+
+    /**
+     * @param $itemWertungen
+     * @return array
+     */
+    private function getItemsNachFach($itemWertungen): array {
+        $itemsNachFach = [];
+        foreach ($itemWertungen as $itemWertung) {
+            $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
+                $itemWertung->getPruefungsItemId(),
+                ClusterTyp::getFachTyp()
+            );
+            if ($clusterIds) {
+                $fachClusterId = $clusterIds[0];
+                $itemsNachFach[$fachClusterId->getValue()][] = $itemWertung;
+            }
+        }
+
+        return $itemsNachFach;
+    }
+
+    /**
+     * @param $itemWertungen
+     * @return array
+     */
+    private function getItemsNachModul($itemWertungen): array {
+        $itemsNachModul = [];
+        foreach ($itemWertungen as $itemWertung) {
+            $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
+                $itemWertung->getPruefungsItemId(),
+                ClusterTyp::getModulTyp()
+            );
+            if ($clusterIds) {
+                $modulClusterId = $clusterIds[0];
+                $itemsNachModul[$modulClusterId->getValue()][] = $itemWertung;
+            }
+        }
+
+        return $itemsNachModul;
+    }
+
+    /**
+     * @param StudiPruefung $studiPruefung
+     * @return array
+     */
+    private function getPruefungUndWertungen(StudiPruefung $studiPruefung): array {
+        $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
+        $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
+
+        return array($pruefung, $itemWertungen);
     }
 
 }

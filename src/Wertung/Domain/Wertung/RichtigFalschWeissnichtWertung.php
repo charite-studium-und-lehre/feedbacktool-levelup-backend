@@ -46,7 +46,7 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
      * @param RichtigFalschWeissnichtWertung[] $wertungen
      * @return RichtigFalschWeissnichtWertung
      */
-    public static function getDurchschnittsWertung(array $wertungen) {
+    public static function getSummenWertung(array $wertungen) {
         $richtigWertungen = [];
         $falschWertungen = [];
         $weissnichtWertungen = [];
@@ -102,7 +102,35 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
         return $this->punktzahlRichtig->getValue() / $this->skala->getMaxPunktzahl();
     }
 
-    public static function getSummenWertung(array $wertungen) {
-        throw new \Exception("Nicht implementiert");
+    public static function getDurchschnittsWertung(array $wertungen) {
+        $richtigWertungen = [];
+        $falschWertungen = [];
+        $weissnichtWertungen = [];
+
+        foreach ($wertungen as $wertung) {
+            if (!$wertung instanceof RichtigFalschWeissnichtWertung) {
+                throw new \Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
+            }
+            $richtigWertungen[] = $wertung->getPunktzahlRichtig()->getValue();
+            $falschWertungen[] = $wertung->getPunktzahlFalsch()->getValue();
+        }
+        $anzahlGesamtPunkte = $wertungen[0]->getGesamtPunktzahl()->getValue();
+        $durchschnittRichtig =  self::getDurchschnittAusZahlen($richtigWertungen);
+        $durchschnittFalsch =  self::getDurchschnittAusZahlen($falschWertungen);
+        $durchschnittWeissnicht = $anzahlGesamtPunkte - $durchschnittRichtig - $durchschnittFalsch;
+
+        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat($durchschnittRichtig),
+            Punktzahl::fromFloat($durchschnittFalsch),
+            Punktzahl::fromFloat($durchschnittWeissnicht)
+        );
     }
+
+    /**
+     * @param float[] $zahlen
+     */
+    protected static function getDurchschnittAusZahlen(array $zahlen): float {
+        return round(array_sum($zahlen) / count($zahlen));
+    }
+
 }
