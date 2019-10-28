@@ -75,6 +75,7 @@ class SSOController extends AbstractController
                 [
                     "vorname"             => $loginUser->getVorname()->getValue(),
                     "nachname"            => $loginUser->getNachname()->getValue(),
+                    "email"               => $loginUser->getEmail()->getValue(),
                     "stammdatenVorhanden" => $loginUser instanceof Studi,
                 ], 200
             );
