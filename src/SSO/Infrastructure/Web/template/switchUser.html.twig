@@ -7,14 +7,28 @@ dass man entsprechend die EPAs vom User ändern, kaputt machen dürfte!
 Also im Zweifelsfall lieber jemand anders nehmen...
 <br/>
 <br/>
-{% for count, studi in studis %}
-    <a href="?studiHash={{ studi.studiHash | url_encode }}">
-        {{ count}}: {{ studi.studiHash|slice(55) }}
-        {% if studi.loginHash %}
-            {{ studi.loginHash|slice(55) }}
-        {% else %}
-            (nicht registriert)
-        {% endif %}
-    </a>
-    <br/>
-{% endfor %}
+<table border="1">
+    <tr>
+        <td>#</td>
+        <td><b>Studi-Hash</b></td>
+        <td>Login-Hash</td>
+    </tr>
+    {% for count, studi in studis %}
+        <tr>
+            <td>{{ count }}</td>
+            <td>
+                <a href="?studiHash={{ studi.studiHash | url_encode }}">
+                    {{ studi.studiHash|slice(55) }}
+                </a>
+            </td>
+
+            <td>
+                {% if studi.loginHash %}
+                    {{ studi.loginHash|slice(55) }}
+                {% else %}
+                    (nicht registriert)
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
