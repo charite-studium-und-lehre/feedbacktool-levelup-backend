@@ -152,7 +152,7 @@ class SSOController extends BaseController
 
     /** @Route("/switchToFrontend", name="switchToFrontend") */
     public function switchToFrontend() {
-        return $this->redirect("/app");
+        return $this->redirect("/app-develop");
     }
 
     /** @Route("/api/userInfo", name="userInfo") */
