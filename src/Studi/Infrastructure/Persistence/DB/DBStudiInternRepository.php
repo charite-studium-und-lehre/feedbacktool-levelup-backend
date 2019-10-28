@@ -4,6 +4,7 @@ namespace Studi\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use Studi\Domain\Matrikelnummer;
+use Studi\Domain\StudiHash;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 
@@ -24,5 +25,11 @@ final class DBStudiInternRepository implements StudiInternRepository
 
     public function byMatrikelnummer(Matrikelnummer $matrikelnummer): ?StudiIntern {
         return $this->abstractById($matrikelnummer);
+    }
+
+    public function byStudiHash(StudiHash $studiHash): ?StudiIntern {
+        return $this->doctrineRepo->findOneBy(
+            ["studiHash" => $studiHash]
+        );
     }
 }

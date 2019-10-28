@@ -5,6 +5,7 @@ namespace Studi\Infrastructure\Persistence\Filesystem;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Studi\Domain\Matrikelnummer;
+use Studi\Domain\StudiHash;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 
@@ -19,6 +20,17 @@ final class FileBasedSimpleStudiInternRepository extends AbstractCommonRepositor
         foreach ($this->all() as $entity) {
             /* @var $entity StudiIntern */
             if ($entity->getMatrikelnummer()->equals($matrikelnummer)) {
+                return $entity;
+            }
+        }
+
+        return NULL;
+    }
+
+    public function byStudiHash(StudiHash $studiHash): ?StudiIntern {
+        foreach ($this->all() as $entity) {
+            /* @var $entity StudiIntern */
+            if ($entity->getStudiHash()->equals($studiHash)) {
                 return $entity;
             }
         }

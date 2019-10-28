@@ -14,9 +14,6 @@ class StudiStammdatenPersistenzService
     /** @var StudiInternRepository */
     private $studiInternRepository;
 
-    /** @var StudiRepository */
-    private $studiRepository;
-
     /** @var StudiHashCreator */
     private $studiHashCreator;
 
@@ -31,11 +28,9 @@ class StudiStammdatenPersistenzService
 
     public function __construct(
         StudiInternRepository $studiInternRepository,
-        StudiRepository $studiRepository,
         StudiHashCreator $studiHashCreator
     ) {
         $this->studiInternRepository = $studiInternRepository;
-        $this->studiRepository = $studiRepository;
         $this->studiHashCreator = $studiHashCreator;
     }
 
@@ -78,7 +73,6 @@ class StudiStammdatenPersistenzService
 
         foreach ($matrikelZuLoeschen as $matrikelValue => $studiInternAktuell) {
             $this->studiInternRepository->delete($studiInternAktuell);
-            $this->studiRepository->delete($this->studiRepository->byStudiHash($studiInternAktuell->getStudiHash()));
             echo "-";
             $this->geloescht++;
         }
@@ -94,6 +88,17 @@ class StudiStammdatenPersistenzService
                 $studiDataObject->getMatrikelnummer()
             );
             if (!$existierenderStudiIntern) {
+                $studiHash = $this->studiHashCreator->createStudiHash($studiDataObject);
+                $existierenderStudiInternByHash = $this->studiInternRepository->byStudiHash(
+                    $studiHash
+                );
+                if ($existierenderStudiInternByHash) {
+                    $this->studiInternRepository->delete($existierenderStudiInternByHash);
+                    $this->studiInternRepository->flush();
+                    echo "D\n";
+                }
+            }
+            if (!$existierenderStudiIntern) {
                 $this->addStudiFromStudiData($studiDataObject);
                 echo "+";
                 $this->hinzugefuegt++;
@@ -104,9 +109,10 @@ class StudiStammdatenPersistenzService
                 ) {
                     $this->studiInternRepository->delete($existierenderStudiIntern);
                     $this->studiInternRepository->flush();
-                    $studi = $this->studiRepository->byStudiHash($existierenderStudiIntern->getStudiHash());
+                    $studi = $this->studiInternRepository->byStudiHash($existierenderStudiIntern->getStudiHash());
                     if ($studi) {
-                        $this->studiRepository->delete($studi);
+                        $this->studiInternRepository->delete($studi);
+                        echo "-";
                     }
                     $this->addStudiFromStudiData($studiDataObject);
                     $this->geaendert++;
@@ -114,7 +120,6 @@ class StudiStammdatenPersistenzService
                 }
             }
         }
-        $this->studiRepository->flush();
         $this->studiInternRepository->flush();
     }
 
@@ -125,9 +130,6 @@ class StudiStammdatenPersistenzService
             $studiHash
         );
         $this->studiInternRepository->add($studiInternNeu);
-
-        $studiNeu = Studi::fromStudiHash($studiHash);
-        $this->studiRepository->add($studiNeu);
     }
 
 }

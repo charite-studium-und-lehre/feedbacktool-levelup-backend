@@ -11,6 +11,8 @@ interface StudiInternRepository extends DDDRepository, FlushableRepository
 
     public function byMatrikelnummer(Matrikelnummer $matrikelnummer): ?StudiIntern;
 
+    public function byStudiHash(StudiHash $studiHash): ?StudiIntern;
+
     /** @return StudiIntern[] */
     public function all(): array;
 
