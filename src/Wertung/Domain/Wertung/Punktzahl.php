@@ -19,6 +19,10 @@ class Punktzahl
     /** @var float */
     private $value;
 
+    public static function fromFloatMitRunden(float $punktzahl): Punktzahl {
+        return self::fromFloat(round($punktzahl, 2));
+    }
+
     public static function fromFloat(float $punktzahl): Punktzahl {
         Assertion::between($punktzahl,
                            -self::MAX_PUNKTZAHL,

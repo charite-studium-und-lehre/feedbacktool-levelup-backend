@@ -26,18 +26,25 @@ class PunktWertung extends AbstractWertung
      * @return PunktWertung
      */
     public static function getDurchschnittsWertung(array $wertungen): PunktWertung {
-        $punktSummenWertung = self::getSummenWertung($wertungen)->getPunktWertung();
+        $punktzahlen = [];
+        $maxPunkte = [];
+        foreach ($wertungen as $wertung) {
+            $punktzahlen[] = $wertung->getPunktzahl()->getValue();
+            $maxPunkte[] = $wertung->getSkala()->getMaxPunktzahl()->getValue();
+        }
 
         return PunktWertung::fromPunktzahlUndSkala(
-            Punktzahl::fromFloat(
-                round($punktSummenWertung->getPunktzahl()->getValue() / count($wertungen), 2)),
-            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(count($wertungen)))
+            Punktzahl::fromFloatMitRunden(
+                self::getDurchschnittAusZahlen($punktzahlen)
+            ),
+            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloatMitRunden(
+                self::getDurchschnittAusZahlen($maxPunkte)))
         );
+
     }
 
     public static function getSummenWertung(array $wertungen) {
         $punktzahlen = [];
-        $ersteWertung = $wertungen[0];
         $skalaMaxPunkte = [];
 
         foreach ($wertungen as $wertung) {
@@ -49,17 +56,11 @@ class PunktWertung extends AbstractWertung
         }
 
         return PunktWertung::fromPunktzahlUndSkala(
-            Punktzahl::fromFloat(
-                round(
-                    self::getSummeAusZahlen($punktzahlen),
-                    2
-                )
-            ),
-            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(
-                round(
-                    self::getSummeAusZahlen($skalaMaxPunkte),
-                    2
-                ))
+            Punktzahl::fromFloatMitRunden(
+                self::getSummeAusZahlen($punktzahlen)),
+            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloatMitRunden(
+                self::getDurchschnittAusZahlen($skalaMaxPunkte) * count($wertungen)
+            )
             )
         );
     }
