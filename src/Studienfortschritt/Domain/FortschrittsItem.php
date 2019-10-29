@@ -149,7 +149,7 @@ class FortschrittsItem implements DDDValueObject
         if (isset(self::MEILENSTEINE[$this->code])) {
             return self::MEILENSTEINE[$this->code];
         }
-        $fachsemester = ($this->getCode() % 100);
+        $fachsemester = $this->getFachsemester();
         if ($this->code > 100 && $this->code <= 110) {
             return "Anwesenheit Sem. $fachsemester";
         }
@@ -206,7 +206,7 @@ class FortschrittsItem implements DDDValueObject
             case 503:
                 return 4;
             case 504:
-                return 9;
+                return 4;
         }
         if ($this->code > 100) {
             return $this->code % 100;

@@ -10,14 +10,13 @@ use Cluster\Domain\ClusterZuordnungsService;
 use DatenImport\Domain\FachCodeKonstanten;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
+use Studienfortschritt\Domain\FortschrittsItem;
 use StudiPruefung\Domain\StudiPruefung;
-use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
 use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\ProzentWertung;
-use Wertung\Domain\Wertung\Prozentzahl;
 use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
 class StudiPruefungErgebnisService
@@ -68,16 +67,22 @@ class StudiPruefungErgebnisService
         $einzelErgebnisse = $this->getErgebnisDetailsAlsJsonArray($studiPruefung);
         $pruefungsPeriode = $pruefung->getPruefungsPeriode();
         $returnArray = [
-            "name"             => $pruefung->getName(),
-            "typ"              => $pruefung->getFormat()->getCode(),
-            "format"           => $pruefung->getFormat()->getFormatAbstrakt(),
-            "studiPruefungsId" => $studiPruefung->getId()->getValue(),
-            "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
-            "periodeCode"      => $pruefungsPeriode->toInt(),
-            "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
-            "gesamtErgebnis"   => $gesamtErgebnis,
+            "name"   => $pruefung->getName(),
+            "typ"    => $pruefung->getFormat()->getCode(),
+            "format" => $pruefung->getFormat()->getFormatAbstrakt(),
         ];
-        $returnArray = $returnArray + $einzelErgebnisse;
+
+        $fortschrittsItem = FortschrittsItem::fromPruefung($pruefung, $studiPruefung->getId());
+        if ($fortschrittsItem) {
+            $returnArray["fachsemester"] = $fortschrittsItem->getFachsemester();
+        }
+        $returnArray += ["studiPruefungsId" => $studiPruefung->getId()->getValue(),
+                         "zeitsemester"     => $pruefungsPeriode->getZeitsemester()->getStandardStringLesbar(),
+                         "periodeCode"      => $pruefungsPeriode->toInt(),
+                         "periodeText"      => $pruefungsPeriode->getPeriodeBeschreibung(),
+                         "gesamtErgebnis"   => $gesamtErgebnis,
+        ];
+        $returnArray += $einzelErgebnisse;
 
         return $returnArray;
     }
@@ -195,7 +200,7 @@ class StudiPruefungErgebnisService
                 }
             }
         }
-//        dump($clusteredItemsWissenMeine);
+        //        dump($clusteredItemsWissenMeine);
 
         $returnArray = [];
 
@@ -210,30 +215,36 @@ class StudiPruefungErgebnisService
             $kohortenDurchschnitt = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
 
             $addArray = [
-                "code"  => $cluster->getCode()->getValue(),
-                "titel" => $cluster->getTitel()->getValue(),
+                "code"                    => $cluster->getCode()->getValue(),
+                "titel"                   => $cluster->getTitel()->getValue(),
+                "ergebnisProzentzahl"     => $meinDurchschnitt->getProzentzahl()->getValue(),
+                "durchschnittProzentzahl" => $kohortenDurchschnitt->getProzentzahl()->getValue(),
             ];
-            if (isset($clusteredItemsWissenMeine[$clusterId])) {
-                $addArray["ergebnisProzentzahl1"] = $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
-                    $clusteredItemsWissenMeine[$clusterId])->getProzentzahl()->getValue();
-                $addArray["ergebnisProzentzahl2"] = $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
-                    $clusteredItemsZusammenhangMeine[$clusterId])->getProzentzahl()->getValue();
-                $addArray["durchschnittRichtigPunktzahl1"] =$itemWertungen[0]->getWertung()::getDurchschnittsWertung(
-                    $clusteredItemsWissenKohorte[$clusterId])->getProzentzahl()->getValue();
-                $addArray["durchschnittRichtigPunktzahl2"] = $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
-                    $clusteredItemsZusammenhangKohorte[$clusterId])->getProzentzahl()->getValue();
-            } else {
-                $addArray["ergebnisProzentzahl"] = $meinDurchschnitt->getProzentzahl()->getValue();
-                $addArray["durchschnittRichtigPunktzahl"] = $kohortenDurchschnitt->getProzentzahl()->getValue();
-            }
-            if ($cluster->getClusterTyp()->isStationsModulTyp()) {
-                $returnArray["stationsModule"][] = $addArray;
-            } else {
-                $returnArray["faecher"][] = $addArray;
-            }
-        }
-        return $returnArray;
 
+            if (isset($clusteredItemsWissenMeine[$clusterId])) {
+                $addArray["details"][] = [
+                    "code"                    => "fakten",
+                    "titel"                   => "Faktenwissen",
+                    "ergebnisProzentzahl"     => $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
+                        $clusteredItemsWissenMeine[$clusterId])->getProzentzahl()->getValue(),
+                    "durchschnittProzentzahl" => $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
+                        $clusteredItemsWissenKohorte[$clusterId])->getProzentzahl()->getValue(),
+                ];
+                $addArray["details"][] = [
+                    "code"                    => FachCodeKonstanten::STATION_WISSENS_TYP_ZUSAMMENHANG,
+                    "titel"                   => FachCodeKonstanten::STATION_WISSENS_TYPEN[FachCodeKonstanten::STATION_WISSENS_TYP_ZUSAMMENHANG],
+                    "ergebnisProzentzahl"     => $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
+                        $clusteredItemsZusammenhangMeine[$clusterId])->getProzentzahl()->getValue(),
+                    "durchschnittProzentzahl" => $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
+                        $clusteredItemsZusammenhangKohorte[$clusterId])->getProzentzahl()->getValue(),
+                ];
+
+            }
+
+            $returnArray["stationen"][] = $addArray;
+        }
+
+        return $returnArray;
 
     }
 
@@ -278,8 +289,7 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private
-    function getMCErgebnisDetailsAlsJsonArray(
+    private function getMCErgebnisDetailsAlsJsonArray(
         StudiPruefung $studiPruefung
     ): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
