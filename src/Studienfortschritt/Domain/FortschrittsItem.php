@@ -199,6 +199,14 @@ class FortschrittsItem implements DDDValueObject
                 return 10;
             case 70:
                 return 9;
+            case 501:
+                return 2;
+            case 502:
+                return 2;
+            case 503:
+                return 4;
+            case 504:
+                return 9;
         }
         if ($this->code > 100) {
             return $this->code % 100;
