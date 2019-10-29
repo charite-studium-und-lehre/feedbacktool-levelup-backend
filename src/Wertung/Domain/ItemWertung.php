@@ -4,7 +4,7 @@ namespace Wertung\Domain;
 
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
-use Pruefung\Domain\FrageAntwort\AntwortId;
+use Pruefung\Domain\FrageAntwort\AntwortCode;
 use Pruefung\Domain\PruefungsItemId;
 use StudiPruefung\Domain\StudiPruefungsId;
 use Wertung\Domain\Wertung\Wertung;
@@ -79,7 +79,7 @@ class ItemWertung implements DDDEntity
         return StudiPruefungsId::fromInt($this->studiPruefungsId);
     }
 
-    public function getAntwortCode(): AntwortCode {
+    public function getAntwortCode(): ?AntwortCode {
         return $this->antwortCode;
     }
 }

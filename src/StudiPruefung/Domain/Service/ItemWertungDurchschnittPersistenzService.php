@@ -43,8 +43,7 @@ class ItemWertungDurchschnittPersistenzService
                 $wertungen[] = $itemWertung->getWertung();
             }
             $ersteWertung = $itemWertungen[0];
-            $durchschnittsWertung = $ersteWertung->getWertung()
-                ::getDurchschnittsWertung($wertungen);
+            $durchschnittsWertung = $ersteWertung->getWertung()::getDurchschnittsWertung($wertungen);
             foreach ($itemWertungen as $itemWertung) {
                 $itemWertung->setKohortenWertung($durchschnittsWertung);
             }

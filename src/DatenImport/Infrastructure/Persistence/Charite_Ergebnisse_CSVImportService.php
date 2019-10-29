@@ -4,6 +4,7 @@ namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\PruefungsdatenImportService;
 use Exception;
+use Pruefung\Domain\FrageAntwort\AntwortCode;
 use Pruefung\Domain\FrageAntwort\FragenNummer;
 use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsFormat;
@@ -94,6 +95,8 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_NORMAL;
             }
 
+            $antwortCode = AntwortCode::fromString($dataLine["antwort"]);
+
             $data[] = [
                 $matrikelnummer,
                 $punktzahl,
@@ -105,6 +108,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 $fragenAnzahl,
                 $bestehensGrenze,
                 $schwierigkeit,
+                $antwortCode,
             ];
         }
 

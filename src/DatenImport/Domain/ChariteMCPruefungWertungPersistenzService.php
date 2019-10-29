@@ -2,6 +2,7 @@
 
 namespace DatenImport\Domain;
 
+use Pruefung\Domain\FrageAntwort\AntwortCode;
 use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
@@ -76,7 +77,8 @@ class ChariteMCPruefungWertungPersistenzService
             $gesamtErreichtePunktzahl,
             $fragenAnzahl,
             $bestehensGrenze,
-            $schwierigkeit]
+            $schwierigkeit,
+            $antwortCode]
         ) {
 
             $counter++;
@@ -99,20 +101,25 @@ class ChariteMCPruefungWertungPersistenzService
                 $bestehensGrenze
             );
 
-            $this->erzeugeStudiPruefungsWertung(
+            //            $this->erzeugeStudiPruefungsWertung(
+            //                $studiPruefung,
+            //                $gesamtErreichtePunktzahl,
+            //                $fragenAnzahl,
+            //                $bestehensGrenze
+            //            );
+            //
+            //            $this->pruefeOderErzeugePruefungsItem(
+            //                $pruefungsItemId,
+            //                $pruefungsId,
+            //                $schwierigkeit
+            //            );
+
+            $this->pruefeOderErzeugeItemWertung(
                 $studiPruefung,
-                $gesamtErreichtePunktzahl,
-                $fragenAnzahl,
-                $bestehensGrenze
-            );
-
-            $this->pruefeOderErzeugePruefungsItem(
                 $pruefungsItemId,
-                $pruefungsId,
-                $schwierigkeit
+                $punktzahl,
+                $antwortCode
             );
-
-            $this->pruefeOderErzeugeItemWertung($studiPruefung, $pruefungsItemId, $punktzahl);
 
         }
         $this->flushAllRepos();
@@ -216,10 +223,11 @@ class ChariteMCPruefungWertungPersistenzService
             }
 
             $this->studiPruefungsWertungRepository->flush();
-        } elseif ($studiPruefungsWertung)
-        if ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
-            $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
-            $this->studiPruefungsWertungRepository->flush();
+        } elseif ($studiPruefungsWertung) {
+            if ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
+                $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
+                $this->studiPruefungsWertungRepository->flush();
+            }
         }
     }
 
@@ -241,7 +249,12 @@ class ChariteMCPruefungWertungPersistenzService
         $pruefungsItem->setItemSchwierigkeit(ItemSchwierigkeit::fromConst($schwierigkeit));
     }
 
-    private function pruefeOderErzeugeItemWertung(StudiPruefung $studiPruefung, $pruefungsItemId, $punktzahl): void {
+    private function pruefeOderErzeugeItemWertung(
+        StudiPruefung $studiPruefung,
+        $pruefungsItemId,
+        $punktzahl,
+        ?AntwortCode $antwortCode
+    ): void {
         $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(
             $studiPruefung->getId(),
             $pruefungsItemId
@@ -251,7 +264,8 @@ class ChariteMCPruefungWertungPersistenzService
             PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
         );
         if (!$itemWertung
-            || !$itemWertung->getWertung()->equals($punktWertung)) {
+            || !$itemWertung->getWertung()->equals($punktWertung)
+            || $itemWertung->getAntwortCode() != $antwortCode) {
             if ($itemWertung) {
                 $this->itemWertungsRepository->delete($itemWertung);
                 $this->geaendert++;
@@ -262,7 +276,8 @@ class ChariteMCPruefungWertungPersistenzService
                 $this->itemWertungsRepository->nextIdentity(),
                 $pruefungsItemId,
                 $studiPruefung->getId(),
-                $punktWertung
+                $punktWertung,
+                $antwortCode
             );
             $this->itemWertungsRepository->add($itemWertung);
             echo "+";
