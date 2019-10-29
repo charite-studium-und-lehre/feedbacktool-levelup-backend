@@ -29,7 +29,7 @@ class EPABewertung
     /** @var epa */
     private $epa;
 
-    public function getEpa(): epa {
+    public function getEpa(): EPA {
         return $this->epa;
     }
 

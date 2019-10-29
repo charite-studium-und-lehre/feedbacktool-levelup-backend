@@ -215,7 +215,7 @@ class FortschrittsItem implements DDDValueObject
     }
 
     public function __toString(): string {
-        return $this->code;
+        return (string) $this->code;
     }
 
     /** @return FortschrittsItem[] */

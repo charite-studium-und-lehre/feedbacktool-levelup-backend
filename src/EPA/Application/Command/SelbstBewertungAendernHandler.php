@@ -7,6 +7,7 @@ use Common\Application\CommandHandler\CommandHandler;
 use Common\Application\CommandHandler\CommandHandlerTrait;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
+use EPA\Domain\EPABewertungsDatum;
 use EPA\Domain\SelbstBewertung;
 use EPA\Domain\SelbstBewertungsRepository;
 use EPA\Domain\SelbstBewertungsTyp;
@@ -49,9 +50,15 @@ final class SelbstBewertungAendernHandler implements CommandHandler
             $selbstBewertung = $this->selbstBewertungsRepository->latestByStudiUndTypUndEpa(
                 $loginHash, $selbstBewertungsTyp, $epa
             );
+            if ($selbstBewertung
+                && !$selbstBewertung->getEpaBewertungsDatum()->equals(EPABewertungsDatum::heute())
+            ) {
+                $selbstBewertung = NULL;
+            }
             if ($selbstBewertung) {
                 $selbstBewertung->setzeBewertung($neuerWert);
             } else {
+
                 $neueBewertung = SelbstBewertung::create(
                     $this->selbstBewertungsRepository->nextIdentity(),
                     $loginHash,

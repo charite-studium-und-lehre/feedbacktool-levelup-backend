@@ -38,7 +38,9 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
             ->andWhere("selbstbewertung.selbstBewertungsTyp.value = :typ")
             ->setParameter("typ", $typ->getValue())
             ->groupBy("selbstbewertung.selbstBewertungsTyp.value")
+            ->addGroupBy("selbstbewertung.epaBewertung.epa.nummer")
             ->addOrderBy("selbstbewertung.epaBewertungsDatum.value", "DESC")
+
             ->getQuery()->execute();
     }
 
