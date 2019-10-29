@@ -62,9 +62,25 @@ trait DoctrineAutoIncrementTrait
         return max($result[0]["AUTO_INCREMENT"], 1);
     }
 
+    private function getMaxIdFromDb(string $tableName): int {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult("maxId", "maxId", "integer");
+        $sql = "SELECT MAX(id) AS maxId FROM `$tableName`";
+
+        $result = $this->entityManager->createNativeQuery($sql, $rsm)->getResult();
+        if (!$result) {
+            return 0;
+        }
+
+        return max((int) $result[0]["maxId"], 0);
+    }
+
+
     private function createAutoIncrement(string $tableName): void {
         $nextAIFromDB = $this->getDbAutoIncrement($tableName);
-        $aiObject = new TableAutoIncrement($tableName, $nextAIFromDB);
+        $maxIdFromTable = $this->getMaxIdFromDb($tableName);
+        $aiFromDb = max($nextAIFromDB, $maxIdFromTable + 1);
+        $aiObject = new TableAutoIncrement($tableName, $aiFromDb);
         $this->entityManager->persist($aiObject);
         $this->entityManager->flush();
     }
