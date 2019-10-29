@@ -6,22 +6,29 @@ use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class FragenText implements DDDValueObject
+final class FragenNummer implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    const MIN_LENGTH = 5;
-    const MAX_LENGTH = 2000;
+    const MIN_VALUE = 1;
+    const MAX_VALUE = 1000000;
 
-    const INVALID_TEXT = "Der Fragentext ist nicht gültig: ";
+    const INVALID_TEXT = "Keine Fragennummer:: ";
 
+    /** @var int */
     private $value;
 
     public static function fromInt(string $value): self {
-        Assertion::string($value);
+        Assertion::integerish($value);
 
-        Assertion::betweenLength($value, self::MIN_LENGTH,
-                                 self::MAX_LENGTH, self::INVALID_TEXT . $value);
+        $value = (int) $value;
+
+        Assertion::between(
+            $value,
+            self::MIN_VALUE,
+            self::MAX_VALUE,
+            self::INVALID_TEXT . $value
+        );
 
         $object = new self();
         $object->value = $value;
@@ -34,7 +41,7 @@ final class FragenText implements DDDValueObject
     }
 
     public function __toString(): string {
-        return $this->value;
+        return (string) $this->value;
     }
 
 }

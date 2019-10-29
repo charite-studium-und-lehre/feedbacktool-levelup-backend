@@ -6,14 +6,14 @@ use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class AntwortText implements DDDValueObject
+final class AntwortCode implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
     const MIN_LENGTH = 1;
-    const MAX_LENGTH = 550;
+    const MAX_LENGTH = 3;
 
-    const INVALID_TEXT = "Der Antworttext ist nicht gültig: ";
+    const INVALID_TEXT = "Der Antwortcode ist nicht gültig: ";
 
     private $value;
 

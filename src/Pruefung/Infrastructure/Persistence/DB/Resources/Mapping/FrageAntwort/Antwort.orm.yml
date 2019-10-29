@@ -1,0 +1,29 @@
+Pruefung\Domain\FrageAntwort\Antwort:
+  type: entity
+  table: pruefung_frage_antwort
+
+  id:
+    id:
+      type: aggregateIdString
+
+  embedded:
+    antwortText:
+      class: Pruefung\Domain\FrageAntwort\AntwortText
+      columnPrefix: false
+
+  fields:
+    fragenId:
+      type: aggregateIdString
+      nullable: false
+    antwortCode:
+      type: antwortCode
+      nullable: false
+    istRichtig:
+      type: boolean
+      nullable: false
+
+  indexes:
+    fragenId:
+      columns: fragenId
+    istRichtig:
+      columns: istRichtig

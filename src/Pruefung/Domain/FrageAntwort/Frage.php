@@ -4,32 +4,66 @@ namespace Pruefung\Domain\FrageAntwort;
 
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
+use Pruefung\Domain\PruefungsItemId;
 
 final class Frage implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    private $frage;
+    /** @var FragenId */
+    private $id;
 
-    public static function fromInt(string $value): self {
-        Assertion::integerish($value);
+    /** @var PruefungsItemId */
+    private $pruefungsItemId;
 
-        $value = (int) $value;
-        Assertion::greaterOrEqualThan($value, self::MIN_VALUE, self::INVALID_STELLEN . $value);
-        Assertion::lessOrEqualThan($value, self::MAX_VALUE, self::INVALID_STELLEN . $value);
+    /** @var FragenNummer */
+    private $fragenNummer;
 
+    /** @var FragenText */
+    private $fragenText;
+
+    public static function fromPruefungsItemIdUndFrage(
+        FragenId $fragenId,
+        PruefungsItemId $pruefungsItemId,
+        FragenNummer $fragenNummer,
+        FragenText $fragenText
+    ) {
         $object = new self();
-        $object->value = $value;
+        $object->id = $fragenId;
+        $object->pruefungsItemId = $pruefungsItemId;
+        $object->fragenNummer = $fragenNummer;
+        $object->fragenText = $fragenText;
 
         return $object;
+
     }
 
-    public function getValue(): string {
-        return $this->value;
+    public function getId(): FragenId {
+        return FragenId::fromString($this->id);
     }
 
-    public function __toString(): string {
-        return $this->value;
+    public function getPruefungsItemId(): PruefungsItemId {
+        return $this->pruefungsItemId;
     }
+
+    public function getFragenNummer(): FragenNummer {
+        return $this->fragenNummer;
+    }
+
+    public function getFragenText(): FragenText {
+        return $this->fragenText;
+    }
+
+    public function setFragenNummer(FragenNummer $fragenNummer): void {
+        $this->fragenNummer = $fragenNummer;
+    }
+
+    public function setFragenText(FragenText $fragenText): void {
+        $this->fragenText = $fragenText;
+    }
+
+
+
+
 
 }

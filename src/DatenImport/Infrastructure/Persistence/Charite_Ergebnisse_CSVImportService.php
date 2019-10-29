@@ -4,6 +4,7 @@ namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\PruefungsdatenImportService;
 use Exception;
+use Pruefung\Domain\FrageAntwort\FragenNummer;
 use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
@@ -68,9 +69,11 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             }
 
             $fragenNr = $dataLine["FragenNr"];
-            $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $fragenNr;
 
-            $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdString);
+            $pruefungsItemId = PruefungsItemId::fromPruefungsIdUndFragenNummer(
+                $pruefungsId, FragenNummer::fromInt($fragenNr)
+            );
+
             $lzNummer = isset($dataLine["LZNummer"]) ? $dataLine["LZNummer"] : $dataLine["LZnummer"];
             if (is_numeric($lzNummer)) {
                 $lzNummer = (int) $lzNummer;

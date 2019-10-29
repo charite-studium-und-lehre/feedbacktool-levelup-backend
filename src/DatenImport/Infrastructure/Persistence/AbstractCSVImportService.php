@@ -38,6 +38,9 @@ abstract class AbstractCSVImportService
                 $headers = $dataLineFixed;
                 continue;
             }
+            if (!implode("",$dataLineFixed)) {
+                continue;
+            }
             if ($hasHeaders) {
                 if (count($headers) != count($dataLineFixed)) {
                     dump($headers);

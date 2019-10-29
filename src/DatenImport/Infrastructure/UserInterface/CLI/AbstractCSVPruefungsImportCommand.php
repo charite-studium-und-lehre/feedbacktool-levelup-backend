@@ -82,12 +82,4 @@ abstract class AbstractCSVPruefungsImportCommand extends AbstractCSVImportComman
         }
     }
 
-    private function computeFileNameToPruefungsId(string $filename): PruefungsId {
-        $filename = basename($filename);
-        $semester = substr(explode("_", $filename)[1], 0, 8);
-        $durchlauf = substr(explode("_", $filename)[2], 0, 1);
-
-        return PruefungsId::fromString("MC-$semester-$durchlauf");
-    }
-
 }

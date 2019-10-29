@@ -1,0 +1,25 @@
+Pruefung\Domain\FrageAntwort\Frage:
+  type: entity
+  table: pruefung_frage
+
+  id:
+    id:
+      type: aggregateIdString
+
+  embedded:
+    fragenNummer:
+      class: Pruefung\Domain\FrageAntwort\FragenNummer
+      columnPrefix: false
+    fragenText:
+      class: Pruefung\Domain\FrageAntwort\FragenText
+      columnPrefix: false
+  fields:
+    pruefungsItemId:
+      type: aggregateIdString
+      nullable: false
+
+  indexes:
+    pruefungsItemId:
+      columns: pruefungsItemId
+    fragenNummer:
+      columns: nummer

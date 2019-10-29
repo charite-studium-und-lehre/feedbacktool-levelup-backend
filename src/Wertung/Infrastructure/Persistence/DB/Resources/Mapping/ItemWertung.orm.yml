@@ -16,6 +16,9 @@ Wertung\Domain\ItemWertung:
     kohortenWertung:
       type: wertung
       nullable: true
+    antwortCode:
+      type: antwortCode
+      nullable: true
 
   indexes:
     pruefungsItemId:

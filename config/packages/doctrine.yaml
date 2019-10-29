@@ -38,6 +38,9 @@ doctrine:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
       pruefungsPeriode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
+      antwortCode:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AntwortCodeType"
+
     mapping_types:
       aggregateId: integer
       aggregateId_AutoIncrement: integer
@@ -49,6 +52,7 @@ doctrine:
       clusterCode: string
       itemSchwierigkeit: integer
       pruefungsPeriode: integer
+      antwortCode: string
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'
@@ -91,6 +95,13 @@ doctrine:
         type:                 yml
         dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Pruefung\\Domain"
+
+      Pruefung_FrageAntwort:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping/FrageAntwort"
+        prefix:               "Pruefung\\Domain\\FrageAntwort"
 
       Studi:
         is_bundle:            false

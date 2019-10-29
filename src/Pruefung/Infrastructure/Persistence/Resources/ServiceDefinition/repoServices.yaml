@@ -34,3 +34,29 @@ services:
             - "@Pruefung-Domain-PruefungsItemRepository-DoctrineRepo"
             - "@doctrine.orm.entity_manager"
         public: true
+
+    Pruefung-Domain-FrageAntwort-FragenRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Pruefung\Domain\FrageAntwort\Frage
+
+    Pruefung\Domain\FrageAntwort\FragenRepository:
+        class: 'Pruefung\Infrastructure\Persistence\DB\DBFragenRepository'
+        arguments:
+            - "@Pruefung-Domain-FrageAntwort-FragenRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true
+
+    Pruefung-Domain-FrageAntwort-AntwortRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Pruefung\Domain\FrageAntwort\Antwort
+
+    Pruefung\Domain\FrageAntwort\AntwortRepository:
+        class: 'Pruefung\Infrastructure\Persistence\DB\DBAntwortRepository'
+        arguments:
+            - "@Pruefung-Domain-FrageAntwort-AntwortRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true
