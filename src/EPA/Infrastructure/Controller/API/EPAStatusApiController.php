@@ -27,7 +27,7 @@ class EPAStatusApiController extends BaseController
      * @Route("/api/epas", name="meine_epas")
      */
     public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
-        if (!$this->getCurrentUserLoginHash()) {
+        if (!$this->getCurrentUserLoginHash($this->loginHashCreator)) {
             return new Response("Nicht eingeloggt?", 401);
         }
         $data = $epasFuerStudiService->getEpaStudiData(
