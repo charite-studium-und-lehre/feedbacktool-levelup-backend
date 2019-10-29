@@ -4,7 +4,7 @@ namespace FBToolCommon\Infrastructure\UserInterface\Web\Controller;
 
 use Common\Domain\User\LoginUser;
 use Doctrine\Common\Collections\ArrayCollection;
-use JsonSchema\Validator;
+use Exception;
 use Studi\Domain\LoginHash;
 use Studi\Domain\Service\LoginHashCreator;
 use Studi\Domain\Studi;
@@ -34,7 +34,7 @@ abstract class BaseController extends AbstractController
 
         try {
             return new ArrayCollection(json_decode($content, TRUE));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new BadRequestHttpException("Content is not a valid json");
         }
     }

@@ -86,7 +86,7 @@ class SSOController extends BaseController
     }
 
     /** @Route("/api/stammdaten", name="stammdaten", methods={"POST", "OPTIONS"}) */
-    public function getStammdatenAction(
+    public function setStammdatenAction(
         Request $request,
         StudiRepository $studiRepository,
         LoginHashCreator $loginHashCreator,
@@ -112,13 +112,13 @@ class SSOController extends BaseController
         $studiHash = $studiHashCreator->createStudiHash($studiData);
         $studi = $studiRepository->byStudiHash($studiHash);
         if (!$studi) {
-            return new Response("Es wurde kein Studi gefunden, auf den Name/Matrikel-Hash passt.", 404);
+            return new Response("Es wurde kein Studi gefunden, auf den Name/Matrikel-Hash passt. Aktuell können sich nur immatrikulierte Studierende des MSM2 einloggen!", 404);
         }
         $loginHash = $loginHashCreator->createLoginHash($loginUser->getUsernameVO());
         $studi->setLoginHash($loginHash);
         $studiRepository->flush();
 
-        $this->loginUser($tokenStorage, $studi);
+//        $this->loginUser($tokenStorage, $studi);
 
         return new Response("OK", 200);
     }

@@ -53,6 +53,7 @@ class Studi extends LoginUser
 
     public function getUsername() {
         return parent::getUsername() . "^" . $this->studiHash->getValue();
+
     }
 
 }

@@ -42,6 +42,9 @@ class StudiUserProvider extends ChariteLDAPUserProvider
         $usernameExploded = explode("^", $username);
         $loginUsername = $usernameExploded[0];
         $loginUser = parent::loadUserByUsername($loginUsername);
+        if (!$loginUser) {
+            throw new \Exception("User im LDAP nicht gefunden");
+        }
 
         $studiHash = count($usernameExploded) > 1 ? $usernameExploded[1] : NULL;
         if (!$studiHash) {
