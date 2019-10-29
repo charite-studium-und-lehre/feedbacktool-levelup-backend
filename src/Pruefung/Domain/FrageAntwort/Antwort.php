@@ -59,11 +59,7 @@ final class Antwort implements DDDEntity
         return $this->istRichtig;
     }
 
-    public function getFragenNummer(): FragenNummer {
-        return $this->fragenNummer;
-    }
-
-    public function getAntwortText(): FragenText {
+    public function getAntwortText(): AntwortText {
         return $this->antwortText;
     }
 

@@ -15,8 +15,11 @@ use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
+use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Domain\Wertung\ProzentWertung;
+use Wertung\Domain\Wertung\PunktWertung;
+use Wertung\Domain\Wertung\Punktzahl;
 use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
 class StudiPruefungErgebnisService
@@ -267,7 +270,7 @@ class StudiPruefungErgebnisService
             /** @var RichtigFalschWeissnichtWertung $kohortenDurchschnitt */
             $kohortenDurchschnitt = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
 
-            $gruppe = $this->getFachGruppeByFach($fach);
+            $gruppe = FachCodeKonstanten::getFachGruppeByFach($fach->getCode()->getValue());
             $fachAggregate[] = [
                 "code"                        => $fach->getCode()->getValue(),
                 "titel"                       => $fach->getTitel()->getValue(),
@@ -305,8 +308,17 @@ class StudiPruefungErgebnisService
             $fach = $this->clusterRepository->byId(ClusterId::fromInt($clusterId));
             [$alleMeineWertungen, $alleKohortenWertungen] = $this->getWertungen($itemWertungen);
             $meineSumme = $itemWertungen[0]->getWertung()::getSummenWertung($alleMeineWertungen);
-            $kohortenSumme = $itemWertungen[0]->getWertung()::getSummenWertung($alleKohortenWertungen);
-            $gruppe = $this->getFachGruppeByFach($fach);
+            $kohortenSumme = NULL;
+            if ($alleKohortenWertungen) {
+                $kohortenSumme = $itemWertungen[0]->getWertung()::getSummenWertung($alleKohortenWertungen);
+            } else {
+                $kohortenSumme = PunktWertung::fromPunktzahlUndSkala(Punktzahl::fromFloat(0),
+                                                                     PunktSkala::fromMaxPunktzahl(
+                                                                         Punktzahl::fromFloat(0)
+                                                                     ));
+            }
+
+            $gruppe = FachCodeKonstanten::getFachGruppeByFach($fach->getCode()->getValue());
 
             $fachAggregate[] = [
                 "code"                   => $fach->getCode()->getValue(),
@@ -326,7 +338,13 @@ class StudiPruefungErgebnisService
             $modul = $this->clusterRepository->byId(ClusterId::fromInt($clusterId));
             [$alleMeineWertungen, $alleKohortenWertungen] = $this->getWertungen($itemWertungen);
             $meineSumme = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleMeineWertungen);
-            $kohortenSumme = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
+            if ($alleKohortenWertungen) {
+                $kohortenSumme = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
+            } else {
+                $kohortenSumme = PunktWertung::fromPunktzahlUndSkala(Punktzahl::fromFloat(0),
+                    PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(0)));
+            }
+
 
             $modulAggregate[] = [
                 "code"                   => $modul->getCode()->getValue(),
@@ -344,28 +362,7 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private
-    function getFachGruppeByFach(
-        Cluster $fach
-    ): string {
-        $fachChar = substr($fach->getCode()->getValue(), 0, 1);
 
-        switch ($fachChar) {
-            case "F":
-                $gruppe = "Klinische Fächer";
-                break;
-            case "Q":
-                $gruppe = "Querschnittsfächer";
-                break;
-            case "S":
-                $gruppe = "Vorklinische Fächer";
-                break;
-            default:
-                $gruppe = "Andere";
-        }
-
-        return $gruppe;
-    }
 
     private
     function getWertungen(
@@ -375,7 +372,9 @@ class StudiPruefungErgebnisService
         $alleKohortenWertungen = [];
         foreach ($itemWertungen as $itemWertung) {
             $alleMeineWertungen[] = $itemWertung->getWertung();
-            $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
+            if ($itemWertung->getKohortenWertung()) {
+                $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
+            }
         }
 
         return [$alleMeineWertungen, $alleKohortenWertungen];

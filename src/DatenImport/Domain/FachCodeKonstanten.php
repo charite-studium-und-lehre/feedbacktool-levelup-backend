@@ -2,6 +2,8 @@
 
 namespace DatenImport\Domain;
 
+use Cluster\Domain\Cluster;
+
 class FachCodeKonstanten
 {
     const FACH_CODES = [
@@ -208,4 +210,24 @@ class FachCodeKonstanten
         self::STATION_WISSENS_TYP_FAKTEN => "Faktenwissen",
         self::STATION_WISSENS_TYP_ZUSAMMENHANG => "Zusammenhangswissen",
     ];
+
+    public static function getFachGruppeByFach(string $fachCode): string {
+        $fachChar = substr($fachCode, 0, 1);
+
+        switch ($fachChar) {
+            case "F":
+                $gruppe = "Klinische Fächer";
+                break;
+            case "Q":
+                $gruppe = "Querschnittsfächer";
+                break;
+            case "S":
+                $gruppe = "Vorklinische Fächer";
+                break;
+            default:
+                $gruppe = "Andere";
+        }
+
+        return $gruppe;
+    }
 }
