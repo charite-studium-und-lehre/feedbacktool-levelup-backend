@@ -79,7 +79,14 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
                 $allePruefungsIds[] = $pruefungsId;
             }
         }
+        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items");
+        foreach ($allePruefungsIds as $pruefungsId) {
+            $this->itemWertungDurchschnittPersistenzService
+                ->berechneUndPersistiereDurchschnitt($pruefungsId);
+            echo ".";
+        }
 
+        $output->writeln("");
         $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen");
         foreach ($allePruefungsIds as $pruefungsId) {
             $this->studiPruefungDurchschnittPersistenzService
@@ -87,13 +94,6 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
             echo ".";
         }
 
-        $output->writeln("");
-        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items");
-        foreach ($allePruefungsIds as $pruefungsId) {
-            $this->itemWertungDurchschnittPersistenzService
-                ->berechneUndPersistiereDurchschnitt($pruefungsId);
-            echo ".";
-        }
 
 
         $output->writeln("\nFertig. "

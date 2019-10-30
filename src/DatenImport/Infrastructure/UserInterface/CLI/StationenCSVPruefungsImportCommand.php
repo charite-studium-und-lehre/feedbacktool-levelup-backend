@@ -93,13 +93,13 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
         $this->chariteStationenPruefungPersistenzService
             ->persistierePruefung($stationsPruefungsDaten, $pruefungsId);
 
+        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items...");
+        $this->itemWertungDurchschnittPersistenzService
+            ->berechneUndPersistiereDurchschnitt($pruefungsId);
         $output->writeln("");
         $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen...");
         $this->studiPruefungDurchschnittPersistenzService
             ->berechneUndPersistiereGesamtDurchschnitt($pruefungsId);
-        $output->writeln("Persistiere Durchschnittswerte der Einzel-Items...");
-        $this->itemWertungDurchschnittPersistenzService
-            ->berechneUndPersistiereDurchschnitt($pruefungsId);
 
         $output->writeln("Persistiere Cluster-Zuordnungen...");
         $this->chariteStationsClusterungPersistenzService
