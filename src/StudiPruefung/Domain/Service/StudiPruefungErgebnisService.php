@@ -2,12 +2,12 @@
 
 namespace StudiPruefung\Domain\Service;
 
-use Cluster\Domain\Cluster;
 use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
 use DatenImport\Domain\FachCodeKonstanten;
+use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
 use Studienfortschritt\Domain\FortschrittsItem;
@@ -166,6 +166,7 @@ class StudiPruefungErgebnisService
     }
 
     private function getStationsErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
+        /** @var Pruefung $pruefung */
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isStation()) {
             return [];
@@ -222,6 +223,7 @@ class StudiPruefungErgebnisService
                 "titel"                   => $cluster->getTitel()->getValue(),
                 "ergebnisProzentzahl"     => $meinDurchschnitt->getProzentzahl()->getValue(),
                 "durchschnittProzentzahl" => $kohortenDurchschnitt->getProzentzahl()->getValue(),
+                "typ"                     => $pruefung->getFormat()->getStationsTyp(),
             ];
 
             if (isset($clusteredItemsWissenMeine[$clusterId])) {
@@ -342,9 +344,8 @@ class StudiPruefungErgebnisService
                 $kohortenSumme = $itemWertungen[0]->getWertung()::getDurchschnittsWertung($alleKohortenWertungen);
             } else {
                 $kohortenSumme = PunktWertung::fromPunktzahlUndSkala(Punktzahl::fromFloat(0),
-                    PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(0)));
+                                                                     PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(0)));
             }
-
 
             $modulAggregate[] = [
                 "code"                   => $modul->getCode()->getValue(),
@@ -362,12 +363,7 @@ class StudiPruefungErgebnisService
         ];
     }
 
-
-
-    private
-    function getWertungen(
-        $itemWertungen
-    ): array {
+    private function getWertungen($itemWertungen): array {
         $alleMeineWertungen = [];
         $alleKohortenWertungen = [];
         foreach ($itemWertungen as $itemWertung) {
@@ -381,11 +377,7 @@ class StudiPruefungErgebnisService
     }
 
     /** @return ItemWertung[] */
-    private
-    function getItemsNachClusterTyp(
-        $itemWertungen,
-        ClusterTyp $clusterTyp
-    ): array {
+    private function getItemsNachClusterTyp($itemWertungen, ClusterTyp $clusterTyp): array {
         $itemsNachFach = [];
         foreach ($itemWertungen as $itemWertung) {
             $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
@@ -401,8 +393,7 @@ class StudiPruefungErgebnisService
         return $itemsNachFach;
     }
 
-    private
-    function getPruefungUndWertungen(
+    private function getPruefungUndWertungen(
         StudiPruefung $studiPruefung
     ): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());

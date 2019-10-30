@@ -156,6 +156,16 @@ class PruefungsFormat implements DDDValueObject
             && $this->getValue() <= self::STATION_TEIL3;
     }
 
+    public function getStationsTyp(): ?string {
+        if (!$this->isStation()) {
+            return NULL;
+        }
+        if (in_array ($this->getValue(), [30, 32])) {
+            return "vorklinisch";
+        }
+        return "klinisch";
+    }
+
     public function isPTM(): bool {
         return $this->getValue() == self::PTM;
     }
