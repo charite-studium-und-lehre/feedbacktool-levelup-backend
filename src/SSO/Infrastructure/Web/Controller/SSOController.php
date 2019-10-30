@@ -157,7 +157,9 @@ class SSOController extends BaseController
         return $this->redirect("/app-develop");
     }
 
-    /** @Route("/api/userInfo", name="userInfo") */
+    /** @Route("/api/userInfo", name="userInfo")
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function userInfo(TokenStorageInterface $tokenStorage) {
         $user = $this->getUser();
         dump($this->getUser());
@@ -169,7 +171,8 @@ class SSOController extends BaseController
         }
 
         return new Response(
-            ""
+            "<a href='/app-develop'>Gehe zu Dashboard</a><br/><a href='"
+            . $this->generateUrl("switchUser"). "'>SwitchUser</a>"
         );
     }
 
