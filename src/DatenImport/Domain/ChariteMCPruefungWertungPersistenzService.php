@@ -172,7 +172,7 @@ class ChariteMCPruefungWertungPersistenzService
         $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
         if (!$studiIntern) {
             if (!in_array($matrikelnummer, $this->nichtZuzuordnen)) {
-                echo "\n Fehler: Studi mit Matrikel als Hash nicht gefunden: " . $matrikelnummer;
+                echo "\n Warnung: Studi mit Matrikel als Hash nicht gefunden: " . $matrikelnummer;
                 echo " -> Ignoriere Matrikelnummer in allen Zeilen.";
                 $this->nichtZuzuordnen[] = $matrikelnummer;
 

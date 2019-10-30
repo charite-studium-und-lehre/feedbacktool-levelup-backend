@@ -70,6 +70,9 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
             $fragenText = $dataLine["Fragentext"];
             $fragenText = str_replace('<$u>', '---', $fragenText);
             $fragenText = str_replace('<$/u>', '---', $fragenText);
+            $fragenText = str_replace('<$sup>', '', $fragenText);
+            $fragenText = str_replace('<$/sup>', '', $fragenText);
+
 
 //            dump($dataLine);
             $loesung = !empty($dataLine["Lösung"]) ? $dataLine["Lösung"] : "zzz";
@@ -116,6 +119,9 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
                 $antwortTextString = "--- Antwort nicht verfügbar ---";
             }
             $antwortCode = trim(substr($antwortString, 0, 1));
+            if ($antwortCode == "#") {
+                continue;
+            }
             $antwortText = AntwortText::fromString($antwortTextString);
             $returnArray[$antwortCode] = $antwortText;
         }
