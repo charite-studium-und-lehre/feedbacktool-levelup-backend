@@ -15,7 +15,6 @@ use Studi\Domain\Studi;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,6 +77,7 @@ class SSOController extends BaseController
                     "nachname"            => $loginUser->getNachname()->getValue(),
                     "email"               => $loginUser->getEmail()->getValue(),
                     "stammdatenVorhanden" => $loginUser instanceof Studi,
+                    "istAdmin"            => $loginUser->istAdmin(),
                 ], 200
             );
         }
@@ -99,7 +99,8 @@ class SSOController extends BaseController
         $params = $this->getJsonContentParams($request);
         $matrikelnummer = $params->get("matrikelnummer");
         if (!$matrikelnummer) {
-            return new Response("'matrikelnummer' muss als POST-Param gg. werden! -> Content:" . $request->getContent(), 400);
+            return new Response("'matrikelnummer' muss als POST-Param gg. werden! -> Content:" . $request->getContent(),
+                                400);
         }
 
         /** @var LoginUser $loginUser */
@@ -112,13 +113,14 @@ class SSOController extends BaseController
         $studiHash = $studiHashCreator->createStudiHash($studiData);
         $studi = $studiRepository->byStudiHash($studiHash);
         if (!$studi) {
-            return new Response("Es wurde kein Studi gefunden, auf den Name/Matrikel-Hash passt. Aktuell können sich nur immatrikulierte Studierende des MSM2 einloggen!", 404);
+            return new Response("Es wurde kein Studi gefunden, auf den Name/Matrikel-Hash passt. Aktuell können sich nur immatrikulierte Studierende des MSM2 einloggen!",
+                                404);
         }
         $loginHash = $loginHashCreator->createLoginHash($loginUser->getUsernameVO());
         $studi->setLoginHash($loginHash);
         $studiRepository->flush();
 
-//        $this->loginUser($tokenStorage, $studi);
+        //        $this->loginUser($tokenStorage, $studi);
 
         return new Response("OK", 200);
     }
@@ -175,7 +177,7 @@ class SSOController extends BaseController
      * @Route("/admin/switchUser", name="switchUser")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function switchUser(
+    public function switchUserAction(
         Request $request,
         StudiRepository $studiRepository,
         LoginHashCreator $loginHashCreator,
