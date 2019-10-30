@@ -108,7 +108,7 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 ### MC-Fragentexte ###
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe2018_19_1*.csv 201821 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe2018_19_2*.csv 201822 -vvv
-bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2018_T1*.csv 201812 -vvv
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2018_T1*.csv 201811 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2018_T2*.csv 201812 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe1718_T1*.csv 201721 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe1718_T2*.csv 201722 -vvv
