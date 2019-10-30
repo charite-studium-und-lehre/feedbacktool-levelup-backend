@@ -33,7 +33,7 @@ class WertungType extends Type
     const TYP_STELLEN = 2;
 
     const PUNKT_SKALA_STELLEN = 6;
-    const RICHTIG_FALSCH_WEISSNICHT_STELLEN = 2;
+    const RICHTIG_FALSCH_WEISSNICHT_STELLEN = 3;
 
     /** 2 Nachkommastellen */
     const PUNKT_SKALA_NACHKOMMASTELLEN = Punktzahl::NACHKOMMASTELLEN;
@@ -99,21 +99,21 @@ class WertungType extends Type
                                                         $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
-        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $stellenzahlBis +=  self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $richtigSummand = IntsToIntKodierer::erzeugeSummand(
             $value->getPunktzahlRichtig()->getValue(),
             $stellenzahlVon,
             $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
-        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $stellenzahlBis += self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $falschSummand = IntsToIntKodierer::erzeugeSummand(
             $value->getPunktzahlFalsch()->getValue(),
             $stellenzahlVon,
             $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
-        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $stellenzahlBis += self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $weissnichtSummand = IntsToIntKodierer::erzeugeSummand(
             $value->getPunktzahlWeissnicht()->getValue(),
             $stellenzahlVon,
@@ -168,6 +168,7 @@ class WertungType extends Type
     }
 
     private function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
+        echo $wertungsWert . ";";
         $stellenzahlVon = 0;
         $stellenzahlBis = self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
 

@@ -52,9 +52,9 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
             PruefungsItemId::fromString(12),
             StudiPruefungsId::fromInt(5000),
             RichtigFalschWeissnichtWertung::fromPunktzahlen(
-                Punktzahl::fromFloat(12),
-                Punktzahl::fromFloat(15),
-                Punktzahl::fromFloat(10)
+                Punktzahl::fromFloat(220),
+                Punktzahl::fromFloat(150),
+                Punktzahl::fromFloat(101)
             )
         );
         $itemWertungRichtigFalschWeissnicht->setKohortenWertung(RichtigFalschWeissnichtWertung::fromPunktzahlen(
@@ -95,7 +95,10 @@ final class ItemWertungRepositoryTest extends DbRepoTestCase
         $object3Wertung = $object3->getWertung();
         $this->assertEquals($object3->getId()->getValue(), 456);
         $this->assertTrue($object3Wertung->equals($itemWertungRichtigFalschWeissnicht->getWertung()));
-        $this->assertEquals(37, $object3Wertung->getSkala()->getMaxPunktzahl()->getValue());
+        $this->assertEquals(471, $object3Wertung->getSkala()->getMaxPunktzahl()->getValue());
+        $this->assertEquals(220, $object3Wertung->getPunktzahlRichtig()->getValue());
+        $this->assertEquals(150, $object3Wertung->getPunktzahlFalsch()->getValue());
+        $this->assertEquals(101, $object3Wertung->getPunktzahlWeissnicht()->getValue());
         $this->assertEquals(12, $object3->getKohortenWertung()
             ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue());
 
