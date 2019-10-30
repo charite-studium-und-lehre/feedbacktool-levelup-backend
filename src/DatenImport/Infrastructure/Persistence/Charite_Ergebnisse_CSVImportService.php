@@ -95,7 +95,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 $schwierigkeit = ItemSchwierigkeit::SCHWIERIGKEIT_NORMAL;
             }
 
-            $antwortCode = AntwortCode::fromString($dataLine["antwort"]);
+            $antwortCode = isset($dataLine["antwort"]) ? AntwortCode::fromString($dataLine["antwort"]) : NULL;
 
             $data[] = [
                 $matrikelnummer,

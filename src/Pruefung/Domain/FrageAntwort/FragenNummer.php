@@ -19,7 +19,7 @@ final class FragenNummer implements DDDValueObject
     private $value;
 
     public static function fromInt(string $value): self {
-        Assertion::integerish($value);
+        Assertion::numeric($value);
 
         $value = (int) $value;
 

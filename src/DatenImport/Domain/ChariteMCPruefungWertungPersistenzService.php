@@ -265,10 +265,15 @@ class ChariteMCPruefungWertungPersistenzService
         );
         if (!$itemWertung
             || !$itemWertung->getWertung()->equals($punktWertung)
-            || $itemWertung->getAntwortCode() != $antwortCode) {
+            || ($itemWertung->getAntwortCode() != $antwortCode
+                && (!$itemWertung->getAntwortCode()
+                    || $itemWertung->getAntwortCode()->getValue() != "0")
+                && (!$antwortCode
+                || $antwortCode->getValue() != "0"))) {
             if ($itemWertung) {
                 $this->itemWertungsRepository->delete($itemWertung);
                 $this->geaendert++;
+                echo "-";
             } else {
                 $this->hinzugefuegt++;
             }
