@@ -59,7 +59,7 @@ class WertungType extends Type
             case self::PROZENT_WERTUNG:
                 return $this->dekodiereProzentWertung($wertungsWert);
             case self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG:
-                return $this->dekodiereRichtigFalschWeissnichtWertung($wertungsWert);
+                return self::dekodiereRichtigFalschWeissnichtWertung($wertungsWert);
             default:
                 throw new Exception("Wertungsart '" . $value % 100 . "'nicht bekannt!'");
         }
@@ -167,7 +167,7 @@ class WertungType extends Type
         return ProzentWertung::fromProzentzahl($prozentZahl);
     }
 
-    private function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
+    public static function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
 //        echo $wertungsWert . ";";
         $stellenzahlVon = 0;
         $stellenzahlBis = self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;

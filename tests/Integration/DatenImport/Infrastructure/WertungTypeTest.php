@@ -11,8 +11,8 @@ final class WertungTypeTest extends TestCase
 
     public function testRichtigFalschWeissnicht() {
 
-        $this->assertRichtigFalschWeissnicht(129234603, 346, 292, 1);
-        $this->assertRichtigFalschWeissnicht(77487303, 873, 774, 0);
+        $this->assertRichtigFalschWeissnicht(1292346, 346, 292, 1);
+        $this->assertRichtigFalschWeissnicht(774873, 873, 774, 0);
     }
 
     private function assertRichtigFalschWeissnicht(
@@ -21,17 +21,16 @@ final class WertungTypeTest extends TestCase
         int $zahlFalsch,
         int $zahlWeissnicht
     ) {
-        $wertungType = new WertungType();
         $this->assertEquals($zahlRichtig,
-                            $wertungType->convertToPHPValue($zahlkodiert, new MySqlPlatform())
+                            WertungType::dekodiereRichtigFalschWeissnichtWertung($zahlkodiert, new MySqlPlatform())
                                 ->getRichtigFalschWeissnichtWertung()
                                 ->getPunktzahlRichtig()->getValue());
         $this->assertEquals($zahlFalsch,
-                            $wertungType->convertToPHPValue($zahlkodiert, new MySqlPlatform())
+                            WertungType::dekodiereRichtigFalschWeissnichtWertung($zahlkodiert, new MySqlPlatform())
                                 ->getRichtigFalschWeissnichtWertung()
                                 ->getPunktzahlFalsch()->getValue());
         $this->assertEquals($zahlWeissnicht,
-                            $wertungType->convertToPHPValue($zahlkodiert, new MySqlPlatform())
+                            WertungType::dekodiereRichtigFalschWeissnichtWertung($zahlkodiert, new MySqlPlatform())
                                 ->getRichtigFalschWeissnichtWertung()
                                 ->getPunktzahlWeissnicht()->getValue());
     }
