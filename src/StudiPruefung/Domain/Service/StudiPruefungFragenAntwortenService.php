@@ -106,8 +106,8 @@ class StudiPruefungFragenAntwortenService
                 $antwortenArray[] = [
                     "text"        => $antwort->getAntwortCode()->getValue() . ") "
                         . $antwort->getAntwortText()->getValue(),
-                    "richtig"     => $antwort->istRichtig() ? "true" : "false",
-                    "ausgewaehlt" => $antwort->getAntwortCode()->equals($antwortGewaehlt) ? "true" : "false",
+                    "richtig"     => $antwort->istRichtig() ? true : false,
+                    "ausgewaehlt" => $antwort->getAntwortCode()->equals($antwortGewaehlt) ? true : false,
                 ];
             }
 
