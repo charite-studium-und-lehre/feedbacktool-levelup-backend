@@ -9,7 +9,7 @@ class Punktzahl
 {
     use DefaultValueObjectComparison;
 
-    const MAX_PUNKTZAHL = 1000;
+    const MAX_PUNKTZAHL = 100000;
     const NACHKOMMASTELLEN = 2;
 
     const INVALID_WERT = "Punktzahl darf max. " . self::MAX_PUNKTZAHL . " (+/-) sein: ";

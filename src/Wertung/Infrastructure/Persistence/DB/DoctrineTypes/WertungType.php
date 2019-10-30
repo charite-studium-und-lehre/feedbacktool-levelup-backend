@@ -168,25 +168,28 @@ class WertungType extends Type
     }
 
     private function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
-        echo $wertungsWert . ";";
+//        echo $wertungsWert . ";";
         $stellenzahlVon = 0;
         $stellenzahlBis = self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
 
         $richtigPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
                                                                      $stellenzahlVon,
                                                                      $stellenzahlBis);
+//        echo "r$richtigPunktzahl";
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
 
         $falschPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
                                                                     $stellenzahlVon,
                                                                     $stellenzahlBis);
+//        echo "f$falschPunktzahl";
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
 
         $weissnichtPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
                                                                         $stellenzahlVon,
                                                                         $stellenzahlBis);
+//        echo "w$weissnichtPunktzahl;";
 
         return RichtigFalschWeissnichtWertung::fromPunktzahlen(
             Punktzahl::fromFloat($richtigPunktzahl),
