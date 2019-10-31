@@ -19,7 +19,6 @@ class StudienFortschrittApiController extends AbstractController
 
     public function __construct(StudienFortschrittExportService $meilensteinExportService) {
         $this->meilensteinExportService = $meilensteinExportService;
-
     }
 
     /**
@@ -27,6 +26,7 @@ class StudienFortschrittApiController extends AbstractController
      * @Route("/api/studienfortschritt", name="studienfortschritt")
      */
     public function jsonMeilensteineAction() {
+        session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
             return new Response("Nicht als 'echter' Studi eingeloggt (switchUser).", 403);

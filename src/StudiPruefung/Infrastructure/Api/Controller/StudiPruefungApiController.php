@@ -31,6 +31,7 @@ class StudiPruefungApiController extends AbstractController
      * @Route("/api/pruefungen")
      */
     public function jsonStudiPruefungAction() {
+        session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
             return new JsonResponse(["pruefungen" => []], 404);
@@ -50,6 +51,7 @@ class StudiPruefungApiController extends AbstractController
      * @Route("/api/pruefungen/{studiPruefungsIdInt}")
      */
     public function jsonStudiPruefungsDetailsAction(int $studiPruefungsIdInt) {
+        session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
             return new JsonResponse(["pruefungen" => []], 200);
