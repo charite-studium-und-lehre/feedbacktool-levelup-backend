@@ -78,8 +78,8 @@ class FortschrittsItem implements DDDValueObject
 
         "stat_prfg_sem2_vorklinik" => 501,
         "stat_prfg_sem2_klinik"    => 502,
-        "stat_prfg_sem4"           => 503,
-        "stat_prfg_sem9"           => 504,
+        "stat_prfg_sem4_vorklinik" => 503,
+        "stat_prfg_sem4_klinik"    => 504,
 
     ];
 
@@ -164,10 +164,16 @@ class FortschrittsItem implements DDDValueObject
         }
         if ($this->code > 500 && $this->code <= 510) {
             if ($this->code == 501) {
-                return "Stationen-Prüfung Sem. 2 Vorklinik";
+                return "Mündliche Prüfung Sem. 2 (Vorklinik)";
             }
             if ($this->code == 502) {
-                return "Stationen-Prüfung Sem. 2 Klinik";
+                return "Praktische Prüfung Sem. 2 (Klinik)";
+            }
+            if ($this->code == 503) {
+                return "Mündliche Prüfung Sem. 4 (Vorklinik)";
+            }
+            if ($this->code == 504) {
+                return "Praktische Prüfung Sem. 4 (Klinik)";
             }
 
             return "Stationen-Prüfung Sem. $fachsemester";
