@@ -27,7 +27,7 @@ class PruefungsFormatTest extends TestCase
     public function testGetTitel() {
 
         $pruefungsformat = PruefungsFormat::fromConst(PruefungsFormat::MC_SEM2);
-        $this->assertEquals(PruefungsFormat::FORMAT_TITEL[PruefungsFormat::MC_SEM2],
+        $this->assertEquals(PruefungsFormat::FORMAT_TITEL_LANG[PruefungsFormat::MC_SEM2],
                             $pruefungsformat->getTitel()
         );
 

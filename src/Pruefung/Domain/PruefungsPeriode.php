@@ -71,12 +71,19 @@ class PruefungsPeriode implements DDDValueObject
     }
 
     public function getPeriodeBeschreibung(): string {
-        $returnString = $this->zeitsemester->getStandardString();
+        $returnString = $this->zeitsemester->getStandardStringLesbar();
         if ($this->unterPeriode) {
-            $returnString .= " Prüfungszeitraum " . (string) $this->unterPeriode;
+            $returnString .= " (Prüfungszeitraum " . $this->unterPeriode . ")";
         }
 
         return $returnString;
     }
+    public function getPeriodeBeschreibungKurz(): string {
+        $returnString = $this->zeitsemester->getStandardStringLesbar();
+        if ($this->unterPeriode) {
+            $returnString .= " (" . $this->unterPeriode . ". Zeitraum)";
+        }
 
+        return $returnString;
+    }
 }

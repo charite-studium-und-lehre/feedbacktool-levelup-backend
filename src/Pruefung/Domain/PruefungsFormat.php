@@ -59,23 +59,42 @@ class PruefungsFormat implements DDDValueObject
         10 => self::MC_SEM10,
     ];
 
-    const FORMAT_TITEL = [
-        self::MC_SEM1                 => "MC-Test Sem.1",
-        self::MC_SEM2                 => "MC-Test Sem.2",
-        self::MC_SEM3                 => "MC-Test Sem.3",
-        self::MC_SEM4                 => "MC-Test Sem.4",
-        self::MC_SEM5                 => "MC-Test Sem.5",
-        self::MC_SEM6                 => "MC-Test Sem.6",
-        self::MC_SEM7                 => "MC-Test Sem.7",
-        self::MC_SEM8                 => "MC-Test Sem.8",
-        self::MC_SEM9                 => "MC-Test Sem.9",
-        self::MC_SEM10                => "MC-Test Sem.10",
-        self::PTM                     => "PTM",
-        self::STATION_TEIL1_VORKLINIK => "Stationsprüfung Teil1 Vorklinik",
-        self::STATION_TEIL1_KLINIK    => "Stationsprüfung Teil1 Klinik",
-        self::STATION_TEIL2           => "Stationsprüfung Teil2",
-        self::STATION_TEIL3           => "Stationsprüfung Teil3",
+    const FORMAT_TITEL_LANG = [
+        self::MC_SEM1                 => "MC-Test Semester 1",
+        self::MC_SEM2                 => "MC-Test Semester 2",
+        self::MC_SEM3                 => "MC-Test Semester 3",
+        self::MC_SEM4                 => "MC-Test Semester 4",
+        self::MC_SEM5                 => "MC-Test Semester 5",
+        self::MC_SEM6                 => "MC-Test Semester 6",
+        self::MC_SEM7                 => "MC-Test Semester 7",
+        self::MC_SEM8                 => "MC-Test Semester 8",
+        self::MC_SEM9                 => "MC-Test Semester 9",
+        self::MC_SEM10                => "MC-Test Semester 10",
+        self::PTM                     => "PTM (Progress Test Medizin)",
+        self::STATION_TEIL1_VORKLINIK => "Mündliche Stationsprüfung Semester 2 (Vorklinik)",
+        self::STATION_TEIL1_KLINIK    => "Praktische Stationsprüfung Semester 2 (Klinik)",
+        self::STATION_TEIL2           => "Mündliche Stationsprüfung Semester 4 (Vorklinik)",
+        self::STATION_TEIL3           => "Praktische Stationsprüfung Semester 4 (Klinik)",
     ];
+
+    const FORMAT_TITEL_KURZ = [
+        self::MC_SEM1                 => "MC 1. FS",
+        self::MC_SEM2                 => "MC 2. FS",
+        self::MC_SEM3                 => "MC 3. FS",
+        self::MC_SEM4                 => "MC 4. FS",
+        self::MC_SEM5                 => "MC 5. FS",
+        self::MC_SEM6                 => "MC 6. FS",
+        self::MC_SEM7                 => "MC 7. FS",
+        self::MC_SEM8                 => "MC 8. FS",
+        self::MC_SEM9                 => "MC 9. FS",
+        self::MC_SEM10                => "MC 10. FS",
+        self::PTM                     => "PTM",
+        self::STATION_TEIL1_VORKLINIK => "Mündliche Prüfung 2. FS",
+        self::STATION_TEIL1_KLINIK    => "Praktische Prüfung 2. FS",
+        self::STATION_TEIL2           => "Mündliche Prüfung 4. FS",
+        self::STATION_TEIL3           => "Praktische Prüfung 4. FS",
+    ];
+
 
     const FORMAT_CODE = [
         self::MC_SEM1                 => "MC-Sem1",
@@ -139,7 +158,11 @@ class PruefungsFormat implements DDDValueObject
     }
 
     public function getTitel(): string {
-        return self::FORMAT_TITEL[$this->value];
+        return self::FORMAT_TITEL_LANG[$this->value];
+    }
+
+    public function getTitelKurz(): string {
+        return self::FORMAT_TITEL_KURZ[$this->value];
     }
 
     public function getCode(): string {

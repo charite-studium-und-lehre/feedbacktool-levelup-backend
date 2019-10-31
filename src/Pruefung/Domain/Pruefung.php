@@ -50,7 +50,13 @@ class Pruefung
     }
 
     public function getName(): string {
-        return $this->getFormat()->getTitel() . " " . $this->getPruefungsPeriode()->getPeriodeBeschreibung();
+        return $this->getFormat()->getTitel() . " "
+            . $this->getPruefungsPeriode()->getPeriodeBeschreibung();
+    }
+
+    public function getKurzName(): string {
+        return $this->getFormat()->getTitelKurz() . " "
+            . $this->getPruefungsPeriode()->getPeriodeBeschreibungKurz();
     }
 
 }

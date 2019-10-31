@@ -70,9 +70,10 @@ class StudiPruefungErgebnisService
         $einzelErgebnisse = $this->getErgebnisDetailsAlsJsonArray($studiPruefung);
         $pruefungsPeriode = $pruefung->getPruefungsPeriode();
         $returnArray = [
-            "name"   => $pruefung->getName(),
-            "typ"    => $pruefung->getFormat()->getCode(),
-            "format" => $pruefung->getFormat()->getFormatAbstrakt(),
+            "name"     => $pruefung->getName(),
+            "kurzName" => $pruefung->getKurzName(),
+            "typ"      => $pruefung->getFormat()->getCode(),
+            "format"   => $pruefung->getFormat()->getFormatAbstrakt(),
         ];
 
         $fortschrittsItem = FortschrittsItem::fromPruefung($pruefung, $studiPruefung->getId());
