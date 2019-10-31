@@ -24,7 +24,7 @@ security:
                 # The route name the user can go to in order to logout
                 path: logout
                 # The name of the route to redirect to after logging out
-                target: switchToFrontend
+                target: logoutFromSSO
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

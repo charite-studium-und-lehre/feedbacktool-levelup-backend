@@ -136,6 +136,7 @@ class SSOController extends BaseController
 
         // Service macht eine Weiterleitung
         $chariteSSOService->signOut();
+        return new Response("...");
     }
 
     //    /** @Route("/levelupLogout", name="levelupLogout") */
