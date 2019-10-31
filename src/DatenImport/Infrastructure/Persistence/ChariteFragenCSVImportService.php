@@ -74,9 +74,13 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
             $fragenText = str_replace('<$/b>', '-', $fragenText);
             $fragenText = str_replace('<$sup>', '', $fragenText);
             $fragenText = str_replace('<$/sup>', '', $fragenText);
+            $fragenText = str_replace('<$sub>', '', $fragenText);
+            $fragenText = str_replace('<$/sub>', '', $fragenText);
+            $fragenText = str_replace('<$i>', '"', $fragenText);
+            $fragenText = str_replace('<$/i>', '"', $fragenText);
+            $fragenText = str_replace('_x000D_', '', $fragenText);
+            $fragenText = str_replace('_x005F', '_', $fragenText);
 
-
-//            dump($dataLine);
             $loesung = !empty($dataLine["Lösung"]) ? $dataLine["Lösung"] : "zzz";
 
             $fragenDTO = new ChariteFragenDTO();
