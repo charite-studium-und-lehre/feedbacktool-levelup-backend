@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Studi\Domain\LoginHash;
 use Studi\Domain\Service\LoginHashCreator;
+use Studi\Domain\Studi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -15,7 +16,7 @@ abstract class BaseController extends AbstractController
     public function getCurrentUserLoginHash(LoginHashCreator $loginHashCreator): ?LoginHash {
         $user = $this->getUser();
         if ($user) {
-            if ($user->getLoginHash()) {
+            if ($user instanceof Studi && $user->getLoginHash()) {
                 return $user->getLoginHash();
             } else {
                 return $loginHashCreator->createLoginHash($user->getUsernameVO());
