@@ -5,7 +5,7 @@ namespace DatenImport\Domain;
 use Cluster\Domain\ClusterId;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class LernzielFach
+class LernzielFach
 {
     use DefaultValueObjectComparison;
 

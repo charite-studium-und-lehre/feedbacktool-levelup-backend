@@ -5,7 +5,7 @@ namespace Pruefung\Domain\FrageAntwort;
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
 
- class Antwort implements DDDEntity
+class Antwort implements DDDEntity
 {
     use DefaultEntityComparison;
 

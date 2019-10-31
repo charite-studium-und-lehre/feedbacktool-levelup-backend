@@ -6,7 +6,7 @@ use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class Email implements DDDValueObject
+class Email implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 

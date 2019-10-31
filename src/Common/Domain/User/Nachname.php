@@ -5,7 +5,7 @@ namespace Common\Domain\User;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class Nachname implements DDDValueObject
+class Nachname implements DDDValueObject
 {
     use DefaultValueObjectComparison;
     use NameTrait;

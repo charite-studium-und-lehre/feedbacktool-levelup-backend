@@ -6,7 +6,7 @@ use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
 use Pruefung\Domain\PruefungsItemId;
 
-final class Frage implements DDDEntity
+class Frage implements DDDEntity
 {
     use DefaultEntityComparison;
 

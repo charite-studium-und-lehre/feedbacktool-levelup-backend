@@ -5,7 +5,7 @@ namespace Common\Domain\User;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 
-final class Vorname implements DDDValueObject
+class Vorname implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
