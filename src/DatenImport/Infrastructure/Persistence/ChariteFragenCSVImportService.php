@@ -70,8 +70,10 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
             $fragenText = $dataLine["Fragentext"];
             $fragenText = str_replace('<$u>', '---', $fragenText);
             $fragenText = str_replace('<$/u>', '---', $fragenText);
-            $fragenText = str_replace('<$sub>', '', $fragenText);
-            $fragenText = str_replace('<$/sub>', '', $fragenText);
+            $fragenText = str_replace('<$b>', '-', $fragenText);
+            $fragenText = str_replace('<$/b>', '-', $fragenText);
+            $fragenText = str_replace('<$sup>', '', $fragenText);
+            $fragenText = str_replace('<$/sup>', '', $fragenText);
 
 
 //            dump($dataLine);
