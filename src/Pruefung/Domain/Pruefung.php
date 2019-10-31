@@ -55,8 +55,7 @@ class Pruefung
     }
 
     public function getKurzName(): string {
-        return $this->getFormat()->getTitelKurz() . " "
-            . $this->getPruefungsPeriode()->getPeriodeBeschreibungKurz();
+        return $this->getFormat()->getTitelKurz() . $this->getPruefungsPeriode()->getPeriodeBeschreibungKurz();
     }
 
 }
