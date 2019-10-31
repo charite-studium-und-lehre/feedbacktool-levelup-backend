@@ -63,7 +63,7 @@ class SSOController extends BaseController
             }
         }
 
-        return $this->redirect("/app-develop");
+        return $this->redirect("/app");
     }
 
     /** @Route("/api/stammdaten", name="isLoggedIn", methods="GET") */
@@ -154,7 +154,7 @@ class SSOController extends BaseController
 
     /** @Route("/switchToFrontend", name="switchToFrontend") */
     public function switchToFrontend() {
-        return $this->redirect("/app-develop");
+        return $this->redirect("/app");
     }
 
     /** @Route("/api/userInfo", name="userInfo")
@@ -171,7 +171,7 @@ class SSOController extends BaseController
         }
 
         return new Response(
-            "<a href='/app-develop'>Gehe zu Dashboard</a><br/><a href='"
+            "<a href='/app'>Gehe zu Dashboard</a><br/><a href='"
             . $this->generateUrl("switchUser"). "'>SwitchUser</a>"
         );
     }
