@@ -143,29 +143,36 @@ class StudiPruefungErgebnisService
                     : NULL,
             ];
         } elseif ($pruefung->getFormat()->isPTM()) {
-            return [
-                "ergebnisRichtigPunktzahl"        => $pruefungsWertung->getGesamtErgebnis()
+            $returnArray = [
+                "ergebnisRichtigPunktzahl"    => $pruefungsWertung->getGesamtErgebnis()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
-                "ergebnisFalschPunktzahl"         => $pruefungsWertung->getGesamtErgebnis()
+                "ergebnisFalschPunktzahl"     => $pruefungsWertung->getGesamtErgebnis()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
-                "ergebnisWeissnichtPunktzahl"     => $pruefungsWertung->getGesamtErgebnis()
+                "ergebnisWeissnichtPunktzahl" => $pruefungsWertung->getGesamtErgebnis()
                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
-                "durchschnittRichtigPunktzahl"    => $pruefungsWertung->getKohortenWertung()
-                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
-                "durchschnittFalschPunktzahl"     => $pruefungsWertung->getKohortenWertung()
-                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
-                "durchschnittWeissnichtPunktzahl" => $pruefungsWertung->getKohortenWertung()
-                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
-                "maximalPunktzahl"                => $pruefungsWertung->getGesamtErgebnis()
+                "maximalPunktzahl"            => $pruefungsWertung->getGesamtErgebnis()
                     ->getRichtigFalschWeissnichtWertung()->getGesamtPunktzahl()->getValue(),
-
             ];
+            if ($pruefungsWertung->getKohortenWertung()->getRichtigFalschWeissnichtWertung()) {
+                $returnArray += ["durchschnittRichtigPunktzahl"    => $pruefungsWertung->getKohortenWertung()
+                    ->getRichtigFalschWeissnichtWertung()->getPunktzahlRichtig()->getValue(),
+                                 "durchschnittFalschPunktzahl"     => $pruefungsWertung->getKohortenWertung()
+                                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlFalsch()->getValue(),
+                                 "durchschnittWeissnichtPunktzahl" => $pruefungsWertung->getKohortenWertung()
+                                     ->getRichtigFalschWeissnichtWertung()->getPunktzahlWeissnicht()->getValue(),
+                ];
+            }
+
+            return $returnArray;
         } else {
             throw new \Exception("Unbekanntes Format: " . $pruefung->getFormat()->getTitel());
         }
     }
 
-    private function getStationsErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
+    private
+    function getStationsErgebnisDetailsAlsJsonArray(
+        StudiPruefung $studiPruefung
+    ): array {
         /** @var Pruefung $pruefung */
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isStation()) {
@@ -253,7 +260,10 @@ class StudiPruefungErgebnisService
 
     }
 
-    private function getPTMErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
+    private
+    function getPTMErgebnisDetailsAlsJsonArray(
+        StudiPruefung $studiPruefung
+    ): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isPTM()) {
             return [];
@@ -294,7 +304,8 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private function getMCErgebnisDetailsAlsJsonArray(
+    private
+    function getMCErgebnisDetailsAlsJsonArray(
         StudiPruefung $studiPruefung
     ): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
@@ -363,7 +374,10 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private function getWertungen($itemWertungen): array {
+    private
+    function getWertungen(
+        $itemWertungen
+    ): array {
         $alleMeineWertungen = [];
         $alleKohortenWertungen = [];
         foreach ($itemWertungen as $itemWertung) {
@@ -377,7 +391,11 @@ class StudiPruefungErgebnisService
     }
 
     /** @return ItemWertung[] */
-    private function getItemsNachClusterTyp($itemWertungen, ClusterTyp $clusterTyp): array {
+    private
+    function getItemsNachClusterTyp(
+        $itemWertungen,
+        ClusterTyp $clusterTyp
+    ): array {
         $itemsNachFach = [];
         foreach ($itemWertungen as $itemWertung) {
             $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
@@ -393,7 +411,8 @@ class StudiPruefungErgebnisService
         return $itemsNachFach;
     }
 
-    private function getPruefungUndWertungen(
+    private
+    function getPruefungUndWertungen(
         StudiPruefung $studiPruefung
     ): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
