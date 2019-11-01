@@ -172,8 +172,8 @@ class SSOController extends BaseController
         }
 
         return new Response(
-            "<a href='/app'>Gehe zu Dashboard</a><br/><a href='"
-            . $this->generateUrl("switchUser"). "'>SwitchUser</a>"
+            "<h1><a href='/app'>Gehe zu Dashboard</a><br/><a href='"
+            . $this->generateUrl("switchUser"). "'>Zurück zu SwitchUser</a></h1>"
         );
     }
 

@@ -4,7 +4,9 @@ namespace EPA\Infrastructure\Controller\API;
 
 use Common\Application\Command\CommandBus;
 use EPA\Application\Command\SelbstBewertungAendernCommand;
-use EPA\Application\Command\SelbstBewertungErhoehenCommand;
+use EPA\Domain\EPA;
+use EPA\Domain\EPABewertung;
+use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
 use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Service\LoginHashCreator;
@@ -47,6 +49,13 @@ class EPAStatusApiController extends BaseController
         $params = $this->getJsonContentParams($request);
         $zutrauen = $params->get("zutrauen") ?: 0;
         $gemacht = $params->get("gemacht") ?: 0;
+
+        try {
+            EPABewertung::fromValues($zutrauen, EPA::fromInt(111));
+            EPABewertung::fromValues($gemacht, EPA::fromInt(111));
+        } catch (\Exception $e) {
+            new Response("Bewertung nicht zwischen 0 und 5!", 400);
+        }
 
         $command = new SelbstBewertungAendernCommand();
 
