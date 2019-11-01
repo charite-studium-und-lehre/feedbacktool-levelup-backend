@@ -64,6 +64,8 @@ class EPABewertungsDatum
     public function equals(object $otherObject): bool {
         $format = "d.m.Y";
 
+        dump($this);
+        dump($otherObject);
         return $this->value->format($format)
             === $otherObject->value->format($format);
     }

@@ -107,7 +107,8 @@ class StudiPruefungFragenAntwortenService
                     "text"        => $antwort->getAntwortCode()->getValue() . ") "
                         . $antwort->getAntwortText()->getValue(),
                     "richtig"     => $antwort->istRichtig() ? true : false,
-                    "ausgewaehlt" => $antwort->getAntwortCode()->equals($antwortGewaehlt) ? true : false,
+                    "ausgewaehlt" => $antwortGewaehlt && $antwort->getAntwortCode()->equals($antwortGewaehlt) ? true :
+                    false,
                 ];
             }
 

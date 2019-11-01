@@ -47,6 +47,7 @@ class EPAStatusApiController extends BaseController
             return new Response("", 200);
         }
         $params = $this->getJsonContentParams($request);
+//        $params = $request;
         $zutrauen = $params->get("zutrauen") ?: 0;
         $gemacht = $params->get("gemacht") ?: 0;
 
