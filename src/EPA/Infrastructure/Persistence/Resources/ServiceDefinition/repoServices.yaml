@@ -21,3 +21,16 @@ services:
           - "@EPA-Domain-SelbstBewertung-SelbstBewertungsRepository-DoctrineRepo"
           - "@doctrine.orm.entity_manager"
         public: true
+
+    EPA-Domain-Fremdbewertung-FremdbewertungsAnfrageRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - EPA\Domain\Fremdbewertung\FremdbewertungsAnfrage
+
+    EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository:
+        class: 'EPA\Infrastructure\Persistence\DB\DBFremdbewertungsAnfrageRepository'
+        arguments:
+            - "@EPA-Domain-Fremdbewertung-FremdbewertungsAnfrageRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true

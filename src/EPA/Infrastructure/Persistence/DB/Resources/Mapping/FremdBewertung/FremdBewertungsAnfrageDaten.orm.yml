@@ -1,0 +1,21 @@
+EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten:
+  type: embeddable
+
+  embedded:
+    datum:
+      class: EPA\Domain\EPABewertungsDatum
+      columnPrefix: false
+    fremdBerwerterName:
+      class: FremdBewerterName
+      columnPrefix: false
+    fremdBerwerterEmail:
+      class: Common\Domain\User\Email
+      columnPrefix: false
+
+  fields:
+    fremdBewertungsAnfrageTaetigkeiten:
+      type: fremdBewertungsAnfrageTaetigkeiten
+      nullable: true
+    fremdBewertungsAnfrageKommentar:
+      type: fremdBewertungsAnfrageKommentar
+      nullable: true

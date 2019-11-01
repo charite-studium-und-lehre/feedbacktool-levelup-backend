@@ -40,6 +40,10 @@ doctrine:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
       antwortCode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AntwortCodeType"
+      fremdBewertungsAnfrageTaetigkeiten:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageTaetigkeitenType"
+      fremdBewertungsAnfrageKommentar:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageKommentarType"
 
     mapping_types:
       aggregateId: integer
@@ -53,6 +57,8 @@ doctrine:
       itemSchwierigkeit: integer
       pruefungsPeriode: integer
       antwortCode: string
+      fremdBewertungsAnfrageTaetigkeiten: string
+      fremdBewertungsAnfrageKommentar: string
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'
@@ -67,6 +73,12 @@ doctrine:
         type:                 yml
         dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Common\\Domain"
+      CommmonUserMapping:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping/User"
+        prefix:               "Common\\Domain\\User"
 
       AbstractEvent:
         is_bundle:            false
@@ -95,6 +107,13 @@ doctrine:
         type:                 yml
         dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/SelbstBewertung"
         prefix:               "EPA\\Domain\\SelbstBewertung"
+
+      EPAFremdBEwertung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/FremdBewertung"
+        prefix:               "EPA\\Domain\\FremdBewertung"
 
       Pruefung:
         is_bundle:            false
