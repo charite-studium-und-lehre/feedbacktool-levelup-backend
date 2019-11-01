@@ -32,16 +32,26 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
 
     /** SelbstBewertung[] */
     public function allLatestByStudiUndTyp(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
-        return $this->doctrineRepo->createQueryBuilder("selbstbewertung")
+        /** @var SelbstBewertung[] $alleSelbstBewertungenNeueste */
+        $alleSelbstBewertungenNeueste = [];
+        /** @var SelbstBewertung[] $alleSelbstBewertungen */
+        $alleSelbstBewertungen = $this->doctrineRepo->createQueryBuilder("selbstbewertung")
             ->andWhere("selbstbewertung.loginHash= :loginHash")
             ->setParameter("loginHash", $loginHash)
             ->andWhere("selbstbewertung.selbstBewertungsTyp.value = :typ")
             ->setParameter("typ", $typ->getValue())
-            ->groupBy("selbstbewertung.selbstBewertungsTyp.value")
-            ->addGroupBy("selbstbewertung.epaBewertung.epa.nummer")
             ->addOrderBy("selbstbewertung.epaBewertungsDatum.value", "DESC")
-
             ->getQuery()->execute();
+        foreach ($alleSelbstBewertungen as $selbstbewertung) {
+            $epaNummer = $selbstbewertung->getEpaBewertung()->getEpa()->getNummer();
+            if (!isset($alleSelbstBewertungenNeueste[$epaNummer])
+                || $selbstbewertung->getEpaBewertungsDatum()
+                    ->istNeuerAls($alleSelbstBewertungenNeueste[$epaNummer]->getEpaBewertungsDatum())
+            ) {
+                $alleSelbstBewertungenNeueste[$epaNummer] = $selbstbewertung;
+            }
+        }
+        return $alleSelbstBewertungenNeueste;
     }
 
     /** @return SelbstBewertung[] */
@@ -65,6 +75,7 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
                 return $bewertung;
             }
         }
+
         return NULL;
     }
 }
