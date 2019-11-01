@@ -2,12 +2,14 @@
 
 namespace FBToolCommon\Infrastructure\UserInterface\Web\Controller;
 
+use Common\Domain\User\LoginUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Studi\Domain\LoginHash;
 use Studi\Domain\Service\LoginHashCreator;
 use Studi\Domain\Studi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -38,5 +40,9 @@ abstract class BaseController extends AbstractController
         } catch (Exception $e) {
             throw new BadRequestHttpException("Content is not a valid json");
         }
+    }
+
+    protected function getLoginUser(): ?LoginUser {
+        return $this->getUser();
     }
 }

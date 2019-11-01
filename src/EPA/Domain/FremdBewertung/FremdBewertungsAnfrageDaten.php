@@ -20,17 +20,17 @@ class FremdBewertungsAnfrageDaten implements DDDValueObject
     /** @var EPABewertungsDatum */
     private $datum;
 
-    /** @var FremdBewertungsAnfrageTaetigkeiten */
+    /** @var ?FremdBewertungsAnfrageTaetigkeiten */
     private $fremdBewertungsAnfrageTaetigkeiten;
 
-    /** @var FremdBewertungsAnfrageKommentar */
+    /** @var ?FremdBewertungsAnfrageKommentar */
     private $fremdBewertungsAnfrageKommentar;
 
     public static function fromDaten(
         FremdBewerterName $fremdBewerterName,
         Email $fremdBewerterEmail,
-        FremdBewertungsAnfrageTaetigkeiten $fremdBewertungsAnfrageTaetigkeiten,
-        FremdBewertungsAnfrageKommentar $fremdBewertungsAnfrageKommentar
+        ?FremdBewertungsAnfrageTaetigkeiten $fremdBewertungsAnfrageTaetigkeiten,
+        ?FremdBewertungsAnfrageKommentar $fremdBewertungsAnfrageKommentar
     ): self {
 
         $object = new self();
@@ -55,11 +55,11 @@ class FremdBewertungsAnfrageDaten implements DDDValueObject
         return $this->datum;
     }
 
-    public function getFremdBewertungsAnfrageTaetigkeiten(): FremdBewertungsAnfrageTaetigkeiten {
+    public function getFremdBewertungsAnfrageTaetigkeiten(): ?FremdBewertungsAnfrageTaetigkeiten {
         return $this->fremdBewertungsAnfrageTaetigkeiten;
     }
 
-    public function getFremdBewertungsAnfrageKommentar(): FremdBewertungsAnfrageKommentar {
+    public function getFremdBewertungsAnfrageKommentar(): ?FremdBewertungsAnfrageKommentar {
         return $this->fremdBewertungsAnfrageKommentar;
     }
 

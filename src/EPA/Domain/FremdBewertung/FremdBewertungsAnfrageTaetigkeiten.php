@@ -10,7 +10,7 @@ class FremdBewertungsAnfrageTaetigkeiten implements DDDValueObject
 {
     const MIN_LENGTH = 5;
     const MAX_LENGTH = 2000;
-    const UNGUELTIG = "Der Text der Tätigkeiten / Kurs ist ungültig: : ";
+    const UNGUELTIG = "Der Text der Tätigkeiten / Kurs ist ungültig: ";
 
     use DefaultValueObjectComparison;
 

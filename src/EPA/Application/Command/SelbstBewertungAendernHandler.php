@@ -11,14 +11,6 @@ use EPA\Domain\EPABewertungsDatum;
 use EPA\Domain\SelbstBewertung\SelbstBewertung;
 use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
 use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
-use Lehrberechtigung\Domain\Lehrberechtigung;
-use Lehrberechtigung\Domain\LehrberechtigungRepository;
-use Lehrberechtigung\Domain\LehrberechtigungsId;
-use Lehrberechtigung\Domain\LehrberechtigungsTyp;
-use Lehrberechtigung\Domain\LehrberechtigungsUmfang;
-use Lehrberechtigung\Domain\Service\LehrberechtigungValidatorService;
-use LLPCommon\Domain\Zeitsemester;
-use Person\Domain\PersonId;
 use Studi\Domain\LoginHash;
 
 final class SelbstBewertungAendernHandler implements CommandHandler

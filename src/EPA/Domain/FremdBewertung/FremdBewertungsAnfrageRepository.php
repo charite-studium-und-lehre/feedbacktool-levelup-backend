@@ -3,6 +3,7 @@
 namespace EPA\Domain\FremdBewertung;
 
 use Common\Domain\DDDRepository;
+use Common\Domain\FlushableRepository;
 use Studi\Domain\LoginHash;
 
 interface FremdBewertungsAnfrageRepository extends DDDRepository, FlushableRepository

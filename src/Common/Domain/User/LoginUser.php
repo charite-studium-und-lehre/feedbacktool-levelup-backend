@@ -112,6 +112,10 @@ class LoginUser implements DDDValueObject, UserInterface
         return $this->nachname;
     }
 
+    public function getVollerNameString(): string {
+        return $this->vorname->getValue() . " " . $this->nachname->getValue();
+    }
+
     public function getEmail(): Email {
         return $this->email;
     }

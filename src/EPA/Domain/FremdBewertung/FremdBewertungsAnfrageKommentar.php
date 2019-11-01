@@ -10,7 +10,7 @@ class FremdBewertungsAnfrageKommentar implements DDDValueObject
 {
     const MIN_LENGTH = 5;
     const MAX_LENGTH = 2000;
-    const UNGUELTIG = "Der Kommentar der Anfrage ist ungültig: : ";
+    const UNGUELTIG = "Der Kommentar der Anfrage ist ungültig: ";
 
     use DefaultValueObjectComparison;
 

@@ -3,6 +3,7 @@
 namespace EPA\Infrastructure\Controller\API;
 
 use Common\Application\Command\CommandBus;
+use EPA\Application\Command\FremdBewertungAnfragenCommand;
 use EPA\Application\Command\SelbstBewertungAendernCommand;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EPAStatusApiController extends BaseController
+class EPAApiController extends BaseController
 {
     /** @var LoginHashCreator */
     private $loginHashCreator;
@@ -47,7 +48,7 @@ class EPAStatusApiController extends BaseController
             return new Response("", 200);
         }
         $params = $this->getJsonContentParams($request);
-//        $params = $request;
+        //        $params = $request;
         $zutrauen = $params->get("zutrauen") ?: 0;
         $gemacht = $params->get("gemacht") ?: 0;
 
@@ -69,6 +70,38 @@ class EPAStatusApiController extends BaseController
         $command->gemacht = $gemacht;
 
         $commandBus->execute($command);
+
+        return new Response("Erfolg", 200);
+    }
+
+    /**
+     * @Route("/api/epas/fremdbewertung/anfordern", name="api_fremdbewertung_anfordern")
+     */
+    public function frageFremdBewertungAn(Request $request, CommandBus $commandBus) {
+        if ($request->getMethod() == "OPTIONS") {
+            return new Response("", 200);
+        }
+        $params = $this->getJsonContentParams($request);
+//                $params = $request;
+
+        $command = new FremdBewertungAnfragenCommand();
+        $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
+        $command->fremdBewerterName = $params->get("fremdBewerterName");
+        $command->fremdBewerterEmail = $params->get("fremdBewerterEmail");
+        $command->angefragteTaetigkeiten = $params->get("angefragteTaetigkeiten");
+        $command->kommentar = $params->get("kommentar");
+
+        $command->studiName = $this->getLoginUser()->getVollerNameString();
+        $command->studiEmail = $this->getLoginUser()->getEmail()->getValue();
+
+        if (!$command->loginHash) {
+            return new Response("Nicht eingeloggt?", 401);
+        }
+        try {
+            $commandBus->execute($command);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage(), 400);
+        }
 
         return new Response("Erfolg", 200);
     }
