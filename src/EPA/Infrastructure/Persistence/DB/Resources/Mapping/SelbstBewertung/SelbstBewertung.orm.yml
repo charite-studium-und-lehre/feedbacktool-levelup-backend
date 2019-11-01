@@ -1,4 +1,4 @@
-EPA\Domain\SelbstBewertung:
+EPA\Domain\SelbstBewertung\SelbstBewertung:
   type: entity
   table: epa_selbstBewertung
 
@@ -8,7 +8,7 @@ EPA\Domain\SelbstBewertung:
 
   embedded:
     selbstBewertungsTyp:
-      class: EPA\Domain\SelbstBewertungsTyp
+      class: EPA\Domain\SelbstBewertung\SelbstBewertungsTyp
       columnPrefix: false
     epaBewertungsDatum:
       class: EPA\Domain\EPABewertungsDatum

@@ -1,9 +1,10 @@
 <?php
 
-namespace EPA\Domain;
+namespace EPA\Domain\SelbstBewertung;
 
 use Common\Domain\DDDRepository;
 use Common\Domain\FlushableRepository;
+use EPA\Domain\EPA;
 use Studi\Domain\LoginHash;
 
 interface SelbstBewertungsRepository extends DDDRepository, FlushableRepository

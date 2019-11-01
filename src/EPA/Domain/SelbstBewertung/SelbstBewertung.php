@@ -1,11 +1,12 @@
 <?php
 
-namespace EPA\Domain;
+namespace EPA\Domain\SelbstBewertung;
 
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
+use EPA\Domain\EPABewertung;
+use EPA\Domain\EPABewertungsDatum;
 use Studi\Domain\LoginHash;
-use Studi\Domain\StudiHash;
 
 class SelbstBewertung implements DDDEntity
 {

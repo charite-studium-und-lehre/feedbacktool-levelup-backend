@@ -3,9 +3,9 @@
 namespace EPA\Domain\Service;
 
 use EPA\Domain\EPAKategorie;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Studi\Domain\LoginHash;
 
 class EpasFuerStudiService

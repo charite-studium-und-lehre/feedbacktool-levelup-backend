@@ -4,10 +4,10 @@ namespace EPA\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use EPA\Domain\EPA;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsId;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsId;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Studi\Domain\LoginHash;
 
 final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository

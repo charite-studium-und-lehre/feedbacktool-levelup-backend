@@ -89,6 +89,13 @@ doctrine:
         dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "EPA\\Domain"
 
+      EPASelbstBEwertung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/SelbstBewertung"
+        prefix:               "EPA\\Domain\\SelbstBewertung"
+
       Pruefung:
         is_bundle:            false
         mapping:              true

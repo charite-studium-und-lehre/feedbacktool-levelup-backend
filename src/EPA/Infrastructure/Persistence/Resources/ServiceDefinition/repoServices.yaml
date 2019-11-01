@@ -9,15 +9,15 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
-    EPA-Domain-SelbstBewertungsRepository-DoctrineRepo:
+    EPA-Domain-SelbstBewertung-SelbstBewertungsRepository-DoctrineRepo:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - EPA\Domain\SelbstBewertung
+            - EPA\Domain\SelbstBewertung\SelbstBewertung
 
-    EPA\Domain\SelbstBewertungsRepository:
+    EPA\Domain\SelbstBewertung\SelbstBewertungsRepository:
         class: 'EPA\Infrastructure\Persistence\DB\DBSelbstBewertungsRepository'
         arguments:
-          - "@EPA-Domain-SelbstBewertungsRepository-DoctrineRepo"
+          - "@EPA-Domain-SelbstBewertung-SelbstBewertungsRepository-DoctrineRepo"
           - "@doctrine.orm.entity_manager"
         public: true

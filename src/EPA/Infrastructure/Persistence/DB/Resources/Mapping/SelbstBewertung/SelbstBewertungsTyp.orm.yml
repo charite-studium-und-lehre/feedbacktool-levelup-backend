@@ -1,4 +1,4 @@
-EPA\Domain\SelbstBewertungsTyp:
+EPA\Domain\SelbstBewertung\SelbstBewertungsTyp:
   type: embeddable
 
   fields:

@@ -1,6 +1,6 @@
 <?php
 
-namespace EPA\Domain;
+namespace EPA\Domain\SelbstBewertung;
 
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;

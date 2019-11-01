@@ -8,9 +8,9 @@ use Common\Application\CommandHandler\CommandHandlerTrait;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
 use EPA\Domain\EPABewertungsDatum;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Lehrberechtigung\Domain\Lehrberechtigung;
 use Lehrberechtigung\Domain\LehrberechtigungRepository;
 use Lehrberechtigung\Domain\LehrberechtigungsId;
@@ -41,7 +41,7 @@ final class SelbstBewertungAendernHandler implements CommandHandler
 
         foreach ([SelbstBewertungsTyp::getGemachtObject(), SelbstBewertungsTyp::getZutrauenObject()]
             as $selbstBewertungsTyp) {
-            /** @var SelbstBewertungsTyp $selbstBewertungsTyp */
+            /** @var \EPA\Domain\SelbstBewertung\SelbstBewertungsTyp $selbstBewertungsTyp */
             if ($selbstBewertungsTyp->istGemacht()) {
                 $neuerWert = $command->gemacht;
             } else {

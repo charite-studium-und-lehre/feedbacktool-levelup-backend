@@ -3,9 +3,8 @@
 namespace EPA\Infrastructure\Controller\API;
 
 use Common\Application\Command\CommandBus;
-use EPA\Application\Command\SelbstBewertungErhoehenCommand;
 use EPA\Application\Command\SelbstBewertungAendernCommand;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Application\Command\SelbstBewertungErhoehenCommand;
 use EPA\Domain\Service\EpasFuerStudiService;
 use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Service\LoginHashCreator;

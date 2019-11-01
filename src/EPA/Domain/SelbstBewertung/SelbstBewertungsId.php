@@ -1,6 +1,6 @@
 <?php
 
-namespace EPA\Domain;
+namespace EPA\Domain\SelbstBewertung;
 
 use Common\Domain\AggregateId;
 
