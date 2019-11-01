@@ -28,4 +28,8 @@ class FremdBewerterName implements DDDValueObject
         return $object;
     }
 
+    public function getValue(): string {
+        return $this->value;
+    }
+
 }

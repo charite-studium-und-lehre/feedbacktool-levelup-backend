@@ -3,6 +3,7 @@
 namespace EPA\Domain\Service;
 
 use EPA\Domain\EPAKategorie;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\SelbstBewertung\SelbstBewertung;
 use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
 use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
@@ -13,8 +14,15 @@ class EpasFuerStudiService
     /** @var SelbstBewertungsRepository */
     private $selbstBewertungsRepository;
 
-    public function __construct(SelbstBewertungsRepository $selbstBewertungsRepository) {
+    /** @var FremdBewertungsAnfrageRepository */
+    private $fremdBewertungsAnfrageRepository;
+
+    public function __construct(
+        SelbstBewertungsRepository $selbstBewertungsRepository,
+        FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository
+    ) {
         $this->selbstBewertungsRepository = $selbstBewertungsRepository;
+        $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;
     }
 
     /** Erzeugt die Sturktur wie im ZIM für das Frontend dokumentiert. */
@@ -45,9 +53,39 @@ class EpasFuerStudiService
 
         return [
             "meineEPAs"            => $meineEPAs,
-            "fremdeinschaetzungen" => [],
+            "fremdeinschaetzungen" => $this->getFremdEinschaetzungen($loginHash),
         ];
 
+    }
+
+    /**
+     * @param LoginHash $loginHash
+     * @return array
+     */
+    private function getFremdEinschaetzungen(LoginHash $loginHash): array {
+        $anfragen = $this->fremdBewertungsAnfrageRepository->allByStudi($loginHash);
+        $returnArray = [];
+        foreach ($anfragen as $anfrage) {
+            $taetigkeiten = $anfrage->getFremdBewertungsAnfrageDaten()->getFremdBewertungsAnfrageTaetigkeiten()
+                ? $anfrage->getFremdBewertungsAnfrageDaten()->getFremdBewertungsAnfrageTaetigkeiten()->getValue()
+                : NULL;
+            $kommentar = $anfrage->getFremdBewertungsAnfrageDaten()->getFremdBewertungsAnfrageKommentar()
+                ? $anfrage->getFremdBewertungsAnfrageDaten()->getFremdBewertungsAnfrageKommentar()->getValue()
+                : NULL;
+            $returnArray[] = [
+                "id"                  => NULL,
+                "name"                => $anfrage->getFremdBewertungsAnfrageDaten()
+                    ->getFremdBerwerterName()->getValue(),
+                "email"               => $anfrage->getFremdBewertungsAnfrageDaten()
+                    ->getFremdBerwerterEmail()->getValue(),
+                "anfrageTaetigkeiten" => $taetigkeiten,
+                "anfrageKommentar"    => $kommentar,
+                "datum"               => $anfrage->getFremdBewertungsAnfrageDaten()->getDatum()->toIsoString(),
+                "status"              => "offen",
+            ];
+        }
+
+        return $returnArray;
     }
 
     /**
