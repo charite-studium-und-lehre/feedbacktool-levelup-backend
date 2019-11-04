@@ -10,8 +10,6 @@ use Studi\Domain\Service\LoginHashCreator;
 use Studi\Domain\Studi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -49,9 +47,9 @@ abstract class BaseController extends AbstractController
         return $this->getUser();
     }
 
-    protected function checkLogin() {
+    protected function checkLogin(Request $request) {
         if (!$this->getUser()) {
-            throw new HttpException(401,"Nicht eingeloggt");
+            throw new HttpException(401, "Nicht eingeloggt");
         }
     }
 }

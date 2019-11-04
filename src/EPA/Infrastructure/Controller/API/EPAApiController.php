@@ -45,10 +45,10 @@ class EPAApiController extends BaseController
      * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen", methods={"POST", "OPTIONS"})
      */
     public function aendereSelbstBewertung(Request $request, CommandBus $commandBus, int $epaID) {
-        $this->checkLogin();
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
+        $this->checkLogin();
         $params = $this->getJsonContentParams($request);
         //        $params = $request;
         $zutrauen = $params->get("zutrauen") ?: 0;
@@ -82,10 +82,10 @@ class EPAApiController extends BaseController
      * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern")
      */
     public function frageFremdBewertungAnfragen(Request $request, CommandBus $commandBus) {
-        $this->checkLogin();
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
+        $this->checkLogin();
         $params = $this->getJsonContentParams($request);
 
         $command = new FremdBewertungAnfragenCommand();
@@ -104,6 +104,8 @@ class EPAApiController extends BaseController
         try {
             $commandBus->execute($command);
         } catch (\Exception $e) {
+            return new Response($e->getMessage(), 400);
+        } catch (\Error $e) {
             return new Response($e->getMessage(), 400);
         }
 
