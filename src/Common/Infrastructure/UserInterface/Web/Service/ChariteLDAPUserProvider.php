@@ -41,7 +41,7 @@ class ChariteLDAPUserProvider implements UserProviderInterface
                          "alhassam",
                          "petzolma",
                          "franzann",
-                         "tameh",
+                         "htame",
                          "linkea",
                          "domansmo",
                      ]
