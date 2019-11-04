@@ -27,8 +27,8 @@ class EpasFuerStudiService
 
     /** Erzeugt die Sturktur wie im ZIM für das Frontend dokumentiert. */
     public function getEpaStudiData(LoginHash $loginHash) {
-        $gemachtArray = $this->getSelbstEinschaetzungen($loginHash, SelbstBewertungsTyp::getGemachtObject());
-        $zutrauenArray = $this->getSelbstEinschaetzungen($loginHash, SelbstBewertungsTyp::getZutrauenObject());
+        $gemachtArray = $this->getSelbstBewertungen($loginHash, SelbstBewertungsTyp::getGemachtObject());
+        $zutrauenArray = $this->getSelbstBewertungen($loginHash, SelbstBewertungsTyp::getZutrauenObject());
         $epaStruktur = EPAKategorie::getEPAStrukturFlach();
 
         $meineEPAs = [];
@@ -53,7 +53,7 @@ class EpasFuerStudiService
 
         return [
             "meineEPAs"            => $meineEPAs,
-            "fremdeinschaetzungen" => $this->getFremdEinschaetzungen($loginHash),
+            "fremdbewertungen" => $this->getFremdBewertungen($loginHash),
         ];
 
     }
@@ -62,7 +62,7 @@ class EpasFuerStudiService
      * @param LoginHash $loginHash
      * @return array
      */
-    private function getFremdEinschaetzungen(LoginHash $loginHash): array {
+    private function getFremdBewertungen(LoginHash $loginHash): array {
         $anfragen = $this->fremdBewertungsAnfrageRepository->allByStudi($loginHash);
         $returnArray = [];
         foreach ($anfragen as $anfrage) {
@@ -92,7 +92,7 @@ class EpasFuerStudiService
      * @param LoginHash $loginHash
      * @return array
      */
-    private function getSelbstEinschaetzungen(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
+    private function getSelbstBewertungen(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
         $bewertungen = $this->selbstBewertungsRepository->allLatestByStudiUndTyp($loginHash, $typ);
 
         return $this->selbstBewertungsListeZuIdWertung($bewertungen);
