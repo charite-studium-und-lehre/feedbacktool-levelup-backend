@@ -26,7 +26,7 @@ class EPAApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epas", name="meine_epas", methods={GET, OPTIONS})
+     * @Route("/api/epas", name="meine_epas", methods={"GET", "OPTIONS"})
      */
     public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
         session_write_close();
@@ -41,7 +41,7 @@ class EPAApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen", methods={POST, OPTIONS})
+     * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen", methods={"POST", "OPTIONS"})
      */
     public function aendereSelbstBewertung(Request $request, CommandBus $commandBus, int $epaID) {
         if ($request->getMethod() == "OPTIONS") {
@@ -75,7 +75,7 @@ class EPAApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={POST, OPTIONS})
+     * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={"POST", "OPTIONS"})
      */
     public function frageFremdBewertungAnfragen(Request $request, CommandBus $commandBus) {
         if ($request->getMethod() == "OPTIONS") {
