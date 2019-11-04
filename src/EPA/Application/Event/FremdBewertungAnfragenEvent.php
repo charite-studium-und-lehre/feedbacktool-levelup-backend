@@ -9,6 +9,9 @@ class FremdBewertungAnfragenEvent implements DomainEvent
 {
     use DomainEventTrait;
 
+    /** @var int */
+    public $fremdBewertungsAnfrageId;
+
     /** @var string */
     public $fremdBewerterName;
 

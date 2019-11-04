@@ -9,6 +9,7 @@ use Common\Domain\User\Email;
 use EPA\Domain\FremdBewertung\FremdBewerterName;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageKommentar;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageTaetigkeiten;
@@ -43,7 +44,7 @@ final class FremdBewertungAnfragenHandler implements CommandHandler
             $kommentar
         );
         $fremdBewertungsAnfrage = FremdBewertungsAnfrage::create(
-            $this->fremdBewertungsAnfrageRepository->nextIdentity(),
+            FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId),
             $loginHash,
             $fremdBewertungsAnfrageDaten
         );

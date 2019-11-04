@@ -7,6 +7,8 @@ use EPA\Application\Command\FremdBewertungAnfragenCommand;
 use EPA\Application\Command\SelbstBewertungAendernCommand;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
 use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
@@ -76,12 +78,17 @@ class EPAApiController extends BaseController
         return new Response("Erfolg", 200);
     }
 
-// @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={"POST", "OPTIONS"})
+    // @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={"POST", "OPTIONS"})
 
     /**
      * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern")
      */
-    public function frageFremdBewertungAnfragen(Request $request, CommandBus $commandBus) {
+    public function frageFremdBewertungAnAction(
+        Request $request,
+        CommandBus $commandBus,
+        FremdBewertungsAnfrageRepository $anfrageRepository,
+        EpasFuerStudiService $epasFuerStudiService
+    ) {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
@@ -89,6 +96,7 @@ class EPAApiController extends BaseController
         $params = $this->getJsonContentParams($request);
 
         $command = new FremdBewertungAnfragenCommand();
+        $command->fremdBewertungsAnfrageId = $anfrageRepository->nextIdentity();
         $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
         $command->fremdBewerterName = $params->get("fremdBewerterName");
         $command->fremdBewerterEmail = $params->get("fremdBewerterEmail");
@@ -108,8 +116,26 @@ class EPAApiController extends BaseController
         } catch (\Error $e) {
             return new Response($e->getMessage(), 400);
         }
+        $anfrage = $anfrageRepository->byId(
+            FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId
+            )
+        );
+
+        return new JsonResponse(
+            $epasFuerStudiService->getFremdBewertungAnfrageData($anfrage)
+        );
+
+        return $this->render("@WebProfiler/Profiler/base.html.twig");
 
         return new Response("Created", 201);
+    }
+
+    public function fremdbewertungAbgebenAction(
+        Request $request,
+        CommandBus $commandBus,
+        FremdBewertungsAnfrageRepository $anfrageRepository
+    ) {
+
     }
 
 }
