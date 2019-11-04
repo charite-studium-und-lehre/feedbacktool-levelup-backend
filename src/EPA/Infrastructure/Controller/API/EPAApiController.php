@@ -29,6 +29,7 @@ class EPAApiController extends BaseController
      * @Route("/api/epas", name="meine_epas", methods={"GET", "OPTIONS"})
      */
     public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
+        $this->checkLogin();
         session_write_close();
         if (!$this->getCurrentUserLoginHash($this->loginHashCreator)) {
             return new Response("Nicht eingeloggt?", 401);
@@ -44,6 +45,7 @@ class EPAApiController extends BaseController
      * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen", methods={"POST", "OPTIONS"})
      */
     public function aendereSelbstBewertung(Request $request, CommandBus $commandBus, int $epaID) {
+        $this->checkLogin();
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
@@ -74,15 +76,17 @@ class EPAApiController extends BaseController
         return new Response("Erfolg", 200);
     }
 
+// @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={"POST", "OPTIONS"})
+
     /**
-     * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={"POST", "OPTIONS"})
+     * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern")
      */
     public function frageFremdBewertungAnfragen(Request $request, CommandBus $commandBus) {
+        $this->checkLogin();
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
         $params = $this->getJsonContentParams($request);
-//                $params = $request;
 
         $command = new FremdBewertungAnfragenCommand();
         $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
