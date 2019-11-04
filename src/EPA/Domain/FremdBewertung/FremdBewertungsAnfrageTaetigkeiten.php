@@ -10,7 +10,8 @@ class FremdBewertungsAnfrageTaetigkeiten implements DDDValueObject
 {
     const MIN_LENGTH = 5;
     const MAX_LENGTH = 2000;
-    const UNGUELTIG = "Der Text der Tätigkeiten / Kurs ist ungültig: ";
+    const UNGUELTIG_KURZ = "Die Angabe zu Tätigkeiten/Kurs muss - wenn gegeben - mindestens " . self::MIN_LENGTH . " Zeichen haben: ";
+    const UNGUELTIG_LANG = "Die Angabe zu Tätigkeiten/Kurs der Anfrage darf höchstens " . self::MAX_LENGTH . " Zeichen haben: ";
 
     use DefaultValueObjectComparison;
 
@@ -18,9 +19,9 @@ class FremdBewertungsAnfrageTaetigkeiten implements DDDValueObject
     private $value;
 
     public static function fromString(string $value): self {
-        Assertion::String($value, self::UNGUELTIG . $value);
-        Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG . $value);
-        Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG . $value);
+        Assertion::String($value, "Ungültig: " . $value);
+        Assertion::minLength($value, self::MIN_LENGTH, self::UNGUELTIG_KURZ . $value);
+        Assertion::maxLength($value, self::MAX_LENGTH, self::UNGUELTIG_LANG . $value);
 
         $object = new self();
         $object->value = $value;

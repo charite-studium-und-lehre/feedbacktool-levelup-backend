@@ -47,7 +47,7 @@ abstract class BaseController extends AbstractController
         return $this->getUser();
     }
 
-    protected function checkLogin(Request $request) {
+    protected function checkLogin() {
         if (!$this->getUser()) {
             throw new HttpException(401, "Nicht eingeloggt");
         }
