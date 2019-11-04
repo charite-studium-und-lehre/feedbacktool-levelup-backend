@@ -6,7 +6,6 @@ use EPA\Application\Event\FremdBewertungAnfragenEvent;
 use EPA\Application\Services\KontaktiereFremdBewerterService;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
-use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageToken;
 
 class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterService
 {
@@ -36,6 +35,7 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         $token = $this->fremdBewertungsAnfrageRepository->byId(
             FremdBewertungsAnfrageId::fromInt($event->fremdBewertungsAnfrageId)
         )->getFremdBewertungsAnfrageToken();
+
         return "https://levelup.charite.de/app/fremdbewertung/" . $token->getValue();
     }
 
@@ -76,13 +76,20 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
             . "Mit freundlichen Grüßen\n"
             . "\n"
             . "Ihr Level-Up-Team\n"
-            . "\n\n"
+            . "\n"
             . " --- \n"
             . "\n\n"
             . "Bei inhaltlichen Fragen wenden Sie sich bitte direkt an den/die Studierende/n: \n"
             . $event->studiEmail . "\n"
             . "\n"
-            . "Bei technischen Fragen schreiben Sie gerne eine Mail an levelup@charite.de \n";
+            . "Bei technischen Fragen schreiben Sie gerne eine Mail an levelup@charite.de \n"
+            . "\n\n"
+            . " --- \n"
+            . "\n"
+            . "Charité - Universitätsmedizin Berlin\n"
+            . "Prodekanat für Studium und Lehre | Qualitätssicherung Charité Campus Klinik | Rahel-Hirsch-Weg 5 | 10117 Berlin"
+            ;
+
 
         return $text;
 
