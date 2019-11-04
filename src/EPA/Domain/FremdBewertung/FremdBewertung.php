@@ -12,32 +12,27 @@ class FremdBewertung implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var SelbstBewertungsId */
+    /** @var FremdBewertungsId */
     private $id;
 
     /** @var LoginHash */
     private $loginHash;
 
-    /** @var EPABewertung */
-    private $epaBewertung;
-
-    /** @var SelbstBewertungsTyp */
-    private $selbstBewertungsTyp;
+    /** @var EPABewertung[] */
+    private $bewertungen;
 
     /** @var EPABewertungsDatum */
     private $epaBewertungsDatum;
 
     public static function create(
-        SelbstBewertungsId $id,
+        FremdBewertungsId $id,
         LoginHash $loginHash,
-        EPABewertung $epaBewertung,
-        SelbstBewertungsTyp $selbstBewertungsTyp
+        array $bewertungen
     ): self {
         $object = new self();
         $object->id = $id;
         $object->loginHash = $loginHash;
-        $object->epaBewertung = $epaBewertung;
-        $object->selbstBewertungsTyp = $selbstBewertungsTyp;
+        $object->bewertungen = $bewertungen;
         $object->epaBewertungsDatum = EPABewertungsDatum::heute();
 
         return $object;
@@ -51,31 +46,14 @@ class FremdBewertung implements DDDEntity
         return $this->loginHash;
     }
 
-    public function getEpaBewertung(): EPABewertung {
-        return $this->epaBewertung;
-    }
-
-    public function setzeBewertung(int $bewertung): void {
-        $this->epaBewertung = $this->epaBewertung->setzeStufe($bewertung);
-        $this->epaBewertungsDatum = EPABewertungsDatum::heute();
-    }
-
-    public function erhoeheBewertung(): void {
-        $this->epaBewertung = $this->epaBewertung->erhoeheStufe();
-        $this->epaBewertungsDatum = EPABewertungsDatum::heute();
-    }
-
-    public function vermindereBewertung(): void {
-        $this->epaBewertung = $this->epaBewertung->vermindereStufe();
-        $this->epaBewertungsDatum = EPABewertungsDatum::heute();
-    }
-
-    public function getSelbstBewertungsTyp(): SelbstBewertungsTyp {
-        return $this->selbstBewertungsTyp;
-    }
-
     public function getEpaBewertungsDatum(): EPABewertungsDatum {
         return $this->epaBewertungsDatum;
     }
+
+    public function getBewertungen(): array {
+        return $this->bewertungen;
+    }
+
+
 
 }

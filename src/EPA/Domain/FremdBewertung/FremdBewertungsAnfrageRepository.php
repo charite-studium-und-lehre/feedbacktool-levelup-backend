@@ -8,10 +8,7 @@ use Studi\Domain\LoginHash;
 
 interface FremdBewertungsAnfrageRepository extends DDDRepository, FlushableRepository
 {
-    public
-    function add(
-        FremdBewertungsAnfrage $object
-    ): void;
+    public function add(FremdBewertungsAnfrage $object): void;
 
     public function byId(FremdBewertungsAnfrageId $id): ?FremdBewertungsAnfrage;
 
