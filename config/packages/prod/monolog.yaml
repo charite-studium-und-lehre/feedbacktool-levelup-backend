@@ -24,7 +24,7 @@ monolog:
             # or list of recipients
             # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
             subject:    '[LEVELUP][ERROR] %%message%%'
-            level:      error
+            level:      debug
             formatter:  monolog.formatter.html
             content_type: text/html
         console:
