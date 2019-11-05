@@ -60,11 +60,11 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
             . "der unter Ihrer Aufsicht durchgeführten ärztlichen Tätigkeiten.\n"
             . "\n";
         if ($event->angefragteTaetigkeiten) {
-            $text .= "Zu bewertende Tätigkeiten:\n"
+            $text .= "Zu bewertende Tätigkeiten / Kurs:\n"
                 . $event->angefragteTaetigkeiten . "\n\n";
         }
         if ($event->kommentar) {
-            $text .= "Kurs / Kommentar:\n"
+            $text .= "Kommentar:\n"
                 . $event->kommentar . "\n\n";
         }
         $text .=
