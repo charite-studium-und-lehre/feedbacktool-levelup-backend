@@ -103,7 +103,7 @@ class ChariteLDAPService
      * @param string $email
      * @return string|null|false string on success, false on "not found", null on connection error
      */
-    public function getUsernameByEmail($email): ?array {
+    public function getUsernameByEmail($email): ?string {
         $info = $this->getLdapInfoByEmail($email);
         if (!$info) {
             return $info;
@@ -153,9 +153,14 @@ class ChariteLDAPService
             return NULL;
         }
 
+        $nachname = $userInfo["sn"][0];
+        if (isset($userInfo["namenszusatz"][0])) {
+            $nachname = $userInfo["namenszusatz"][0] . " " . $nachname;
+        }
+
         return LoginUser::fromValues(
             Vorname::fromString($userInfo["givenname"][0]),
-            Nachname::fromString($userInfo["sn"][0]),
+            Nachname::fromString($nachname),
             Email::fromString($userInfo["mail"][0]),
             Username::fromString($username),
             );
