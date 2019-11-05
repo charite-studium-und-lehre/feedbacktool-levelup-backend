@@ -8,7 +8,7 @@ use EPA\Domain\EPABewertung;
 use EPA\Domain\EPABewertungsDatum;
 use Studi\Domain\LoginHash;
 
-class FremdBewertung implements DDDEntity
+class FremdBewertungsEpaWertung implements DDDEntity
 {
     use DefaultEntityComparison;
 
