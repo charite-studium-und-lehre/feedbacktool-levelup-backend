@@ -3,6 +3,7 @@
 namespace SSO\Infrastructure\Web\Controller;
 
 use Common\Domain\User\LoginUser;
+use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
 use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
@@ -136,6 +137,7 @@ class SSOController extends BaseController
 
         // Service macht eine Weiterleitung
         $chariteSSOService->signOut();
+
         return new Response("...");
     }
 
@@ -161,7 +163,11 @@ class SSOController extends BaseController
     /** @Route("/api/userInfo", name="userInfo")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function userInfo(TokenStorageInterface $tokenStorage) {
+    public function userInfo(
+        TokenStorageInterface $tokenStorage,
+        Request $request,
+        ChariteLDAPService $chariteLDAPService
+    ) {
         $user = $this->getUser();
         dump($this->getUser());
         dump($this->getUser()->getRoles());
@@ -170,10 +176,15 @@ class SSOController extends BaseController
         if ($user instanceof Studi) {
             dump($user->getStudiHash());
         }
+        if ($request->get("mailInfo") && $this->getUser()->istAdmin()) {
+            $username = $chariteLDAPService->getUsernameByEmail($request->get("mailInfo"));
+            dump($chariteLDAPService->getUserInfoByUsername($username));
+            dump($chariteLDAPService->getLoginUserByUsername($username));
+        }
 
         return new Response(
             "<h1><a href='/app'>Gehe zu Dashboard</a><br/><a href='"
-            . $this->generateUrl("switchUser"). "'>Zurück zu SwitchUser</a></h1>"
+            . $this->generateUrl("switchUser") . "'>Zurück zu SwitchUser</a></h1>"
         );
     }
 
