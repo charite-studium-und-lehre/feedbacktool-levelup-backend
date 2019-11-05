@@ -69,7 +69,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 echo "- Fehler beim Import: Prüfungstitel (Sem): " . $dataLine["Kl_Nr"];
             }
 
-            $fragenNr = $dataLine["FragenNr"];
+            $fragenNr = isset($dataLine["FragenNr"]) ? $dataLine["FragenNr"] : $dataLine["fragenNr"];
 
             $pruefungsItemId = PruefungsItemId::fromPruefungsIdUndFragenNummer(
                 $pruefungsId, FragenNummer::fromInt($fragenNr)
