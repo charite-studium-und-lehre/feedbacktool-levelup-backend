@@ -21,39 +21,46 @@ class FremdBewertung implements DDDEntity
     /** @var EPABewertung[] */
     private $bewertungen;
 
+    /** @var FremdBewertungsAnfrageDaten */
+    private $anfrageDaten;
+
     /** @var EPABewertungsDatum */
-    private $epaBewertungsDatum;
+    private $bewertungsDatum;
 
     public static function create(
         FremdBewertungsId $id,
         LoginHash $loginHash,
+        FremdBewertungsAnfrageDaten $anfrageDaten,
         array $bewertungen
     ): self {
         $object = new self();
         $object->id = $id;
         $object->loginHash = $loginHash;
+        $object->anfrageDaten = $anfrageDaten;
         $object->bewertungen = $bewertungen;
-        $object->epaBewertungsDatum = EPABewertungsDatum::heute();
+        $object->bewertungsDatum = EPABewertungsDatum::heute();
 
         return $object;
     }
 
-    public function getId(): SelbstBewertungsId {
-        return SelbstBewertungsId::fromInt($this->id);
+    public function getId(): FremdBewertungsId {
+        return FremdBewertungsId::fromInt($this->id);
     }
 
     public function getLoginHash(): LoginHash {
         return $this->loginHash;
     }
 
-    public function getEpaBewertungsDatum(): EPABewertungsDatum {
-        return $this->epaBewertungsDatum;
+    public function getBewertungsDatum(): EPABewertungsDatum {
+        return $this->bewertungsDatum;
     }
 
+    /** @return EPABewertung[] */
     public function getBewertungen(): array {
         return $this->bewertungen;
     }
 
-
-
+    public function getAnfrageDaten(): FremdBewertungsAnfrageDaten {
+        return $this->anfrageDaten;
+    }
 }

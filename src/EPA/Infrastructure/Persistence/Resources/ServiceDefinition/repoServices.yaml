@@ -34,3 +34,16 @@ services:
             - "@EPA-Domain-FremdBewertung-FremdBewertungsAnfrageRepository-DoctrineRepo"
             - "@doctrine.orm.entity_manager"
         public: true
+        
+    EPA-Domain-FremdBewertung-FremdBewertungsRepository-DoctrineRepo:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - EPA\Domain\FremdBewertung\FremdBewertung
+
+    EPA\Domain\FremdBewertung\FremdBewertungsRepository:
+        class: 'EPA\Infrastructure\Persistence\DB\DBFremdBewertungsRepository'
+        arguments:
+            - "@EPA-Domain-FremdBewertung-FremdBewertungsRepository-DoctrineRepo"
+            - "@doctrine.orm.entity_manager"
+        public: true

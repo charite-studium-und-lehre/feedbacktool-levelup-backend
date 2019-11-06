@@ -72,4 +72,12 @@ class EPABewertung
         return self::BEWERTUNG_BESCHREIBUNG[$this->bewertung];
     }
 
+    public function serializeToArray():array  {
+        return [$this->epa->getNummer(), $this->getBewertung()];
+    }
+    public static function unserializeFromArray(array $values): self {
+        [$epaNummer, $epaBewertung] = $values;
+        return self::fromValues($epaBewertung, EPA::fromInt($epaNummer));
+    }
+
 }
