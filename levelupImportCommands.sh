@@ -117,6 +117,7 @@ bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragent
 
 ### MC-Ergebnisse ###
 
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_19_T1_qs.xlsx.csv 201911 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_Wise18_19_T1_qs.xlsx.csv 201821 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe1819_T2_qs.xlsx.csv 201822 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe18_T1_qs.xlsx.csv 201811 -vvv
@@ -134,6 +135,7 @@ bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamter
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe15_T1_qs.xlsx.csv 201511 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe15_T2_qs.xlsx.csv 201512 -vvv
 
+bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_19_T1_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201911 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_Wise18_19_T1_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201821 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe1819_T2_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201822 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe18_T1_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201811 -vvv

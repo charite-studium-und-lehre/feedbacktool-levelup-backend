@@ -158,6 +158,7 @@ class FachCodeKonstanten
         'S1#N1' => 'Notfallstation',
         'S1#N2' => 'Notfallstation',
         'S1#N3' => 'Notfallstation',
+        '51#N3' => 'Notfallstation', # sic!
         'S1#N4' => 'Notfallstation',
         'S1#U1' => 'Untersuchungskursstation ',
         'S1#U2' => 'Untersuchungskursstation ',
@@ -201,7 +202,6 @@ class FachCodeKonstanten
         '35#01' => 'Geschlechtsspezifische Erkrankungen M35',
         '36#01' => 'Alter/Tod/Sterben M36',
         '36#02' => 'Alter/Tod/Sterben M36',
-        '51#N3' => '(unbekannt)'
     ];
 
     public const STATION_WISSENS_TYP_FAKTEN = "fakten";

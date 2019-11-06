@@ -16,8 +16,8 @@ final class DBFremdBewertungsAnfrageRepository implements FremdBewertungsAnfrage
         $this->abstractDelete($object);
     }
 
-    public function add(FremdBewertungsAnfrage $pruefung): void {
-        $this->abstractAdd($pruefung);
+    public function add(FremdBewertungsAnfrage $object): void {
+        $this->abstractAdd($object);
     }
 
     public function byId(FremdBewertungsAnfrageId $id): ?FremdBewertungsAnfrage {
