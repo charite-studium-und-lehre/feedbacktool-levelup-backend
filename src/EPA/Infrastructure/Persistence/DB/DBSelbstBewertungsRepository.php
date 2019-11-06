@@ -18,8 +18,8 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
         $this->abstractDelete($object);
     }
 
-    public function add(SelbstBewertung $pruefung): void {
-        $this->abstractAdd($pruefung);
+    public function add(SelbstBewertung $object): void {
+        $this->abstractAdd($object);
     }
 
     public function byId(SelbstBewertungsId $id): ?SelbstBewertung {

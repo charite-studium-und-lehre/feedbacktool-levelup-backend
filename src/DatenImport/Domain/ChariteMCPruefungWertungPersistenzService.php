@@ -101,18 +101,18 @@ class ChariteMCPruefungWertungPersistenzService
                 $bestehensGrenze
             );
 
-            //            $this->erzeugeStudiPruefungsWertung(
-            //                $studiPruefung,
-            //                $gesamtErreichtePunktzahl,
-            //                $fragenAnzahl,
-            //                $bestehensGrenze
-            //            );
-            //
-            //            $this->pruefeOderErzeugePruefungsItem(
-            //                $pruefungsItemId,
-            //                $pruefungsId,
-            //                $schwierigkeit
-            //            );
+            $this->erzeugeStudiPruefungsWertung(
+                $studiPruefung,
+                $gesamtErreichtePunktzahl,
+                $fragenAnzahl,
+                $bestehensGrenze
+            );
+
+            $this->pruefeOderErzeugePruefungsItem(
+                $pruefungsItemId,
+                $pruefungsId,
+                $schwierigkeit
+            );
 
             $this->pruefeOderErzeugeItemWertung(
                 $studiPruefung,
@@ -269,7 +269,7 @@ class ChariteMCPruefungWertungPersistenzService
                 && (!$itemWertung->getAntwortCode()
                     || $itemWertung->getAntwortCode()->getValue() != "0")
                 && (!$antwortCode
-                || $antwortCode->getValue() != "0"))) {
+                    || $antwortCode->getValue() != "0"))) {
             if ($itemWertung) {
                 $this->itemWertungsRepository->delete($itemWertung);
                 $this->geaendert++;
