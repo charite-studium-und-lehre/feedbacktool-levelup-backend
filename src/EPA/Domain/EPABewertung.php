@@ -33,13 +33,13 @@ class EPABewertung
         return $this->epa;
     }
 
-    public static function fromValues(string $bewertung, EPA $epa): self {
-        Assertion::integerish($bewertung, self::INVALID);
-        Assertion::between($bewertung, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);
+    public static function fromValues(string $bewertungsInt, EPA $epa): self {
+        Assertion::integerish($bewertungsInt, self::INVALID);
+        Assertion::between($bewertungsInt, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);
 
         $object = new self();
         $object->epa = $epa;
-        $object->bewertung = $bewertung;
+        $object->bewertung = $bewertungsInt;
 
         return $object;
     }
@@ -64,20 +64,11 @@ class EPABewertung
         );
     }
 
-    public function getBewertung(): int {
+    public function getBewertungInt(): int {
         return $this->bewertung;
     }
 
     public function getBeschreibung(): string {
         return self::BEWERTUNG_BESCHREIBUNG[$this->bewertung];
     }
-
-    public function serializeToArray():array  {
-        return [$this->epa->getNummer(), $this->getBewertung()];
-    }
-    public static function unserializeFromArray(array $values): self {
-        [$epaNummer, $epaBewertung] = $values;
-        return self::fromValues($epaBewertung, EPA::fromInt($epaNummer));
-    }
-
 }

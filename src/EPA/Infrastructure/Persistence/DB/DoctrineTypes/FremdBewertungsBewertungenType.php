@@ -4,8 +4,8 @@ namespace EPA\Infrastructure\Persistence\DB\DoctrineTypes;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
-use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageTaetigkeiten;
 
 class FremdBewertungsBewertungenType extends Type
 {
@@ -23,21 +23,26 @@ class FremdBewertungsBewertungenType extends Type
         }
         $arrayOfValues = json_decode($value);
         $returnArray = [];
-        foreach ($arrayOfValues as $bewertungsArray) {
-            $returnArray[] = EPABewertung::unserializeFromArray($bewertungsArray);
+        foreach ($arrayOfValues as $epaNummer => $epaBewertungsInt) {
+            $returnArray[] = EPABewertung::fromValues(
+                $epaBewertungsInt,
+                EPA::fromInt($epaNummer)
+            );
         }
+
         return $returnArray;
     }
 
     /** @param EPABewertung[] $value */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-        if (!$value) {
+        if (!is_array($value)) {
             return NULL;
         }
-        $valueArray = [];
         foreach ($value as $epaBewertung) {
-            $valueArray[] = $epaBewertung->serializeToArray();
+            /** @var EPABewertung $epaBewertung */
+            $valueArray[$epaBewertung->getEpa()->getNummer()] = $epaBewertung->getBewertungInt();
         }
+
         return json_encode($valueArray);
     }
 

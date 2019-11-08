@@ -88,7 +88,7 @@ class EpasFuerStudiService
         $returnArray = [];
         foreach ($selbstbewertungen as $einzelSelbstBewertung) {
             $bewertung = $einzelSelbstBewertung->getEpaBewertung();
-            $returnArray[$bewertung->getEpa()->getNummer()] = $bewertung->getBewertung();
+            $returnArray[$bewertung->getEpa()->getNummer()] = $bewertung->getBewertungInt();
         }
 
         return $returnArray;

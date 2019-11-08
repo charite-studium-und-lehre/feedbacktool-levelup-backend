@@ -113,8 +113,8 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
             $latestObjectsGemacht[0]->getEpaBewertung()->getEpa()->equals(
                 EPA::fromInt(111))
         );
-        $this->assertEquals(4, $latestObjectsGemacht[0]->getEpaBewertung()->getBewertung());
-        $this->assertEquals(0, $latestObjectsZutrauen[0]->getEpaBewertung()->getBewertung());
+        $this->assertEquals(4, $latestObjectsGemacht[0]->getEpaBewertung()->getBewertungInt());
+        $this->assertEquals(0, $latestObjectsZutrauen[0]->getEpaBewertung()->getBewertungInt());
     }
 
     /**
