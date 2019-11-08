@@ -204,7 +204,7 @@ class FortschrittsItem implements DDDValueObject
             case 60:
                 return 10;
             case 70:
-                return 9;
+                return 4;
             case 501:
                 return 2;
             case 502:
