@@ -11,6 +11,7 @@ use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
+use EPA\Domain\Service\EpasService;
 use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Service\LoginHashCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,18 +29,11 @@ class EPAApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epas", name="meine_epas", methods={"GET", "OPTIONS"})
+     * @Route("/api/epas", name="alleEpas", methods={"GET", "OPTIONS"})
      */
-    public function meineEpas(EpasFuerStudiService $epasFuerStudiService) {
-        $this->checkLogin();
+    public function alleEpas(EpasService $epasService) {
         session_write_close();
-        if (!$this->getCurrentUserLoginHash($this->loginHashCreator)) {
-            return new Response("Nicht eingeloggt?", 401);
-        }
-        $data = $epasFuerStudiService->getEpaStudiData(
-            $this->getCurrentUserLoginHash($this->loginHashCreator)
-        );
-
+        $data = $epasService->getAlleEPAs();
         return new JsonResponse($data, 200);
     }
 
