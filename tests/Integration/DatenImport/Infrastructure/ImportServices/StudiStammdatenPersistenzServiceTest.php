@@ -25,11 +25,9 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
         return [
             'file-based-repo' => [
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
-                FileBasedSimpleStudiRepository::createTempFileRepo(),
             ],
             'db-repo'         => [
                 $this->currentContainer->get(StudiInternRepository::class),
-                $this->currentContainer->get(StudiRepository::class),
             ],
         ];
     }
@@ -37,21 +35,17 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
     /**
      * @dataProvider getAllRepositories
      */
-    public function testImportStudiInternPersistenz(
-        StudiInternRepository $studiInternRepository,
-        StudiRepository $studiRepository
-    ) {
+    public function testImportStudiInternPersistenz(StudiInternRepository $studiInternRepository) {
 
         $studiHashCreator = new StudiHashCreator_SHA256("test");
         $csvImportService = new ChariteStudiStammdatenHIS_CSVImportService();
 
         $studiStammdatenPersistenzService = new StudiStammdatenPersistenzService(
             $studiInternRepository,
-            $studiRepository,
             $studiHashCreator
         );
 
-        $this->clearRepos([$studiInternRepository, $studiRepository]);
+        $this->clearRepos([$studiInternRepository]);
 
         $this->assertCount(0, $studiInternRepository->all());
 

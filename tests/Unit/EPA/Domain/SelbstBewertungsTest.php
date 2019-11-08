@@ -15,7 +15,7 @@ class SelbstBewertungsTest extends TestCase
 {
 
     public static function setzeDatumMitReflectionAuf(
-        Selbstbewertung\SelbstBewertung $selbstBewertung,
+        SelbstBewertung $selbstBewertung,
         EPABewertungsDatum $bewertungsDatum
     ) {
         $refObject = new \ReflectionObject($selbstBewertung);

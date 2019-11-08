@@ -51,7 +51,7 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
                 $alleSelbstBewertungenNeueste[$epaNummer] = $selbstbewertung;
             }
         }
-        return $alleSelbstBewertungenNeueste;
+        return array_values($alleSelbstBewertungenNeueste);
     }
 
     /** @return SelbstBewertung[] */

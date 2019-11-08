@@ -22,7 +22,9 @@ use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudienfo
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 use Wertung\Domain\ItemWertungsRepository;
+use Wertung\Domain\StudiPruefungsWertungRepository;
 use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleItemWertungsRepository;
+use Wertung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsWertungRepository;
 
 class CharitePTMPersistenzServiceTest extends DbRepoTestCase
 {
@@ -39,6 +41,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
                 FileBasedSimpleStudiInternRepository::createTempFileRepo(),
                 FileBasedSimpleClusterRepository::createTempFileRepo(),
                 FileBasedSimpleClusterZuordnungsRepository::createTempFileRepo(),
+                FileBasedSimpleStudiPruefungsWertungRepository::createTempFileRepo(),
             ],
             'db-repos'         => [
                 $this->currentContainer->get(PruefungsRepository::class),
@@ -48,6 +51,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
                 $this->currentContainer->get(StudiInternRepository::class),
                 $this->currentContainer->get(ClusterRepository::class),
                 $this->currentContainer->get(ClusterZuordnungsRepository::class),
+                $this->currentContainer->get(StudiPruefungsWertungRepository::class),
             ],
         ];
     }
@@ -62,7 +66,8 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         PruefungsItemRepository $pruefungsItemRepository,
         StudiInternRepository $studiInternRepository,
         ClusterRepository $clusterRepository,
-        ClusterZuordnungsRepository $clusterZuordnungsRepository
+        ClusterZuordnungsRepository $clusterZuordnungsRepository,
+        StudiPruefungsWertungRepository $studiPruefungsWertungRepository
     ) {
         $this->clearRepos([$clusterRepository, $studiPruefungsRepository, $pruefungsItemRepository,
                            $itemWertungsRepository, $pruefungsItemRepository, $studiInternRepository,
@@ -82,7 +87,8 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
             $pruefungsItemRepository,
             $studiInternRepository,
             $clusterRepository,
-            $clusterZuordnungsRepository
+            $clusterZuordnungsRepository,
+            $studiPruefungsWertungRepository
         );
 
         $data = $csvImportService->getData(
@@ -97,7 +103,7 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         //
         //        $this->assertTrue($clusters[0]->getTitel()->equals(ClusterTitel::fromString("Kinderheilkunde")));
         //
-        $this->assertCount(41, $pruefungsItemRepository->all());
+        $this->assertCount(27, $pruefungsItemRepository->all());
         $this->assertCount(27, $clusterZuordnungsRepository->all());
 
     }
