@@ -5,7 +5,7 @@ namespace StudiPruefung\Domain\Service;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
-use DatenImport\Domain\FachCodeKonstanten;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\FrageAntwort\AntwortRepository;
 use Pruefung\Domain\FrageAntwort\FragenId;
 use Pruefung\Domain\FrageAntwort\FragenRepository;

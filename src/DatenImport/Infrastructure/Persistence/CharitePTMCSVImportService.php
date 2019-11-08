@@ -4,7 +4,7 @@ namespace DatenImport\Infrastructure\Persistence;
 
 use Cluster\Domain\ClusterTyp;
 use DatenImport\Domain\CharitePTMPersistenzService;
-use DatenImport\Domain\FachCodeKonstanten;
+use Pruefung\Domain\FachCodeKonstanten;
 
 class CharitePTMCSVImportService extends AbstractCSVImportService
 

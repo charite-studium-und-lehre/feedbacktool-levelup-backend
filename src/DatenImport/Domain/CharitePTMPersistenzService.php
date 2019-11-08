@@ -8,6 +8,7 @@ use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Exception;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;

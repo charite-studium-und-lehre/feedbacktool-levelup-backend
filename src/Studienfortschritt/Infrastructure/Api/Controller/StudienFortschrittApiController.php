@@ -2,7 +2,6 @@
 
 namespace Studienfortschritt\Infrastructure\Api\Controller;
 
-use SSO\Domain\EingeloggterStudiService;
 use Studi\Domain\Studi;
 use Studienfortschritt\Domain\FortschrittsItem;
 use Studienfortschritt\Domain\Service\StudienFortschrittExportService;

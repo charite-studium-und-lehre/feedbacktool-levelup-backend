@@ -2,10 +2,10 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
-use DatenImport\Domain\FachCodeKonstanten;
 use DatenImport\Domain\PruefungsdatenImportService;
 use DateTimeImmutable;
 use Exception;
+use Pruefung\Domain\FachCodeKonstanten;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 

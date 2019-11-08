@@ -6,7 +6,7 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
-use DatenImport\Domain\FachCodeKonstanten;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;

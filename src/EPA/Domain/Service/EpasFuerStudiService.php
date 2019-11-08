@@ -26,7 +26,7 @@ class EpasFuerStudiService
         $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;
     }
 
-    /** Erzeugt die Sturktur wie im ZIM für das Frontend dokumentiert. */
+    /** Erzeugt die Struktur wie im ZIM für das Frontend dokumentiert. */
     public function getEpaStudiData(LoginHash $loginHash) {
         $gemachtArray = $this->getSelbstBewertungen($loginHash, SelbstBewertungsTyp::getGemachtObject());
         $zutrauenArray = $this->getSelbstBewertungen($loginHash, SelbstBewertungsTyp::getZutrauenObject());

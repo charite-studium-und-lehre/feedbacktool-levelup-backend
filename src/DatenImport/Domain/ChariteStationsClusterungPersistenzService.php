@@ -9,6 +9,7 @@ use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
 use Studi\Domain\StudiIntern;

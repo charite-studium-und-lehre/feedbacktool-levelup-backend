@@ -2,8 +2,8 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
-use DatenImport\Domain\FachCodeKonstanten;
 use DatenImport\Domain\LernzielFachDatenEinleseService;
+use Pruefung\Domain\FachCodeKonstanten;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
 class ChariteLernzielFachEinleseCSVService extends AbstractCSVImportService implements LernzielFachDatenEinleseService

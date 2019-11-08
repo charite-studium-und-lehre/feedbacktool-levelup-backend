@@ -7,6 +7,7 @@ use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
+use Pruefung\Domain\FachCodeKonstanten;
 
 class ChariteFaecherAnlegenService
 {
