@@ -37,7 +37,7 @@ services:
             - [setDomainEventPublisher, ['@Common\Application\DomainEvent\DomainEventPublisher']]
 
     Common\Domain\Services\CurrentUserIdService:
-        class: FBToolCommon\Infrastructure\UserInterface\Web\Service\CurrentWebUserIdService
+        class: LevelUpCommon\Infrastructure\UserInterface\Web\Service\CurrentWebUserIdService
 
     Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService:
         arguments:

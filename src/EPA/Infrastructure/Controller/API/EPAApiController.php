@@ -11,7 +11,7 @@ use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
-use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
+use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Service\LoginHashCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

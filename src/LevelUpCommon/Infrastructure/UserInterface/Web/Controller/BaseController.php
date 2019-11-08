@@ -1,6 +1,6 @@
 <?php
 
-namespace FBToolCommon\Infrastructure\UserInterface\Web\Controller;
+namespace LevelUpCommon\Infrastructure\UserInterface\Web\Controller;
 
 use Common\Domain\User\LoginUser;
 use Doctrine\Common\Collections\ArrayCollection;

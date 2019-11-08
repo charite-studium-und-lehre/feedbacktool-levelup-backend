@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Pruefung\Domain;
 
-use FBToolCommon\Domain\Zeitsemester;
+use LevelUpCommon\Domain\Zeitsemester;
 use PHPUnit\Framework\TestCase;
 use Pruefung\Domain\PruefungsPeriode;
 use Pruefung\Domain\PruefungsUnterPeriode;

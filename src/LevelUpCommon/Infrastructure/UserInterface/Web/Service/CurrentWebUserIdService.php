@@ -1,6 +1,6 @@
 <?php
 
-namespace FBToolCommon\Infrastructure\UserInterface\Web\Service;
+namespace LevelUpCommon\Infrastructure\UserInterface\Web\Service;
 
 use Common\Domain\Services\CurrentUserIdService;
 

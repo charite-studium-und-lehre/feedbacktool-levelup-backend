@@ -1,6 +1,6 @@
 <?php
 
-namespace FBToolCommon\Domain;
+namespace LevelUpCommon\Domain;
 
 use Assert\Assertion;
 use Common\Domain\DefaultValueObjectComparison;

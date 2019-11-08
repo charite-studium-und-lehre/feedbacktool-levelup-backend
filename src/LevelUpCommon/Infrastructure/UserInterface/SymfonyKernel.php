@@ -1,6 +1,6 @@
 <?php
 
-namespace FBToolCommon\Infrastructure\UserInterface;
+namespace LevelUpCommon\Infrastructure\UserInterface;
 
 use Common\Application\CommandHandler\CommandHandler;
 use Common\Application\DomainEvent\DomainEventSubscriber;

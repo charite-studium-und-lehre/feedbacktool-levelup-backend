@@ -1,9 +1,9 @@
 doctrine_migrations:
-    dir_name: '%kernel.project_dir%/src/FBToolCommon/Infrastructure/Persistence/Migrations'
+    dir_name: '%kernel.project_dir%/src/LevelUpCommon/Infrastructure/Persistence/Migrations'
     # namespace is arbitrary but should be different from App\Migrations
     # as migrations classes should NOT be autoloaded
-    namespace: FBToolCommon\Infrastructure\Persistence\Migrations
+    namespace: LevelUpCommon\Infrastructure\Persistence\Migrations
 
     all_or_nothing: true
     organize_migrations: BY_YEAR_AND_MONTH
-    name: 'DB-Migrations für Feedbacktool-Backend'
+    name: 'DB-Migrations für LevelUp-Backend'

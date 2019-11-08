@@ -12,5 +12,5 @@ services:
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
 
-    FBToolCommon\:
-        resource: '%kernel.project_dir%/src/FBToolCommon/*'
+    LevelUpCommon\:
+        resource: '%kernel.project_dir%/src/LevelUpCommon/*'

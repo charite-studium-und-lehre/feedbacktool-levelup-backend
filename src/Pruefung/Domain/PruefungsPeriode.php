@@ -5,7 +5,7 @@ namespace Pruefung\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
-use FBToolCommon\Domain\Zeitsemester;
+use LevelUpCommon\Domain\Zeitsemester;
 
 class PruefungsPeriode implements DDDValueObject
 {

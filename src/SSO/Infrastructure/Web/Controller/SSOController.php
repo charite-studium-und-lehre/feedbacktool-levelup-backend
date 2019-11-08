@@ -6,7 +6,7 @@ use Common\Domain\User\LoginUser;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
-use FBToolCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
+use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use SSO\Infrastructure\Web\Service\UserSwitcher;
 use Studi\Domain\Matrikelnummer;
