@@ -19,6 +19,8 @@ interface FremdBewertungsAnfrageRepository extends DDDRepository, FlushableRepos
 
     public function nextIdentity(): FremdBewertungsAnfrageId;
 
+    public function byToken(FremdBewertungsAnfrageToken $token): ?FremdBewertungsAnfrage;
+
     /** @return FremdBewertungsAnfrage[] */
     public function allByStudi(LoginHash $loginHash): array;
 

@@ -3,12 +3,16 @@
 namespace EPA\Infrastructure\Controller\API;
 
 use Common\Application\Command\CommandBus;
+use EPA\Application\Command\FremdBewertungAbgebenCommand;
 use EPA\Application\Command\FremdBewertungAnfragenCommand;
 use EPA\Application\Command\SelbstBewertungAendernCommand;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
+use EPA\Domain\EPAKonstanten;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageToken;
+use EPA\Domain\FremdBewertung\FremdBewertungsRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
 use EPA\Domain\Service\EpasService;
@@ -29,33 +33,39 @@ class EPAApiController extends BaseController
     }
 
     /**
-     * @Route("/api/epas", name="alleEpas", methods={"GET", "OPTIONS"})
+     * @Route("/api/epas", name="alleEpas", methods={"GET"})
      */
     public function alleEpas(EpasService $epasService) {
         session_write_close();
         $data = $epasService->getAlleEPAs();
+
         return new JsonResponse($data, 200);
     }
 
     /**
-     * @Route("/api/epas/{epaID}", name="api_selbstbewertung_setzen", methods={"POST", "OPTIONS"})
+     * @Route("/api/epas/bewertungen", name="bewertungen", methods={"GET"})
      */
-    public function aendereSelbstBewertung(Request $request, CommandBus $commandBus, int $epaID) {
+    public function bewertungen(EpasFuerStudiService $epasFuerStudiService) {
+        $this->checkLogin();
+        session_write_close();
+        $loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
+        $data = $epasFuerStudiService->getEpaStudiData($loginHash);
+
+        return new JsonResponse($data, 200);
+    }
+
+    /**
+     * @Route("/api/epas/bewertungen", name="api_selbstbewertung_setzen", methods={"POST", "OPTIONS"})
+     */
+    public function aendereSelbstBewertung(Request $request, CommandBus $commandBus) {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
         $this->checkLogin();
         $params = $this->getJsonContentParams($request);
-        //        $params = $request;
-        $zutrauen = $params->get("zutrauen") ?: 0;
-        $gemacht = $params->get("gemacht") ?: 0;
-
-        try {
-            EPABewertung::fromValues($zutrauen, EPA::fromInt(111));
-            EPABewertung::fromValues($gemacht, EPA::fromInt(111));
-        } catch (\Exception $e) {
-            new Response("Bewertung nicht zwischen 0 und 5!", 400);
-        }
+        $epaID = $params->get("bewertungen")[0]["epaId"] ?? 0;
+        $zutrauen = $params->get("bewertungen")[0]["zutrauen"] ?? 0;
+        $gemacht = $params->get("bewertungen")[0]["gemacht"] ?? 0;
 
         $command = new SelbstBewertungAendernCommand();
 
@@ -72,10 +82,56 @@ class EPAApiController extends BaseController
         return new Response("Erfolg", 200);
     }
 
-    // @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern", methods={"POST", "OPTIONS"})
+    /**
+     * @Route("/api/epas/bewertungen/{tokenString}", name="fremdBewertungenPost", methods={"POST", "OPTIONS"})
+     */
+    public function fremdBewertungenPost(
+        Request $request,
+        EpasFuerStudiService $epasFuerStudiService,
+        string $tokenString,
+        FremdBewertungsRepository $fremdBewertungsRepository,
+        FremdBewertungsAnfrageRepository $anfrageRepository,
+        CommandBus $commandBus
+    ) {
+        if ($request->getMethod() == "OPTIONS") {
+            return new Response("", 200);
+        }
+        $this->checkLogin();
+        $token = FremdBewertungsAnfrageToken::fromString($tokenString);
+        $fremdBewertungsAnfrage = $anfrageRepository->byToken($token);
+        if (!$fremdBewertungsAnfrage) {
+            return new Response("Token nicht gefunden!", 404);
+        }
+        $params = $this->getJsonContentParams($request);
+        $command = new FremdBewertungAbgebenCommand();
+        $command->fremdBewertungsId = $fremdBewertungsRepository->nextIdentity()->getValue();
+        $command->fremdBewertungsAnfrageId = $fremdBewertungsAnfrage->getId()->getValue();
+        $command->loginHash = $fremdBewertungsAnfrage->getLoginHash();
+        $command->fremdBewertungen = $params->get("bewertungen");
+
+        try {
+            $commandBus->execute($command);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage() . $e->getTraceAsString(), 400);
+        }
+        return new Response("Erfolg", 200);
+    }
 
     /**
-     * @Route("/api/epas/fremdbewertung/anfrage", name="api_fremdbewertung_anfordern")
+     * @Route("/api/epas/fremdbewertungen", name="fremdbewertungen", methods={"GET"})
+     */
+    public function fremdbewertungenAction(EpasFuerStudiService $epasFuerStudiService) {
+        $this->checkLogin();
+        session_write_close();
+        $loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
+        $data = $epasFuerStudiService->getFremdBewertungen($loginHash);
+
+        return new JsonResponse($data, 200);
+    }
+
+    /**
+     * @Route("/api/epas/fremdbewertungen/anfragen", name="api_fremdbewertung_anfordern",
+     *     methods={"POST","OPTIONS", "GET"})
      */
     public function frageFremdBewertungAnAction(
         Request $request,
@@ -106,9 +162,9 @@ class EPAApiController extends BaseController
         try {
             $commandBus->execute($command);
         } catch (\Exception $e) {
-            return new Response($e->getMessage(), 400);
+            return new Response($e->getMessage() . $e->getTraceAsString(), 400);
         } catch (\Error $e) {
-            return new Response($e->getMessage(), 400);
+            return new Response($e->getMessage() . $e->getTraceAsString(), 400);
         }
         $anfrage = $anfrageRepository->byId(
             FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId
@@ -116,7 +172,7 @@ class EPAApiController extends BaseController
         );
 
         return new JsonResponse(
-            $epasFuerStudiService->getFremdBewertungAnfrageData($anfrage)
+            $epasFuerStudiService->getFremdBewertungAnfrageDaten($anfrage)
         );
 
         return $this->render("@WebProfiler/Profiler/base.html.twig");
@@ -124,11 +180,36 @@ class EPAApiController extends BaseController
         return new Response("Created", 201);
     }
 
-    public function fremdbewertungAbgebenAction(
-        Request $request,
-        CommandBus $commandBus,
+    /**
+     * @Route("/api/epas/fremdbewertungen/anfragen/{tokenString}", name="api_fremdbewertung_abgabe_anfragen",
+     *     methods={"GET"})
+     * @Route("/api/epas/fremdbewertung/anfrage/{tokenString}", name="api_fremdbewertung_abgabe_anfragen",
+     *     methods={"GET"})
+     */
+    public function fremdbewertungAbgebenAnfrage(
+        string $tokenString,
         FremdBewertungsAnfrageRepository $anfrageRepository
     ) {
+        $token = FremdBewertungsAnfrageToken::fromString($tokenString);
+        $fremdBewertungsAnfrage = $anfrageRepository->byToken($token);
+        if (!$fremdBewertungsAnfrage) {
+            return new Response("Token nicht gefunden!", 404);
+        }
+        $anfrageDaten = $fremdBewertungsAnfrage->getAnfrageDaten();
+
+        return new JsonResponse(
+            [
+                "id"                     => $fremdBewertungsAnfrage->getId()->getValue(),
+                "token"                  => $token->getValue(),
+                "email"                  => $anfrageDaten->getFremdBerwerterEmail()->getValue(),
+                "datum"                  => $anfrageDaten->getDatum()->toIsoString(),
+                "studiName"              => $anfrageDaten->getStudiName()->getValue(),
+                "studiEmail"             => $anfrageDaten->getStudiEmail()->getValue(),
+                "angefragteTaetigkeiten" => $anfrageDaten->getAnfrageTaetigkeiten()->getValue(),
+                "kommentar"              => $anfrageDaten->getAnfrageKommentar()->getValue(),
+                "epas" => array_keys(EPAKonstanten::EPAS),
+            ]
+        );
 
     }
 

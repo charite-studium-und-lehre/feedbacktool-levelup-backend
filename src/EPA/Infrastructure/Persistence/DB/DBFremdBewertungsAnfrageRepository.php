@@ -6,6 +6,7 @@ use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageToken;
 use Studi\Domain\LoginHash;
 
 final class DBFremdBewertungsAnfrageRepository implements FremdBewertungsAnfrageRepository
@@ -33,6 +34,14 @@ final class DBFremdBewertungsAnfrageRepository implements FremdBewertungsAnfrage
         return $this->doctrineRepo->findBy(
             [
                 "loginHash" => $loginHash,
+            ]
+        );
+    }
+
+    public function byToken(FremdBewertungsAnfrageToken $token): ?FremdBewertungsAnfrage {
+        return $this->doctrineRepo->findOneBy(
+            [
+                "anfrageToken.value" => $token->getValue(),
             ]
         );
     }

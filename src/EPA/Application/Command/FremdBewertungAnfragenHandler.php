@@ -6,6 +6,7 @@ use Common\Application\Command\DomainCommand;
 use Common\Application\CommandHandler\CommandHandler;
 use Common\Application\CommandHandler\CommandHandlerTrait;
 use Common\Domain\User\Email;
+use EPA\Domain\FremdBewertung\AnfragerName;
 use EPA\Domain\FremdBewertung\FremdBewerterName;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten;
@@ -19,13 +20,11 @@ final class FremdBewertungAnfragenHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /**
-     * @var FremdBewertungsAnfrageRepository
-     */
+    /** @var FremdBewertungsAnfrageRepository */
     private $fremdBewertungsAnfrageRepository;
 
-    public function __construct(FremdBewertungsAnfrageRepository $selbstBewertungsRepository) {
-        $this->fremdBewertungsAnfrageRepository = $selbstBewertungsRepository;
+    public function __construct(FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository) {
+        $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;
     }
 
     /** @param FremdBewertungAnfragenCommand $command */
@@ -40,6 +39,8 @@ final class FremdBewertungAnfragenHandler implements CommandHandler
         $fremdBewertungsAnfrageDaten = FremdBewertungsAnfrageDaten::fromDaten(
             FremdBewerterName::fromString($command->fremdBewerterName),
             Email::fromString($command->fremdBewerterEmail),
+            AnfragerName::fromString($command->studiName),
+            Email::fromString($command->studiEmail),
             $taetigkeiten,
             $kommentar
         );

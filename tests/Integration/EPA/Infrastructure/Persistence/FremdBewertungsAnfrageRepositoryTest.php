@@ -3,6 +3,7 @@
 namespace Tests\Integration\EPA\Infrastructure\Persistence;
 
 use Common\Domain\User\Email;
+use EPA\Domain\FremdBewertung\AnfragerName;
 use EPA\Domain\FremdBewertung\FremdBewerterName;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten;
@@ -13,6 +14,7 @@ use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageTaetigkeiten;
 use EPA\Infrastructure\Persistence\Filesystem\FileBasedSimpleFremdBewertungsAnfrageRepository;
 use Studi\Domain\LoginHash;
 use Tests\Integration\Common\DbRepoTestCase;
+use Tests\Unit\Studi\Domain\NachnameTest;
 
 final class FremdBewertungsAnfrageRepositoryTest extends DbRepoTestCase
 {
@@ -37,6 +39,8 @@ final class FremdBewertungsAnfrageRepositoryTest extends DbRepoTestCase
 
         $fremdBewerterName = FremdBewerterName::fromString("Prof. Ingrid Meyer-Lüdenscheid");
         $email = Email::fromString("ingrid.meyer-luedenscheid@charite.de");
+        $studiName = AnfragerName::fromString("Petra Meyer-Lüdenscheid");
+        $studiEmail = Email::fromString("petra@luedenscheid.de");
         $fremdBewertungsAnfrageTaetigkeiten = FremdBewertungsAnfrageTaetigkeiten::fromString("Ich hätte gerne eine Bewertung zu:
 * Blut abnehmen
 * Anamnese
@@ -48,6 +52,8 @@ ich war bei Ihnen in der Famulatur");
         $fremdBewertungsAnfrageDaten = FremdBewertungsAnfrageDaten::fromDaten(
             $fremdBewerterName,
             $email,
+            $studiName,
+            $studiEmail,
             $fremdBewertungsAnfrageTaetigkeiten,
             $fremdBewertungsAnfrageKommentar
         );
@@ -70,10 +76,21 @@ ich war bei Ihnen in der Famulatur");
                               ->equals($fremdbewertungsAnfrage1->getId()));
         $this->assertTrue($fremdbewertungsAnfrage->getLoginHash()
                               ->equals($fremdbewertungsAnfrage1->getLoginHash()));
-        $this->assertTrue($fremdbewertungsAnfrage->getFremdBewertungsAnfrageDaten()
-                              ->equals($fremdbewertungsAnfrage1->getFremdBewertungsAnfrageDaten()));
-        $this->assertTrue($fremdbewertungsAnfrage->getFremdBewertungsAnfrageToken()
-                              ->equals($fremdbewertungsAnfrage1->getFremdBewertungsAnfrageToken()));
+        $this->assertTrue($fremdbewertungsAnfrage->getAnfrageDaten()
+                              ->equals($fremdbewertungsAnfrage1->getAnfrageDaten()));
+        $this->assertTrue($fremdbewertungsAnfrage->getAnfrageToken()
+                              ->equals($fremdbewertungsAnfrage1->getAnfrageToken()));
+    }
+
+    /** @dataProvider getAllRepositories */
+    public function testByToken(FremdBewertungsAnfrageRepository $repo) {
+        $this->kann_speichern_und_wiederholen($repo);
+        $anfrage = $repo->byId(FremdBewertungsAnfrageId::fromInt(123));
+        $token = $anfrage->getAnfrageToken();
+
+        $anfrageByToken = $repo->byToken($token);
+        $this->assertNotNull($anfrageByToken);
+        $this->assertTrue($anfrageByToken->getId()->equals(FremdBewertungsAnfrageId::fromInt(123)));
     }
 
     /**

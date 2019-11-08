@@ -302,9 +302,6 @@
             "ref": "dc3fc2e0334a4137c47cfd5a3ececc601fa61a0b"
         }
     },
-    "symfony/form": {
-        "version": "v4.2.2"
-    },
     "symfony/framework-bundle": {
         "version": "4.2",
         "recipe": {
@@ -355,9 +352,6 @@
             "version": "3.1",
             "ref": "18ebf5a940573a20de06f9c4060101eeb438cf3d"
         }
-    },
-    "symfony/options-resolver": {
-        "version": "v4.2.2"
     },
     "symfony/orm-pack": {
         "version": "v1.0.5"

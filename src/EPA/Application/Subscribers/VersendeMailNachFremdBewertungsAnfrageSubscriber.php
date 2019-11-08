@@ -2,26 +2,41 @@
 
 namespace EPA\Application\Subscribers;
 
+use Common\Application\Command\CommandBus;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventSubscriber;
-use EPA\Application\Event\FremdBewertungAnfragenEvent;
-use EPA\Application\Services\KontaktiereFremdBewerterService;
+use Common\Application\DomainEvent\DomainEventSubscriberTrait;
+use EPA\Application\Command\FremdBewertungAnfrageVerschickenCommand;
+use EPA\Application\Event\FremdBewertungAngefragtEvent;
 
 class VersendeMailNachFremdBewertungsAnfrageSubscriber implements DomainEventSubscriber
 {
-    /** @var KontaktiereFremdBewerterService */
-    private $kontaktiereFremdBewerterService;
 
-    public function __construct(KontaktiereFremdBewerterService $kontaktiereFremdBewerterService) {
-        $this->kontaktiereFremdBewerterService = $kontaktiereFremdBewerterService;
+    use DomainEventSubscriberTrait;
+
+    private $isSubscribedTo = [FremdBewertungAngefragtEvent::class];
+
+    /** @var CommandBus */
+    private $commandBus;
+
+    public function __construct(CommandBus $commandBus) {
+        $this->commandBus = $commandBus;
     }
 
-    /** @param $aDomainEvent FremdBewertungAnfragenEvent */
-    public function handle(DomainEvent $aDomainEvent): void {
-        $this->kontaktiereFremdBewerterService->run($aDomainEvent);
+    /** @param $event FremdBewertungAngefragtEvent */
+    public function handle(DomainEvent $event): void {
+        $command = new FremdBewertungAnfrageVerschickenCommand();
+
+        $command->fremdBewertungsAnfrageId = $event->fremdBewertungsAnfrageId;
+        $command->loginHash = $event->loginHash;
+        $command->fremdBewerterName = $event->fremdBewerterName;
+        $command->fremdBewerterEmail = $event->fremdBewerterEmail;
+        $command->studiEmail = $event->studiEmail;
+        $command->studiName = $event->studiName;
+        $command->angefragteTaetigkeiten = $event->angefragteTaetigkeiten;
+        $command->kommentar = $event->kommentar;
+
+        $this->commandBus->execute($command);
     }
 
-    public function isSubscribedTo(DomainEvent $aDomainEvent): bool {
-        return $aDomainEvent instanceof FremdBewertungAnfragenEvent;
-    }
 }

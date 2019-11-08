@@ -40,6 +40,8 @@ abstract class BaseController extends AbstractController
             return new ArrayCollection(json_decode($content, TRUE));
         } catch (Exception $e) {
             throw new BadRequestHttpException("Content is not a valid json");
+        } catch (\Error $e) {
+            throw new BadRequestHttpException("Content is not a valid json");
         }
     }
 

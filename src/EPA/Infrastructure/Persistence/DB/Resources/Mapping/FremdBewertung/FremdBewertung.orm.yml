@@ -9,7 +9,7 @@ EPA\Domain\FremdBewertung\FremdBewertung:
   embedded:
     anfrageDaten:
       class: FremdBewertungsAnfrageDaten
-      columnPrefix: anfrage_
+      columnPrefix: false
     bewertungsDatum:
       class: EPA\Domain\EPABewertungsDatum
       columnPrefix: bewertung_

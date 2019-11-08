@@ -5,7 +5,7 @@ namespace EPA\Application\Event;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventTrait;
 
-class SelbstBewertungAendernEvent implements DomainEvent
+class SelbstBewertungGeandertEvent implements DomainEvent
 {
     use DomainEventTrait;
 

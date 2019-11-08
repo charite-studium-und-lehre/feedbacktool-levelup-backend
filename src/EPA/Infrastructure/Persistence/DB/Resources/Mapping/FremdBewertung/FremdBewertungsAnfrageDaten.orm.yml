@@ -7,15 +7,21 @@ EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten:
       columnPrefix: false
     fremdBerwerterName:
       class: FremdBewerterName
-      columnPrefix: false
+      columnPrefix: bewerter_
     fremdBerwerterEmail:
       class: Common\Domain\User\Email
-      columnPrefix: false
+      columnPrefix: bewerter_
+    studiName:
+      class: AnfragerName
+      columnPrefix: studi_
+    studiEmail:
+      class: Common\Domain\User\Email
+      columnPrefix: studi_
 
   fields:
-    fremdBewertungsAnfrageTaetigkeiten:
+    anfrageTaetigkeiten:
       type: fremdBewertungsAnfrageTaetigkeiten
       nullable: true
-    fremdBewertungsAnfrageKommentar:
+    anfrageKommentar:
       type: fremdBewertungsAnfrageKommentar
       nullable: true

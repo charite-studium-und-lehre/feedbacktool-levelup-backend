@@ -2,10 +2,10 @@
 
 namespace EPA\Application\Services;
 
-use EPA\Application\Event\FremdBewertungAnfragenEvent;
+use EPA\Application\Command\FremdBewertungAnfrageVerschickenCommand;
 
 interface KontaktiereFremdBewerterService
 {
-    public function run(FremdBewertungAnfragenEvent $event): void;
+    public function run(FremdBewertungAnfrageVerschickenCommand $command): void;
 
 }

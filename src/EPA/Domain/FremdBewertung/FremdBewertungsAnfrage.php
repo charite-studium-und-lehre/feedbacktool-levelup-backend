@@ -17,10 +17,10 @@ class FremdBewertungsAnfrage implements DDDEntity
     private $loginHash;
 
     /** @var FremdBewertungsAnfrageDaten */
-    private $fremdBewertungsAnfrageDaten;
+    private $anfrageDaten;
 
     /** @var FremdBewertungsAnfrageToken */
-    private $fremdBewertungsAnfrageToken;
+    private $anfrageToken;
 
     public static function create(
         FremdBewertungsAnfrageId $id,
@@ -30,8 +30,8 @@ class FremdBewertungsAnfrage implements DDDEntity
         $object = new self();
         $object->id = $id;
         $object->loginHash = $loginHash;
-        $object->fremdBewertungsAnfrageDaten = $fremdBewertungsAnfrageDaten;
-        $object->fremdBewertungsAnfrageToken = FremdBewertungsAnfrageToken::create();
+        $object->anfrageDaten = $fremdBewertungsAnfrageDaten;
+        $object->anfrageToken = FremdBewertungsAnfrageToken::create();
 
         return $object;
     }
@@ -44,12 +44,12 @@ class FremdBewertungsAnfrage implements DDDEntity
         return $this->loginHash;
     }
 
-    public function getFremdBewertungsAnfrageDaten(): FremdBewertungsAnfrageDaten {
-        return $this->fremdBewertungsAnfrageDaten;
+    public function getAnfrageDaten(): FremdBewertungsAnfrageDaten {
+        return $this->anfrageDaten;
     }
 
-    public function getFremdBewertungsAnfrageToken(): FremdBewertungsAnfrageToken {
-        return $this->fremdBewertungsAnfrageToken;
+    public function getAnfrageToken(): FremdBewertungsAnfrageToken {
+        return $this->anfrageToken;
     }
 
 }

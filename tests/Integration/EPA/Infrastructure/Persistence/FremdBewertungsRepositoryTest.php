@@ -5,6 +5,7 @@ namespace Tests\Integration\EPA\Infrastructure\Persistence;
 use Common\Domain\User\Email;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
+use EPA\Domain\FremdBewertung\AnfragerName;
 use EPA\Domain\FremdBewertung\FremdBewerterName;
 use EPA\Domain\FremdBewertung\FremdBewertung;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten;
@@ -39,6 +40,9 @@ final class FremdBewertungsRepositoryTest extends DbRepoTestCase
 
         $fremdBewerterName = FremdBewerterName::fromString("Prof. Ingrid Meyer-Lüdenscheid");
         $email = Email::fromString("ingrid.meyer-luedenscheid@charite.de");
+        $studiName = AnfragerName::fromString("Petra Meyer-Lüdenscheid");
+        $studiEmail = Email::fromString("petra@luedenscheid.de");
+
         $fremdBewertungsAnfrageTaetigkeiten = FremdBewertungsAnfrageTaetigkeiten::fromString("Ich hätte gerne eine Bewertung zu:
 * Blut abnehmen
 * Anamnese
@@ -50,6 +54,8 @@ ich war bei Ihnen in der Famulatur");
         $fremdBewertungsAnfrageDaten = FremdBewertungsAnfrageDaten::fromDaten(
             $fremdBewerterName,
             $email,
+            $studiName,
+            $studiEmail,
             $fremdBewertungsAnfrageTaetigkeiten,
             $fremdBewertungsAnfrageKommentar
         );

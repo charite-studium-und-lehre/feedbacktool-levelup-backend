@@ -5,7 +5,7 @@ namespace EPA\Application\Event;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventTrait;
 
-class FremdBewertungAnfragenEvent implements DomainEvent
+class FremdBewertungsAnfrageVerschicktEvent implements DomainEvent
 {
     use DomainEventTrait;
 
@@ -32,4 +32,5 @@ class FremdBewertungAnfragenEvent implements DomainEvent
 
     /** @var string */
     public $studiEmail;
+
 }

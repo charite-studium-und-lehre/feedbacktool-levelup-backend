@@ -7,6 +7,7 @@ use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageToken;
 use Studi\Domain\LoginHash;
 
 /** @method FremdBewertungsAnfrage[] all() */
@@ -32,5 +33,14 @@ final class FileBasedSimpleFremdBewertungsAnfrageRepository extends AbstractComm
         }
 
         return $returnArray;
+    }
+
+    public function byToken(FremdBewertungsAnfrageToken $token): ?FremdBewertungsAnfrage {
+        foreach ($this->all() as $anfrage) {
+            if ($anfrage->getAnfrageToken()->equals($token)) {
+                return $anfrage;
+            }
+        }
+        return NULL;
     }
 }

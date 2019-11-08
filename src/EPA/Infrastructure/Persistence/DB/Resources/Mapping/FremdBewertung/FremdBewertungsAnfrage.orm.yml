@@ -7,10 +7,10 @@ EPA\Domain\FremdBewertung\FremdBewertungsAnfrage:
       type: aggregateId
 
   embedded:
-    fremdBewertungsAnfrageDaten:
+    anfrageDaten:
       class: FremdBewertungsAnfrageDaten
       columnPrefix: false
-    fremdBewertungsAnfrageToken:
+    anfrageToken:
       class: FremdBewertungsAnfrageToken
       columnPrefix: false
 
