@@ -6,8 +6,6 @@ use Common\Application\Command\CommandBus;
 use EPA\Application\Command\FremdBewertungAbgebenCommand;
 use EPA\Application\Command\FremdBewertungAnfragenCommand;
 use EPA\Application\Command\SelbstBewertungAendernCommand;
-use EPA\Domain\EPA;
-use EPA\Domain\EPABewertung;
 use EPA\Domain\EPAKonstanten;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
@@ -16,6 +14,8 @@ use EPA\Domain\FremdBewertung\FremdBewertungsRepository;
 use EPA\Domain\SelbstBewertungsTyp;
 use EPA\Domain\Service\EpasFuerStudiService;
 use EPA\Domain\Service\EpasService;
+use Error;
+use Exception;
 use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Service\LoginHashCreator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -111,9 +111,10 @@ class EPAApiController extends BaseController
 
         try {
             $commandBus->execute($command);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new Response($e->getMessage() . $e->getTraceAsString(), 400);
         }
+
         return new Response("Erfolg", 200);
     }
 
@@ -161,9 +162,9 @@ class EPAApiController extends BaseController
         }
         try {
             $commandBus->execute($command);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new Response($e->getMessage() . $e->getTraceAsString(), 400);
-        } catch (\Error $e) {
+        } catch (Error $e) {
             return new Response($e->getMessage() . $e->getTraceAsString(), 400);
         }
         $anfrage = $anfrageRepository->byId(
@@ -182,8 +183,6 @@ class EPAApiController extends BaseController
 
     /**
      * @Route("/api/epas/fremdbewertungen/anfragen/{tokenString}", name="api_fremdbewertung_abgabe_anfragen",
-     *     methods={"GET"})
-     * @Route("/api/epas/fremdbewertung/anfrage/{tokenString}", name="api_fremdbewertung_abgabe_anfragen",
      *     methods={"GET"})
      */
     public function fremdbewertungAbgebenAnfrage(
@@ -205,9 +204,9 @@ class EPAApiController extends BaseController
                 "datum"                  => $anfrageDaten->getDatum()->toIsoString(),
                 "studiName"              => $anfrageDaten->getStudiName()->getValue(),
                 "studiEmail"             => $anfrageDaten->getStudiEmail()->getValue(),
-                "angefragteTaetigkeiten" => $anfrageDaten->getAnfrageTaetigkeiten()->getValue(),
-                "kommentar"              => $anfrageDaten->getAnfrageKommentar()->getValue(),
-                "epas" => array_keys(EPAKonstanten::EPAS),
+                "angefragteTaetigkeiten" => $anfrageDaten->getAnfrageTaetigkeiten() . "",
+                "kommentar"              => $anfrageDaten->getAnfrageKommentar() . "",
+                "epas"                   => array_keys(EPAKonstanten::EPAS),
             ]
         );
 

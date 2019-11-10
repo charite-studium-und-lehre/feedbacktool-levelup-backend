@@ -100,7 +100,7 @@ class EpasFuerStudiService
             $returnArray[] = $bewertungsArray;
         }
 
-        return $returnArray;
+        return ["fremdbewertungen" => $returnArray];
     }
 
     public function bewertungsDatenAusAnfrageDaten(FremdBewertungsAnfrageDaten $anfrageDaten): array {
