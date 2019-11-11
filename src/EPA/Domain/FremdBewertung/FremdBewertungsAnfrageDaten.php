@@ -87,6 +87,8 @@ class FremdBewertungsAnfrageDaten implements DDDValueObject
         $newObject = clone ($this);
         $newObject->studiName = AnfragerName::fromString("-----");
         $newObject->studiEmail = Email::fromString("nobody@charite.de");
+        $newObject->anfrageKommentar = NULL;
+        $newObject->anfrageTaetigkeiten = NULL;
         return $newObject;
     }
 

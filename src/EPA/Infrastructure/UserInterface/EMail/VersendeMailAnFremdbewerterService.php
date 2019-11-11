@@ -28,7 +28,7 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         $this->sendMassage(
             $this->getMailSubject($command,),
             $this->getMailBody($command, $this->getLink($command)),
-            $command->fremdBewerterEmail,
+            $command->fremdBewerterEmail,$command->studiEmail
             );
     }
 
@@ -40,11 +40,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         return "https://levelup.charite.de/app/epas/fremdbewertung/" . $token->getValue();
     }
 
-    private function sendMassage($subject, $body, $to, $from = "levelup@charite.de") {
+    private function sendMassage($subject, $body, $to, $cc, $from = "levelup@charite.de") {
         $message = new \Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
+            ->setCc($cc)
             ->setBody($body, 'text/plain');
         $this->swiftMailer->send($message);
     }
