@@ -33,12 +33,12 @@ class StudienFortschrittExportService
     /** return FortschrittsItem[] */
     public function alleFortschrittsItemsFuerStudi(StudiHash $studiHash): array {
         $alleItems = [];
+        $semesterKomplett = [];
         foreach ($this->studiMeilensteinRepository->allByStudiHash($studiHash) as $studiMeilenstein) {
             $alleItems[] = $studiMeilenstein->getMeilenstein();
             foreach ($studiMeilenstein->getMeilenstein()->getImplizierteFortschrittsItems() as $item) {
-                $alleItems[] = $studiMeilenstein->getMeilenstein();
+                $alleItems[] = $item;
             }
-
         }
         foreach ($this->studiPruefungsRepository->allByStudiHash($studiHash) as $studiPruefung) {
             if (!$studiPruefung->isBestanden()) {

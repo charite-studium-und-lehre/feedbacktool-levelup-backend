@@ -84,6 +84,17 @@ class FortschrittsItem implements DDDValueObject
     ];
 
     const IMPLIZIERT = [
+        201 => [401],
+        202 => [402, 501, 502],
+        203 => [403, 20, 30],
+        204 => [404, 503, 504],
+        205 => [405],
+        206 => [406],
+        207 => [407],
+        208 => [408],
+        209 => [409],
+
+
         309 => [310],  // wer 309 hat, hat immer auch 310
     ];
 
@@ -204,7 +215,7 @@ class FortschrittsItem implements DDDValueObject
             case 60:
                 return 10;
             case 70:
-                return 9;
+                return 4;
             case 501:
                 return 2;
             case 502:
