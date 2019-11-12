@@ -33,7 +33,7 @@ final class FremdBewertungAnfragenHandler implements CommandHandler
         $taetigkeiten = $command->angefragteTaetigkeiten
             ? FremdBewertungsAnfrageTaetigkeiten::fromString($command->angefragteTaetigkeiten)
             : NULL;
-        $kommentar = $command->angefragteTaetigkeiten
+        $kommentar = $command->kommentar
             ? FremdBewertungsAnfrageKommentar::fromString($command->kommentar)
             : NULL;
         $fremdBewertungsAnfrageDaten = FremdBewertungsAnfrageDaten::fromDaten(

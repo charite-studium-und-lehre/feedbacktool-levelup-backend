@@ -2,10 +2,10 @@
 
 namespace EPA\Application\Services;
 
-use EPA\Application\Command\FremdBewertungAnfrageVerschickenCommand;
+use EPA\Application\Command\StudiUeberFremdbewertungInformierenCommand;
 
 interface KontaktiereStudiUeberFremdbewertungService
 {
-    public function run(FremdBewertungAnfrageVerschickenCommand $command): void;
+    public function run(StudiUeberFremdbewertungInformierenCommand $command): void;
 
 }

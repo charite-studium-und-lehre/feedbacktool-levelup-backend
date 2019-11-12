@@ -26,11 +26,11 @@ class KontaktiereStudiNachFremdbewertungSubscriber implements DomainEventSubscri
     /** @param FremdBewertungAbgegebenEvent $event */
     public function handle(DomainEvent $event): void {
         $command = new StudiUeberFremdbewertungInformierenCommand();
-        $command->fremdBewertungsAnfrageId = $event->fremdBewertungsAnfrageId;
         $command->fremdBewertungsId = $event->fremdBewertungsId;
         $command->fremdBewerterName = $event->bewerterName;
-        $command->fremdBewerterEMail = $event->bewerterEmail;
+        $command->fremdBewerterEmail = $event->bewerterEmail;
         $command->studiEmail = $event->studiEmail;
+        $command->studiName = $event->studiName;
 
         $this->commandBus->execute($command);
     }

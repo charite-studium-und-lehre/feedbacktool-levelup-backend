@@ -22,6 +22,9 @@ class FremdBewertungAbgegebenEvent implements DomainEvent
     public $studiEmail;
 
     /** @var string */
+    public $studiName;
+
+    /** @var string */
     public $bewerterName;
 
     /** @var string */

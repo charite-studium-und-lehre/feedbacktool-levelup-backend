@@ -22,6 +22,9 @@ class StudiUeberFremdbewertungInformiertEvent implements DomainEvent
     public $loginHash;
 
     /** @var string */
+    public $studiName;
+
+    /** @var string */
     public $studiEmail;
 
 }
