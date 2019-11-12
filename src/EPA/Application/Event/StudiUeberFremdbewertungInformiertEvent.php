@@ -5,15 +5,18 @@ namespace EPA\Application\Event;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventTrait;
 
-class FremdBewertungAbgegebenEvent implements DomainEvent
+class StudiUeberFremdbewertungInformiertEvent implements DomainEvent
 {
     use DomainEventTrait;
 
     /** @var int */
     public $fremdBewertungsId;
 
-    /** @var int */
-    public $fremdBewertungsAnfrageId;
+    /** @var string */
+    public $fremdBewerterName;
+
+    /** @var string */
+    public $fremdBewerterEmail;
 
     /** @var string */
     public $loginHash;
@@ -21,12 +24,4 @@ class FremdBewertungAbgegebenEvent implements DomainEvent
     /** @var string */
     public $studiEmail;
 
-    /** @var string */
-    public $bewerterName;
-
-    /** @var string */
-    public $bewerterEmail;
-
-    /** @var FremdBewertungDTO[] */
-    public $fremdBewertungen;
 }

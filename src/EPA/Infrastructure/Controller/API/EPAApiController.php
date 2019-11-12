@@ -108,6 +108,9 @@ class EPAApiController extends BaseController
         $command->fremdBewertungsAnfrageId = $fremdBewertungsAnfrage->getId()->getValue();
         $command->loginHash = $fremdBewertungsAnfrage->getLoginHash();
         $command->fremdBewertungen = $params->get("bewertungen");
+        $command->studiEmail = $fremdBewertungsAnfrage->getAnfrageDaten()->getStudiEmail()->getValue();
+        $command->bewerterName = $fremdBewertungsAnfrage->getAnfrageDaten()->getFremdBerwerterName();
+        $command->bewerterEmail = $fremdBewertungsAnfrage->getAnfrageDaten()->getFremdBerwerterEmail();
 
         try {
             $commandBus->execute($command);
