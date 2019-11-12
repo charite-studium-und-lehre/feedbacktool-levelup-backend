@@ -37,7 +37,7 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
             FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId)
         )->getAnfrageToken();
 
-        return "https://levelup.charite.de/app/epas/fremdbewertung/" . $token->getValue();
+        return "https://levelup.charite.de/app-develop/epas/fremdbewertung/" . $token->getValue();
     }
 
     private function sendMassage($subject, $body, $to, $cc, $from = "levelup@charite.de") {
