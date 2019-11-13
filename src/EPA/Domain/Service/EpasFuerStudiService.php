@@ -89,7 +89,6 @@ class EpasFuerStudiService
         foreach ($fremdbewertungen as $fremdbewertung) {
             $bewertungsArray = ["id" => $fremdbewertung->getId()->getValue()];
             $bewertungsArray += $this->bewertungsDatenAusAnfrageDaten($fremdbewertung->getAnfrageDaten());
-            $bewertungsArray["status"] = "beantwortet";
             $returnArray[] = $bewertungsArray;
         }
 
@@ -104,10 +103,7 @@ class EpasFuerStudiService
         $returnArray = [];
         $anfragen = $this->fremdBewertungsAnfrageRepository->allByStudi($loginHash);
         foreach ($anfragen as $anfrage) {
-            $bewertungsArray = ["id" => "Anfrage" . $anfrage->getId()->getValue()];
-            $bewertungsArray += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten());
-            $bewertungsArray["status"] = "offen";
-            $returnArray[] = $bewertungsArray;
+            $returnArray[] = $this->getFremdBewertungAnfrageDaten($anfrage);
         }
         return ["fremdbewertungsAnfragen" => $returnArray];
     }
@@ -119,28 +115,15 @@ class EpasFuerStudiService
             "anfrageTaetigkeiten" => $anfrageDaten->getAnfrageTaetigkeiten() . "",
             "anfrageKommentar"    => $anfrageDaten->getAnfrageKommentar() . "",
             "datum"               => $anfrageDaten->getDatum()->toIsoString(),
-            "status"              => "offen",
         ];
     }
 
-    public function getFremdBewertungAnfrageDaten(FremdBewertungsAnfrage $anfrage): array {
-        $taetigkeiten = $anfrage->getAnfrageDaten()->getAnfrageTaetigkeiten() . "";
-        $kommentar = $anfrage->getAnfrageDaten()->getAnfrageKommentar() . "";
-
-        return [
-            "id"                  => NULL,
-            "name"                => $anfrage->getAnfrageDaten()
-                ->getFremdBerwerterName()->getValue(),
-            "email"               => $anfrage->getAnfrageDaten()
-                ->getFremdBerwerterEmail()->getValue(),
-            "anfrageTaetigkeiten" => $taetigkeiten,
-            "anfrageKommentar"    => $kommentar,
-            "datum"               => $anfrage->getAnfrageDaten()->getDatum()->toIsoString(),
-            "status"              => "offen",
-        ];
+    public function getFremdBewertungAnfrageDaten(FremdBewertungsAnfrage $anfrage, bool $mitToken = false): array {
+        $result = [ "id" => $anfrage->getId()->getValue() ];
+        if($mitToken) $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageToken()->getValue());
+        $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten()); 
+        return $result;
     }
-
-
 
     /**
      * @param LoginHash $loginHash
