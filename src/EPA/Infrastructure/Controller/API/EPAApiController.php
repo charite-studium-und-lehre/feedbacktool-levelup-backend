@@ -216,7 +216,8 @@ class EPAApiController extends BaseController
             [
                 "id"                     => $fremdBewertungsAnfrage->getId()->getValue(),
                 "token"                  => $token->getValue(),
-                "email"                  => $anfrageDaten->getFremdBerwerterEmail()->getValue(),
+                "bewerterName"           => $anfrageDaten->getFremdBerwerterName()->getValue(),
+                "bewerterEmail"          => $anfrageDaten->getFremdBerwerterEmail()->getValue(),
                 "datum"                  => $anfrageDaten->getDatum()->toIsoString(),
                 "studiName"              => $anfrageDaten->getStudiName()->getValue(),
                 "studiEmail"             => $anfrageDaten->getStudiEmail()->getValue(),
