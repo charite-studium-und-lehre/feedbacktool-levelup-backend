@@ -121,8 +121,6 @@ class EpasFuerStudiService
             "datum"               => $anfrageDaten->getDatum()->toIsoString(),
             "status"              => "offen",
         ];
-
-        return $returnArray;
     }
 
     public function getFremdBewertungAnfrageDaten(FremdBewertungsAnfrage $anfrage): array {
@@ -140,8 +138,6 @@ class EpasFuerStudiService
             "datum"               => $anfrage->getAnfrageDaten()->getDatum()->toIsoString(),
             "status"              => "offen",
         ];
-
-        return $returnArray;
     }
 
 

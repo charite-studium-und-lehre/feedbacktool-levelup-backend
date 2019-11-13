@@ -96,7 +96,6 @@ class EPAApiController extends BaseController
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
-        $this->checkLogin();
         $token = FremdBewertungsAnfrageToken::fromString($tokenString);
         $fremdBewertungsAnfrage = $anfrageRepository->byToken($token);
         if (!$fremdBewertungsAnfrage) {
@@ -184,17 +183,13 @@ class EPAApiController extends BaseController
             return new Response($e->getMessage() . $e->getTraceAsString(), 400);
         }
         $anfrage = $anfrageRepository->byId(
-            FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId
-            )
+            FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId)
         );
 
         return new JsonResponse(
-            $epasFuerStudiService->getFremdBewertungAnfrageDaten($anfrage)
+            $epasFuerStudiService->getFremdBewertungAnfrageDaten($anfrage),
+            201
         );
-
-        return $this->render("@WebProfiler/Profiler/base.html.twig");
-
-        return new Response("Created", 201);
     }
 
     /**
@@ -216,8 +211,8 @@ class EPAApiController extends BaseController
             [
                 "id"                     => $fremdBewertungsAnfrage->getId()->getValue(),
                 "token"                  => $token->getValue(),
-                "bewerterName"           => $anfrageDaten->getFremdBerwerterName()->getValue(),
-                "bewerterEmail"          => $anfrageDaten->getFremdBerwerterEmail()->getValue(),
+                "name"                   => $anfrageDaten->getFremdBerwerterName()->getValue(),
+                "email"                  => $anfrageDaten->getFremdBerwerterEmail()->getValue(),
                 "datum"                  => $anfrageDaten->getDatum()->toIsoString(),
                 "studiName"              => $anfrageDaten->getStudiName()->getValue(),
                 "studiEmail"             => $anfrageDaten->getStudiEmail()->getValue(),
