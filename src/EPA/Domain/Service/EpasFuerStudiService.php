@@ -84,14 +84,7 @@ class EpasFuerStudiService
      * @return array
      */
     public function getFremdBewertungen(LoginHash $loginHash): array {
-        $anfragen = $this->fremdBewertungsAnfrageRepository->allByStudi($loginHash);
         $returnArray = [];
-        foreach ($anfragen as $anfrage) {
-            $bewertungsArray = ["id" => "Anfrage" . $anfrage->getId()->getValue()];
-            $bewertungsArray += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten());
-            $bewertungsArray["status"] = "offen";
-            $returnArray[] = $bewertungsArray;
-        }
         $fremdbewertungen = $this->fremdBewertungsRepository->allByStudi($loginHash);
         foreach ($fremdbewertungen as $fremdbewertung) {
             $bewertungsArray = ["id" => $fremdbewertung->getId()->getValue()];
@@ -103,7 +96,23 @@ class EpasFuerStudiService
         return ["fremdbewertungen" => $returnArray];
     }
 
-    public function bewertungsDatenAusAnfrageDaten(FremdBewertungsAnfrageDaten $anfrageDaten): array {
+    /**
+     * @param LoginHash $loginHash
+     * @return array
+     */
+    public function getFremdBewertungsAnfragen(LoginHash $loginHash): array {
+        $returnArray = [];
+        $anfragen = $this->fremdBewertungsAnfrageRepository->allByStudi($loginHash);
+        foreach ($anfragen as $anfrage) {
+            $bewertungsArray = ["id" => "Anfrage" . $anfrage->getId()->getValue()];
+            $bewertungsArray += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten());
+            $bewertungsArray["status"] = "offen";
+            $returnArray[] = $bewertungsArray;
+        }
+        return ["fremdbewertungsAnfragen" => $returnArray];
+    }
+
+    private function bewertungsDatenAusAnfrageDaten(FremdBewertungsAnfrageDaten $anfrageDaten): array {
         return [
             "name"                => $anfrageDaten->getFremdBerwerterName()->getValue(),
             "email"               => $anfrageDaten->getFremdBerwerterEmail()->getValue(),

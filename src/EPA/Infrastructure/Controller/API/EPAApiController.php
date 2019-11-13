@@ -135,8 +135,20 @@ class EPAApiController extends BaseController
     }
 
     /**
+     * @Route("/api/epas/fremdbewertungen/anfragen", name="fremdbewertungsAnfragen", methods={"GET"})
+     */
+    public function fremdbewertungsAnfragenAction(EpasFuerStudiService $epasFuerStudiService) {
+        $this->checkLogin();
+        session_write_close();
+        $loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
+        $data = $epasFuerStudiService->getFremdBewertungsAnfragen($loginHash);
+
+        return new JsonResponse($data, 200);
+    }
+
+    /**
      * @Route("/api/epas/fremdbewertungen/anfragen", name="api_fremdbewertung_anfordern",
-     *     methods={"POST","OPTIONS", "GET"})
+     *     methods={"POST","OPTIONS"})
      */
     public function frageFremdBewertungAnAction(
         Request $request,
