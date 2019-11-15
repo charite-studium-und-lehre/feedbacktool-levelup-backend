@@ -43,6 +43,9 @@ final class FremdBewertungAbgebenHandler implements CommandHandler
                                          EPA::fromInt($bewertungsArray["epaId"])
                 );
         }
+        if (!$epaBewertungen) {
+            throw new \Exception("Es muss mindestens eine Bewertung abgegeben werden!");
+        }
         $fremdBewertung = FremdBewertung::create(
             FremdBewertungsId::fromInt($command->fremdBewertungsId),
             $fremdBewertungsAnfrage->getLoginHash(),
