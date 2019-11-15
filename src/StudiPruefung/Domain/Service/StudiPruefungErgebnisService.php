@@ -246,10 +246,16 @@ class StudiPruefungErgebnisService
                 $addArray["details"][] = [
                     "code"                    => FachCodeKonstanten::STATION_WISSENS_TYP_ZUSAMMENHANG,
                     "titel"                   => FachCodeKonstanten::STATION_WISSENS_TYPEN[FachCodeKonstanten::STATION_WISSENS_TYP_ZUSAMMENHANG],
-                    "ergebnisProzentzahl"     => $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
-                        $clusteredItemsZusammenhangMeine[$clusterId])->getProzentzahl()->getValue(),
-                    "durchschnittProzentzahl" => $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
-                        $clusteredItemsZusammenhangKohorte[$clusterId])->getProzentzahl()->getValue(),
+                    "ergebnisProzentzahl"     =>
+                        isset($clusteredItemsZusammenhangMeine[$clusterId])
+                            ? $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
+                            $clusteredItemsZusammenhangMeine[$clusterId])->getProzentzahl()->getValue()
+                            : NULL,
+                    "durchschnittProzentzahl" =>
+                        isset($clusteredItemsZusammenhangKohorte[$clusterId])
+                            ? $itemWertungen[0]->getWertung()::getDurchschnittsWertung(
+                            $clusteredItemsZusammenhangKohorte[$clusterId])->getProzentzahl()->getValue()
+                            : NULL,
                 ];
 
             }
