@@ -23,10 +23,11 @@ class PruefungsFormat implements DDDValueObject
 
     const PTM = 50;
 
-    const STATION_TEIL1_VORKLINIK = 30;
-    const STATION_TEIL1_KLINIK = 31;
-    const STATION_TEIL2 = 32;
-    const STATION_TEIL3 = 33;
+    const STATION_TEIL1_VORKLINIK_SEM2 = 30;
+    const STATION_TEIL1_KLINIK_SEM2 = 31;
+    const STATION_TEIL2_SEM4 = 32;
+    const STATION_TEIL3_SEM4 = 33;
+    const STATION_OSCE_SEM9 = 39;
 
     const FORMAT_KONSTANTEN = [
         self::MC_SEM1,
@@ -40,10 +41,11 @@ class PruefungsFormat implements DDDValueObject
         self::MC_SEM9,
         self::MC_SEM10,
         self::PTM,
-        self::STATION_TEIL1_VORKLINIK,
-        self::STATION_TEIL1_KLINIK,
-        self::STATION_TEIL2,
-        self::STATION_TEIL3,
+        self::STATION_TEIL1_VORKLINIK_SEM2,
+        self::STATION_TEIL1_KLINIK_SEM2,
+        self::STATION_TEIL2_SEM4,
+        self::STATION_TEIL3_SEM4,
+        self::STATION_OSCE_SEM9,
     ];
 
     const MC_KONSTANTEN_NACH_FACHSEMESTER = [
@@ -60,58 +62,60 @@ class PruefungsFormat implements DDDValueObject
     ];
 
     const FORMAT_TITEL_LANG = [
-        self::MC_SEM1                 => "MC-Test Semester 1",
-        self::MC_SEM2                 => "MC-Test Semester 2",
-        self::MC_SEM3                 => "MC-Test Semester 3",
-        self::MC_SEM4                 => "MC-Test Semester 4",
-        self::MC_SEM5                 => "MC-Test Semester 5",
-        self::MC_SEM6                 => "MC-Test Semester 6",
-        self::MC_SEM7                 => "MC-Test Semester 7",
-        self::MC_SEM8                 => "MC-Test Semester 8",
-        self::MC_SEM9                 => "MC-Test Semester 9",
-        self::MC_SEM10                => "MC-Test Semester 10",
-        self::PTM                     => "PTM",
-        self::STATION_TEIL1_VORKLINIK => "Mündliche Stationsprüfung Semester 2 (Vorklinik)",
-        self::STATION_TEIL1_KLINIK    => "Praktische Stationsprüfung Semester 2 (Klinik)",
-        self::STATION_TEIL2           => "Mündliche Stationsprüfung Semester 4 (Vorklinik)",
-        self::STATION_TEIL3           => "Praktische Stationsprüfung Semester 4 (Klinik)",
+        self::MC_SEM1                      => "MC-Test Semester 1",
+        self::MC_SEM2                      => "MC-Test Semester 2",
+        self::MC_SEM3                      => "MC-Test Semester 3",
+        self::MC_SEM4                      => "MC-Test Semester 4",
+        self::MC_SEM5                      => "MC-Test Semester 5",
+        self::MC_SEM6                      => "MC-Test Semester 6",
+        self::MC_SEM7                      => "MC-Test Semester 7",
+        self::MC_SEM8                      => "MC-Test Semester 8",
+        self::MC_SEM9                      => "MC-Test Semester 9",
+        self::MC_SEM10                     => "MC-Test Semester 10",
+        self::PTM                          => "PTM",
+        self::STATION_TEIL1_VORKLINIK_SEM2 => "Mündliche Stationsprüfung Semester 2 (Vorklinik)",
+        self::STATION_TEIL1_KLINIK_SEM2    => "Praktische Stationsprüfung Semester 2 (Klinik)",
+        self::STATION_TEIL2_SEM4           => "Mündliche Stationsprüfung Semester 4 (Vorklinik)",
+        self::STATION_TEIL3_SEM4           => "Praktische Stationsprüfung Semester 4 (Klinik)",
+        self::STATION_OSCE_SEM9            => "OSCE-Prüfung Semester 9",
     ];
 
     const FORMAT_TITEL_KURZ = [
-        self::MC_SEM1                 => "MC-Test Semester 1",
-        self::MC_SEM2                 => "MC-Test Semester 2",
-        self::MC_SEM3                 => "MC-Test Semester 3",
-        self::MC_SEM4                 => "MC-Test Semester 4",
-        self::MC_SEM5                 => "MC-Test Semester 5",
-        self::MC_SEM6                 => "MC-Test Semester 6",
-        self::MC_SEM7                 => "MC-Test Semester 7",
-        self::MC_SEM8                 => "MC-Test Semester 8",
-        self::MC_SEM9                 => "MC-Test Semester 9",
-        self::MC_SEM10                => "MC-Test Semester 10",
-        self::PTM                     => "PTM",
-        self::STATION_TEIL1_VORKLINIK => "Mündliche Prüfung 2. FS",
-        self::STATION_TEIL1_KLINIK    => "Praktische Prüfung 2. FS",
-        self::STATION_TEIL2           => "Mündliche Prüfung 4. FS",
-        self::STATION_TEIL3           => "Praktische Prüfung 4. FS",
+        self::MC_SEM1                      => "MC-Test Semester 1",
+        self::MC_SEM2                      => "MC-Test Semester 2",
+        self::MC_SEM3                      => "MC-Test Semester 3",
+        self::MC_SEM4                      => "MC-Test Semester 4",
+        self::MC_SEM5                      => "MC-Test Semester 5",
+        self::MC_SEM6                      => "MC-Test Semester 6",
+        self::MC_SEM7                      => "MC-Test Semester 7",
+        self::MC_SEM8                      => "MC-Test Semester 8",
+        self::MC_SEM9                      => "MC-Test Semester 9",
+        self::MC_SEM10                     => "MC-Test Semester 10",
+        self::PTM                          => "PTM",
+        self::STATION_TEIL1_VORKLINIK_SEM2 => "Mündliche Prüfung 2. FS",
+        self::STATION_TEIL1_KLINIK_SEM2    => "Praktische Prüfung 2. FS",
+        self::STATION_TEIL2_SEM4           => "Mündliche Prüfung 4. FS",
+        self::STATION_TEIL3_SEM4           => "Praktische Prüfung 4. FS",
+        self::STATION_OSCE_SEM9            => "OSCE 9. FS",
     ];
 
-
     const FORMAT_CODE = [
-        self::MC_SEM1                 => "MC-Sem1",
-        self::MC_SEM2                 => "MC-Sem2",
-        self::MC_SEM3                 => "MC-Sem3",
-        self::MC_SEM4                 => "MC-Sem4",
-        self::MC_SEM5                 => "MC-Sem5",
-        self::MC_SEM6                 => "MC-Sem6",
-        self::MC_SEM7                 => "MC-Sem7",
-        self::MC_SEM8                 => "MC-Sem8",
-        self::MC_SEM9                 => "MC-Sem9",
-        self::MC_SEM10                => "MC-Sem10",
-        self::PTM                     => "PTM",
-        self::STATION_TEIL1_VORKLINIK => "Stat-1VK",
-        self::STATION_TEIL1_KLINIK    => "Stat-1K",
-        self::STATION_TEIL2           => "Stat-2",
-        self::STATION_TEIL3           => "Stat-3",
+        self::MC_SEM1                      => "MC-Sem1",
+        self::MC_SEM2                      => "MC-Sem2",
+        self::MC_SEM3                      => "MC-Sem3",
+        self::MC_SEM4                      => "MC-Sem4",
+        self::MC_SEM5                      => "MC-Sem5",
+        self::MC_SEM6                      => "MC-Sem6",
+        self::MC_SEM7                      => "MC-Sem7",
+        self::MC_SEM8                      => "MC-Sem8",
+        self::MC_SEM9                      => "MC-Sem9",
+        self::MC_SEM10                     => "MC-Sem10",
+        self::PTM                          => "PTM",
+        self::STATION_TEIL1_VORKLINIK_SEM2 => "Stat-1VK",
+        self::STATION_TEIL1_KLINIK_SEM2    => "Stat-1K",
+        self::STATION_TEIL2_SEM4           => "Stat-2",
+        self::STATION_TEIL3_SEM4           => "Stat-3",
+        self::STATION_OSCE_SEM9            => "Stat-9",
     ];
 
     const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Prüfungsformat: ";
@@ -138,19 +142,23 @@ class PruefungsFormat implements DDDValueObject
     }
 
     public static function getStationTeil1Klinik(): PruefungsFormat {
-        return self::fromConst(self::STATION_TEIL1_KLINIK);
+        return self::fromConst(self::STATION_TEIL1_KLINIK_SEM2);
     }
 
     public static function getStationTeil1Vorklinik(): PruefungsFormat {
-        return self::fromConst(self::STATION_TEIL1_VORKLINIK);
+        return self::fromConst(self::STATION_TEIL1_VORKLINIK_SEM2);
     }
 
     public static function getStationTeil2(): PruefungsFormat {
-        return self::fromConst(self::STATION_TEIL2);
+        return self::fromConst(self::STATION_TEIL2_SEM4);
     }
 
     public static function getStationTeil3(): PruefungsFormat {
-        return self::fromConst(self::STATION_TEIL3);
+        return self::fromConst(self::STATION_TEIL3_SEM4);
+    }
+
+    public static function getStationOsceSem9(): PruefungsFormat {
+        return self::fromConst(self::STATION_OSCE_SEM9);
     }
 
     public function getValue(): int {
@@ -175,17 +183,18 @@ class PruefungsFormat implements DDDValueObject
     }
 
     public function isStation(): bool {
-        return $this->getValue() >= self::STATION_TEIL1_VORKLINIK
-            && $this->getValue() <= self::STATION_TEIL3;
+        return $this->getValue() >= self::STATION_TEIL1_VORKLINIK_SEM2
+            && $this->getValue() <= self::STATION_OSCE_SEM9;
     }
 
     public function getStationsTyp(): ?string {
         if (!$this->isStation()) {
             return NULL;
         }
-        if (in_array ($this->getValue(), [30, 32])) {
+        if (in_array($this->getValue(), [30, 32])) {
             return "vorklinisch";
         }
+
         return "klinisch";
     }
 
@@ -208,4 +217,4 @@ class PruefungsFormat implements DDDValueObject
         throw new \Exception("Format nicht bekannt: " . $this->value);
     }
 
-    }
+}

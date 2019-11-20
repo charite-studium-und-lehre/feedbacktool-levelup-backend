@@ -65,21 +65,21 @@ class FortschrittsItem implements DDDValueObject
         "voraus_sem9"  => 309,
         "voraus_sem10" => 310, // das ergibt sich direkt aus voraus_sem9
 
-        "MC-Sem1"  => 401,
-        "MC-Sem2"  => 402,
-        "MC-Sem3"  => 403,
-        "MC-Sem4"  => 404,
-        "MC-Sem5"  => 405,
-        "MC-Sem6"  => 406,
-        "MC-Sem7"  => 407,
-        "MC-Sem8"  => 408,
-        "MC-Sem9"  => 409,
-        "MC-Sem10" => 410,
+        "MC-Sem1" => 401,
+        "MC-Sem2" => 402,
+        "MC-Sem3" => 403,
+        "MC-Sem4" => 404,
+        "MC-Sem5" => 405,
+        "MC-Sem6" => 406,
+        "MC-Sem7" => 407,
+        "MC-Sem8" => 408,
+        "MC-Sem9" => 409,
 
         "stat_prfg_sem2_vorklinik" => 501,
         "stat_prfg_sem2_klinik"    => 502,
         "stat_prfg_sem4_vorklinik" => 503,
         "stat_prfg_sem4_klinik"    => 504,
+        "osce_sem9_klinik"         => 509,
 
     ];
 
@@ -92,8 +92,7 @@ class FortschrittsItem implements DDDValueObject
         206 => [406],
         207 => [407],
         208 => [408],
-        209 => [409],
-
+        209 => [409, 509],
 
         309 => [310],  // wer 309 hat, hat immer auch 310
     ];
