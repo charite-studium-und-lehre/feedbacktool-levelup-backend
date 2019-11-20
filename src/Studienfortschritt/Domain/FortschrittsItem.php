@@ -7,6 +7,7 @@ use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 use Exception;
 use Pruefung\Domain\Pruefung;
+use Pruefung\Domain\PruefungsFormat;
 use StudiPruefung\Domain\StudiPruefungsId;
 
 class FortschrittsItem implements DDDValueObject
@@ -123,7 +124,11 @@ class FortschrittsItem implements DDDValueObject
             return FortschrittsItem::fromCode($pruefungsFormat->getValue() - 10 + 400, $studiPruefungsId);
         }
         if ($pruefungsFormat->isStation()) {
-            return FortschrittsItem::fromCode($pruefungsFormat->getValue() - 30 + 1 + 500, $studiPruefungsId);
+            $code = $pruefungsFormat->getValue() - 30 + 1 + 500;
+            if ($pruefungsFormat->getValue() == PruefungsFormat::STATION_OSCE_SEM9) {
+                $code = 509;
+            }
+            return FortschrittsItem::fromCode($code, $studiPruefungsId);
         }
 
         return NULL;
@@ -184,6 +189,9 @@ class FortschrittsItem implements DDDValueObject
             }
             if ($this->code == 504) {
                 return "Praktische Prüfung Sem. 4 (Klinik)";
+            }
+            if ($this->code == 509) {
+                return "OSCE-Prüfung Sem. 9";
             }
 
             return "Stationen-Prüfung Sem. $fachsemester";
