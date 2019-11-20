@@ -69,7 +69,7 @@ class EPAApiController extends BaseController
 
         $command = new SelbstBewertungAendernCommand();
 
-        $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
+        $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator)->getValue();
         if (!$command->loginHash) {
             return new Response("Nicht eingeloggt?", 401);
         }
