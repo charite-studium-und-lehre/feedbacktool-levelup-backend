@@ -91,8 +91,7 @@ class SSOController extends BaseController
         Request $request,
         StudiRepository $studiRepository,
         LoginHashCreator $loginHashCreator,
-        StudiHashCreator $studiHashCreator,
-        TokenStorageInterface $tokenStorage
+        StudiHashCreator $studiHashCreator
     ) {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);

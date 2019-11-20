@@ -67,7 +67,7 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
     protected function configure() {
         $this->addArgumentDateiPfad();
         $this->addArgumentPeriode();
-        $this->addArgument('stationsTeil', InputArgument::REQUIRED, 'Teil1VK, Teil1K, Teil2 oder Teil3');
+        $this->addArgument('stationsTeil', InputArgument::REQUIRED, 'Teil1VK, Teil1K, Teil2, Teil3 oder Sem9');
         $this->addAndereArgumente();
         $this->setDescription('Datenimport aus Datei: Stationen-Prüfung in CSV-Datei');
         $this->setHelp("Aufruf: bin/console l:i:mc <CSV-Dateipfad> <Datum> <Stations-Teil>");
@@ -123,6 +123,8 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
                 return PruefungsFormat::getStationTeil2();
             case 'Teil3':
                 return PruefungsFormat::getStationTeil3();
+            case 'Sem9':
+                return PruefungsFormat::getStationOsceSem9();
             default:
                 throw new Exception("Falsches Format: $pruefungsTeil");
         }
