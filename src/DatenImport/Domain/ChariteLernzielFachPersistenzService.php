@@ -19,7 +19,7 @@ class ChariteLernzielFachPersistenzService
         $this->clusterRepository = $clusterRepository;
     }
 
-    /** @param array<int $lernzielNummer => string $fachCode */
+    /** @param array<int, string> $lernzielFaecher */
     public function persistiereLernzielFaecher(array $lernzielFaecher) {
 
         $alleFaecherNachCode = $this->alleFaecherNachCode();

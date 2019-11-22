@@ -24,7 +24,7 @@ class ChariteFragenPersistenzService
         $this->antwortRepository = $antwortRepository;
     }
 
-    /** @param $fragenDTOs ChariteFragenDTO[] */
+    /** @param ChariteFragenDTO[] $fragenDTOs */
     public function persistiereFragenUndAntworten(array $fragenDTOs) {
         foreach ($fragenDTOs as $fragenDTO) {
             $pruefungsItemId = PruefungsItemId::fromPruefungsIdUndFragenNummer(

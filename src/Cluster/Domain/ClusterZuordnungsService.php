@@ -67,8 +67,6 @@ class ClusterZuordnungsService
     }
 
     /**
-     * @param ClusterTyp $clusterTypId
-     * @param $vorhandeneClusterIds
      * @return ClusterId[]
      */
     public function getVorhandeneClusterIdsNachTyp(

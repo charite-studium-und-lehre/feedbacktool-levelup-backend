@@ -28,8 +28,8 @@ class ChariteMCPruefungFachPersistenzService
         $this->lernzielFachRepository = $lernzielFachRepository;
     }
 
-    /** @param StudiIntern[] $studiInternArray */
-    public function persistiereFachZuordnung($mcPruefungsDaten) {
+    /** @param StudiIntern[] $mcPruefungsDaten */
+    public function persistiereFachZuordnung($mcPruefungsDaten): array {
         $counter = 0;
         $lineCount = count($mcPruefungsDaten);
         $einProzent = round($lineCount / 100);

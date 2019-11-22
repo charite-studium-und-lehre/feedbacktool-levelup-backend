@@ -28,7 +28,7 @@ class ChariteLDAPService
     /** @var string */
     private $bindDn;
 
-    /** @var resource */
+    /** @var ?resource */
     private $connection;
 
     public function __construct(string $host, int $port, bool $tls, string $baseDn, string $bindDn) {
@@ -51,11 +51,6 @@ class ChariteLDAPService
             $this->unconnect();
         }
 
-        // put user to bind dn if username is given
-        if ($username) {
-            $bind_dn = str_replace("%", $username, $this->bindDn);
-        }
-
         $protocol = $this->port == 389 ? "ldap://" : "ldaps://";
         $this->connection = ldap_connect($protocol . $this->host, $this->port);
         if (!$this->connection) {
@@ -66,6 +61,8 @@ class ChariteLDAPService
         ldap_set_option($this->connection, LDAP_OPT_REFERRALS, 0);
 
         if ($username) {
+            // put user to bind dn if username is given
+            $bind_dn = str_replace("%", $username, $this->bindDn);
             // authenticated bind -> use "@" to suppress warning on wrong credentials
             $bind = @ldap_bind($this->connection, $bind_dn, $password);
         } else {

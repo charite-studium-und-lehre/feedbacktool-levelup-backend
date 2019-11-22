@@ -20,7 +20,7 @@ class ClusterCodeType extends Type
         return $value ? ClusterCode::fromString($value) : NULL;
     }
 
-    /** @param ClusterCode $value */
+    /** @param ?ClusterCode $value */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         return $value ? $value->getValue() : NULL;
     }

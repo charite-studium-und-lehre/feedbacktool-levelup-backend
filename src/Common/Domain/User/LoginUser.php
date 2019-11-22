@@ -5,6 +5,7 @@ namespace Common\Domain\User;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Role\Role;
 
 class LoginUser implements DDDValueObject, UserInterface
 {
