@@ -13,4 +13,10 @@ sudo setfacl -R  -m g:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 sudo touch ./bin/symfony_requirements
 sudo chmod a+rwx ./bin/symfony_requirements
 
+
+wget https://get.symfony.com/cli/installer -O - | bash
+rm installer
+mv ~/.symfony/bin/symfonymv  bin/
+rmdir ~/.symfony/bin
+
 echo Fertig.

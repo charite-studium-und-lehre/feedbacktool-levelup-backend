@@ -1,4 +1,5 @@
 .idea
+bin/symfony
 
 ### Symfony template
 # Cache and logs (Symfony2)
