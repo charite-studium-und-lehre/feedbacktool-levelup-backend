@@ -2,14 +2,14 @@
 
 namespace DatenImport\Domain;
 
-use DatenImport\Infrastructure\Persistence\AbstractCSVImportService;
-
 interface PruefungsdatenImportService
 {
+    const DEFAULT_OUT_ENCODING = "UTF-8";
+
     public function getData(
         string $inputFile,
         string $delimiter = ",",
         bool $hasHeaders = TRUE,
-        string $fromEncoding = AbstractCSVImportService::OUT_ENCODING
+        string $fromEncoding = self::DEFAULT_OUT_ENCODING
     ): array;
 }
