@@ -1,7 +1,6 @@
 <?php
 
 use FBToolCommon\Infrastructure\UserInterface\SymfonyKernel;
-use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,7 +20,7 @@ $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
 if ($debug) {
     umask(0000);
 
-    Debug::enable();
+//    \Symfony\Component\Debug\Debug::enable();
 }
 
 if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? false) {
