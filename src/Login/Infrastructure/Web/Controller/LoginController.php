@@ -1,14 +1,14 @@
 <?php
 
-namespace SSO\Infrastructure\Web\Controller;
+namespace Login\Infrastructure\Web\Controller;
 
 use Common\Domain\User\LoginUser;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
 use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
+use Login\Infrastructure\Web\Service\UserSwitcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use SSO\Infrastructure\Web\Service\UserSwitcher;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\Service\LoginHashCreator;
 use Studi\Domain\Service\StudiHashCreator;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class SSOController extends BaseController
+class LoginController extends BaseController
 {
     /**
      * @Route("/login", name="login")

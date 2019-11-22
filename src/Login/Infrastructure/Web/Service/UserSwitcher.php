@@ -1,6 +1,6 @@
 <?php
 
-namespace SSO\Infrastructure\Web\Service;
+namespace Login\Infrastructure\Web\Service;
 
 use Common\Domain\User\Username;
 use Studi\Domain\LoginHash;

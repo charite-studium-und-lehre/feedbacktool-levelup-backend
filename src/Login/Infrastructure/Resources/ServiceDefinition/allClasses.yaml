@@ -12,10 +12,10 @@ services:
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
 
-    SSO\:
-        resource: '%kernel.project_dir%/src/SSO/*'
+    Login\:
+        resource: '%kernel.project_dir%/src/Login/*'
 
-    SSO\Infrastructure\:
-        resource: '%kernel.project_dir%/src/SSO/Infrastructure/**/*Controller'
+    Login\Infrastructure\:
+        resource: '%kernel.project_dir%/src/Login/Infrastructure/**/*Controller'
         tags: ['controller.service_arguments']
 
