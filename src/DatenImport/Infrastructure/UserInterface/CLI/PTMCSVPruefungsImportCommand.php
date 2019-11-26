@@ -83,6 +83,7 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 
         $output->writeln("\nFertig. ");
 
+        return 0;
     }
 
 }

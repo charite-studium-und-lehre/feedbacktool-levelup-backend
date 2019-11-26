@@ -59,6 +59,7 @@ class StudiImportCommand extends AbstractCSVImportCommand
             $this->studiStammdatenPersistenzService->getGeaendert() . " geändert; "
         );
 
+        return 0;
     }
 
 }

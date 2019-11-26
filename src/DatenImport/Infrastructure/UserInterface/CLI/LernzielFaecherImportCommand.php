@@ -56,6 +56,8 @@ class LernzielFaecherImportCommand extends AbstractCSVImportCommand
         $output->writeln(count($lernzielFaecher) . " lernziel-Fach-Zeilen gelesen. Persistiere.");
         $this->chariteLernzielFachPersistenzService->persistiereLernzielFaecher($lernzielFaecher);
 
+        return 0;
+
     }
 
 }

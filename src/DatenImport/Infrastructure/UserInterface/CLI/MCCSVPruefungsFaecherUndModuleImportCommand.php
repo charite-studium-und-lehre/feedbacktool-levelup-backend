@@ -90,6 +90,7 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
 
         $output->writeln("\nFertig. ");
 
+        return 0;
     }
 
 }

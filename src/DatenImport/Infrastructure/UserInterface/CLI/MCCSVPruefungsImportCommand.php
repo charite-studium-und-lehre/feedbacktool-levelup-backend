@@ -103,6 +103,7 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
                          . " Matrikelnummern nicht zuzuordnen; "
         );
 
+        return 0;
     }
 
 }

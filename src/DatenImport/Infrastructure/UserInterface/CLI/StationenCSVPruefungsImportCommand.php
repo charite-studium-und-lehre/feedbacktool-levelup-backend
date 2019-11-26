@@ -107,6 +107,7 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
 
         $output->writeln("\nFertig. ");
 
+        return 0;
     }
 
     /**
