@@ -70,7 +70,7 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 
 # WiSe2018
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil1\ VK/Teil1\ VK\ WiSe1819\ HAUPT.csv 201821 Teil1VK ";" -vvv
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil1\ KLINIK/Teil1WiSe1819HAUPT_KLINIK.xlsx.csv 201821 Teil1VK -vvv
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil1\ KLINIK/Teil1WiSe1819HAUPT_KLINIK.xlsx.csv 201821 Teil1K -vvv
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil2/Teil2WiSe1819HAUPT.csv 201821 Teil2 ";" -vvv
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil3/Teil3WiSe1819_HAUPT.xlsx.csv 201821 Teil3 -vvv
   # WDH
