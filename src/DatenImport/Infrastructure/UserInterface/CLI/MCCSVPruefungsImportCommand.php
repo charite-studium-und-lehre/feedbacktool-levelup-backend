@@ -94,8 +94,6 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
             echo ".";
         }
 
-
-
         $output->writeln("\nFertig. "
                          . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
                          . $this->chariteMCPruefungWertungPersistenzService->getGeaendert() . " Zeilen geändert; "
