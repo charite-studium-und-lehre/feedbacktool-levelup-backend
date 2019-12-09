@@ -94,8 +94,6 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
             echo ".";
         }
 
-
-
         $output->writeln("\nFertig. "
                          . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
                          . $this->chariteMCPruefungWertungPersistenzService->getGeaendert() . " Zeilen geändert; "
@@ -103,6 +101,7 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
                          . " Matrikelnummern nicht zuzuordnen; "
         );
 
+        return 0;
     }
 
 }

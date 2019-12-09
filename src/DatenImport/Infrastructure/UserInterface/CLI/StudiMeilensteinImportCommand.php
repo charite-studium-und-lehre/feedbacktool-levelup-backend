@@ -57,6 +57,7 @@ class StudiMeilensteinImportCommand extends AbstractCSVImportCommand
             $this->StudiMeilensteinPersistenzService->getGeloescht() . " gelöscht; "
         );
 
+        return 0;
     }
 
 }

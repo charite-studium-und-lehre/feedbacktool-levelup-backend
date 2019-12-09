@@ -50,6 +50,7 @@ class MCFragenAntwortenImportCommand extends AbstractCSVPruefungsImportCommand
 
         $output->writeln("\nFertig. ");
 
+        return 0;
     }
 
 }

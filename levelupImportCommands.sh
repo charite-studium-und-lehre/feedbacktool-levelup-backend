@@ -70,7 +70,7 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 
 # WiSe2018
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil1\ VK/Teil1\ VK\ WiSe1819\ HAUPT.csv 201821 Teil1VK ";" -vvv
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil1\ KLINIK/Teil1WiSe1819HAUPT_KLINIK.xlsx.csv 201821 Teil1VK -vvv
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil1\ KLINIK/Teil1WiSe1819HAUPT_KLINIK.xlsx.csv 201821 Teil1K -vvv
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil2/Teil2WiSe1819HAUPT.csv 201821 Teil2 ";" -vvv
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_WiSe18_19HAUPT/Teil3/Teil3WiSe1819_HAUPT.xlsx.csv 201821 Teil3 -vvv
   # WDH
@@ -108,6 +108,8 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 ### MC ###
 
 ### MC-Fragentexte ###
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2019_1*.csv 201911 -vvv
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2019_2*.csv 201912 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe2018_19_1*.csv 201821 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe2018_19_2*.csv 201822 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2018_T1*.csv 201811 -vvv
