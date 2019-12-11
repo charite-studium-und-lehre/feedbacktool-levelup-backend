@@ -16,7 +16,7 @@ sudo chmod a+rwx ./bin/symfony_requirements
 
 wget https://get.symfony.com/cli/installer -O - | bash
 rm installer
-mv ~/.symfony/bin/symfonymv  bin/
+mv ~/.symfony/bin/symfony bin/
 rmdir ~/.symfony/bin
 
 echo Fertig.
