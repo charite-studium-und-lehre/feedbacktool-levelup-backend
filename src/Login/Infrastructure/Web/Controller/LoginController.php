@@ -172,6 +172,7 @@ class LoginController extends BaseController
         dump($this->getUser()->getRoles());
         dump($tokenStorage);
         dump($_SESSION);
+        dump($request->headers->get("referer"));
         if ($user instanceof Studi) {
             dump($user->getStudiHash());
         }
@@ -182,7 +183,8 @@ class LoginController extends BaseController
         }
 
         return new Response(
-            "<h1><a href='/app'>Gehe zu Dashboard</a><br/><a href='"
+            "<h1><a href='/app'>Gehe zu Dashboard</a><br/></h1>"
+            . "<h1><a href=''>Neu laden</a><br/></h1><a href='"
             . $this->generateUrl("switchUser") . "'>Zurück zu SwitchUser</a></h1>"
         );
     }
