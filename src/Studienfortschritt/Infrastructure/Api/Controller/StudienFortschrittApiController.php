@@ -2,15 +2,15 @@
 
 namespace Studienfortschritt\Infrastructure\Api\Controller;
 
+use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Studi;
 use Studienfortschritt\Domain\FortschrittsItem;
 use Studienfortschritt\Domain\Service\StudienFortschrittExportService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StudienFortschrittApiController extends AbstractController
+class StudienFortschrittApiController extends BaseController
 {
 
     /** @var StudienFortschrittExportService */
