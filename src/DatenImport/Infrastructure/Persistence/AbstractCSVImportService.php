@@ -46,7 +46,7 @@ abstract class AbstractCSVImportService
                     dump($headers);
                     dump($dataLineFixed);
                     echo "\nZeile: $counter";
-                    throw new \Exception("Header-Anzahl passt nicht zu Daten!");
+                    throw new \Exception("Header-Anzahl passt nicht zu Daten: $inputFile!");
                 }
                 $dataLineFixed = array_combine($headers, $dataLineFixed);
             }
