@@ -417,5 +417,7 @@ class EpasDemoData extends AbstractJsonDemoData
         ]
     ];
 
-
+    public function isResponsibleFor(string $pathInfo): bool {
+        return $pathInfo == "/api/epas";
+    }
 }

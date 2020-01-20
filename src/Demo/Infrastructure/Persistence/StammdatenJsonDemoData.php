@@ -12,4 +12,7 @@ class StammdatenJsonDemoData extends AbstractJsonDemoData
         'istAdmin' => false,
     ];
 
+    public function isResponsibleFor(string $pathInfo): bool {
+        return $pathInfo == "/api/stammdaten";
+    }
 }

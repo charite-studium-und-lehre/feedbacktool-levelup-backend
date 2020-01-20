@@ -6,15 +6,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MCFragenDemoData extends AbstractJsonDemoData
 {
-    public function getController(array $params = []): callable {
-        $this->jsonData["studiPruefungsId"] = $params["studiPruefungsId"];
-
-        return function() {
-            return new JsonResponse($this->jsonData);
-        };
-    }
-    
-
     protected $jsonData = [
         "name"             => "MC-Test Semester 6 WiSe 2017 (Prüfungszeitraum 1)",
         "typ"              => "MC-Sem6",
@@ -2266,5 +2257,23 @@ Was ist die Therapie der Wahl?",
             ],
         ],
     ];
+
+    public function getController(string $pathInfo): callable {
+        preg_match("/\/[0-9]+\//", $pathInfo, $matches);
+        if ($matches[0]) {
+            $studiPruefungsId = str_replace("/", "", $matches[0]);
+        }
+        $this->jsonData["studiPruefungsId"] = $studiPruefungsId;
+
+        return function() {
+            return new JsonResponse($this->jsonData);
+        };
+    }
+
+    public function isResponsibleFor(string $pathInfo): bool {
+        $pathInfo = preg_replace("/\/[0-9]+/", "", $pathInfo);
+
+        return $pathInfo == "/api/pruefungen/fragen";
+    }
 
 }
