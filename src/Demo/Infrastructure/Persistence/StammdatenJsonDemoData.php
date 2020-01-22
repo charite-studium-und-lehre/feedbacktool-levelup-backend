@@ -5,9 +5,9 @@ namespace Demo\Infrastructure\Persistence;
 class StammdatenJsonDemoData extends AbstractJsonDemoData
 {
     protected $jsonData = [
-        'vorname' => 'Petra',
+        'vorname' => 'Demo',
         'nachname' => 'Tester',
-        'email' => 'petra.tester@charite.de',
+        'email' => 'demo.tester@charite.de',
         'stammdatenVorhanden' => true,
         'istAdmin' => false,
     ];
