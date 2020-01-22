@@ -24,42 +24,42 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "stationen"        => [
                         [
                             "code"                    => "00#04",
-                            "titel"                   => "KIT Gesprächstechnik ",
+                            "titel"                   => "KIT Gesprächstechnik",
                             "ergebnisProzentzahl"     => 0.92,
                             "durchschnittProzentzahl" => 0.8,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "27#02",
-                            "titel"                   => "Erkrankungen der Extremitäten M27",
+                            "titel"                   => "Modul 27",
                             "ergebnisProzentzahl"     => 0.86,
                             "durchschnittProzentzahl" => 0.84,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "30#01",
-                            "titel"                   => "Neurologische Erkrankungen M30",
+                            "titel"                   => "Modul 30",
                             "ergebnisProzentzahl"     => 0.83,
                             "durchschnittProzentzahl" => 0.84,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "31#05",
-                            "titel"                   => "Psychiatrische Erkrankungen M31",
+                            "titel"                   => "Modul 31",
                             "ergebnisProzentzahl"     => 0.85,
                             "durchschnittProzentzahl" => 0.65,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "33#01",
-                            "titel"                   => "Schwangerschaft/Geburt M33",
+                            "titel"                   => "Modul 33",
                             "ergebnisProzentzahl"     => 0.94,
                             "durchschnittProzentzahl" => 0.86,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "35#01",
-                            "titel"                   => "Geschlechtsspezifische Erkrankungen M35",
+                            "titel"                   => "Modul 35",
                             "ergebnisProzentzahl"     => 0.82,
                             "durchschnittProzentzahl" => 0.78,
                             "typ"                     => "klinisch",
@@ -83,28 +83,28 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "stationen"        => [
                         [
                             "code"                    => "10#01",
-                            "titel"                   => "Bewegung M10",
+                            "titel"                   => "Modul 10",
                             "ergebnisProzentzahl"     => 0.56,
                             "durchschnittProzentzahl" => 0.8,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "13#02",
-                            "titel"                   => "Atmung M13",
+                            "titel"                   => "Modul 13",
                             "ergebnisProzentzahl"     => 0.57,
                             "durchschnittProzentzahl" => 0.73,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "14#04",
-                            "titel"                   => "Niere/Elektrolyte M14",
+                            "titel"                   => "Modul 14",
                             "ergebnisProzentzahl"     => 0.78,
                             "durchschnittProzentzahl" => 0.78,
                             "typ"                     => "klinisch",
                         ],
                         [
                             "code"                    => "11#01",
-                            "titel"                   => "Herz Kreislauf M11",
+                            "titel"                   => "Modul 11",
                             "ergebnisProzentzahl"     => 0.61,
                             "durchschnittProzentzahl" => 0.71,
                             "typ"                     => "klinisch",
@@ -6634,5 +6634,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                 ],
             ],
         ];
+
+    public function isResponsibleFor(string $pathInfo): bool {
+        return $pathInfo == "/api/pruefungen";
+    }
 
 }
