@@ -47,7 +47,6 @@ class StudiStammdatenPersistenzServiceTest extends DbRepoTestCase
 
         $studiStammdatenPersistenzService = new StudiStammdatenPersistenzService(
             $studiInternRepository,
-            $studiRepository,
             $studiHashCreator
         );
 
