@@ -106,6 +106,8 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
             LoginHash::fromString(self::LOGIN_HASH),
             SelbstBewertungsTyp::getZutrauenObject()
         );
+        $latestObjectsGemacht = array_values($latestObjectsGemacht);
+        $latestObjectsZutrauen = array_values($latestObjectsZutrauen);
 
         $this->assertCount(1, $latestObjectsGemacht);
         $this->assertCount(1, $latestObjectsZutrauen);

@@ -10,7 +10,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
         "name"             => "MC-Test Semester 6 WiSe 2017 (Prüfungszeitraum 1)",
         "typ"              => "MC-Sem6",
         "format"           => "mc",
-        "studiPruefungsId" => 5620,
+        "studiPruefungsId" => 100002,
         "zeitsemester"     => "WiSe 2017",
         "periodeCode"      => 201721,
         "periodeText"      => "WiSe 2017 (Prüfungszeitraum 1)",
