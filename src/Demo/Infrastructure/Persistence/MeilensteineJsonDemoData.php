@@ -309,7 +309,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 1",
                 "fachsemester"     => 1,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 11353,
+                "studiPruefungsId" => 987654,
                 "format"           => "mc",
             ],
             [
@@ -318,7 +318,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 2",
                 "fachsemester"     => 2,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 9889,
+                "studiPruefungsId" => 789456,
                 "format"           => "mc",
             ],
             [
@@ -336,7 +336,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 4",
                 "fachsemester"     => 4,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 9078,
+                "studiPruefungsId" => 100000,
                 "format"           => "mc",
             ],
             [
@@ -345,7 +345,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 5",
                 "fachsemester"     => 5,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 7759,
+                "studiPruefungsId" => 100001,
                 "format"           => "mc",
             ],
             [
@@ -354,7 +354,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 6",
                 "fachsemester"     => 6,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 5620,
+                "studiPruefungsId" => 100002,
                 "format"           => "mc",
             ],
             [
@@ -363,7 +363,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 7",
                 "fachsemester"     => 7,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 3478,
+                "studiPruefungsId" => 100003,
                 "format"           => "mc",
             ],
             [
@@ -372,7 +372,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 8",
                 "fachsemester"     => 8,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 1992,
+                "studiPruefungsId" => 100004,
                 "format"           => "mc",
             ],
             [
@@ -381,7 +381,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 9",
                 "fachsemester"     => 9,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 35818,
+                "studiPruefungsId" => 100005,
                 "format"           => "mc",
             ],
             [
@@ -408,7 +408,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "Mündliche Prüfung Sem. 4 (Vorklinik)",
                 "fachsemester"     => 4,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 26076,
+                "studiPruefungsId" => 100006,
                 "format"           => "station",
             ],
             [
@@ -417,7 +417,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "Praktische Prüfung Sem. 4 (Klinik)",
                 "fachsemester"     => 4,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 26155,
+                "studiPruefungsId" => 100007,
                 "format"           => "station",
             ],
             [
@@ -426,7 +426,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "OSCE-Prüfung Sem. 9",
                 "fachsemester"     => 9,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 38030,
+                "studiPruefungsId" => 100008,
                 "format"           => "station",
             ],
         ],
