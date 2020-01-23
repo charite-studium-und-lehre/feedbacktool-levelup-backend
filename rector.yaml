@@ -1,0 +1,9 @@
+# rector.yaml
+parameters:
+    sets:
+        - 'code-quality'
+        - 'php74'
+        - 'symfony50'
+        - 'symfony50-types'
+    autoload_paths:
+        - 'vendor/autoload.php'
