@@ -9,20 +9,15 @@ class Cluster implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var ClusterId */
-    private $id;
+    private ClusterId $id;
 
-    /** @var ClusterTyp */
-    private $clusterTyp;
+    private ClusterTyp $clusterTyp;
 
-    /** @var ClusterTitel */
-    private $titel;
+    private ClusterTitel $titel;
 
-    /** @var ?ClusterCode */
-    private $code;
+    private ?ClusterCode $code;
 
-    /** @var ClusterId */
-    private $parentId;
+    private ?ClusterId $parentId;
 
     public static function create(
         ClusterId $id,
