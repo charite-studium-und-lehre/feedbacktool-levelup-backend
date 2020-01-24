@@ -87,10 +87,10 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/OSCE9_MSM\ 2.0_SoSe19HZ/OSCE\ 9\ SoSe\ 2019\ HAUPT.xlsx.csv 201911 Sem9
   # WDH
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil1_GrundlagenSoSe\ 19\ WDH\ FINAL.xlsx.csv 201912 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil\ 1_\ OSCE-2_SoSe\ WDH\ FINAL.xlsx.csv 201912 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil2_GrundlagenSoSe\ 19\ WDH\ FINAL.xlsx.csv 201912 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil\ 3_\ OSCE-4_SoSe\ WDH\ FINAL.xlsx.csv 201912 Teil3
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/OSCE9_MSM\ 2.0_SoSe19WDH/OSCE\ 9\ SoSe\ 2019\ WDH.xlsx.csv 201912 Sem9
 
 ### PTM ###
@@ -121,8 +121,8 @@ bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragent
 
 ### MC-Ergebnisse ###
 
-bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_19_T2_qs.xlsx.csv 201912 -vvv
-bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_19_T1_qs.xlsx.csv 201911 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_19_T2_qs.xlsx.csv  201912 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_19_T1_qs-korrigiert.xlsx.csv 201911 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_Wise18_19_T1_qs.xlsx.csv 201821 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe1819_T2_qs.xlsx.csv 201822 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe18_T1_qs.xlsx.csv 201811 -vvv
