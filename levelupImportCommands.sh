@@ -87,10 +87,10 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/OSCE9_MSM\ 2.0_SoSe19HZ/OSCE\ 9\ SoSe\ 2019\ HAUPT.xlsx.csv 201911 Sem9
   # WDH
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
-#bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil1_GrundlagenSoSe\ 19\ WDH\ FINAL.xlsx.csv 201912 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil\ 1_\ OSCE-2_SoSe\ WDH\ FINAL.xlsx.csv 201912 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil2_GrundlagenSoSe\ 19\ WDH\ FINAL.xlsx.csv 201912 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_SoSe_19_WDH/Teil\ 3_\ OSCE-4_SoSe\ WDH\ FINAL.xlsx.csv 201912 Teil3
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/OSCE9_MSM\ 2.0_SoSe19WDH/OSCE\ 9\ SoSe\ 2019\ WDH.xlsx.csv 201912 Sem9
 
 ### PTM ###
