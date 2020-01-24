@@ -30,11 +30,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
     }
 
     public function run(FremdBewertungAnfrageVerschickenCommand $command): void {
-        $this->sendMassage(
-            $this->getMailSubject($command,),
-            $this->getMailBody($command, $this->getLink($command)),
-            $command->fremdBewerterEmail, $command->studiEmail
-        );
+        $subject = $this->getMailSubject($command);
+        $body = $this->getMailBody($command, $this->getLink($command));
+        $to = $command->fremdBewerterEmail;
+        $studiTo = $command->studiEmail;
+        $this->sendeMailAnBewerter($subject, $body, $to);
+        $this->sendeKopieAnStudi($subject, $body, $studiTo, $to);
     }
 
     private function getLink(FremdBewertungAnfrageVerschickenCommand $command): string {
@@ -46,12 +47,25 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         return "https://levelup.charite.de$appUrl/epas/fremdbewertung/" . $token->getValue();
     }
 
-    private function sendMassage($subject, $body, $to, $cc, $from = "levelup@charite.de") {
+    private function sendeMailAnBewerter($subject, $body, $to, $from = "levelup@charite.de") {
         $message = new \Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
-            ->setCc($cc)
+            ->setBody($body, 'text/plain');
+        $this->swiftMailer->send($message);
+    }
+
+    private function sendeKopieAnStudi($subject, $body, $to, $originalTo, $from = "levelup@charite.de") {
+        $subjectStudi = "Levelup: Anfrage zu Fremdbewertug versendet an $originalTo";
+        $body = "Folgende Nachricht wurde gerade verschickt:\n\n"
+            . "An: $originalTo\n"
+            . "Betreff: $subject\n"
+            . "Inhalt:\n\n" . $body;
+        $message = new \Swift_Message();
+        $message->setSubject($subjectStudi)
+            ->setFrom($from)
+            ->setTo($to)
             ->setBody($body, 'text/plain');
         $this->swiftMailer->send($message);
     }
