@@ -7,8 +7,7 @@ abstract class AbstractCSVImportService
     const OUT_ENCODING = "UTF-8";
     const DEFAULT_DELIMITER = ";";
 
-    /** @var array */
-    private $options;
+    private array $options;
 
     public function __construct($options = []) {
         $this->options = $options;

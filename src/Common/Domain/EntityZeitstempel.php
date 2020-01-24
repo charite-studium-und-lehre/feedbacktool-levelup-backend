@@ -9,11 +9,9 @@ use DateTimeImmutable;
 final class EntityZeitstempel
 {
 
-    /** @var DateTimeImmutable */
-    private $erzeugungsZeit;
+    private \DateTimeImmutable $erzeugungsZeit;
 
-    /** @var DateTimeImmutable|NULL */
-    private $aenderungsZeit = NULL;
+    private ?\DateTimeImmutable $aenderungsZeit = NULL;
 
     public static function createErzeugungsZeitstempel(): EntityZeitstempel {
         $entityZeitstempel = new self();

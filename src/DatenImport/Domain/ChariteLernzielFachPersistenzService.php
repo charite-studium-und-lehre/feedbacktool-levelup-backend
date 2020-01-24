@@ -8,11 +8,9 @@ use Cluster\Domain\ClusterTyp;
 
 class ChariteLernzielFachPersistenzService
 {
-    /** @var LernzielFachRepository */
-    private $lernzielFachRepository;
+    private \DatenImport\Domain\LernzielFachRepository $lernzielFachRepository;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private \Cluster\Domain\ClusterRepository $clusterRepository;
 
     public function __construct(LernzielFachRepository $lernzielFachRepository, ClusterRepository $clusterRepository) {
         $this->lernzielFachRepository = $lernzielFachRepository;

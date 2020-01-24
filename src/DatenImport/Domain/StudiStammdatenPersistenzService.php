@@ -11,20 +11,15 @@ use Studi\Domain\StudiRepository;
 
 class StudiStammdatenPersistenzService
 {
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private \Studi\Domain\StudiInternRepository $studiInternRepository;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private \Studi\Domain\Service\StudiHashCreator $studiHashCreator;
 
-    /** @var int */
-    private $hinzugefuegt = 0;
+    private int $hinzugefuegt = 0;
 
-    /** @var int */
-    private $geloescht = 0;
+    private int $geloescht = 0;
 
-    /** @var int */
-    private $geaendert = 0;
+    private int $geaendert = 0;
 
     public function __construct(
         StudiInternRepository $studiInternRepository,

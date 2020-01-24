@@ -11,12 +11,11 @@ final class FragenNummer implements DDDValueObject
     use DefaultValueObjectComparison;
 
     const MIN_VALUE = 1;
-    const MAX_VALUE = 1000000;
+    const MAX_VALUE = 1_000_000;
 
     const INVALID_TEXT = "Keine Fragennummer:: ";
 
-    /** @var int */
-    private $value;
+    private string $value;
 
     public static function fromInt(string $value): self {
         Assertion::numeric($value);

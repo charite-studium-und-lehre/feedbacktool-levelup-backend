@@ -9,21 +9,15 @@ class Antwort implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var AntwortId */
-    private $id;
+    private AntwortId $id;
 
-    /** @var FragenId */
-    private $fragenId;
+    private FragenId $fragenId;
 
-    /** @var AntwortCode */
-    private $antwortCode;
+    private AntwortCode $antwortCode;
 
-    /** @var AntwortText */
-    private $antwortText;
+    private AntwortText $antwortText;
 
-    /** @var bool */
-    private $istRichtig;
-
+    private bool $istRichtig;
 
     public static function fromPruefungsItemIdUndFragenId(
         AntwortId $antwortId,
@@ -70,6 +64,5 @@ class Antwort implements DDDEntity
     public function setIstRichtig(bool $istRichtig): void {
         $this->istRichtig = $istRichtig;
     }
-
 
 }

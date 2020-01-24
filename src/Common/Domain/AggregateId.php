@@ -10,7 +10,7 @@ class AggregateId implements DDDValueObject
 
     const INVALID_ID = "Ist keine gültige ID: ";
 
-    protected $id;
+    protected int $id;
 
     /** @return static */
     public static function fromInt(string $id): self {

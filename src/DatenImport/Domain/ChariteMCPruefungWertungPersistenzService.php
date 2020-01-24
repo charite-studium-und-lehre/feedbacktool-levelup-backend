@@ -23,29 +23,21 @@ use Wertung\Domain\Wertung\Punktzahl;
 class ChariteMCPruefungWertungPersistenzService
 {
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private \StudiPruefung\Domain\StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private \Wertung\Domain\ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private \Pruefung\Domain\PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private \Studi\Domain\StudiInternRepository $studiInternRepository;
 
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private \Wertung\Domain\StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
-    /** @var int */
-    private $hinzugefuegt = 0;
+    private int $hinzugefuegt = 0;
 
-    /** @var int */
-    private $geaendert = 0;
+    private int $geaendert = 0;
 
-    /** @var int */
-    private $nichtZuzuordnen = [];
+    private array $nichtZuzuordnen = [];
 
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,

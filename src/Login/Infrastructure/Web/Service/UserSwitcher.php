@@ -7,14 +7,13 @@ use Studi\Domain\LoginHash;
 use Studi\Domain\Service\LoginHashCreator;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class UserSwitcher {
-    const SWITCHED_LOGIN_HASH_SESSION_KEY="switched_OriginalLoginHash";
+class UserSwitcher
+{
+    const SWITCHED_LOGIN_HASH_SESSION_KEY = "switched_OriginalLoginHash";
 
-    /** @var SessionInterface */
-    private $session;
+    private SessionInterface $session;
 
-    /** @var LoginHashCreator */
-    private $loginHashCreator;
+    private LoginHashCreator $loginHashCreator;
 
     public function __construct(SessionInterface $session, LoginHashCreator $loginHashCreator) {
         $this->session = $session;
@@ -33,13 +32,12 @@ class UserSwitcher {
 
     public function getSwitchedLoginHash(): ?LoginHash {
         $hash_string = $this->session->get(self::SWITCHED_LOGIN_HASH_SESSION_KEY);
+
         return $hash_string ? LoginHash::fromString($hash_string) : NULL;
     }
 
     public function unsetUserSwitched(): void {
         $this->session->remove(self::SWITCHED_LOGIN_HASH_SESSION_KEY, NULL);
     }
-
-
 
 }

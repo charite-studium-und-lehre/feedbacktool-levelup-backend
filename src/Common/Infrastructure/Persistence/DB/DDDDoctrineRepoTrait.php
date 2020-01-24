@@ -10,11 +10,9 @@ trait DDDDoctrineRepoTrait
     use DoctrineAutoIncrementTrait;
     use DoctrineFlushTrait;
 
-    /** @var EntityRepository */
-    protected $doctrineRepo;
+    protected \Doctrine\ORM\EntityRepository $doctrineRepo;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected \Doctrine\ORM\EntityManagerInterface $entityManager;
 
     public function __construct(EntityRepository $doctrineRepo, EntityManagerInterface $entityManager) {
         $this->doctrineRepo = $doctrineRepo;

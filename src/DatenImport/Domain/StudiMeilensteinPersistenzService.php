@@ -10,20 +10,15 @@ use Studienfortschritt\Domain\StudiMeilensteinRepository;
 
 class StudiMeilensteinPersistenzService
 {
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private \Studi\Domain\StudiInternRepository $studiInternRepository;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private \Studi\Domain\Service\StudiHashCreator $studiHashCreator;
 
-    /** @var StudiMeilensteinRepository */
-    private $StudiMeilensteinRepository;
+    private \Studienfortschritt\Domain\StudiMeilensteinRepository $StudiMeilensteinRepository;
 
-    /** @var int */
-    private $hinzugefuegt = 0;
+    private int $hinzugefuegt = 0;
 
-    /** @var int */
-    private $geloescht = 0;
+    private int $geloescht = 0;
 
     public function __construct(
         StudiInternRepository $studiInternRepository,

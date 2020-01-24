@@ -15,7 +15,7 @@ class Username implements DDDValueObject
 
     const UNGUELTIG = "Scheint kein Charite-User-ID zu sein. ";
 
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);

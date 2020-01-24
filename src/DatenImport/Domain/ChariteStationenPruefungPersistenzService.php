@@ -23,23 +23,17 @@ use Wertung\Domain\Wertung\Prozentzahl;
 class ChariteStationenPruefungPersistenzService
 {
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private \StudiPruefung\Domain\StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private \Wertung\Domain\ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private \Pruefung\Domain\PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private \Studi\Domain\StudiInternRepository $studiInternRepository;
 
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private \Wertung\Domain\StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,

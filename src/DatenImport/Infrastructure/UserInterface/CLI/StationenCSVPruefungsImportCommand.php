@@ -19,23 +19,17 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:stationen';
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
 
-    /** @var ChariteStationenErgebnisse_CSVImportService */
-    private $chariteStationenErgebnisseCSVImportService;
+    private \DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportService $chariteStationenErgebnisseCSVImportService;
 
-    /** @var ChariteStationenPruefungPersistenzService */
-    private $chariteStationenPruefungPersistenzService;
+    private \DatenImport\Domain\ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService;
 
-    /** @var StudiPruefungDurchschnittPersistenzService */
-    private $studiPruefungDurchschnittPersistenzService;
+    private \StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
 
-    /** @var ItemWertungDurchschnittPersistenzService */
-    private $itemWertungDurchschnittPersistenzService;
+    private \StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
 
-    /** @var ChariteStationsClusterungPersistenzService */
-    private $chariteStationsClusterungPersistenzService;
+    private \DatenImport\Domain\ChariteStationsClusterungPersistenzService $chariteStationsClusterungPersistenzService;
 
     /**
      * StationenCSVPruefungsImportCommand constructor.

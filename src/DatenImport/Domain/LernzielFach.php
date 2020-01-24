@@ -10,10 +10,9 @@ class LernzielFach
     use DefaultValueObjectComparison;
 
     /** @var LernzielNummer */
-    private $lernzielNummer;
+    private  $lernzielNummer;
 
-    /** @var ClusterId */
-    private $clusterId;
+    private \Cluster\Domain\ClusterId $clusterId;
 
     public static function byIds(LernzielNummer $lernzielNummer, ClusterId $clusterId): self {
         $object = new self();

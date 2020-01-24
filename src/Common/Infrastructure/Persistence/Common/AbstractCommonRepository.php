@@ -8,7 +8,7 @@ use Common\Domain\AggregateId;
 class AbstractCommonRepository
 {
 
-    protected $persistedEntities = [];
+    protected array $persistedEntities = [];
 
     public function add($entity): void {
         $entities = $this->all();

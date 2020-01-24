@@ -13,20 +13,15 @@ class ChariteLDAPService
     const AUTH_FAILED = "authFailed";
     const SUCCESS = "success";
 
-    /** @var string */
-    private $host;
+    private string $host;
 
-    /** @var int */
-    private $port;
+    private int $port;
 
-    /** @var bool */
-    private $tls;
+    private bool $tls;
 
-    /** @var string */
-    private $baseDn;
+    private string $baseDn;
 
-    /** @var string */
-    private $bindDn;
+    private string $bindDn;
 
     /** @var ?resource */
     private $connection;

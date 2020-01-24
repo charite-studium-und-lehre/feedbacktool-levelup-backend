@@ -16,20 +16,15 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:ptm';
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
 
-    /** @var CharitePTMCSVImportService */
-    private $charitePTMCSVImportService;
+    private \DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService $charitePTMCSVImportService;
 
-    /** @var CharitePTMPersistenzService */
-    private $charitePTMPersistenzService;
+    private \DatenImport\Domain\CharitePTMPersistenzService $charitePTMPersistenzService;
 
-    /** @var StudiPruefungDurchschnittPersistenzService */
-    private $studiPruefungDurchschnittPersistenzService;
+    private \StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
 
-    /** @var ItemWertungDurchschnittPersistenzService */
-    private $itemWertungDurchschnittPersistenzService;
+    private \StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,

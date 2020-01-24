@@ -20,7 +20,7 @@ final class ChariteGuardAuthenticator extends AbstractFormLoginAuthenticator
 
     private const LOGIN_ROUTE = 'login';
 
-    private $router;
+    private RouterInterface $router;
 
     public function __construct(
         RouterInterface $router
@@ -28,28 +28,23 @@ final class ChariteGuardAuthenticator extends AbstractFormLoginAuthenticator
         $this->router = $router;
     }
 
-    protected function getLoginUrl()
-    {
+    protected function getLoginUrl() {
         return $this->router->generate(self::LOGIN_ROUTE);
     }
 
-    public function supports(Request $request)
-    {
+    public function supports(Request $request) {
         return FALSE;
-//        return self::LOGIN_ROUTE === $request->attributes->get('_route');
+        //        return self::LOGIN_ROUTE === $request->attributes->get('_route');
     }
 
-    public function getCredentials(Request $request)
-    {
+    public function getCredentials(Request $request) {
         return [];
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
+    public function getUser($credentials, UserProviderInterface $userProvider) {
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
-    {
+    public function checkCredentials($credentials, UserInterface $user) {
         return TRUE;
     }
 
@@ -62,7 +57,8 @@ final class ChariteGuardAuthenticator extends AbstractFormLoginAuthenticator
      *
      * @param string $providerKey The provider (i.e. firewall) key
      * @return Response|null
-     */public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
-            return new RedirectResponse($this->router->generate("login"));
-}
+     */
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
+        return new RedirectResponse($this->router->generate("login"));
+    }
 }

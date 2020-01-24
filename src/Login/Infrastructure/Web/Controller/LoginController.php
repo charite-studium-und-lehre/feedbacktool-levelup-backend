@@ -26,8 +26,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class LoginController extends BaseController
 {
-    /** @var FrontendUrlService */
-    private $frontendUrlService;
+    private FrontendUrlService $frontendUrlService;
 
     public function __construct(FrontendUrlService $frontendUrlService) {
         $this->frontendUrlService = $frontendUrlService;

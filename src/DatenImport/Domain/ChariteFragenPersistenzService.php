@@ -13,11 +13,9 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ChariteFragenPersistenzService
 {
-    /** @var FragenRepository */
-    private $fragenRepository;
+    private \Pruefung\Domain\FrageAntwort\FragenRepository $fragenRepository;
 
-    /** @var AntwortRepository */
-    private $antwortRepository;
+    private \Pruefung\Domain\FrageAntwort\AntwortRepository $antwortRepository;
 
     public function __construct(FragenRepository $fragenRepository, AntwortRepository $antwortRepository) {
         $this->fragenRepository = $fragenRepository;

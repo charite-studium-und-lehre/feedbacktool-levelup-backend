@@ -11,8 +11,7 @@ use Pruefung\Domain\FachCodeKonstanten;
 
 class ChariteFaecherAnlegenService
 {
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private \Cluster\Domain\ClusterRepository $clusterRepository;
 
     public function __construct(ClusterRepository $clusterRepository) {
         $this->clusterRepository = $clusterRepository;

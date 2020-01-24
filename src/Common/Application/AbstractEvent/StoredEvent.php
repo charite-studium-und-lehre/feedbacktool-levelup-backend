@@ -9,14 +9,11 @@ class StoredEvent implements DomainEvent
 {
     use AbstractEventTrait;
 
-    /** @var StoredEventId */
-    private $id;
+    private \Common\Application\AbstractEvent\StoredEventId $id;
 
-    /** @var StoredEventBody */
-    private $eventBody;
+    private \Common\Application\AbstractEvent\StoredEventBody $eventBody;
 
-    /** @var StoredEventClass */
-    private $eventClass;
+    private \Common\Application\AbstractEvent\StoredEventClass $eventClass;
 
     public static function fromData(
         StoredEventId $id,

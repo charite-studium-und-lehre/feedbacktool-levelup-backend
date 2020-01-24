@@ -4,9 +4,9 @@ namespace Common\Domain;
 
 class TableAutoIncrement
 {
-    private $tableName;
+    private string $tableName;
 
-    private $autoIncrement;
+    private ?int $autoIncrement;
 
     public function __construct(string $tableName, int $autoIncrement) {
         $this->tableName = $tableName;

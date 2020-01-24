@@ -12,10 +12,9 @@ use Exception;
 class SimpleCommandBus implements CommandBus
 {
     /** @var CommandHandler[] */
-    private $allhandlers;
+    private array $allhandlers;
 
-    /** @var DomainEventPublisher */
-    private $domainEventPublisher;
+    private \Common\Application\DomainEvent\DomainEventPublisher $domainEventPublisher;
 
     /**
      * @param CommandHandler[] $allHandlers

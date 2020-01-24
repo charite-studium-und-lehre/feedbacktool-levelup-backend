@@ -6,11 +6,9 @@ use DateTimeImmutable;
 
 trait AbstractEventTrait
 {
-    /** @var DateTimeImmutable */
-    public $occurredOn;
+    public \DateTimeImmutable $occurredOn;
 
-    /** @var int */
-    public $byUserId;
+    public int $byUserId;
 
     public function getOccurredOn(): DateTimeImmutable {
         return $this->occurredOn;

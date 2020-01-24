@@ -4,7 +4,7 @@ namespace Demo\Infrastructure\Persistence;
 
 class EpasFremdBewertungenData extends AbstractJsonDemoData
 {
-    protected $jsonData = [
+    protected array $jsonData = [
         "bewertungen" => [
             [
                 "epaId"            => 412,

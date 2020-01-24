@@ -11,20 +11,15 @@ class LoginUser implements DDDValueObject, UserInterface
 {
     use DefaultValueObjectComparison;
 
-    /** @var Vorname */
-    protected $vorname;
+    protected \Common\Domain\User\Vorname $vorname;
 
-    /** @var Nachname */
-    protected $nachname;
+    protected \Common\Domain\User\Nachname $nachname;
 
-    /** @var Email */
-    protected $email;
+    protected \Common\Domain\User\Email $email;
 
-    /** @var Username */
-    protected $usernameVO;
+    protected \Common\Domain\User\Username $usernameVO;
 
-    /** @var bool */
-    protected $istAdmin = FALSE;
+    protected bool $istAdmin = FALSE;
 
     public static function fromValues(
         Vorname $vorname,

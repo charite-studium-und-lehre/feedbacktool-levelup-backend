@@ -15,22 +15,15 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 {
     protected static $defaultName = 'levelup:importFile:mcCSVWertung';
 
-    // the name of the command (the part after "bin/console")
+    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private \DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
 
-    /** @var Charite_Ergebnisse_CSVImportService */
-    private $chariteMCErgebnisseCSVImportService;
+    private \DatenImport\Domain\ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService;
 
-    /** @var ChariteMCPruefungWertungPersistenzService */
-    private $chariteMCPruefungWertungPersistenzService;
+    private \StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
 
-    /** @var StudiPruefungDurchschnittPersistenzService */
-    private $studiPruefungDurchschnittPersistenzService;
-
-    /** @var ItemWertungDurchschnittPersistenzService */
-    private $itemWertungDurchschnittPersistenzService;
+    private \StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
 
 
     public function __construct(

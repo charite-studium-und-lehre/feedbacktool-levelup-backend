@@ -38,6 +38,8 @@ doctrine:
         class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
       itemSchwierigkeit:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
+      pruefungsId:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsIdType"
       pruefungsItemId:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsItemIdType"
       pruefungsPeriode:
@@ -68,6 +70,7 @@ doctrine:
       clusterId: integer
       clusterCode: string
       itemSchwierigkeit: integer
+      pruefungsId: string
       pruefungsItemId: string
       pruefungsPeriode: integer
       antwortCode: string

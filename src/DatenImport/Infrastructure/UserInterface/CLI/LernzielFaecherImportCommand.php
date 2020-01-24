@@ -13,14 +13,11 @@ class LernzielFaecherImportCommand extends AbstractCSVImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:lernzielFaecher';
 
-    /** @var ChariteFaecherAnlegenService */
-    private $chariteFaecherAnlegenService;
+    private \DatenImport\Domain\ChariteFaecherAnlegenService $chariteFaecherAnlegenService;
 
-    /** @var ChariteLernzielFachPersistenzService */
-    private $chariteLernzielFachPersistenzService;
+    private \DatenImport\Domain\ChariteLernzielFachPersistenzService $chariteLernzielFachPersistenzService;
 
-    /** @var ChariteLernzielFachEinleseCSVService */
-    private $chariteLernzielFachEinleseCSVService;
+    private \DatenImport\Infrastructure\Persistence\ChariteLernzielFachEinleseCSVService $chariteLernzielFachEinleseCSVService;
 
     public function __construct(
         ChariteFaecherAnlegenService $chariteFaecherAnlegenService,

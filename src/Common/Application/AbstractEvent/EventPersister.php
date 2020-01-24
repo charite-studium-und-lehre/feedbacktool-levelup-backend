@@ -7,11 +7,9 @@ use ReflectionObject;
 
 class EventPersister
 {
-    /** @var EventSerializer */
-    private $eventSerializer;
+    private \Common\Application\AbstractEvent\EventSerializer $eventSerializer;
 
-    /** @var StoredEventRepository */
-    private $storedEventRepository;
+    private \Common\Application\AbstractEvent\StoredEventRepository $storedEventRepository;
 
     public function __construct(EventSerializer $eventSerializer, StoredEventRepository $storedEventRepository) {
         $this->eventSerializer = $eventSerializer;

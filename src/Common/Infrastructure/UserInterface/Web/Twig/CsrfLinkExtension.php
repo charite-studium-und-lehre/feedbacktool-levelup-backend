@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class CsrfLinkExtension extends AbstractExtension
 {
-    protected $csrfChecker;
+    protected \Common\Infrastructure\UserInterface\Web\Service\CSRFChecker $csrfChecker;
 
     public function __construct(CSRFChecker $csrfChecker) {
         $this->csrfChecker = $csrfChecker;

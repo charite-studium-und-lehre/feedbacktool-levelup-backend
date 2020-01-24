@@ -13,14 +13,11 @@ class StudiMeilensteinImportCommand extends AbstractCSVImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:StudiMeilenstein';
 
-    /** @var ChariteStudiStammdatenHIS_CSVImportService */
-    private $chariteStudiStammdatenHIS_CSVImportService;
+    private \DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private \Studi\Domain\Service\StudiHashCreator $studiHashCreator;
 
-    /** @var StudiMeilensteinPersistenzService */
-    private $StudiMeilensteinPersistenzService;
+    private \DatenImport\Domain\StudiMeilensteinPersistenzService $StudiMeilensteinPersistenzService;
 
     public function __construct(
         ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService,

@@ -16,20 +16,16 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcCSVFachUndModule';
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
 
-    /** @var Charite_Ergebnisse_CSVImportService */
-    private $chariteMCErgebnisseCSVImportService;
+    private \DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
 
-    /** @var ChariteMCPruefungLernzielModulPersistenzService */
-    private $chariteMCPruefungLernzielModulPersistenz;
+    private \DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz;
 
     /** ChariteMCPruefungFachPersistenzService */
-    private $chariteMCPruefungFachPersistenzService;
+    private \DatenImport\Domain\ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService;
 
-    /** @var ChariteLernzielModulImportCSVService */
-    private $chariteLernzielModulImportCSVService;
+    private \DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,

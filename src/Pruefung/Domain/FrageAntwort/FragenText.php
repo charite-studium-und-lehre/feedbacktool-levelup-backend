@@ -11,11 +11,11 @@ final class FragenText implements DDDValueObject
     use DefaultValueObjectComparison;
 
     const MIN_LENGTH = 5;
-    const MAX_LENGTH = 2000;
+    const MAX_LENGTH = 2_000;
 
     const INVALID_TEXT = "Der Fragentext ist nicht gültig: ";
 
-    private $value;
+    private string $value;
 
     public static function fromInt(string $value): self {
         Assertion::string($value);

@@ -4,7 +4,7 @@ namespace Demo\Infrastructure\Persistence;
 
 class EpasDemoData extends AbstractJsonDemoData
 {
-    protected $jsonData = [
+    protected array $jsonData = [
         "meineEPAs" => [
             [
                 "id" => 100,

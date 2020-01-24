@@ -9,14 +9,11 @@ use Studi\Domain\StudiIntern;
 
 class ChariteMCPruefungFachPersistenzService
 {
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private \Cluster\Domain\ClusterRepository $clusterRepository;
 
-    /** @var ClusterZuordnungsService */
-    private $clusterZuordnungsService;
+    private \Cluster\Domain\ClusterZuordnungsService $clusterZuordnungsService;
 
-    /** @var LernzielFachRepository */
-    private $lernzielFachRepository;
+    private \DatenImport\Domain\LernzielFachRepository $lernzielFachRepository;
 
     public function __construct(
         ClusterRepository $clusterRepository,

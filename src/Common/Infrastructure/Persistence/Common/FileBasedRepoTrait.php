@@ -4,10 +4,7 @@ namespace Common\Infrastructure\Persistence\Common;
 
 trait FileBasedRepoTrait
 {
-    /**
-     * @var string
-     */
-    protected $filePath;
+    protected string $filePath;
 
     public function __construct($filePath) {
         $this->filePath = $filePath;

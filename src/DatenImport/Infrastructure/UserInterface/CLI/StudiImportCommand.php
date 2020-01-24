@@ -13,14 +13,11 @@ class StudiImportCommand extends AbstractCSVImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:studi';
 
-    /** @var ChariteStudiStammdatenHIS_CSVImportService */
-    private $chariteStudiStammdatenHIS_CSVImportService;
+    private \DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private \Studi\Domain\Service\StudiHashCreator $studiHashCreator;
 
-    /** @var StudiStammdatenPersistenzService */
-    private $studiStammdatenPersistenzService;
+    private \DatenImport\Domain\StudiStammdatenPersistenzService $studiStammdatenPersistenzService;
 
     public function __construct(
         ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService,

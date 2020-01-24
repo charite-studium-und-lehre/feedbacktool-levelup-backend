@@ -13,11 +13,9 @@ use Studi\Domain\StudiIntern;
 
 class ChariteMCPruefungLernzielModulPersistenzService
 {
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private \Cluster\Domain\ClusterRepository $clusterRepository;
 
-    /** @var ClusterZuordnungsService */
-    private $clusterZuordnungsService;
+    private \Cluster\Domain\ClusterZuordnungsService $clusterZuordnungsService;
 
     public function __construct(
         ClusterRepository $clusterRepository,

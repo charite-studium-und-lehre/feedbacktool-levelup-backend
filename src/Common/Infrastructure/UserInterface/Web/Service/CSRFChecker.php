@@ -8,10 +8,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CSRFChecker
 {
-    protected $csrfTokenManager;
+    protected \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrfTokenManager;
 
-    /** @var CurrentUserIdService */
-    protected $currentUserIdService;
+    protected \Common\Domain\Services\CurrentUserIdService $currentUserIdService;
 
     public function __construct(
         CsrfTokenManagerInterface $tokenGeneratorcsrfTokenManager,

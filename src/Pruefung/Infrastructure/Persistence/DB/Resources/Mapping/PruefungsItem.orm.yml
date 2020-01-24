@@ -8,7 +8,7 @@ Pruefung\Domain\PruefungsItem:
 
   fields:
     pruefungsId:
-      type: aggregateIdString
+      type: pruefungsId
       column: pruefungsId
     itemSchwierigkeit:
       type: itemSchwierigkeit

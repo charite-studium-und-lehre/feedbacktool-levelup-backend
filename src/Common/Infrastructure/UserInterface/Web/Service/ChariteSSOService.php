@@ -23,8 +23,7 @@ class ChariteSSOService
 
     private $authorizationEndpoint;
 
-    /** @var string */
-    private $errorMessage = "";
+    private string $errorMessage = "";
 
     public function __construct(
         $clientId,

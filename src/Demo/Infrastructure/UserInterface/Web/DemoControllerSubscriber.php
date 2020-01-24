@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class DemoControllerSubscriber implements EventSubscriberInterface
 {
     /** @var AbstractJsonDemoData[] */
-    private $demoDataClasses;
+    private iterable $demoDataClasses;
 
     public function __construct(iterable $demoDataClasses) {
         $this->demoDataClasses = $demoDataClasses;
