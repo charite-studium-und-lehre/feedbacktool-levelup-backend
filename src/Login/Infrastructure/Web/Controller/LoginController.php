@@ -7,6 +7,7 @@ use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
 use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
+use Login\Infrastructure\Web\Service\FrontendUrlService;
 use Login\Infrastructure\Web\Service\UserSwitcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Studi\Domain\Matrikelnummer;
@@ -25,6 +26,13 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class LoginController extends BaseController
 {
+    /** @var FrontendUrlService */
+    private $frontendUrlService;
+
+    public function __construct(FrontendUrlService $frontendUrlService) {
+        $this->frontendUrlService = $frontendUrlService;
+    }
+
     /**
      * @Route("/login", name="login")
      * @Route("/ssoSuccess")
@@ -64,7 +72,7 @@ class LoginController extends BaseController
             }
         }
 
-        return $this->redirect("/app");
+        return $this->redirect($this->frontendUrlService->getFrontendUrl());
     }
 
     /** @Route("/api/stammdaten", name="isLoggedIn", methods="GET") */
@@ -156,7 +164,7 @@ class LoginController extends BaseController
 
     /** @Route("/switchToFrontend", name="switchToFrontend") */
     public function switchToFrontend() {
-        return $this->redirect("/app");
+        return $this->redirect($this->frontendUrlService->getFrontendUrl());
     }
 
     /** @Route("/api/userInfo", name="userInfo")
@@ -183,7 +191,9 @@ class LoginController extends BaseController
         }
 
         return new Response(
-            "<h1><a href='/app'>Gehe zu Dashboard</a><br/></h1>"
+            "<h1><a href='"
+            . $this->frontendUrlService->getFrontendUrl()
+            . "'>Gehe zu Dashboard</a><br/></h1>"
             . "<h1><a href=''>Neu laden</a><br/></h1><a href='"
             . $this->generateUrl("switchUser") . "'>Zurück zu SwitchUser</a></h1>"
         );
@@ -228,5 +238,4 @@ class LoginController extends BaseController
         $token = new UsernamePasswordToken($loginUser, [], "main", $loginUser->getRoles());
         $tokenStorage->setToken($token);
     }
-
 }

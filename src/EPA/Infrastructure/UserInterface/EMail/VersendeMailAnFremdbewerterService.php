@@ -3,10 +3,10 @@
 namespace EPA\Infrastructure\UserInterface\EMail;
 
 use EPA\Application\Command\FremdBewertungAnfrageVerschickenCommand;
-use EPA\Application\Event\FremdBewertungAngefragtEvent;
 use EPA\Application\Services\KontaktiereFremdBewerterService;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
+use Login\Infrastructure\Web\Service\FrontendUrlService;
 
 class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterService
 {
@@ -16,20 +16,25 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
     /** @var FremdBewertungsAnfrageRepository */
     private $fremdBewertungsAnfrageRepository;
 
+    /** @var FrontendUrlService */
+    private $frontendUrlService;
+
     public function __construct(
         \Swift_Mailer $swiftMailer,
-        FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository
+        FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository,
+        FrontendUrlService $frontendUrlService
     ) {
         $this->swiftMailer = $swiftMailer;
         $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;
+        $this->frontendUrlService = $frontendUrlService;
     }
 
     public function run(FremdBewertungAnfrageVerschickenCommand $command): void {
         $this->sendMassage(
             $this->getMailSubject($command,),
             $this->getMailBody($command, $this->getLink($command)),
-            $command->fremdBewerterEmail,$command->studiEmail
-            );
+            $command->fremdBewerterEmail, $command->studiEmail
+        );
     }
 
     private function getLink(FremdBewertungAnfrageVerschickenCommand $command): string {
@@ -37,7 +42,8 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
             FremdBewertungsAnfrageId::fromInt($command->fremdBewertungsAnfrageId)
         )->getAnfrageToken();
 
-        return "https://levelup.charite.de/app-develop/epas/fremdbewertung/" . $token->getValue();
+        $appUrl = $this->frontendUrlService->getFrontendUrl();
+        return "https://levelup.charite.de$appUrl/epas/fremdbewertung/" . $token->getValue();
     }
 
     private function sendMassage($subject, $body, $to, $cc, $from = "levelup@charite.de") {

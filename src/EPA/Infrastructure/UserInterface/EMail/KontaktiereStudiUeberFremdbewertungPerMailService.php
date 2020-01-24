@@ -4,14 +4,19 @@ namespace EPA\Infrastructure\UserInterface\EMail;
 
 use EPA\Application\Command\StudiUeberFremdbewertungInformierenCommand;
 use EPA\Application\Services\KontaktiereStudiUeberFremdbewertungService;
+use Login\Infrastructure\Web\Service\FrontendUrlService;
 
 class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereStudiUeberFremdbewertungService
 {
     /** @var \Swift_Mailer */
     private $swiftMailer;
 
-    public function __construct(\Swift_Mailer $swiftMailer) {
+    /** @var FrontendUrlService */
+    private $frontendUrlService;
+
+    public function __construct(\Swift_Mailer $swiftMailer, FrontendUrlService $frontendUrlService) {
         $this->swiftMailer = $swiftMailer;
+        $this->frontendUrlService = $frontendUrlService;
     }
 
     public function run(StudiUeberFremdbewertungInformierenCommand $command): void {
@@ -23,7 +28,8 @@ class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereSt
     }
 
     private function getLink(StudiUeberFremdbewertungInformierenCommand $command): string {
-        return "https://levelup.charite.de/app-develop/epas";
+        $frontendUrl = $this->frontendUrlService->getFrontendUrl();
+        return "https://levelup.charite.de$frontendUrl/epas";
     }
 
     private function sendMassage(
