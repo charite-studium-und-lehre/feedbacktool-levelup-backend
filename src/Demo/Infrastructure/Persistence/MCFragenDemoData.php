@@ -10,7 +10,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
         "name"             => "MC-Test Semester 6 WiSe 2017 (Prüfungszeitraum 1)",
         "typ"              => "MC-Sem6",
         "format"           => "mc",
-        "studiPruefungsId" => 100002,
+        "studiPruefungsId" => 5620,
         "zeitsemester"     => "WiSe 2017",
         "periodeCode"      => 201721,
         "periodeText"      => "WiSe 2017 (Prüfungszeitraum 1)",
@@ -18,32 +18,32 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-952",
                 "durchschnittRichtig" => 0.95,
-                "text"                => "Die Körperlänge eines 5-jährigen Jungen entspricht der 75. Perzentile. Was bedeutet das?",
+                "text"                => "Fakefrage: Welches der Medikamente ist ein Kalziumkanalblocker vom Dihydropyridin-Typ?",
                 "antworten"           => [
                     [
-                        "text"        => "a) Mit einer Wahrscheinlichkeit von etwa 75 % ist die Größe normal.",
+                        "text"        => "a) Sulfat.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "b) Mit einer Wahrscheinlichkeit von etwa 25 % ist die Größe normal.",
+                        "text"        => "b) Gluthation.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "c) Etwa 75 % der gleichaltrigen Jungen sind kleiner.",
+                        "text"        => "c) Serin.",
                         "richtig"     => TRUE,
                         "ausgewaehlt" => TRUE,
                     ],
                     [
-                        "text"        => "d) Etwa 25 % der der gleichaltrigen Jungen sind kleiner.",
+                        "text"        => "d) Cystin.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                 ],
                 "fach"                => [
-                    "code"   => "F12",
-                    "titel"  => "Kinderheilkunde",
+                    "code"   => "F17",
+                    "titel"  => "Pharmakologie, Toxikologie",
                     "gruppe" => "Klinische Fächer",
                 ],
                 "modul"               => [
@@ -54,25 +54,25 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-5581",
                 "durchschnittRichtig" => 0.74,
-                "text"                => "Was umfasst das pharmakologische Prinzip der selektiven nukleären Hormonrezeptormodulation?",
+                "text"                => "Fakefrage: Was zählt nicht zu den modifizierten Duke Kriterien",
                 "antworten"           => [
                     [
-                        "text"        => "a) die ligandenabhängige Aktivierung von Secondmessenger-Molekülen",
+                        "text"        => "a) Herzinsuffizienz",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "b) die ligandenunabhängige Degradation von Rezeptorkomplexen",
+                        "text"        => "b) positive Blutkulturen",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "c) die ligandenabhängige Rekrutierung von Histonen",
+                        "text"        => "c) positives Echo",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "d) die ligandenabhängige Rekrutierung von nuklearen Ko-Faktoren zum Rezeptor",
+                        "text"        => "d) septische Lungeninfarkte",
                         "richtig"     => TRUE,
                         "ausgewaehlt" => TRUE,
                     ],
@@ -90,64 +90,64 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-5650",
                 "durchschnittRichtig" => 0.99,
-                "text"                => "Welcher der folgenden Einflussfaktoren ist bei der Planung der Durchführung der Messung der Serumkonzentration von Cortisol zu beachten?",
+                "text"                => "Fakefrage: Welche Aussage zum Asthma Bronchiale bei Kindern im Schulalter trifft zu?",
                 "antworten"           => [
                     [
-                        "text"        => "a) Einhalten eines nikotinfreien Intervalls vor der Blutentnahme bei Rauchern.",
+                        "text"        => "a) es handelt sich meistens um nicht-allergisches Asthma.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "b) Beachtung des zirkadianen Rhythmus bei der Festlegung des Zeitpunkts zur Blutentnahme.",
+                        "text"        => "b) Lungenfunktion in Ruhe meist normal.",
                         "richtig"     => TRUE,
                         "ausgewaehlt" => TRUE,
                     ],
                     [
-                        "text"        => "c) Ermittlung des Körpergewichts zur Bestimmung der Cortisol-Ratio.",
+                        "text"        => "c) die Prävalenz beträgt 5-8 %.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "d) Einhaltung einer kohlenhydratreichen Diät über 2 Tage vor Blutentnahme.",
+                        "text"        => "d) meist kommt es nicht zu einer Spontanremission.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                 ],
                 "fach"                => [
-                    "code"   => "F13",
-                    "titel"  => "Klinische Chemie, Laboratoriumsdiagnostik",
+                    "code"   => "F12",
+                    "titel"  => "Kinderheilkunde",
                     "gruppe" => "Klinische Fächer",
                 ],
                 "modul"               => [
-                    "code"  => "M21",
-                    "titel" => "Modul 21",
+                    "code"  => "M22",
+                    "titel" => "Modul 22",
                 ],
             ],
             [
                 "id"                  => "MC-Sem6-201721-5661",
                 "durchschnittRichtig" => 0.97,
-                "text"                => "Welche Ansätze zur Vermeidung von Gewalt in der Helfer-Patient-Beziehung haben nachweislich Effekte?",
+                "text"                => "Fakefrage: Welche Tumore sind im hinteren Mediastinum am häufigsten?",
                 "antworten"           => [
                     [
-                        "text"        => "a) Gut ausgebildetes Personal.",
+                        "text"        => "a) Thymom.",
                         "richtig"     => TRUE,
                         "ausgewaehlt" => TRUE,
                     ],
                     [
-                        "text"        => "b) Farbgestaltung der Stationen.",
+                        "text"        => "b) Schilddrüsentumor.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                     [
-                        "text"        => "c) Später Beginn der Arbeitszeit.",
+                        "text"        => "c) Neurinom.",
                         "richtig"     => FALSE,
                         "ausgewaehlt" => FALSE,
                     ],
                 ],
                 "fach"                => [
-                    "code"   => "S04",
-                    "titel"  => "Psychologie, Soziologie",
-                    "gruppe" => "Vorklinische Fächer",
+                    "code"   => "A",
+                    "titel"  => "Anderes",
+                    "gruppe" => "Andere",
                 ],
                 "modul"               => [
                     "code"  => "M21",
@@ -157,7 +157,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-5670",
                 "durchschnittRichtig" => 0.98,
-                "text"                => "Was ist häufig Ursache einer chronischen Erschöpfung?",
+                "text"                => "Fakefrage: Welches der Medikamente ist ein Kalziumkanalblocker vom Dihydropyridin-Typ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Hypocortisolismus",
@@ -193,7 +193,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-5705",
                 "durchschnittRichtig" => 0.81,
-                "text"                => "Wer führt die äußere Leichenschau durch?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Der Arzt, der den Tod feststellt und der Pathologe vor einer klinisch-pathologischen Sektion.",
@@ -229,7 +229,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-5713",
                 "durchschnittRichtig" => 0.76,
-                "text"                => "Welcher der aufgeführten Stoffwechselprozesse ist die dominante Quelle von Sauerstoffradikalen beim Reperfusionssyndrom?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Beta-Oxidation",
@@ -270,7 +270,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-6129",
                 "durchschnittRichtig" => 0.97,
-                "text"                => "Paraphilien sind unter anderem gekennzeichnet durch wiederkehrende, intensive sexuelle Erregung durch nicht-menschliche Objekte, körperliches Leiden oder die Demütigung von sich selbst oder seines Partners, von Kindern oder nicht einwilligenden oder nicht einwilligungsfähigen Personen. Was trifft für den Störungscharakter von Paraphilien zu?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Das Vorliegen von oben genannter sexueller Erlebnisfähigkeit hat an sich bereits Störungscharakter.",
@@ -311,7 +311,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-6142",
                 "durchschnittRichtig" => 0.89,
-                "text"                => "Welches Enzym ist wesentlich am Abbau von Serotonin beteiligt?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Cholinesterase",
@@ -352,7 +352,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-6148",
                 "durchschnittRichtig" => 0.93,
-                "text"                => "Was bewirkt die Gabe von Corticosteroiden?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Eine Hypotrophie der Nebennierenrinde, weil sie die ACTH-Ausschüttung aus der Adenohypophyse stimulieren.",
@@ -388,7 +388,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-6150",
                 "durchschnittRichtig" => 0.7,
-                "text"                => "Eine 25-jährige Patientin kommt in die Hochschulambulanz, weil sie seit fünf Monaten keine Blutungen mehr hatte. Ein Schwangerschaftstest war negativ. Außerdem stört sie seit langem eine Akne und nun auch ein progredienter Haarwuchs im Bereich der Oberlippe. Der Testosteronwert ist leicht erhöht (0,49 ng/ml), ansonsten liegen alle Hormonwerte (FSH, LH, Prolaktin, TSH, Estradiol, Progesteron, DHEAS) im Normbereich. Womit sollte die Patientin am besten behandelt werden?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Gestagenmonopräparat, z.B. einer „Minipille“",
@@ -424,7 +424,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-6283",
                 "durchschnittRichtig" => 0.77,
-                "text"                => "Welche der genannten Hydratationszustände ist bei Kleinkindern physiologisch?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Gesamtwasseranteil 90 %, IZW:EZW = 2:3",
@@ -465,8 +465,7 @@ class MCFragenDemoData extends AbstractJsonDemoData
             [
                 "id"                  => "MC-Sem6-201721-7459",
                 "durchschnittRichtig" => 0.91,
-                "text"                => "Diese Frage bezieht sich auf die Abbildung 7459 in der Bildbeilage:---
-Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mit der Klammer 2 markiert?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Fibromuskuläre Kapsel",
@@ -502,7 +501,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-7540",
                 "durchschnittRichtig" => 0.93,
-                "text"                => "Welche der aufgeführten Substanzen ist das wichtigste energieliefernde Substrat für reife Spermien?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Galaktose",
@@ -543,7 +542,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-7551",
                 "durchschnittRichtig" => 0.5,
-                "text"                => "Eine Patientin kommt zur kontrazeptiven Beratung in Ihre Sprechstunde. Sie möchte nur mit Kondomen verhüten und wissen, wann ihr Eisprung ist und wie lange sie vor und nach dem Eisprung schwanger werden kann. Ihr Zyklus hat eine Dauer von 26-30 Tagen. Welche Information ist für die Patientin in Bezug auf die Verhütung mit Kondomen von Bedeutung?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Die Follikelphase hat eine konstante Dauer von 12-14 Tagen.",
@@ -584,7 +583,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-7764",
                 "durchschnittRichtig" => 0.97,
-                "text"                => "Welcher Mediator ist an der Entstehung der hepatischen Enzephalopathie beteiligt?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Kreatinin",
@@ -625,7 +624,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-8250",
                 "durchschnittRichtig" => 0.84,
-                "text"                => "Sie möchten Amoxicillin 750 mg (1-0-1) zur Therapie einer bakteriellen Otitis media für 7 Tage verschreiben. Sie möchten die Preisangaben der verschiedenen Präparate für eine N2-Packung vergleichen. Wo finden Sie die gewünschten Angaben?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Fachinformation",
@@ -661,7 +660,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-9337",
                 "durchschnittRichtig" => 0.93,
-                "text"                => "Welche Aussage zum Verlauf der V. ovarica trifft zu?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Sie mündet in die V. lumbalis ein.",
@@ -702,7 +701,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-9704",
                 "durchschnittRichtig" => 0.82,
-                "text"                => "Welche der folgenden Proteinketten sind identisch?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) PRL und GH",
@@ -743,8 +742,7 @@ Sie sehen einen Anschnitt der Prostata (H.E.-Färbung). Welche Struktur wurde mi
             [
                 "id"                  => "MC-Sem6-201721-9904",
                 "durchschnittRichtig" => 0.71,
-                "text"                => "Ein 24-jähriger Motorradfahrer wird nach einem Auffahrunfall mit leichtem Schädel-Hirn-Trauma, stumpfem Thoraxtrauma sowie stumpfem Bauchtrauma vom Notarzt vor Ort intubiert und in die Rettungsstelle eingeliefert. Die Herzfrequenz beträgt 135/min, der arterielle Blutdruck 73/34 mmHg unter Therapie mit Noradrenalin, der initiale Hb-Wert beträgt 13g/dl, Base Excess -10mmol/l, die Körpertemperatur 35,4°C. Es werden Pneumothoraces beidseits mit mittelständigem Herz sowie massiv freie abdominelle Flüssigkeit mit Verdacht auf Milzruptur diagnostiziert. In einer Notoperation werden Thoraxdrainagen beidseits angelegt sowie eine Milzruptur mittels Splenektomie versorgt. Intraoperativ müssen 6 Erythrozytenkonzentrate und 10 gefrorene Frischplasmen (FFP) transfundiert werden. Postoperativ wird der Patient am nächsten Tag auf der Intensivstation extubiert, der Noradrenalinbedarf ist nur noch minimal, die Herzfrequenz beträgt 74/min, der arterielle Blutdruck 135/78 mmHg. Weitere zwei Tage später steigt der Noradrenalinbedarf innerhalb weniger Stunden signifikant an (verdreifacht), die Herzfrequenz beträgt 98/min, der Blutdruck 105/63 mmHg, die Körpertemperatur 38,2°C.
-Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1) bei dem oben genannten Patienten am ehesten?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Für das Vorliegen einer anaphylaktischen Medikamentenreaktion",
@@ -780,7 +778,7 @@ Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1
             [
                 "id"                  => "MC-Sem6-201721-9958",
                 "durchschnittRichtig" => 0.89,
-                "text"                => "Welches Symptom spricht bei Kindern spezifisch für das Vorliegen eines sexuellen Missbrauchs?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Ängste",
@@ -821,7 +819,7 @@ Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1
             [
                 "id"                  => "MC-Sem6-201721-10245",
                 "durchschnittRichtig" => 0.98,
-                "text"                => "Was zählt zu den typischen klinischen Zeichen des Schocks?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Metabolische Alkalose",
@@ -857,7 +855,7 @@ Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1
             [
                 "id"                  => "MC-Sem6-201721-10677",
                 "durchschnittRichtig" => 0.97,
-                "text"                => "Eine 25-Jährige bittet ihre Gynäkologin um die chirurgische Verkleinerung der Schamlippen, die nach dem Untersuchungsbefund keine auffällige Größe aufweisen. Die junge Frau erwähnt, dass ihr auch ihre Oberschenkel und die Bauchregion missfallen und beides „als nächstes drankomme“. Welche Antwort ist richtig?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Gegen die Durchführung der Schamlippenverkleinerung spricht nichts, zumal es kaum Risiken gibt.",
@@ -898,7 +896,7 @@ Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1
             [
                 "id"                  => "MC-Sem6-201721-10733",
                 "durchschnittRichtig" => 0.77,
-                "text"                => "Was kann mit einem Insulin-Hypoglykämietest überprüft werden?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Die TRH-PRL-Achse",
@@ -939,7 +937,7 @@ Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1
             [
                 "id"                  => "MC-Sem6-201721-10921",
                 "durchschnittRichtig" => 0.54,
-                "text"                => "Welche anatomische Region in einem gesunden Probanden lässt sich im Rahmen der digital-rektalen Untersuchung mit einer durchschnittlichen Untersucherfingerlänge von 6 cm erreichen?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) rektosigmoidaler Übergang",
@@ -980,8 +978,7 @@ Wofür spricht ein positiver Schockindex (Herzfrequenz/systolischer Blutdruck >1
             [
                 "id"                  => "MC-Sem6-201721-10982",
                 "durchschnittRichtig" => 0.85,
-                "text"                => "Diese Frage bezieht sich auf die Abbildung 10982 in der Bildbeilage:---
-Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalingabe bei dem Patienten indiziert? (Falltext siehe Bildbeilage, Abbildung 10982)",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Symptomatische Therapie einer Hypothermie: Verminderung des Wärmeverlustes durch periphere Vasokonstriktion",
@@ -1022,7 +1019,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-11035",
                 "durchschnittRichtig" => 0.95,
-                "text"                => "Welcher der folgenden Therapiegrundsätze ist in der Akutversorgung eines traumatisierten Notfallpatienten (z.B. bei einem schweren Verkehrsunfall) -nicht---- relevant?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Volumengabe zum Ausgleich von Blut- und Flüssigkeitsverlusten",
@@ -1063,7 +1060,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-12052",
                 "durchschnittRichtig" => 0.98,
-                "text"                => "Was ist ein typisches Zeichen für eine anaphylaktische Reaktion?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Bradykardie",
@@ -1104,7 +1101,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-12378",
                 "durchschnittRichtig" => 0.83,
-                "text"                => "Welche der folgenden Aussagen beschreibt die physiologische Lage des Uterus am ehesten?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Anteversio und Retroflexio",
@@ -1140,7 +1137,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-13017",
                 "durchschnittRichtig" => 0.9,
-                "text"                => "Welche Faktoren werden für die Entstehung einer Kachexie im Verlauf einer Tumorerkrankung mitverantwortlich gemacht?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) erhöhte Konzentrationen von TNFa, IL6, Katecholaminen, Cortisol",
@@ -1171,7 +1168,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-13137",
                 "durchschnittRichtig" => 0.91,
-                "text"                => "Wodurch wird die belohnende Wirkung prosozialer Interaktionen auf zentralnervöser Ebene vermittelt?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Über die Ausschüttung von Oxytocin aus dem Hypothalamus, welches an Oxytocin-Rezeptoren in dopaminergen Strukturen des Gehirns bindet.",
@@ -1207,7 +1204,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-13252",
                 "durchschnittRichtig" => 0.5,
-                "text"                => "Bei einem 65-jährigen Patienten wird eine beidseitige Adrenalektomie wegen eines Nierenzellkarzinoms mit Nebennierenmetastase auf der kontralateralen Seite notwendig. Danach besteht eine primäre Nebenniereninsuffizienz. Welche Kombination von Medikamenten sollte in der weiteren Therapie der Nebenniereninsuffizienz eingesetzt werden, vorausgesetzt es besteht keine außergewöhnliche psychische oder körperliche Belastung (z.B. Infektion, Fieber, starker psychischer Stress)?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Hydrocortison und Fludrocortison",
@@ -1243,7 +1240,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-13930",
                 "durchschnittRichtig" => 0.73,
-                "text"                => "In welchen Schritten erfolgt die Entwicklung einer Differentialdiagnose?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Datenerhebung – Problembeschreibung – Liste von Differentialdiagnosen",
@@ -1279,8 +1276,7 @@ Nach welchem Behandlungsprinzip hatte der Notarzt am ehesten eine Noradrenalinga
             [
                 "id"                  => "MC-Sem6-201721-14219",
                 "durchschnittRichtig" => 0.41,
-                "text"                => "Diese Frage bezieht sich auf die Abbildung 14219 in der Bildbeilage:---
-Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computertomographischen Schnitt in der rechten Lunge?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) inhomogenes, alveoläres Verdichtungsmuster",
@@ -1316,7 +1312,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-14240",
                 "durchschnittRichtig" => 0.61,
-                "text"                => "Welche bildgebende Methode ist für die Darstellung der Nebennieren bei einem Patienten mit einer Kontraindikation für eine MRT und Verdacht auf ein Phäochromozytom am besten geeignet?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Röntgen",
@@ -1352,7 +1348,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-15046",
                 "durchschnittRichtig" => 0.27,
-                "text"                => "Was ist das Markerhormon für eine adrenale Hyperandrogenämie?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Cortisol",
@@ -1393,7 +1389,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-15112",
                 "durchschnittRichtig" => 0.77,
-                "text"                => "Welche Hormonkonstellation findet sich physiologischerweise in der Postmenopause?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) FSH niedrig und Estradiol niedrig",
@@ -1429,7 +1425,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-15261",
                 "durchschnittRichtig" => 0.57,
-                "text"                => "Ein 17-jähriges Mädchen kommt in die gynäkologische Sprechstunde, weil die Menarche noch nicht aufgetreten sei. Die sekundären Geschlechtsmerkmale sind normal ausgebildet, auch das äußere weibliche Genitale ist unauffällig. Da sie noch Virgo ist, führen Sie einen abdominalen Ultraschall durch und können keine Gebärmutter darstellen. Was ist die wahrscheinlichste Verdachtsdiagnose?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Hymenalatresie",
@@ -1470,7 +1466,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-16051",
                 "durchschnittRichtig" => 0.78,
-                "text"                => "Was kommt bei Angabe von kolikartigen Schmerzen am ehesten als pathophysiologischer Mechanismus in Betracht?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Entzündung",
@@ -1511,7 +1507,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-16313",
                 "durchschnittRichtig" => 0.76,
-                "text"                => "Was ist eine sinnvolle Präventionsmaßnahme beim Erschöpfungssyndrom im Sinne eines Burn-out?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Jährliche Check-ups beim Hausarzt/bei der Hausärztin",
@@ -1547,7 +1543,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-17023",
                 "durchschnittRichtig" => 0.95,
-                "text"                => "Auf welche akute, unerwünschte Wirkung weisen die Symptome Übelkeit mit Erbrechen, Rückenschmerzen, Blutdruckabfall, Hämoglobinurie kurz nach Beginn einer Erythrozytentransfusion hin?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) anaphylaktische Reaktion auf Plasmaproteine im Erythrozytenkonzentrat",
@@ -1588,7 +1584,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-17188",
                 "durchschnittRichtig" => 0.7,
-                "text"                => "Wieviel Prozent der täglichen Sekretion von Wachstumshormon erfolgt während des Schlafes?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) < 10 %",
@@ -1629,7 +1625,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-17842",
                 "durchschnittRichtig" => 0.72,
-                "text"                => "Welcher Untersuchungsbefund differenziert eindeutig zwischen einem Patienten mit einem Locked-in-Syndrom und einem komatösen Patienten?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Tetraparese",
@@ -1670,7 +1666,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-18100",
                 "durchschnittRichtig" => 0.86,
-                "text"                => "Welche bildgebende Methode ist für eine schnelle orientierende Diagnostik beim akuten Abdomen sinnvoll?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) MRT des Abdomens",
@@ -1711,8 +1707,7 @@ Um welche Art von Verdichtungsmuster handelt es sich bei diesem axialen computer
             [
                 "id"                  => "MC-Sem6-201721-18311",
                 "durchschnittRichtig" => 0.69,
-                "text"                => "Diese Frage bezieht sich auf die Abbildung 18311 in der Bildbeilage:---
-Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu welcher Stoffgruppe gehören die in dem mit einem Stern markierten Bereich gebildeten Hormone?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) biogene Amine",
@@ -1748,7 +1743,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-18317",
                 "durchschnittRichtig" => 0.95,
-                "text"                => "Die Eltern eines erkrankten Kindes mit Adrenogenitalem Syndrom sind beide Überträger für das Adrenogenitale Syndrom. Bei jetzt erneuter Schwangerschaft wird die Mutter in der 4. SSW unmittelbar nach Feststellung der Schwangerschaft mit Dexamethason behandelt. Welche Konsequenz hat die pränatale Diagnostik mittels der in der 11. SSW durchgeführten Chorionzottenbiopsie?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Es kann über die Fortführung oder Beendigung der Therapie mit Dexamethason entschieden werden.",
@@ -1784,7 +1779,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-18344",
                 "durchschnittRichtig" => 0.86,
-                "text"                => "Ein 69-jähriger Patient stellt sich mit einer schmerzlosen Hämaturie bei Ihnen in der Rettungsstelle vor. Sie führen eine ausführliche Anamnese und gründliche körperliche Untersuchung durch. Ein Labor inklusive Blutbild und Serumretentionswerten wurde bereits abgenommen. Welche weiterführende Untersuchung ist in diesem Fall umgehend indiziert?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) CT von Abdomen und Becken",
@@ -1825,7 +1820,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-19526",
                 "durchschnittRichtig" => 0.94,
-                "text"                => "Den sog. Nürnberger Kodex formulierten die Richter im Nürnberger Ärzteprozess von 1947, um eine Beurteilungsbasis für die NS-Medizinverbrechen zu haben. Worin besteht die wesentliche Grundlage der juristischen Beurteilung des Kodex?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Zentral sind Wohl und Schutz des einzelnen Menschen.",
@@ -1861,7 +1856,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-20422",
                 "durchschnittRichtig" => 0.43,
-                "text"                => "Was verändert sich bei der Mikrozirkulation durch einen Volumenmangelschock?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Der onkotische Druck des Plasmas nimmt ab und steigert dadurch die Flüssigkeitsaufnahme aus dem interstitiellen Raum in die Kapillare.",
@@ -1902,7 +1897,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-20429",
                 "durchschnittRichtig" => 0.95,
-                "text"                => "Was beinhaltet die Beziehungsdimension menschlicher Sexualität?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Monogamie, Selbstbefriedigung, sexuelle Fantasie und sexuelles Verhalten",
@@ -1938,7 +1933,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-20550",
                 "durchschnittRichtig" => 0.94,
-                "text"                => "Welche endokrin wirkende und im Ovar lokalisierte Struktur sorgt ab der 2. Zyklushälfte für die Vorbereitung der Gebärmutterschleimhaut auf die Nidation?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) dominanter Tertiärfollikel",
@@ -1979,7 +1974,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-20551",
                 "durchschnittRichtig" => 0.79,
-                "text"                => "Wo endet der Verlauf des im Tubenwinkel entspringenden Lig. teres uteri?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Labia majora",
@@ -2020,7 +2015,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-20641",
                 "durchschnittRichtig" => 0.92,
-                "text"                => "Eine 55-jährige, normalgewichtige Patientin mit bekannter Depression und arterieller Hypertonie wird derzeit mit einem Antidepressivum (Mirtazapin 30 mg) und einem Antihypertensivum (Ramipril 5mg) behandelt. Hierunter hat sich ihre Stimmung deutlich verbessert und die Blutdruckwerte liegen im normotonen Bereich. Die Patientin beklagt jedoch eine vermehrte Tagesmüdigkeit. Was ist die wahrscheinlichste Ursache für die von der Patientin beschriebene Symptomatik?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Medikamentennebenwirkungen",
@@ -2056,9 +2051,7 @@ Nebenstehende Abbildung zeigt einen Ausschnitt aus einem endokrinen Organ. Zu we
             [
                 "id"                  => "MC-Sem6-201721-20682",
                 "durchschnittRichtig" => 0.87,
-                "text"                => "Diese Frage bezieht sich auf die Abbildung 20682 in der Bildbeilage:---
-Sie werden als diensthabender Arzt auf der Intensivstation im Rahmen der Besetzung des hausinternen Reanimationsdienstes auf die viszeralchirurgische Normalstation zu einem Patienten bei Z.n. Transverso-Rektostomie bei Koloncarzinom des Colon descendens vor 5 Tagen gerufen. Bei Ankunft finden Sie einen leblosen Patienten vor. Die Kollegen der Viszeralchirurgie haben bereits mit der kardiopulmonalen Reanimation begonnen. Sie schließen zügig Ihren transportablen Defibrillator an. Es stellt sich das unten aufgeführte EKG dar. 
-Was ist die Therapie der Wahl?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Gabe von 1 mg Adrenalin intravenös",
@@ -2094,7 +2087,7 @@ Was ist die Therapie der Wahl?",
             [
                 "id"                  => "MC-Sem6-201721-20686",
                 "durchschnittRichtig" => 0.15,
-                "text"                => "Was gehört zu den grundlegenden Therapieprinzipien einer disseminierten intravasalen Gerinnung (DIC)?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Erhalten eines hohen Niveaus an Inhibitoren der Blutgerinnung.",
@@ -2135,7 +2128,7 @@ Was ist die Therapie der Wahl?",
             [
                 "id"                  => "MC-Sem6-201721-20688",
                 "durchschnittRichtig" => 0.68,
-                "text"                => "Welche Maßnahme wird zur Optimierung des perioperativen Hämoglobinspiegels eingesetzt?",
+                "text"                => "XXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Häufige Durchführung von Routinelaborentnahmen",
@@ -2176,7 +2169,7 @@ Was ist die Therapie der Wahl?",
             [
                 "id"                  => "MC-Sem6-201721-20741",
                 "durchschnittRichtig" => 0.22,
-                "text"                => "Eine 25-jährige ansonsten gesunde Patientin stellt sich 14 Tage nach einer Sportverletzung am rechten oberen Sprunggelenk bei Ihnen vor. Das betroffene Bein ist geschwollen und schmerzhaft gerötet. Sie berichtet, vor einigen Stunden eine Episode akuter Luftnot erlitten zu haben, die sich spontan gebessert habe. Der Blutdruck liegt aktuell bei 110/60 mmHg, die Herzfrequenz beträgt 95/min, die Atemfrequenz beträgt 18/min, das kardiale Troponin ist negativ, eine Echokardiographie steht akut nicht zur Verfügung. Ihre Verdachtsdiagnose lautet tiefe Beinvenenthrombose mit komplizierender Lungenarterienembolie. In welche Risikokategorie ist die Patientin einzuordnen und welche Therapie folgt daraus?",
+                "text"                => "XXXXXXXX?",
                 "antworten"           => [
                     [
                         "text"        => "a) Hohes Risiko - Fibrinolyse",
@@ -2217,7 +2210,7 @@ Was ist die Therapie der Wahl?",
             [
                 "id"                  => "MC-Sem6-201721-20955",
                 "durchschnittRichtig" => 0.72,
-                "text"                => "Ihnen wird ein 3-jähriges, atemnötiges Kleinkind vorgestellt. Die Mutter berichtet, dass die Symptomatik nach dem Essen aufgetreten sei. Welche anamnestische Angabe bzw. welcher Untersuchungsbefund spricht eher für eine Fremdkörperaspiration als für eine anaphylaktische Reaktion?",
+                "text"                => "XXXXXXXX ?",
                 "antworten"           => [
                     [
                         "text"        => "a) Verzehr von Erdnüssen",
