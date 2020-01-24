@@ -6,11 +6,9 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ClusterZuordnungsService
 {
-    /** @var ClusterZuordnungsRepository */
-    private $clusterZuordnungsRepository;
+    private ClusterZuordnungsRepository $clusterZuordnungsRepository;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
     public function __construct(
         ClusterZuordnungsRepository $clusterZuordnungsRepository,
@@ -77,7 +75,7 @@ class ClusterZuordnungsService
         $gefilterteClusterIds = [];
         foreach ($vorhandeneClusterIds as $vorhandenerClusterId) {
             $cluster = $this->clusterRepository->byId($vorhandenerClusterId);
-            if (!$cluster) {
+            if ($cluster === null) {
                 continue;
             }
             if ($cluster->getClusterTyp()->equals($clusterTypId)) {

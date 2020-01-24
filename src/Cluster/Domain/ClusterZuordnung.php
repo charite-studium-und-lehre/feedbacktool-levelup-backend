@@ -7,11 +7,9 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ClusterZuordnung
 {
-    /** @var ClusterId */
-    private $clusterId;
+    private ClusterId $clusterId;
 
-    /** @var PruefungsItemId */
-    private $pruefungsItemId;
+    private PruefungsItemId $pruefungsItemId;
 
     use DefaultValueObjectComparison;
 

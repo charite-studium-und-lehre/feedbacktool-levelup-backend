@@ -15,8 +15,7 @@ class SelbstBewertungsTyp implements DDDValueObject
 
     const INVALID = "Ist kein SelbstBewertungsTyp: ";
 
-    /** @var int */
-    private $value;
+    private int $value;
 
     public static function fromInt(string $value): self {
         $intVal = (int) $value;

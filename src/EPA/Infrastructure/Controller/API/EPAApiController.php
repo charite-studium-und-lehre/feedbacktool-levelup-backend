@@ -25,8 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EPAApiController extends BaseController
 {
-    /** @var LoginHashCreator */
-    private $loginHashCreator;
+    private LoginHashCreator $loginHashCreator;
 
     public function __construct(LoginHashCreator $loginHashCreator) {
         $this->loginHashCreator = $loginHashCreator;

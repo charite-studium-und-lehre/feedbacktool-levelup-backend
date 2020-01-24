@@ -23,11 +23,9 @@ class EPABewertung
         5 => "5 - eigenständig, Wichtiges wird nachgeprüft (Arzt nur telefonisch erreichbar)",
     ];
 
-    /** @var int */
-    private $bewertung;
+    private int $bewertung;
 
-    /** @var epa */
-    private $epa;
+    private EPA $epa;
 
     public function getEpa(): EPA {
         return $this->epa;

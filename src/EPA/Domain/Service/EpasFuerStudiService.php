@@ -2,7 +2,6 @@
 
 namespace EPA\Domain\Service;
 
-use EPA\Domain\FremdBewertung\FremdBewertung;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
@@ -14,14 +13,11 @@ use Studi\Domain\LoginHash;
 
 class EpasFuerStudiService
 {
-    /** @var SelbstBewertungsRepository */
-    private $selbstBewertungsRepository;
+    private SelbstBewertungsRepository $selbstBewertungsRepository;
 
-    /** @var FremdBewertungsAnfrageRepository */
-    private $fremdBewertungsAnfrageRepository;
+    private FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
 
-    /** @var FremdBewertungsRepository */
-    private $fremdBewertungsRepository;
+    private FremdBewertungsRepository $fremdBewertungsRepository;
 
     public function __construct(
         SelbstBewertungsRepository $selbstBewertungsRepository,
@@ -61,16 +57,16 @@ class EpasFuerStudiService
                 $bewertungenNachId[$bewertung->getEpa()->getNummer()]["fremdbewertungen"][] =
                     [
                         "fremdbewertungsId" => $fremdBewertungsId->getValue(),
-                        "wert" => $bewertung->getBewertungInt()
+                        "wert"              => $bewertung->getBewertungInt(),
                     ];
             }
         }
 
         foreach ($bewertungenNachId as $epaId => $bewertung) {
             $alleBewertungen[] = [
-                "epaId"    => $epaId,
-                "gemacht"  => $bewertungenNachId[$epaId]["gemacht"] ?? NULL,
-                "zutrauen" => $bewertungenNachId[$epaId]["zutrauen"] ?? NULL,
+                "epaId"            => $epaId,
+                "gemacht"          => $bewertungenNachId[$epaId]["gemacht"] ?? NULL,
+                "zutrauen"         => $bewertungenNachId[$epaId]["zutrauen"] ?? NULL,
                 "fremdbewertungen" => $bewertungenNachId[$epaId]["fremdbewertungen"] ?? NULL,
             ];
         }
@@ -105,7 +101,18 @@ class EpasFuerStudiService
         foreach ($anfragen as $anfrage) {
             $returnArray[] = $this->getFremdBewertungAnfrageDaten($anfrage);
         }
+
         return ["fremdbewertungsAnfragen" => $returnArray];
+    }
+
+    public function getFremdBewertungAnfrageDaten(FremdBewertungsAnfrage $anfrage, bool $mitToken = FALSE): array {
+        $result = ["id" => $anfrage->getId()->getValue()];
+        if ($mitToken) {
+            $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageToken()->getValue());
+        }
+        $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten());
+
+        return $result;
     }
 
     private function bewertungsDatenAusAnfrageDaten(FremdBewertungsAnfrageDaten $anfrageDaten): array {
@@ -116,13 +123,6 @@ class EpasFuerStudiService
             "anfrageKommentar"    => $anfrageDaten->getAnfrageKommentar() . "",
             "datum"               => $anfrageDaten->getDatum()->toIsoString(),
         ];
-    }
-
-    public function getFremdBewertungAnfrageDaten(FremdBewertungsAnfrage $anfrage, bool $mitToken = false): array {
-        $result = [ "id" => $anfrage->getId()->getValue() ];
-        if($mitToken) $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageToken()->getValue());
-        $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten()); 
-        return $result;
     }
 
     /**

@@ -14,10 +14,9 @@ class VersendeMailNachFremdBewertungsAnfrageSubscriber implements DomainEventSub
 
     use DomainEventSubscriberTrait;
 
-    private $isSubscribedTo = [FremdBewertungAngefragtEvent::class];
+    private array $isSubscribedTo = [FremdBewertungAngefragtEvent::class];
 
-    /** @var CommandBus */
-    private $commandBus;
+    private CommandBus $commandBus;
 
     public function __construct(CommandBus $commandBus) {
         $this->commandBus = $commandBus;

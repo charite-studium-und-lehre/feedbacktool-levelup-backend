@@ -32,14 +32,24 @@ doctrine:
         class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
       wertung:
         class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
+      clusterId:
+        class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterIdType"
       clusterCode:
         class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
       itemSchwierigkeit:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
+      pruefungsItemId:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsItemIdType"
       pruefungsPeriode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
       antwortCode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AntwortCodeType"
+      selbstBewertungsId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\SelbstBewertungsIdType"
+      fremdBewertungsId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsIdType"
+      fremdBewertungsAnfrageId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageIdType"
       fremdBewertungsAnfrageTaetigkeiten:
         class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageTaetigkeitenType"
       fremdBewertungsAnfrageKommentar:
@@ -55,10 +65,15 @@ doctrine:
       studiHash: string
       loginHash: string
       wertung: integer
+      clusterId: integer
       clusterCode: string
       itemSchwierigkeit: integer
+      pruefungsItemId: string
       pruefungsPeriode: integer
       antwortCode: string
+      selbstBewertungsId: integer
+      fremdBewertungsId: integer
+      fremdBewertungsAnfrageId: integer
       fremdBewertungsAnfrageTaetigkeiten: string
       fremdBewertungsAnfrageKommentar: string
       fremdBewertungsBewertungen: string

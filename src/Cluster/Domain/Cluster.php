@@ -2,6 +2,7 @@
 
 namespace Cluster\Domain;
 
+use Common\Domain\AggregateId;
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
 
@@ -17,7 +18,7 @@ class Cluster implements DDDEntity
 
     private ?ClusterCode $code;
 
-    private ?ClusterId $parentId;
+    private ?AggregateId $parentId;
 
     public static function create(
         ClusterId $id,
@@ -37,7 +38,7 @@ class Cluster implements DDDEntity
     }
 
     public function getId(): ClusterId {
-        return ClusterId::fromInt($this->id->getValue());
+        return $this->id;
     }
 
     public function getClusterTyp(): ClusterTyp {
@@ -45,7 +46,7 @@ class Cluster implements DDDEntity
     }
 
     public function getParentId(): ?ClusterId {
-        return ClusterId::fromInt($this->parentId);
+        return $this->parentId;
     }
 
     public function getTitel(): ClusterTitel {

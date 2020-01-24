@@ -5,34 +5,25 @@ namespace EPA\Domain\FremdBewertung;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 use Common\Domain\User\Email;
-use Common\Domain\User\Nachname;
-use Common\Domain\User\Vorname;
 use EPA\Domain\EPABewertungsDatum;
 
 class FremdBewertungsAnfrageDaten implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    /** @var FremdBewerterName */
-    private $fremdBerwerterName;
+    private FremdBewerterName $fremdBerwerterName;
 
-    /** @var Email */
-    private $fremdBerwerterEmail;
+    private Email $fremdBerwerterEmail;
 
-    /** @var EPABewertungsDatum */
-    private $datum;
+    private EPABewertungsDatum $datum;
 
-    /** @var AnfragerName */
-    private $studiName;
+    private AnfragerName $studiName;
 
-    /** @var Email */
-    private $studiEmail;
+    private ?Email $studiEmail;
 
-    /** @var ?FremdBewertungsAnfrageTaetigkeiten */
-    private $anfrageTaetigkeiten;
+    private ?FremdBewertungsAnfrageTaetigkeiten $anfrageTaetigkeiten;
 
-    /** @var ?FremdBewertungsAnfrageKommentar */
-    private $anfrageKommentar;
+    private ?FremdBewertungsAnfrageKommentar $anfrageKommentar;
 
     public static function fromDaten(
         FremdBewerterName $fremdBewerterName,
@@ -84,11 +75,12 @@ class FremdBewertungsAnfrageDaten implements DDDValueObject
     }
 
     public function getAnfrageDatenOhneStudiInfo(): self {
-        $newObject = clone ($this);
+        $newObject = clone($this);
         $newObject->studiName = AnfragerName::fromString("-----");
         $newObject->studiEmail = Email::fromString("nobody@charite.de");
         $newObject->anfrageKommentar = NULL;
         $newObject->anfrageTaetigkeiten = NULL;
+
         return $newObject;
     }
 

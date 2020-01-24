@@ -1,7 +1,7 @@
 # rector.yaml
 parameters:
     sets:
-        - 'code-quality'
+#        - 'code-quality'
         - 'php74'
         - 'symfony50'
         - 'symfony50-types'

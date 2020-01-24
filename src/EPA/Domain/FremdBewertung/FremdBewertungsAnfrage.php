@@ -10,17 +10,13 @@ class FremdBewertungsAnfrage implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var FremdBewertungsAnfrageId */
-    private $id;
+    private FremdBewertungsAnfrageId $id;
 
-    /** @var LoginHash */
-    private $loginHash;
+    private LoginHash $loginHash;
 
-    /** @var FremdBewertungsAnfrageDaten */
-    private $anfrageDaten;
+    private FremdBewertungsAnfrageDaten $anfrageDaten;
 
-    /** @var FremdBewertungsAnfrageToken */
-    private $anfrageToken;
+    private FremdBewertungsAnfrageToken $anfrageToken;
 
     public static function create(
         FremdBewertungsAnfrageId $id,
@@ -37,7 +33,7 @@ class FremdBewertungsAnfrage implements DDDEntity
     }
 
     public function getId(): FremdBewertungsAnfrageId {
-        return FremdBewertungsAnfrageId::fromInt($this->id);
+        return $this->id;
     }
 
     public function getLoginHash(): LoginHash {

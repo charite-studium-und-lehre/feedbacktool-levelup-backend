@@ -4,7 +4,7 @@ Pruefung\Domain\PruefungsItem:
 
   id:
     id:
-      type: aggregateIdString
+      type: pruefungsItemId
 
   fields:
     pruefungsId:

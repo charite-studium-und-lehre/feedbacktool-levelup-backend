@@ -9,15 +9,11 @@ class SelbstBewertungGeandertEvent implements DomainEvent
 {
     use DomainEventTrait;
 
-    /** @var string */
-    public $loginHash;
+    public string $loginHash;
 
-    /** @var int */
-    public $epaId;
+    public int $epaId;
 
-    /** @var int */
-    public $zutrauen;
+    public int $zutrauen;
 
-    /** @var int */
-    public $gemacht;
+    public int $gemacht;
 }

@@ -5,16 +5,16 @@ namespace EPA\Infrastructure\UserInterface\EMail;
 use EPA\Application\Command\StudiUeberFremdbewertungInformierenCommand;
 use EPA\Application\Services\KontaktiereStudiUeberFremdbewertungService;
 use Login\Infrastructure\Web\Service\FrontendUrlService;
+use Swift_Mailer;
+use Swift_Message;
 
 class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereStudiUeberFremdbewertungService
 {
-    /** @var \Swift_Mailer */
-    private $swiftMailer;
+    private Swift_Mailer $swiftMailer;
 
-    /** @var FrontendUrlService */
-    private $frontendUrlService;
+    private FrontendUrlService $frontendUrlService;
 
-    public function __construct(\Swift_Mailer $swiftMailer, FrontendUrlService $frontendUrlService) {
+    public function __construct(Swift_Mailer $swiftMailer, FrontendUrlService $frontendUrlService) {
         $this->swiftMailer = $swiftMailer;
         $this->frontendUrlService = $frontendUrlService;
     }
@@ -29,6 +29,7 @@ class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereSt
 
     private function getLink(StudiUeberFremdbewertungInformierenCommand $command): string {
         $frontendUrl = $this->frontendUrlService->getFrontendUrl();
+
         return "https://levelup.charite.de$frontendUrl/epas";
     }
 
@@ -38,7 +39,7 @@ class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereSt
         $to,
         $from = "levelup@charite.de"
     ) {
-        $message = new \Swift_Message();
+        $message = new Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)

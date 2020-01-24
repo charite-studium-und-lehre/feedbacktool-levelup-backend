@@ -6,4 +6,4 @@ DatenImport\Domain\LernzielFach:
     lernzielNummer:
       type: aggregateId
     clusterId:
-      type: aggregateId
+      type: clusterId

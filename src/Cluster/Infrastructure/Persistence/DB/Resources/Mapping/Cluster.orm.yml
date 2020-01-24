@@ -4,11 +4,11 @@ Cluster\Domain\Cluster:
 
   id:
     id:
-      type: aggregateId
+      type: clusterId
 
   fields:
     parentId:
-      type: aggregateId
+      type: clusterId
       nullable: true
     code:
       type: clusterCode

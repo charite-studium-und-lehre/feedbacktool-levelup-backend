@@ -12,20 +12,15 @@ class SelbstBewertung implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var SelbstBewertungsId */
-    private $id;
+    private SelbstBewertungsId $id;
 
-    /** @var LoginHash */
-    private $loginHash;
+    private LoginHash $loginHash;
 
-    /** @var EPABewertung */
-    private $epaBewertung;
+    private EPABewertung $epaBewertung;
 
-    /** @var SelbstBewertungsTyp */
-    private $selbstBewertungsTyp;
+    private SelbstBewertungsTyp $selbstBewertungsTyp;
 
-    /** @var EPABewertungsDatum */
-    private $epaBewertungsDatum;
+    private EPABewertungsDatum $epaBewertungsDatum;
 
     public static function create(
         SelbstBewertungsId $id,
@@ -44,7 +39,7 @@ class SelbstBewertung implements DDDEntity
     }
 
     public function getId(): SelbstBewertungsId {
-        return SelbstBewertungsId::fromInt($this->id);
+        return $this->id;
     }
 
     public function getLoginHash(): LoginHash {

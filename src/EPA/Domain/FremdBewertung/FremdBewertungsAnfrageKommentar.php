@@ -9,15 +9,14 @@ use Common\Domain\DefaultValueObjectComparison;
 class FremdBewertungsAnfrageKommentar implements DDDValueObject
 {
     const MIN_LENGTH = 5;
-    const MAX_LENGTH = 2000;
+    const MAX_LENGTH = 2_000;
     const UNGUELTIG_KURZ = "Der Kommentar der Anfrage muss - wenn gegeben - mindestens "
     . self::MIN_LENGTH . " Zeichen haben: ";
     const UNGUELTIG_LANG = "Der Kommentar der Anfrage darf höchstens " . self::MAX_LENGTH . " Zeichen haben: ";
 
     use DefaultValueObjectComparison;
 
-    /** @var string */
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::String($value, "Ungültig: " . $value);

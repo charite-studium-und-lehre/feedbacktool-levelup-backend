@@ -9,7 +9,7 @@ use Doctrine\DBAL\Types\Type;
 class AggregateIdStringType extends Type
 {
 
-    const AGGREGATE_ID_STRING_TYPE = 'aggregateIdString'; // modify to match your type name
+    const TYPE_NAME = 'aggregateIdString'; // modify to match your type name
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
         return "VARCHAR(30)";
@@ -19,7 +19,6 @@ class AggregateIdStringType extends Type
         if (!$value) {
             return NULL;
         }
-
         return AggregateIdString::fromString($value);
     }
 
@@ -35,7 +34,7 @@ class AggregateIdStringType extends Type
     }
 
     public function getName() {
-        return self::AGGREGATE_ID_STRING_TYPE; // modify to match your constant name
+        return static::TYPE_NAME; // modify to match your constant name
     }
 
     public function requiresSQLCommentHint(AbstractPlatform $platform) {

@@ -39,9 +39,10 @@
   },
 
   "require-dev": {
+    "phpstan/phpstan": "dev-master",
     "phpunit/phpunit": "^8.3",
-    "symfony/inflector" : "^5.0",
-    "phpstan/phpstan": "dev-master"
+    "rector/rector": "^0.6.13",
+    "symfony/inflector": "^5.0"
   },
 
   "config": {

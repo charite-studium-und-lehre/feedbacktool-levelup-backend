@@ -9,22 +9,16 @@ class StudiUeberFremdbewertungInformiertEvent implements DomainEvent
 {
     use DomainEventTrait;
 
-    /** @var int */
-    public $fremdBewertungsId;
+    public int $fremdBewertungsId;
 
-    /** @var string */
-    public $fremdBewerterName;
+    public string $fremdBewerterName;
 
-    /** @var string */
-    public $fremdBewerterEmail;
+    public string $fremdBewerterEmail;
 
-    /** @var string */
-    public $loginHash;
+    public string $loginHash;
 
-    /** @var string */
-    public $studiName;
+    public string $studiName;
 
-    /** @var string */
-    public $studiEmail;
+    public string $studiEmail;
 
 }

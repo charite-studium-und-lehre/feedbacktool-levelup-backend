@@ -4,7 +4,7 @@ EPA\Domain\FremdBewertung\FremdBewertung:
 
   id:
     id:
-      type: aggregateId
+      type: fremdBewertungsId
 
   embedded:
     anfrageDaten:

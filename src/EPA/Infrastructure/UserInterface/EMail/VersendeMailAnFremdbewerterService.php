@@ -7,20 +7,19 @@ use EPA\Application\Services\KontaktiereFremdBewerterService;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use Login\Infrastructure\Web\Service\FrontendUrlService;
+use Swift_Mailer;
+use Swift_Message;
 
 class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterService
 {
-    /** @var \Swift_Mailer */
-    private $swiftMailer;
+    private Swift_Mailer $swiftMailer;
 
-    /** @var FremdBewertungsAnfrageRepository */
-    private $fremdBewertungsAnfrageRepository;
+    private FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
 
-    /** @var FrontendUrlService */
-    private $frontendUrlService;
+    private FrontendUrlService $frontendUrlService;
 
     public function __construct(
-        \Swift_Mailer $swiftMailer,
+        Swift_Mailer $swiftMailer,
         FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository,
         FrontendUrlService $frontendUrlService
     ) {
@@ -44,11 +43,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         )->getAnfrageToken();
 
         $appUrl = $this->frontendUrlService->getFrontendUrl();
+
         return "https://levelup.charite.de$appUrl/epas/fremdbewertung/" . $token->getValue();
     }
 
     private function sendeMailAnBewerter($subject, $body, $to, $from = "levelup@charite.de") {
-        $message = new \Swift_Message();
+        $message = new Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
@@ -62,7 +62,7 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
             . "An: $originalTo\n"
             . "Betreff: $subject\n"
             . "Inhalt:\n\n" . $body;
-        $message = new \Swift_Message();
+        $message = new Swift_Message();
         $message->setSubject($subjectStudi)
             ->setFrom($from)
             ->setTo($to)

@@ -12,8 +12,7 @@ class EPAKategorie implements EPAElement, DDDValueObject
 
     const INVALID = "Ist keine gültige ID für eine EPA-Kategorie: ";
 
-    /** @var int */
-    private $nummer;
+    private int $nummer;
 
     public static function fromInt(string $value): self {
         $intVal = (int) $value;
