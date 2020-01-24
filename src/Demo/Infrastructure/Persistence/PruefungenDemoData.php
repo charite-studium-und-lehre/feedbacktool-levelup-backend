@@ -175,7 +175,7 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200100,
+                    "studiPruefungsId" => 200199,
                     "zeitsemester"     => "SoSe 2019",
                     "periodeCode"      => 20191,
                     "periodeText"      => "SoSe 2019",
