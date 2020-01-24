@@ -1,5 +1,6 @@
 .idea
 bin/symfony
+symfony.lock
 
 ### Symfony template
 # Cache and logs (Symfony2)
