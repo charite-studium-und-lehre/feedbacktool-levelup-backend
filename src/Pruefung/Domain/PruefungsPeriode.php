@@ -30,7 +30,7 @@ class PruefungsPeriode implements DDDValueObject
         return $object;
     }
 
-    public static function fromInt(string $value): PruefungsPeriode {
+    public static function fromInt(int $value): PruefungsPeriode {
         Assertion::integerish($value);
         if ($value < 100_000) {
             $value *= 10;

@@ -31,7 +31,7 @@ class EPABewertung
         return $this->epa;
     }
 
-    public static function fromValues(string $bewertungsInt, EPA $epa): self {
+    public static function fromValues(int $bewertungsInt, EPA $epa): self {
         Assertion::integerish($bewertungsInt, self::INVALID);
         Assertion::between($bewertungsInt, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);
 

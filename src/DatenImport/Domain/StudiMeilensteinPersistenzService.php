@@ -3,6 +3,7 @@
 namespace DatenImport\Domain;
 
 use Studi\Domain\Service\StudiHashCreator;
+use Studi\Domain\StudiData;
 use Studi\Domain\StudiInternRepository;
 use Studienfortschritt\Domain\FortschrittsItem;
 use Studienfortschritt\Domain\StudiMeilenstein;
@@ -10,11 +11,11 @@ use Studienfortschritt\Domain\StudiMeilensteinRepository;
 
 class StudiMeilensteinPersistenzService
 {
-    private \Studi\Domain\StudiInternRepository $studiInternRepository;
+    private StudiInternRepository $studiInternRepository;
 
-    private \Studi\Domain\Service\StudiHashCreator $studiHashCreator;
+    private StudiHashCreator $studiHashCreator;
 
-    private \Studienfortschritt\Domain\StudiMeilensteinRepository $StudiMeilensteinRepository;
+    private StudiMeilensteinRepository $StudiMeilensteinRepository;
 
     private int $hinzugefuegt = 0;
 
@@ -30,7 +31,8 @@ class StudiMeilensteinPersistenzService
         $this->StudiMeilensteinRepository = $StudiMeilensteinRepository;
     }
 
-    public function persistiereStudiListe($studiDataObjectsToImport) {
+    /** @param StudiData[] $studiDataObjectsToImport */
+    public function persistiereStudiListe(array $studiDataObjectsToImport): void {
 
         foreach ($studiDataObjectsToImport as $studiDataObject) {
             $existierenderStudiIntern = $this->studiInternRepository->byMatrikelnummer(

@@ -33,7 +33,7 @@ class CsrfLinkExtension extends AbstractExtension
      *  string 'csrfField' - CSRF field name. _token by default
      *  bool 'escape' - escape title, TRUE by default
      */
-    public function linkToFunction($path, $title, array $options = array()) {
+    public function linkToFunction($path, $title, array $options = array()): string {
         $default = array(
             'csrf_intention' => '',
             'csrf_field'     => '_token',
@@ -56,7 +56,7 @@ class CsrfLinkExtension extends AbstractExtension
         return $return;
     }
 
-    function _tagOptions(array $options = array()) {
+    function _tagOptions(array $options = array()): string {
         $html = '';
         foreach ($options as $key => $value) {
             $html .= ' ' . $key . '="' . htmlspecialchars($value, ENT_COMPAT) . '"';
@@ -65,7 +65,7 @@ class CsrfLinkExtension extends AbstractExtension
         return $html;
     }
 
-    function _options2javascript($options) {
+    function _options2javascript($options): array {
         // confirm
         $confirm = isset($options['confirm']) ? $options['confirm'] : '';
 

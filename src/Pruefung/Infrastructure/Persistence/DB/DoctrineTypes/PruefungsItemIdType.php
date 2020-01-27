@@ -11,7 +11,10 @@ class PruefungsItemIdType extends AggregateIdStringType
 
     const TYPE_NAME = 'pruefungsItemId'; // modify to match your type name
 
-    /** @return PruefungsItemId */
+    /**
+     * @param ?string $value
+     * @return ?PruefungsItemId
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         return $value ? PruefungsItemId::fromString($value) : NULL;
     }

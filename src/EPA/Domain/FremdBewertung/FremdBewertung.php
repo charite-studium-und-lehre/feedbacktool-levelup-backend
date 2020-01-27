@@ -23,6 +23,7 @@ class FremdBewertung implements DDDEntity
 
     private EPABewertungsDatum $bewertungsDatum;
 
+    /** @param EPABewertung[] $bewertungen */
     public static function create(
         FremdBewertungsId $id,
         LoginHash $loginHash,

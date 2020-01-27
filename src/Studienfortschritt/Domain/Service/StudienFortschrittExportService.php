@@ -5,17 +5,18 @@ namespace Studienfortschritt\Domain\Service;
 use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\StudiHash;
 use Studienfortschritt\Domain\FortschrittsItem;
+use Studienfortschritt\Domain\StudiMeilenstein;
 use Studienfortschritt\Domain\StudiMeilensteinRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 
 /** Vereint abgespeicherte Meilsteine und indirekt, durch Prüfungsteilnahmen, erworbene Fortschritts-Items */
 class StudienFortschrittExportService
 {
-    private \Studienfortschritt\Domain\StudiMeilensteinRepository $studiMeilensteinRepository;
+    private StudiMeilensteinRepository $studiMeilensteinRepository;
 
-    private \StudiPruefung\Domain\StudiPruefungsRepository $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
     public function __construct(
         StudiMeilensteinRepository $studiMeilensteinRepository,
@@ -27,10 +28,9 @@ class StudienFortschrittExportService
         $this->pruefungsRepository = $pruefungsRepository;
     }
 
-    /** return FortschrittsItem[] */
+    /** @return FortschrittsItem[] */
     public function alleFortschrittsItemsFuerStudi(StudiHash $studiHash): array {
         $alleItems = [];
-        $semesterKomplett = [];
         foreach ($this->studiMeilensteinRepository->allByStudiHash($studiHash) as $studiMeilenstein) {
             $alleItems[] = $studiMeilenstein->getMeilenstein();
             foreach ($studiMeilenstein->getMeilenstein()->getImplizierteFortschrittsItems() as $item) {
@@ -42,9 +42,9 @@ class StudienFortschrittExportService
                 continue;
             }
             $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
-            $meilenstein = FortschrittsItem::fromPruefung($pruefung, $studiPruefung->getId());
-            if ($meilenstein) {
-                $alleItems[] = $meilenstein;
+            $fortschrittsItem = FortschrittsItem::fromPruefung($pruefung, $studiPruefung->getId());
+            if ($fortschrittsItem) {
+                $alleItems[] = $fortschrittsItem;
             }
         }
 

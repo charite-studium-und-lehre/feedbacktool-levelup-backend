@@ -6,6 +6,7 @@ use Common\Domain\User\LoginUser;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Exception;
+use Studi\Domain\Studi;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -68,8 +69,6 @@ class StudiUserProvider extends ChariteLDAPUserProvider
      * @return bool
      */
     public function supportsClass($class) {
-        return TRUE;
-
-        return $class === Studi::class || $class === LoginUser::class;
+        return $class === Studi::class;
     }
 }

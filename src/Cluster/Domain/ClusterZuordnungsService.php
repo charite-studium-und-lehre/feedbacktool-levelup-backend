@@ -27,7 +27,7 @@ class ClusterZuordnungsService
         PruefungsItemId $pruefungsItemId,
         ClusterTyp $clusterTypId,
         array $clusterIdsZuzuordnen
-    ) {
+    ): void {
 
         $aktuelleClusterIds = $this->getVorhandeneClusterIdsNachTyp($pruefungsItemId, $clusterTypId,);
 
@@ -75,7 +75,7 @@ class ClusterZuordnungsService
         $gefilterteClusterIds = [];
         foreach ($vorhandeneClusterIds as $vorhandenerClusterId) {
             $cluster = $this->clusterRepository->byId($vorhandenerClusterId);
-            if ($cluster === null) {
+            if ($cluster === NULL) {
                 continue;
             }
             if ($cluster->getClusterTyp()->equals($clusterTypId)) {

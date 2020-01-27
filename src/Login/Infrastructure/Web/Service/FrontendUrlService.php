@@ -6,9 +6,9 @@ namespace Login\Infrastructure\Web\Service;
 
 final class FrontendUrlService
 {
-    private $environment;
+    private string $environment;
 
-    public function __construct($environment) {
+    public function __construct(string $environment) {
         $this->environment = $environment;
     }
 

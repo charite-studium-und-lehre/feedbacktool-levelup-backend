@@ -6,7 +6,10 @@ use Pruefung\Domain\FrageAntwort\AntwortCode;
 use Pruefung\Domain\ItemSchwierigkeit;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
+use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
+use Pruefung\Infrastructure\Persistence\DB\DoctrineTypes\PruefungsItemIdType;
+use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
@@ -23,21 +26,22 @@ use Wertung\Domain\Wertung\Punktzahl;
 class ChariteMCPruefungWertungPersistenzService
 {
 
-    private \StudiPruefung\Domain\StudiPruefungsRepository $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    private \Wertung\Domain\ItemWertungsRepository $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    private \Pruefung\Domain\PruefungsItemRepository $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
-    private \Studi\Domain\StudiInternRepository $studiInternRepository;
+    private StudiInternRepository $studiInternRepository;
 
-    private \Wertung\Domain\StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
     private int $hinzugefuegt = 0;
 
     private int $geaendert = 0;
 
-    private array $nichtZuzuordnen = [];
+    /** @var Matrikelnummer[] */
+    private array $matrikelnummernNichtZuzuordnen = [];
 
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,
@@ -53,8 +57,8 @@ class ChariteMCPruefungWertungPersistenzService
         $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
-    /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung($mcPruefungsDaten) {
+    /** @param array<array<mixed>> $mcPruefungsDaten */
+    public function persistierePruefung($mcPruefungsDaten): void {
         $counter = 0;
         $lineCount = count($mcPruefungsDaten);
         $einProzent = round($lineCount / 100);
@@ -126,15 +130,18 @@ class ChariteMCPruefungWertungPersistenzService
         return $this->geaendert;
     }
 
-    public function getNichtZuzuordnen(): array {
-        return $this->nichtZuzuordnen;
+    /**
+     * @return Matrikelnummer[];
+     */
+    public function getMatrikelnummernNichtZuzuordnen(): array {
+        return $this->matrikelnummernNichtZuzuordnen;
     }
 
     private function holeOderErzeugeStudiPruefung(
         StudiHash $studiHash,
         PruefungsId $pruefungsId,
-        $gesamtPunktzahl = NULL,
-        $bestehensgrenze = NULL
+        float $gesamtPunktzahl = NULL,
+        float $bestehensgrenze = NULL
     ): StudiPruefung {
         $bestanden = $gesamtPunktzahl && $bestehensgrenze && $gesamtPunktzahl > $bestehensgrenze;
 
@@ -160,13 +167,13 @@ class ChariteMCPruefungWertungPersistenzService
         return $studiPruefung;
     }
 
-    private function holeStudiIntern($matrikelnummer) {
+    private function holeStudiIntern(Matrikelnummer $matrikelnummer): ?StudiIntern {
         $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
         if (!$studiIntern) {
-            if (!in_array($matrikelnummer, $this->nichtZuzuordnen)) {
+            if (!in_array($matrikelnummer, $this->matrikelnummernNichtZuzuordnen)) {
                 echo "\n Warnung: Studi mit Matrikel als Hash nicht gefunden: " . $matrikelnummer;
                 echo " -> Ignoriere Matrikelnummer in allen Zeilen.";
-                $this->nichtZuzuordnen[] = $matrikelnummer;
+                $this->matrikelnummernNichtZuzuordnen[] = $matrikelnummer;
 
                 return NULL;
             }
@@ -178,9 +185,9 @@ class ChariteMCPruefungWertungPersistenzService
 
     private function erzeugeStudiPruefungsWertung(
         StudiPruefung $studiPruefung,
-        $gesamtErreichtePunktzahl,
-        $fragenAnzahl,
-        $bestehensGrenze
+        float $gesamtErreichtePunktzahl,
+        int $fragenAnzahl,
+        float $bestehensGrenze
     ): void {
         $studiPruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId(
             $studiPruefung->getId()
@@ -215,17 +222,19 @@ class ChariteMCPruefungWertungPersistenzService
             }
 
             $this->studiPruefungsWertungRepository->flush();
-        } elseif ($studiPruefungsWertung) {
-            if ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
-                $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
-                $this->studiPruefungsWertungRepository->flush();
-            }
+        } elseif ($studiPruefungsWertung && !$gesamtErreichtePunktzahl) {
+            $this->studiPruefungsWertungRepository->delete($studiPruefungsWertung);
+            $this->studiPruefungsWertungRepository->flush();
         }
     }
 
-    private function pruefeOderErzeugePruefungsItem($pruefungsItemId, $pruefungsId, ?int $schwierigkeit): void {
+    private function pruefeOderErzeugePruefungsItem(
+        PruefungsItemId $pruefungsItemId,
+        PruefungsId $pruefungsId,
+        ?int $schwierigkeit
+    ): void {
         $schwierigkeitVO = NULL;
-        if ($schwierigkeit) {
+        if ($schwierigkeit !== 0) {
             $schwierigkeitVO = ItemSchwierigkeit::fromConst($schwierigkeit);
         }
 
@@ -243,8 +252,8 @@ class ChariteMCPruefungWertungPersistenzService
 
     private function pruefeOderErzeugeItemWertung(
         StudiPruefung $studiPruefung,
-        $pruefungsItemId,
-        $punktzahl,
+        PruefungsItemId $pruefungsItemId,
+        Punktzahl $punktzahl,
         ?AntwortCode $antwortCode
     ): void {
         $itemWertung = $this->itemWertungsRepository->byStudiPruefungsIdUndPruefungssItemId(

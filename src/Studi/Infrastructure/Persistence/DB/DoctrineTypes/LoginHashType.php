@@ -15,14 +15,24 @@ class LoginHashType extends Type
         return "VARCHAR(100)";
     }
 
-    /** @return LoginHash */
+    /**
+     * @param ?string $value
+     * @return ?LoginHash
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
-        return $value ? LoginHash::fromString($value) : NULL;
+        return $value
+            ? LoginHash::fromString($value)
+            : NULL;
     }
 
-    /** @param LoginHash $value */
+    /**
+     * @param ?LoginHash $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-        return $value ? $value->getValue() : NULL;
+        return $value
+            ? $value->getValue()
+            : NULL;
     }
 
     public function getName() {

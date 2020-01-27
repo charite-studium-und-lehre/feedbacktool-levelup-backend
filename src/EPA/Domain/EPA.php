@@ -36,7 +36,7 @@ class EPA implements EPAElement, DDDValueObject
     }
 
     public function getParent(): EPAKategorie {
-        return EPAKategorie::fromInt(floor($this->nummer / 10) * 10);
+        return EPAKategorie::fromInt((int) floor($this->nummer / 10) * 10);
     }
 
     public function istBlatt(): bool {

@@ -13,9 +13,9 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ChariteFragenPersistenzService
 {
-    private \Pruefung\Domain\FrageAntwort\FragenRepository $fragenRepository;
+    private FragenRepository $fragenRepository;
 
-    private \Pruefung\Domain\FrageAntwort\AntwortRepository $antwortRepository;
+    private AntwortRepository $antwortRepository;
 
     public function __construct(FragenRepository $fragenRepository, AntwortRepository $antwortRepository) {
         $this->fragenRepository = $fragenRepository;
@@ -23,7 +23,7 @@ class ChariteFragenPersistenzService
     }
 
     /** @param ChariteFragenDTO[] $fragenDTOs */
-    public function persistiereFragenUndAntworten(array $fragenDTOs) {
+    public function persistiereFragenUndAntworten(array $fragenDTOs): void {
         foreach ($fragenDTOs as $fragenDTO) {
             $pruefungsItemId = PruefungsItemId::fromPruefungsIdUndFragenNummer(
                 $fragenDTO->pruefungsId, $fragenDTO->fragenNr

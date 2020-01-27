@@ -16,7 +16,7 @@ class Vorname implements DDDValueObject
     const UNGUELTIG_ZU_KURZ = "Der Vorname ist zu kurz: ";
     const UNGUELTIG_ZU_LANG = "Der Vorname ist zu lang: ";
 
-    private $value;
+    private string $value;
 
     use NameTrait;
 

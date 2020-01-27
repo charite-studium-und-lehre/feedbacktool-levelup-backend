@@ -10,7 +10,7 @@ use Studienfortschritt\Domain\StudiMeilenstein;
 use Studienfortschritt\Domain\StudiMeilensteinId;
 use Studienfortschritt\Domain\StudiMeilensteinRepository;
 
-/** @method Studienfortschritt[] all() */
+/** @method StudiMeilenstein[] all() */
 final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepository implements StudiMeilensteinRepository
 {
     use FileBasedRepoTrait;
@@ -20,10 +20,10 @@ final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepo
     }
 
     public function nextIdentity(): StudiMeilensteinId {
-        return StudiMeilensteinId::fromInt($this->abstractNextIdentity());
+        return StudiMeilensteinId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
-    /** @return Studienfortschritt[] */
+    /** @return StudiMeilenstein[] */
     public function allByStudiHash(StudiHash $studiHash): array {
         $all = [];
         foreach ($this->all() as $studiMeilenstein) {

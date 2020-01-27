@@ -23,7 +23,7 @@ class StudiPruefung
         StudiHash $studiHash,
         PruefungsId $pruefungsId,
         bool $bestanden = TRUE
-    ) {
+    ): self {
         $object = new self();
         $object->id = $id;
         $object->studiHash = $studiHash;

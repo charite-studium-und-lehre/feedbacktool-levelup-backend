@@ -19,8 +19,8 @@ class ProzentWertung extends AbstractWertung
     }
 
     /**
-     * @param ProzentWertung[] $wertungen
-     * @return ProzentWertung
+     * @param Wertung[] $wertungen
+     * @return Wertung
      */
     public static function getDurchschnittsWertung(array $wertungen) {
         $prozentzahlen = [];

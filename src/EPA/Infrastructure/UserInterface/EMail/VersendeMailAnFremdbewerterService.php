@@ -47,7 +47,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         return "https://levelup.charite.de$appUrl/epas/fremdbewertung/" . $token->getValue();
     }
 
-    private function sendeMailAnBewerter($subject, $body, $to, $from = "levelup@charite.de") {
+    private function sendeMailAnBewerter(
+        string $subject,
+        string $body,
+        string $to,
+        string $from = "levelup@charite.de"
+    ): void {
         $message = new Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
@@ -56,7 +61,13 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         $this->swiftMailer->send($message);
     }
 
-    private function sendeKopieAnStudi($subject, $body, $to, $originalTo, $from = "levelup@charite.de") {
+    private function sendeKopieAnStudi(
+        string $subject,
+        string $body,
+        string $to,
+        string $originalTo,
+        string $from = "levelup@charite.de"
+    ): void {
         $subjectStudi = "Levelup: Anfrage zu Fremdbewertug versendet an $originalTo";
         $body = "Folgende Nachricht wurde gerade verschickt:\n\n"
             . "An: $originalTo\n"
@@ -70,12 +81,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         $this->swiftMailer->send($message);
     }
 
-    private function getMailSubject(FremdBewertungAnfrageVerschickenCommand $command) {
+    private function getMailSubject(FremdBewertungAnfrageVerschickenCommand $command): string {
         return "Anfrage zur Fremdbewertung ärztlicher Tätigkeiten von Studierende/r "
             . $command->studiName;
     }
 
-    private function getMailBody(FremdBewertungAnfrageVerschickenCommand $command, string $link) {
+    private function getMailBody(FremdBewertungAnfrageVerschickenCommand $command, string $link): string {
         $text = "Sehr geehrte/r Frau/Herr " . $command->fremdBewerterName . "\n\n"
             . "\n"
             . "Der/Die Studierende " . $command->studiName . " bittet Sie um eine Bewertung\n"

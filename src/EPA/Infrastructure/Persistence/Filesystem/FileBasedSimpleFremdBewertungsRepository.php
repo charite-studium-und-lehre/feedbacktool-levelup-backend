@@ -19,7 +19,7 @@ final class FileBasedSimpleFremdBewertungsRepository extends AbstractCommonRepos
     }
 
     public function nextIdentity(): FremdBewertungsId {
-        return FremdBewertungsId::fromString($this->abstractNextIdentity());
+        return FremdBewertungsId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
     /** @return FremdBewertung[] */

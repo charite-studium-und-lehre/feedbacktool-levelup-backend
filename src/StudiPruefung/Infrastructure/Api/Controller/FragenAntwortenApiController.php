@@ -8,6 +8,7 @@ use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FragenAntwortenApiController extends AbstractController
@@ -28,7 +29,7 @@ class FragenAntwortenApiController extends AbstractController
     /**
      * @Route("/api/pruefungen/{studiPruefungsIdInt}/fragen")
      */
-    public function jsonStudiPruefungsDetailsAction(int $studiPruefungsIdInt) {
+    public function jsonStudiPruefungsDetailsAction(int $studiPruefungsIdInt): Response {
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
             return new JsonResponse(["pruefungen" => []], 200);

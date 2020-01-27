@@ -7,33 +7,35 @@ use Jumbojett\OpenIDConnectClient;
 
 class ChariteSSOService
 {
-    private $clientId;
+    private string $clientId;
 
-    private $clientSecret;
+    private string $clientSecret;
 
-    private $redirectURL;
+    private string $redirectURL;
 
-    private $providerUrl;
+    private string $providerUrl;
 
-    private $tokenEndpoint;
+    private string $tokenEndpoint;
 
-    private $userinfoEndpoint;
+    private string $userinfoEndpoint;
 
-    private $endSessionEndpoint;
+    private string $endSessionEndpoint;
 
-    private $authorizationEndpoint;
+    private string $authorizationEndpoint;
 
     private string $errorMessage = "";
 
+
     public function __construct(
-        $clientId,
-        $clientSecret,
-        $redirectURL,
-        $providerUrl,
-        $tokenEndpoint,
-        $userinfoEndpoint,
-        $endSessionEndpoint,
-        $authorizationEndpoint
+        string $clientId,
+        string $clientSecret,
+        string $redirectURL,
+        string $providerUrl,
+        string $tokenEndpoint,
+        string $userinfoEndpoint,
+        string $endSessionEndpoint,
+        string $authorizationEndpoint,
+        string $errorMessage
     ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -43,6 +45,7 @@ class ChariteSSOService
         $this->userinfoEndpoint = $userinfoEndpoint;
         $this->endSessionEndpoint = $endSessionEndpoint;
         $this->authorizationEndpoint = $authorizationEndpoint;
+        $this->errorMessage = $errorMessage;
     }
 
     public function hasPendingSSOAuth(): bool {
@@ -89,8 +92,9 @@ class ChariteSSOService
         } catch (\Exception $e) {
             $this->errorMessage = $e->getMessage();
 
-            return NULL;
+            return FALSE;
         }
+        return TRUE;
     }
 
     public function getErrorMessage(): string {

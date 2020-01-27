@@ -5,15 +5,14 @@ namespace DatenImport\Domain;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
-use Studi\Domain\StudiIntern;
 
 class ChariteMCPruefungFachPersistenzService
 {
-    private \Cluster\Domain\ClusterRepository $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
-    private \Cluster\Domain\ClusterZuordnungsService $clusterZuordnungsService;
+    private ClusterZuordnungsService $clusterZuordnungsService;
 
-    private \DatenImport\Domain\LernzielFachRepository $lernzielFachRepository;
+    private LernzielFachRepository $lernzielFachRepository;
 
     public function __construct(
         ClusterRepository $clusterRepository,
@@ -25,7 +24,7 @@ class ChariteMCPruefungFachPersistenzService
         $this->lernzielFachRepository = $lernzielFachRepository;
     }
 
-    /** @param StudiIntern[] $mcPruefungsDaten */
+    /** @param array<array<mixed>> $mcPruefungsDaten */
     public function persistiereFachZuordnung($mcPruefungsDaten): void {
         $counter = 0;
         $lineCount = count($mcPruefungsDaten);

@@ -10,10 +10,10 @@ class PunktWertung extends AbstractWertung
 {
     protected Punktzahl $punktzahl;
 
-    protected Skala $skala;
+    protected PunktSkala $skala;
 
     public static function fromPunktzahlUndSkala(Punktzahl $punktzahl, PunktSkala $skala): self {
-        $object = new static();
+        $object = new self();
         $object->punktzahl = $punktzahl;
         $object->skala = $skala;
 
@@ -21,15 +21,14 @@ class PunktWertung extends AbstractWertung
     }
 
     /**
-     * @param PunktWertung[] $wertungen
-     * @return PunktWertung
+     * @param Wertung[] $wertungen
      */
     public static function getDurchschnittsWertung(array $wertungen): PunktWertung {
         $punktzahlen = [];
         $maxPunkte = [];
         foreach ($wertungen as $wertung) {
-            $punktzahlen[] = $wertung->getPunktzahl()->getValue();
-            $maxPunkte[] = $wertung->getSkala()->getMaxPunktzahl()->getValue();
+            $punktzahlen[] = $wertung->getPunktWertung()->getPunktzahl()->getValue();
+            $maxPunkte[] = $wertung->getPunktWertung()->getSkala()->getMaxPunktzahl()->getValue();
         }
 
         return PunktWertung::fromPunktzahlUndSkala(
@@ -42,6 +41,10 @@ class PunktWertung extends AbstractWertung
 
     }
 
+    /**
+     * @param PunktWertung[] $wertungen
+     * @return PunktWertung
+     */
     public static function getSummenWertung(array $wertungen) {
         $punktzahlen = [];
         $skalaMaxPunkte = [];

@@ -9,10 +9,9 @@ class LernzielFach
 {
     use DefaultValueObjectComparison;
 
-    /** @var LernzielNummer */
-    private  $lernzielNummer;
+    private LernzielNummer $lernzielNummer;
 
-    private \Cluster\Domain\ClusterId $clusterId;
+    private ClusterId $clusterId;
 
     public static function byIds(LernzielNummer $lernzielNummer, ClusterId $clusterId): self {
         $object = new self();
@@ -23,11 +22,11 @@ class LernzielFach
     }
 
     public function getLernzielNummer(): LernzielNummer {
-        return LernzielNummer::fromInt($this->lernzielNummer);
+        return $this->lernzielNummer;
     }
 
     public function getClusterId(): ClusterId {
-        return ClusterId::fromInt($this->clusterId);
+        return $this->clusterId;
     }
 
 }

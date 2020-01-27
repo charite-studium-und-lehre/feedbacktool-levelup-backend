@@ -23,12 +23,12 @@ trait DDDDoctrineRepoTrait
         return $this->doctrineRepo->findAll();
     }
 
-    private function abstractAdd($object): void {
+    private function abstractAdd(object $object): void {
         $this->entityManager->persist($object);
     }
 
-    private function abstractById($objectId): ?object {
-        return $this->doctrineRepo->find($objectId);
+    private function abstractById(object $idObject): ?object {
+        return $this->doctrineRepo->find($idObject);
     }
 
     private function abstractDelete(object $object): void {

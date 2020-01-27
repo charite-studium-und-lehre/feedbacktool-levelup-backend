@@ -25,7 +25,7 @@ class Antwort implements DDDEntity
         AntwortCode $antwortCode,
         AntwortText $antwortText,
         bool $istRichtig
-    ) {
+    ): self {
         $object = new self();
         $object->id = $antwortId;
         $object->fragenId = $fragenId;

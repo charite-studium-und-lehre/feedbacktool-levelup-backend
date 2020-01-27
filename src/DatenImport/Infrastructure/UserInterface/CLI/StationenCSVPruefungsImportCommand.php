@@ -19,17 +19,17 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:stationen';
 
-    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    private \DatenImport\Infrastructure\Persistence\ChariteStationenErgebnisse_CSVImportService $chariteStationenErgebnisseCSVImportService;
+    private ChariteStationenErgebnisse_CSVImportService $chariteStationenErgebnisseCSVImportService;
 
-    private \DatenImport\Domain\ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService;
+    private ChariteStationenPruefungPersistenzService $chariteStationenPruefungPersistenzService;
 
-    private \StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
+    private StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
 
-    private \StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
+    private ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
 
-    private \DatenImport\Domain\ChariteStationsClusterungPersistenzService $chariteStationsClusterungPersistenzService;
+    private ChariteStationsClusterungPersistenzService $chariteStationsClusterungPersistenzService;
 
     /**
      * StationenCSVPruefungsImportCommand constructor.
@@ -104,9 +104,6 @@ class StationenCSVPruefungsImportCommand extends AbstractCSVPruefungsImportComma
         return 0;
     }
 
-    /**
-     * @param $pruefungsTeil
-     */
     protected function getPruefungsFormat(InputInterface $input): PruefungsFormat {
         $pruefungsTeil = $input->getArgument("stationsTeil");
         switch ($pruefungsTeil) {

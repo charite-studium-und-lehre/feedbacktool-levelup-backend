@@ -15,12 +15,18 @@ class FremdBewertungsAnfrageTaetigkeitenType extends Type
         return "VARCHAR(" . FremdBewertungsAnfrageTaetigkeiten::MAX_LENGTH . ")";
     }
 
-    /** @return FremdBewertungsAnfrageTaetigkeiten */
+    /**
+     * @param ?string $value
+     * @return ?FremdBewertungsAnfrageTaetigkeiten
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         return $value ? FremdBewertungsAnfrageTaetigkeiten::fromString($value) : NULL;
     }
 
-    /** @param FremdBewertungsAnfrageTaetigkeiten $value */
+    /**
+     * @param ?FremdBewertungsAnfrageTaetigkeiten $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         return $value ? $value->getValue() : NULL;
     }

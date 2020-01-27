@@ -15,7 +15,7 @@ class PruefungsUnterPeriode implements DDDValueObject
 
     private int $value;
 
-    public static function fromInt(string $value): self {
+    public static function fromInt(int $value): self {
         Assertion::integerish($value, self::INVALID_PRUEFUNGS_UNTER_PERIODE);
         Assertion::between($value, 1, 9, self::INVALID_PRUEFUNGS_UNTER_PERIODE);
 

@@ -2,22 +2,27 @@
 
 namespace DatenImport\Infrastructure\Persistence;
 
+use Exception;
+
 abstract class AbstractCSVImportService
 {
     const OUT_ENCODING = "UTF-8";
     const DEFAULT_DELIMITER = ";";
 
+    /** @var array<string, string> */
     private array $options;
 
-    public function __construct($options = []) {
+    /** @param array<string, string> $options */
+    public function __construct(array $options = []) {
         $this->options = $options;
     }
 
+    /** @return array<array<string,string>> */
     protected function getCSVDataAsArray(
         string $inputFile,
         string $delimiter = self::DEFAULT_DELIMITER,
         bool $hasHeaders = TRUE,
-        $fromEncoding = self::OUT_ENCODING
+        string $fromEncoding = self::OUT_ENCODING
     ): array {
         $handle = fopen($inputFile, "r");
 
@@ -37,7 +42,7 @@ abstract class AbstractCSVImportService
                 $headers = $dataLineFixed;
                 continue;
             }
-            if (!implode("",$dataLineFixed)) {
+            if (!implode("", $dataLineFixed)) {
                 continue;
             }
             if ($hasHeaders) {
@@ -45,7 +50,7 @@ abstract class AbstractCSVImportService
                     dump($headers);
                     dump($dataLineFixed);
                     echo "\nZeile: $counter";
-                    throw new \Exception("Header-Anzahl passt nicht zu Daten: $inputFile!");
+                    throw new Exception("Header-Anzahl passt nicht zu Daten: $inputFile!");
                 }
                 $dataLineFixed = array_combine($headers, $dataLineFixed);
             }
@@ -57,7 +62,11 @@ abstract class AbstractCSVImportService
         return $dataAsArray;
     }
 
-    protected function fixEncoding($string, $fromEncoding, $toEncoding = self::OUT_ENCODING) {
+    protected function fixEncoding(
+        string $string,
+        string $fromEncoding,
+        string $toEncoding = self::OUT_ENCODING
+    ): string {
         if ($fromEncoding != $toEncoding) {
             return iconv($fromEncoding, $toEncoding, $string);
         }
@@ -65,7 +74,7 @@ abstract class AbstractCSVImportService
         return $string;
     }
 
-    protected function trimDataCell($string) {
+    protected function trimDataCell(string $string): string {
         return trim($string);
     }
 

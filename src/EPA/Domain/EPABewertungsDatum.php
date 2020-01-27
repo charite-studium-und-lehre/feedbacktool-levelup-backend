@@ -61,6 +61,7 @@ class EPABewertungsDatum
         return $this->value->format("d.m.Y");
     }
 
+    /** @param self $otherObject */
     public function equals(object $otherObject): bool {
         $format = "d.m.Y";
 

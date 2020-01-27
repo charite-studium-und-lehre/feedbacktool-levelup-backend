@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class CorsListener
 {
-    public function onKernelResponse(ResponseEvent $event) {
+    public function onKernelResponse(ResponseEvent $event): void {
         $responseHeaders = $event->getResponse()->headers;
 
         $responseHeaders->set('Access-Control-Allow-Origin', 'http://localhost:3000');

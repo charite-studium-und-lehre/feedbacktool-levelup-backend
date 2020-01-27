@@ -16,16 +16,16 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcCSVFachUndModule';
 
-    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    private \DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
+    private Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
 
-    private \DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz;
+    private ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz;
 
     /** ChariteMCPruefungFachPersistenzService */
-    private \DatenImport\Domain\ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService;
+    private ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService;
 
-    private \DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService;
+    private ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -56,8 +56,8 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $importOptionen = $this->getParameters($input);
-        $dateiPfadLzModule = $input->getArgument("dateiPfadLzModule");
-        $delimiterLzModule = $input->getArgument("delimiterLzModule") ?: ";";
+        $dateiPfadLzModule = (string) $input->getArgument("dateiPfadLzModule");
+        $delimiterLzModule = (string) $input->getArgument("delimiterLzModule") ?: ";";
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
             $importOptionen->dateiPfad, $importOptionen->delimiter,

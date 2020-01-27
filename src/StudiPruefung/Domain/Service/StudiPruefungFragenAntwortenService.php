@@ -61,6 +61,7 @@ class StudiPruefungFragenAntwortenService
         $this->antwortRepository = $antwortRepository;
     }
 
+    /** @return array<string, array<int, array<string, mixed>>|int|string> */
     public function getErgebnisAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
 
@@ -81,6 +82,7 @@ class StudiPruefungFragenAntwortenService
         return $returnArray;
     }
 
+    /** @return array<string, array<int, array<string, mixed>>> */
     private function getMCErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         $itemWertungen = $this->getItemWertungen($studiPruefung);
         $fragen = [];
@@ -146,6 +148,10 @@ class StudiPruefungFragenAntwortenService
         return ["fragen" => $fragen];
     }
 
+    /**
+     * @param ItemWertung[] $itemWertungen
+     * @return array<array<ItemWertung>>
+     */
     private function getWertungen($itemWertungen): array {
         $alleMeineWertungen = [];
         $alleKohortenWertungen = [];
@@ -157,8 +163,11 @@ class StudiPruefungFragenAntwortenService
         return [$alleMeineWertungen, $alleKohortenWertungen];
     }
 
-    /** @return ItemWertung[] */
-    private function getItemsNachClusterTyp($itemWertungen, ClusterTyp $clusterTyp): array {
+    /**
+     * @param ItemWertung[] $itemWertungen
+     * @return array<int, array<ItemWertung>>
+     */
+    private function getItemsNachClusterTyp(array $itemWertungen, ClusterTyp $clusterTyp): array {
         $itemsNachFach = [];
         foreach ($itemWertungen as $itemWertung) {
             $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(

@@ -23,7 +23,7 @@ class Frage implements DDDEntity
         PruefungsItemId $pruefungsItemId,
         FragenNummer $fragenNummer,
         FragenText $fragenText
-    ) {
+    ): self {
         $object = new self();
         $object->id = $fragenId;
         $object->pruefungsItemId = $pruefungsItemId;

@@ -35,7 +35,7 @@ class StudiPruefungsWertung implements DDDEntity
     }
 
     public function getStudiPruefungsId(): StudiPruefungsId {
-        return StudiPruefungsId::fromInt($this->studiPruefungsId);
+        return $this->studiPruefungsId;
     }
 
     public function getGesamtErgebnis(): Wertung {
@@ -50,7 +50,7 @@ class StudiPruefungsWertung implements DDDEntity
         return $this->bestehensGrenze;
     }
 
-    public function setBestehensGrenze($bestehensGrenze): void {
+    public function setBestehensGrenze(Wertung $bestehensGrenze): void {
         $this->bestehensGrenze = $bestehensGrenze;
     }
 

@@ -15,7 +15,11 @@ class StudiMeilenstein
 
     private FortschrittsItem $meilenstein;
 
-    public static function fromValues(StudiMeilensteinId $id, StudiHash $studiHash, FortschrittsItem $meilenstein) {
+    public static function fromValues(
+        StudiMeilensteinId $id,
+        StudiHash $studiHash,
+        FortschrittsItem $meilenstein
+    ): self {
         $object = new self();
         $object->id = $id;
         $object->studiHash = $studiHash;

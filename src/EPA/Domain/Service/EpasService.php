@@ -6,8 +6,12 @@ use EPA\Domain\EPAKategorie;
 
 class EpasService
 {
-    /** Erzeugt die Struktur wie im ZIM für das Frontend dokumentiert. */
-    public function getAlleEPAs() {
+    /**
+     * Erzeugt die Struktur wie im ZIM für das Frontend dokumentiert.
+     *
+     * @return Array<Array<string, string>>
+     */
+    public function getAlleEPAs(): array {
         $epaStruktur = EPAKategorie::getEPAStrukturFlach();
 
         $epas = [];

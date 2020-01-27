@@ -34,7 +34,7 @@ class EPAApiController extends BaseController
     /**
      * @Route("/api/epas", name="alleEpas", methods={"GET"})
      */
-    public function alleEpas(EpasService $epasService) {
+    public function alleEpas(EpasService $epasService): Response {
         session_write_close();
         $data = $epasService->getAlleEPAs();
 
@@ -44,7 +44,7 @@ class EPAApiController extends BaseController
     /**
      * @Route("/api/epas/bewertungen", name="bewertungen", methods={"GET"})
      */
-    public function bewertungen(EpasFuerStudiService $epasFuerStudiService) {
+    public function bewertungen(EpasFuerStudiService $epasFuerStudiService): Response {
         $this->checkLogin();
         session_write_close();
         $loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
@@ -56,7 +56,7 @@ class EPAApiController extends BaseController
     /**
      * @Route("/api/epas/bewertungen", name="api_selbstbewertung_setzen", methods={"POST", "OPTIONS"})
      */
-    public function aendereSelbstBewertung(Request $request, CommandBus $commandBus) {
+    public function aendereSelbstBewertung(Request $request, CommandBus $commandBus): Response {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
@@ -91,7 +91,7 @@ class EPAApiController extends BaseController
         FremdBewertungsRepository $fremdBewertungsRepository,
         FremdBewertungsAnfrageRepository $anfrageRepository,
         CommandBus $commandBus
-    ) {
+    ): Response {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
@@ -123,7 +123,7 @@ class EPAApiController extends BaseController
     /**
      * @Route("/api/epas/fremdbewertungen", name="fremdbewertungen", methods={"GET"})
      */
-    public function fremdbewertungenAction(EpasFuerStudiService $epasFuerStudiService) {
+    public function fremdbewertungenAction(EpasFuerStudiService $epasFuerStudiService): Response {
         $this->checkLogin();
         session_write_close();
         $loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
@@ -135,7 +135,7 @@ class EPAApiController extends BaseController
     /**
      * @Route("/api/epas/fremdbewertungen/anfragen", name="fremdbewertungsAnfragen", methods={"GET"})
      */
-    public function fremdbewertungsAnfragenAction(EpasFuerStudiService $epasFuerStudiService) {
+    public function fremdbewertungsAnfragenAction(EpasFuerStudiService $epasFuerStudiService): Response {
         $this->checkLogin();
         session_write_close();
         $loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
@@ -153,7 +153,7 @@ class EPAApiController extends BaseController
         CommandBus $commandBus,
         FremdBewertungsAnfrageRepository $anfrageRepository,
         EpasFuerStudiService $epasFuerStudiService
-    ) {
+    ): Response {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
@@ -161,7 +161,7 @@ class EPAApiController extends BaseController
         $params = $this->getJsonContentParams($request);
 
         $command = new FremdBewertungAnfragenCommand();
-        $command->fremdBewertungsAnfrageId = $anfrageRepository->nextIdentity();
+        $command->fremdBewertungsAnfrageId = $anfrageRepository->nextIdentity()->getValue();
         $command->loginHash = $this->getCurrentUserLoginHash($this->loginHashCreator);
         $command->fremdBewerterName = $params->get("fremdBewerterName");
         $command->fremdBewerterEmail = $params->get("fremdBewerterEmail");
@@ -198,7 +198,7 @@ class EPAApiController extends BaseController
     public function fremdbewertungAbgebenAnfrage(
         string $tokenString,
         FremdBewertungsAnfrageRepository $anfrageRepository
-    ) {
+    ): Response {
         $token = FremdBewertungsAnfrageToken::fromString($tokenString);
         $fremdBewertungsAnfrage = $anfrageRepository->byToken($token);
         if (!$fremdBewertungsAnfrage) {

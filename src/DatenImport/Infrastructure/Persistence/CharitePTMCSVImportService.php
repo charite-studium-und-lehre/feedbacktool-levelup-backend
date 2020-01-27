@@ -26,6 +26,7 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
         'nha' => 'Niere Harnwege',
     ];
 
+    /** @return array<int|string, array<int|string, array<string, array<string, float|int|string>>>> */
     public function getData(
         string $inputFile,
         string $delimiter = ",",
@@ -51,8 +52,8 @@ class CharitePTMCSVImportService extends AbstractCSVImportService
                     $ptmClusterKuerzel = $kuerzel;
                 } elseif (array_key_exists($kuerzel, self::ORGANSYSTEM_KUERZEL)) {
                     continue;
-                    $clusterTyp = ClusterTyp::getOrgansystemTyp()->getConst();
-                    $ptmClusterKuerzel = $kuerzel;
+                    //                    $clusterTyp = ClusterTyp::getOrgansystemTyp()->getConst();
+                    //                    $ptmClusterKuerzel = $kuerzel;
                 } elseif ($kuerzel == "all") {
                     $clusterTyp = "gesamtergebnis";
                     $ptmClusterKuerzel = $kuerzel;

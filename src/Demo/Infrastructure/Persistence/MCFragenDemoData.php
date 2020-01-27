@@ -2255,8 +2255,8 @@ class MCFragenDemoData extends AbstractJsonDemoData
         preg_match("/\/[0-9]+\//", $pathInfo, $matches);
         if ($matches[0]) {
             $studiPruefungsId = str_replace("/", "", $matches[0]);
+            $this->jsonData["studiPruefungsId"] = $studiPruefungsId;
         }
-        $this->jsonData["studiPruefungsId"] = $studiPruefungsId;
 
         return fn() => new JsonResponse($this->jsonData);
     }

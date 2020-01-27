@@ -62,6 +62,8 @@ doctrine:
         class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageKommentarType"
       fremdBewertungsBewertungen:
         class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsBewertungenType"
+      lernzielNummer:
+        class: "DatenImport\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LernzielNummerType"
 
     mapping_types:
       aggregateId: integer
@@ -86,6 +88,7 @@ doctrine:
       fremdBewertungsAnfrageTaetigkeiten: string
       fremdBewertungsAnfrageKommentar: string
       fremdBewertungsBewertungen: string
+      lernzielNummer: integer
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'

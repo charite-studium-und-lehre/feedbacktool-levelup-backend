@@ -44,11 +44,15 @@ class StudiPruefungDurchschnittPersistenzService
             $alleStudiPruefungsWertungen[] = $studiPruefungsWertung;
             $alleGesamtWertungen[] = $studiPruefungsWertung->getGesamtErgebnis();
         }
+        $kohortenWertung = NULL;
         if ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof PunktWertung)) {
+            /** @var PunktWertung[] $kohortenWertung */
             $kohortenWertung = PunktWertung::getDurchschnittsWertung($alleGesamtWertungen);
         } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof ProzentWertung)) {
+            /** @var ProzentWertung[] $kohortenWertung */
             $kohortenWertung = ProzentWertung::getDurchschnittsWertung($alleGesamtWertungen);
         } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof RichtigFalschWeissnichtWertung)) {
+            /** @var RichtigFalschWeissnichtWertung[] $kohortenWertung */
             $kohortenWertung = RichtigFalschWeissnichtWertung::getDurchschnittsWertung($alleGesamtWertungen);
         }
         foreach ($alleStudiPruefungsWertungen as $studiPruefungsWertung) {

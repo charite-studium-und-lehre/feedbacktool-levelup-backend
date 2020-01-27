@@ -44,7 +44,7 @@ class LoginController extends BaseController
         ChariteLDAPUserProvider $chariteLDAPUserProvider,
         TokenStorageInterface $tokenStorage,
         UserSwitcher $userSwitcher
-    ) {
+    ): Response {
         $userSwitcher->unsetUserSwitched();
         if ($request->get("code") && !$chariteSSOService->hasPendingSSOAuth()) {
             return new Response("Fehler: Kann code ohne gestartetem SSO-Request nicht verarbeiten", 400);
@@ -75,8 +75,8 @@ class LoginController extends BaseController
     }
 
     /** @Route("/api/stammdaten", name="isLoggedIn", methods="GET") */
-    public function checkStammdatenAction() {
-        /** @var $loginUser LoginUser */
+    public function checkStammdatenAction(): Response {
+        /** @var LoginUser $loginUser */
         $loginUser = $this->getUser();
         if ($this->getUser()) {
             return new JsonResponse(
@@ -99,11 +99,13 @@ class LoginController extends BaseController
         StudiRepository $studiRepository,
         LoginHashCreator $loginHashCreator,
         StudiHashCreator $studiHashCreator
-    ) {
+    ): Response {
         if ($request->getMethod() == "OPTIONS") {
             return new Response("", 200);
         }
         $params = $this->getJsonContentParams($request);
+
+        /** @var int $matrikelnummer */
         $matrikelnummer = $params->get("matrikelnummer");
         if (!$matrikelnummer) {
             return new Response("'matrikelnummer' muss als POST-Param gg. werden! -> Content:" . $request->getContent(),
@@ -133,12 +135,12 @@ class LoginController extends BaseController
     }
 
     /** @Route("/notLoggedIn", name="notLoggedIn") */
-    public function notLoggedIn() {
+    public function notLoggedIn(): Response {
         return new Response();
     }
 
     /** @Route("/logoutFromSSO", name="logoutFromSSO") */
-    public function ssoLogoutAction(ChariteSSOService $chariteSSOService, UserSwitcher $userSwitcher) {
+    public function ssoLogoutAction(ChariteSSOService $chariteSSOService, UserSwitcher $userSwitcher): Response {
         $userSwitcher->unsetUserSwitched();
 
         // Service macht eine Weiterleitung
@@ -147,22 +149,14 @@ class LoginController extends BaseController
         return new Response("...");
     }
 
-    //    /** @Route("/levelupLogout", name="levelupLogout") */
-    //    public function logoutAction(Session $session, UserSwitcher $userSwitcher, TokenStorageInterface $storage) {
-    //        $userSwitcher->unsetUserSwitched();
-    //        $this->logoutUser($storage);
-    //
-    //        return new Response("OK", 200);
-    //    }
-
     /** @Route("/redirectToLogout", name="redirectToLogout") */
     /** @Route("/logout", name="logout") */
-    public function redirectToLogout() {
+    public function redirectToLogout(): Response {
         return $this->redirectToRoute("logoutFromSSO");
     }
 
     /** @Route("/switchToFrontend", name="switchToFrontend") */
-    public function switchToFrontend() {
+    public function switchToFrontend(): Response {
         return $this->redirect($this->frontendUrlService->getFrontendUrl());
     }
 
@@ -173,7 +167,7 @@ class LoginController extends BaseController
         TokenStorageInterface $tokenStorage,
         Request $request,
         ChariteLDAPService $chariteLDAPService
-    ) {
+    ): Response {
         $user = $this->getUser();
         dump($this->getUser());
         dump($this->getUser()->getRoles());
@@ -208,7 +202,7 @@ class LoginController extends BaseController
         LoginHashCreator $loginHashCreator,
         TokenStorageInterface $tokenStorage,
         UserSwitcher $userSwitcher
-    ) {
+    ): Response {
         /** @var LoginUser $currentUser */
         $currentUser = $this->getUser();
         $studiHash = $request->get("studiHash");

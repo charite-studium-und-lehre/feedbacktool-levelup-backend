@@ -11,7 +11,7 @@ class ItemWertungsIdType extends AggregateIdType
     const TYPE_NAME = 'itemWertungsId'; // modify to match your type name
 
     /**
-     * @param $value integer
+     * @param integer $value
      * @return ItemWertungsId
      */
     public function convertToPHPValue($value, AbstractPlatform $platform) {

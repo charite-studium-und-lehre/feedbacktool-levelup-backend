@@ -57,6 +57,7 @@ class StudiPruefungErgebnisService
         $this->clusterRepository = $clusterRepository;
     }
 
+    /** @return array<string,string> */
     public function getErgebnisAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
 
@@ -85,6 +86,7 @@ class StudiPruefungErgebnisService
         return $returnArray;
     }
 
+    /** @return array<string,string> */
     private function getErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         if ($pruefung->getFormat()->isMc()) {
@@ -98,6 +100,7 @@ class StudiPruefungErgebnisService
         return [];
     }
 
+    /** @return array<string,string> */
     private function getStudiPruefungGesamtWertung(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());
@@ -164,10 +167,8 @@ class StudiPruefungErgebnisService
         }
     }
 
-    private
-    function getStationsErgebnisDetailsAlsJsonArray(
-        StudiPruefung $studiPruefung
-    ): array {
+    /** @return array<string,string> */
+    private function getStationsErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         /** @var Pruefung $pruefung */
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isStation()) {
@@ -261,10 +262,8 @@ class StudiPruefungErgebnisService
 
     }
 
-    private
-    function getPTMErgebnisDetailsAlsJsonArray(
-        StudiPruefung $studiPruefung
-    ): array {
+    /** @return array<string,string> */
+    private function getPTMErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isPTM()) {
             return [];
@@ -305,10 +304,8 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private
-    function getMCErgebnisDetailsAlsJsonArray(
-        StudiPruefung $studiPruefung
-    ): array {
+    /** @return array<string,string> */
+    private function getMCErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isMc()) {
             return [];
@@ -375,10 +372,11 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private
-    function getWertungen(
-        $itemWertungen
-    ): array {
+    /**
+     * @param ItemWertung[] $itemWertungen
+     * @return array<string,string>
+     */
+    private function getWertungen(array $itemWertungen): array {
         $alleMeineWertungen = [];
         $alleKohortenWertungen = [];
         foreach ($itemWertungen as $itemWertung) {
@@ -392,11 +390,7 @@ class StudiPruefungErgebnisService
     }
 
     /** @return ItemWertung[] */
-    private
-    function getItemsNachClusterTyp(
-        $itemWertungen,
-        ClusterTyp $clusterTyp
-    ): array {
+    private function getItemsNachClusterTyp($itemWertungen, ClusterTyp $clusterTyp): array {
         $itemsNachFach = [];
         foreach ($itemWertungen as $itemWertung) {
             $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
@@ -412,14 +406,11 @@ class StudiPruefungErgebnisService
         return $itemsNachFach;
     }
 
-    private
-    function getPruefungUndWertungen(
-        StudiPruefung $studiPruefung
-    ): array {
+    private function getPruefungUndWertungen(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
 
-        return array($pruefung, $itemWertungen);
+        return [$pruefung, $itemWertungen];
     }
 
 }

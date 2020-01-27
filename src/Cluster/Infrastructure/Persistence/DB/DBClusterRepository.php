@@ -23,7 +23,7 @@ final class DBClusterRepository implements ClusterRepository
     }
 
     public function byId(ClusterId $clusterId): ?Cluster {
-        return $this->abstractById($clusterId->getValue());
+        return $this->abstractById($clusterId);
     }
 
     public function byCode(ClusterCode $clusterCode): ?Cluster {

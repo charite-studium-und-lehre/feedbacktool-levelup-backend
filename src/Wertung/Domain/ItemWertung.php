@@ -55,7 +55,7 @@ class ItemWertung implements DDDEntity
     }
 
     public function getId(): ItemWertungsId {
-        return ItemWertungsId::fromInt($this->id);
+        return $this->id;
     }
 
     public function getPruefungsItemId(): PruefungsItemId {
@@ -71,7 +71,7 @@ class ItemWertung implements DDDEntity
     }
 
     public function getStudiPruefungsId(): StudiPruefungsId {
-        return StudiPruefungsId::fromInt($this->studiPruefungsId);
+        return $this->studiPruefungsId;
     }
 
     public function getAntwortCode(): ?AntwortCode {

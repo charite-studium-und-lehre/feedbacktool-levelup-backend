@@ -15,16 +15,15 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 {
     protected static $defaultName = 'levelup:importFile:mcCSVWertung';
 
-    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    private \DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
+    private Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
 
-    private \DatenImport\Domain\ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService;
+    private ChariteMCPruefungWertungPersistenzService $chariteMCPruefungWertungPersistenzService;
 
-    private \StudiPruefung\Domain\Service\StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
+    private StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
 
-    private \StudiPruefung\Domain\Service\ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
-
+    private ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -90,7 +89,7 @@ class MCCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
         $output->writeln("\nFertig. "
                          . $this->chariteMCPruefungWertungPersistenzService->getHinzugefuegt() . " Zeilen hinzugefügt; "
                          . $this->chariteMCPruefungWertungPersistenzService->getGeaendert() . " Zeilen geändert; "
-                         . count($this->chariteMCPruefungWertungPersistenzService->getNichtZuzuordnen())
+                         . count($this->chariteMCPruefungWertungPersistenzService->getMatrikelnummernNichtZuzuordnen())
                          . " Matrikelnummern nicht zuzuordnen; "
         );
 

@@ -22,7 +22,7 @@ final class DBFremdBewertungsAnfrageRepository implements FremdBewertungsAnfrage
     }
 
     public function byId(FremdBewertungsAnfrageId $id): ?FremdBewertungsAnfrage {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): FremdBewertungsAnfrageId {

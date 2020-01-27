@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbstractCSRFForm extends AbstractType
 {
+    /** @return void */
     public function configureOptions(OptionsResolver $resolver) {
         $classNameStripped = $this->stripStaticClassName();
 
@@ -23,7 +24,7 @@ class AbstractCSRFForm extends AbstractType
         return $this->stripClassName(static::class);
     }
 
-    private function stripClassName($name): string {
+    private function stripClassName(string $name): string {
         return str_replace("\\", "_", $name);
     }
 }

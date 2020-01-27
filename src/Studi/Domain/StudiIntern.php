@@ -12,7 +12,7 @@ class StudiIntern
 
     use DefaultEntityComparison;
 
-    public static function fromMatrikelUndStudiHash(Matrikelnummer $matrikelnummer, StudiHash $studiHash) {
+    public static function fromMatrikelUndStudiHash(Matrikelnummer $matrikelnummer, StudiHash $studiHash): self {
         $object = new self();
         $object->matrikelnummer = $matrikelnummer;
         $object->studiHash = $studiHash;

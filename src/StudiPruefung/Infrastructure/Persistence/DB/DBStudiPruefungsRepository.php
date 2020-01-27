@@ -22,7 +22,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
     }
 
     public function byId(StudiPruefungsId $id): ?StudiPruefung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): StudiPruefungsId {

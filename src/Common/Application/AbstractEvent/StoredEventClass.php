@@ -19,7 +19,7 @@ class StoredEventClass
         return $object;
     }
 
-    public function getValue() {
+    public function getValue(): string {
         return $this->value;
     }
 

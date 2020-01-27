@@ -10,7 +10,10 @@ class ClusterIdType extends AggregateIdType
 {
     const TYPE_NAME = 'clusterId'; // modify to match your type name
 
-    /** @return ClusterId */
+    /**
+     * @param int $value
+     * @return ClusterId
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         return $value ? ClusterId::fromInt($value) : NULL;
     }

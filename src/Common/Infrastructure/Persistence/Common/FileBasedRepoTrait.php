@@ -2,19 +2,23 @@
 
 namespace Common\Infrastructure\Persistence\Common;
 
+use Common\Domain\DDDEntity;
+
 trait FileBasedRepoTrait
 {
     protected string $filePath;
 
-    public function __construct($filePath) {
+    public function __construct(string $filePath) {
         $this->filePath = $filePath;
     }
 
+    /** @return static */
     public static function createTempFileRepo() {
         return new static(tempnam(sys_get_temp_dir(), static::class));
     }
 
-    public static function createFixedFileRepo($fileSuffix) {
+    /** @return static */
+    public static function createFixedFileRepo(string $fileSuffix) {
         return new static(sys_get_temp_dir() . DIRECTORY_SEPARATOR . static::class . $fileSuffix);
     }
 
@@ -44,7 +48,7 @@ trait FileBasedRepoTrait
         file_put_contents($this->filePath, serialize($entities));
     }
 
-    public function clearRepo() {
+    public function clearRepo(): void {
         file_put_contents($this->filePath, "");
         $this->persistedEntities = NULL;
     }

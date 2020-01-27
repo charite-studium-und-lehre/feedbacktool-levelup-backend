@@ -9,13 +9,14 @@ use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
+use phpDocumentor\Reflection\Types\Array_;
 use Studi\Domain\StudiIntern;
 
 class ChariteMCPruefungLernzielModulPersistenzService
 {
-    private \Cluster\Domain\ClusterRepository $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
-    private \Cluster\Domain\ClusterZuordnungsService $clusterZuordnungsService;
+    private ClusterZuordnungsService $clusterZuordnungsService;
 
     public function __construct(
         ClusterRepository $clusterRepository,
@@ -25,8 +26,11 @@ class ChariteMCPruefungLernzielModulPersistenzService
         $this->clusterZuordnungsService = $clusterZuordnungsService;
     }
 
-    /** @param StudiIntern[] $studiInternArray */
-    public function persistiereMcModulZuordnung($mcPruefungsDaten, $lzModulDaten) {
+    /**
+     * @param array<array<mixed>> $mcPruefungsDaten
+     * @param array<int, ClusterCode> $lzModulDaten
+     */
+    public function persistiereMcModulZuordnung(array $mcPruefungsDaten, array $lzModulDaten): void {
         $counter = 0;
         $lineCount = count($mcPruefungsDaten);
         $einProzent = round($lineCount / 100);

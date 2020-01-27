@@ -15,7 +15,7 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
 
     protected Punktzahl $punktzahlWeissnicht;
 
-    protected Skala $skala;
+    protected PunktSkala $skala;
 
     public static function fromPunktzahlen(
         Punktzahl $punktzahlRichtig,
@@ -40,8 +40,8 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
     }
 
     /**
-     * @param RichtigFalschWeissnichtWertung[] $wertungen
-     * @return RichtigFalschWeissnichtWertung
+     * @param Wertung[] $wertungen
+     * @return Wertung
      */
     public static function getSummenWertung(array $wertungen) {
         $richtigWertungen = [];
@@ -78,19 +78,23 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
         return $this->punktzahlRichtig->getValue() / $this->skala->getMaxPunktzahl();
     }
 
-    public static function getDurchschnittsWertung(array $wertungen) {
+    /**
+     * @param Wertung[] $wertungen
+     */
+    public static function getDurchschnittsWertung(array $wertungen): RichtigFalschWeissnichtWertung {
         $richtigWertungen = [];
         $falschWertungen = [];
-        $weissnichtWertungen = [];
 
         foreach ($wertungen as $wertung) {
             if (!$wertung instanceof RichtigFalschWeissnichtWertung) {
                 throw new Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
             }
-            $richtigWertungen[] = $wertung->getPunktzahlRichtig()->getValue();
-            $falschWertungen[] = $wertung->getPunktzahlFalsch()->getValue();
+            $richtigWertungen[] = $wertung->getRichtigFalschWeissnichtWertung()
+                ->getPunktzahlRichtig()->getValue();
+            $falschWertungen[] = $wertung->getRichtigFalschWeissnichtWertung()
+                ->getPunktzahlFalsch()->getValue();
         }
-        $anzahlGesamtPunkte = $wertungen[0]->getGesamtPunktzahl()->getValue();
+        $anzahlGesamtPunkte = $wertungen[0]->getRichtigFalschWeissnichtWertung()->getGesamtPunktzahl()->getValue();
         $durchschnittRichtig = self::getDurchschnittAusZahlen($richtigWertungen);
         $durchschnittFalsch = self::getDurchschnittAusZahlen($falschWertungen);
         $durchschnittWeissnicht = $anzahlGesamtPunkte - $durchschnittRichtig - $durchschnittFalsch;

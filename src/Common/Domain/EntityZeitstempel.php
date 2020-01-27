@@ -37,7 +37,7 @@ final class EntityZeitstempel
         return $this->aenderungsZeit;
     }
 
-    public function setzeErzeugungRelativ_fuerTest(int $sekunden) {
+    public function setzeErzeugungRelativ_fuerTest(int $sekunden): void {
         $this->erzeugungsZeit = DateTimeImmutable::createFromMutable(
             (new DateTime())
                 ->add(new DateInterval("PT$sekunden" . "S"))

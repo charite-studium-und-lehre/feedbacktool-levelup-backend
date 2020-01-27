@@ -13,6 +13,7 @@ class KontaktiereStudiNachFremdbewertungSubscriber implements DomainEventSubscri
 {
     use DomainEventSubscriberTrait;
 
+    /** @var string[] */
     private array $isSubscribedTo = [FremdBewertungAbgegebenEvent::class];
 
     private CommandBus $commandBus;

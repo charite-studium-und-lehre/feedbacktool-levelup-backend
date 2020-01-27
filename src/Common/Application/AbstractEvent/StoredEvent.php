@@ -9,11 +9,11 @@ class StoredEvent implements DomainEvent
 {
     use AbstractEventTrait;
 
-    private \Common\Application\AbstractEvent\StoredEventId $id;
+    private StoredEventId $id;
 
-    private \Common\Application\AbstractEvent\StoredEventBody $eventBody;
+    private StoredEventBody $eventBody;
 
-    private \Common\Application\AbstractEvent\StoredEventClass $eventClass;
+    private StoredEventClass $eventClass;
 
     public static function fromData(
         StoredEventId $id,
@@ -21,7 +21,7 @@ class StoredEvent implements DomainEvent
         StoredEventBody $eventBody,
         DateTimeImmutable $occurredOn,
         ?int $byUserId = NULL
-    ) {
+    ): self {
         $object = new static();
         $object->id = $id;
         $object->eventClass = $eventClass;

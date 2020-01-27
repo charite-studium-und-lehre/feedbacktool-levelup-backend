@@ -14,17 +14,16 @@ class EPAKategorie implements EPAElement, DDDValueObject
 
     private int $nummer;
 
-    public static function fromInt(string $value): self {
-        $intVal = (int) $value;
-        Assertion::integerish($intVal, self::INVALID);
+    public static function fromInt(int $value): self {
+        Assertion::integerish($value, self::INVALID);
         Assertion::inArray(
-            $intVal,
+            $value,
             array_keys(EPAKonstanten::EBENE_1 + EPAKonstanten::EBENE_2),
             self::INVALID . $value
         );
 
         $object = new self();
-        $object->nummer = $intVal;
+        $object->nummer = $value;
 
         return $object;
     }
@@ -78,7 +77,7 @@ class EPAKategorie implements EPAElement, DDDValueObject
             return NULL;
         }
 
-        return self::fromInt(floor($this->nummer / 100) * 100);
+        return self::fromInt((int) floor($this->nummer / 100) * 100);
     }
 
     public function istBlatt(): bool {

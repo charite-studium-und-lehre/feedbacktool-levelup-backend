@@ -13,11 +13,11 @@ class LernzielFaecherImportCommand extends AbstractCSVImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:lernzielFaecher';
 
-    private \DatenImport\Domain\ChariteFaecherAnlegenService $chariteFaecherAnlegenService;
+    private ChariteFaecherAnlegenService $chariteFaecherAnlegenService;
 
-    private \DatenImport\Domain\ChariteLernzielFachPersistenzService $chariteLernzielFachPersistenzService;
+    private ChariteLernzielFachPersistenzService $chariteLernzielFachPersistenzService;
 
-    private \DatenImport\Infrastructure\Persistence\ChariteLernzielFachEinleseCSVService $chariteLernzielFachEinleseCSVService;
+    private ChariteLernzielFachEinleseCSVService $chariteLernzielFachEinleseCSVService;
 
     public function __construct(
         ChariteFaecherAnlegenService $chariteFaecherAnlegenService,
@@ -40,8 +40,8 @@ class LernzielFaecherImportCommand extends AbstractCSVImportCommand
     protected function execute(InputInterface $input, OutputInterface $output) {
         $importOptionenDTO = $this->getParameters($input);
 
-        $delimiter = $input->getArgument("delimiter") ?: ";";
-        $encoding = $input->getArgument("delimiter") ?: "ISO-8859-15";
+        $delimiter = (string) $input->getArgument("delimiter") ?: ";";
+        $encoding = (string) $input->getArgument("delimiter") ?: "ISO-8859-15";
 
         $this->chariteFaecherAnlegenService->addAlleFaecherZuDB();
 

@@ -13,7 +13,7 @@ class Studi extends LoginUser
 
     use DefaultEntityComparison;
 
-    public static function fromStudiHash(StudiHash $studiHash) {
+    public static function fromStudiHash(StudiHash $studiHash): self {
         $object = new self();
         $object->studiHash = $studiHash;
 
@@ -49,7 +49,7 @@ class Studi extends LoginUser
         $this->loginHash = NULL;
     }
 
-    public function getUsername() {
+    public function getUsername(): string {
         return parent::getUsername() . "^" . $this->studiHash->getValue();
 
     }

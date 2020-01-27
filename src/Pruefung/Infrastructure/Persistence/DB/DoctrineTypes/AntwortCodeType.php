@@ -15,7 +15,10 @@ class AntwortCodeType extends Type
         return "VARCHAR(" . AntwortCode::MAX_LENGTH . ")";
     }
 
-    /** @return AntwortCode */
+    /**
+     * @param ?string $value
+     * @return ?AntwortCode
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if ($value) {
             return AntwortCode::fromString($value);
@@ -24,7 +27,10 @@ class AntwortCodeType extends Type
         return NULL;
     }
 
-    /** @param AntwortCode $value */
+    /**
+     * @param ?AntwortCode $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;

@@ -17,6 +17,6 @@ class ImportOptionenDTO
 
     public bool $hasHeaders;
 
-    public \Pruefung\Domain\PruefungsPeriode $pruefungsPeriode;
+    public PruefungsPeriode $pruefungsPeriode;
 
 }

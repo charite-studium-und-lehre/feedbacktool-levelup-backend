@@ -23,7 +23,7 @@ trait AbstractEventTrait
         $this->setOccuredOn();
     }
 
-    private function setOccuredOn() {
+    private function setOccuredOn(): void {
         $this->occurredOn = new DateTimeImmutable();
     }
 }

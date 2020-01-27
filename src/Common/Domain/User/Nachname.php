@@ -17,6 +17,6 @@ class Nachname implements DDDValueObject
     const UNGUELTIG_ZU_KURZ = "Der Nachname ist zu kurz: ";
     const UNGUELTIG_ZU_LANG = "Der Nachname ist zu lang: ";
 
-    private $value;
+    private string $value;
 
 }

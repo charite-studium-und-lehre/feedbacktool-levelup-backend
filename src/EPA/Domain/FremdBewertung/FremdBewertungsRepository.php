@@ -12,7 +12,7 @@ interface FremdBewertungsRepository extends DDDRepository, FlushableRepository
 
     public function byId(FremdBewertungsId $id): ?FremdBewertung;
 
-    /** @return FremdBewertungsAnfrage[] */
+    /** @return FremdBewertung[] */
     public function all(): array;
 
     public function delete(FremdBewertung $object): void;

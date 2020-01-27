@@ -34,9 +34,7 @@ class SymfonyKernel extends BaseKernel
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
+    /** @return void */
     protected function build(ContainerBuilder $container) {
         $container->registerForAutoconfiguration(DomainEventSubscriber::class)
             ->addTag('ddd.domainEventSubscriber');
@@ -45,6 +43,7 @@ class SymfonyKernel extends BaseKernel
             ->addTag('ddd.domainCommandHandler');
     }
 
+    /** @return void */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader) {
         $container->setParameter('container.autowiring.strict_mode', TRUE);
         $container->setParameter('container.dumper.inline_class_loader', TRUE);
@@ -57,6 +56,7 @@ class SymfonyKernel extends BaseKernel
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
     }
 
+    /** @return void */
     protected function configureRoutes(RouteCollectionBuilder $routes) {
         $confDir = $this->getProjectDir() . '/config';
         if (is_dir($confDir . '/routes/')) {

@@ -18,7 +18,7 @@ final class StudiUeberFremdbewertungInformierenHandler implements CommandHandler
         $this->kontaktiereStudiUeberFremdbewertungService = $kontaktiereStudiUeberFremdbewertungService;
     }
 
-    /** @param StudiUeberFremdbewertungInformierenHandler $command */
+    /** @param StudiUeberFremdbewertungInformierenCommand $command */
     public function handle(DomainCommand $command): void {
         $this->kontaktiereStudiUeberFremdbewertungService->run($command);
     }

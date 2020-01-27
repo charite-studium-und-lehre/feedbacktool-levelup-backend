@@ -22,7 +22,7 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
     }
 
     public function nextIdentity(): ItemWertungsId {
-        return ItemWertungsId::fromInt($this->abstractNextIdentity());
+        return ItemWertungsId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
     public function byStudiPruefungsIdUndPruefungssItemId(

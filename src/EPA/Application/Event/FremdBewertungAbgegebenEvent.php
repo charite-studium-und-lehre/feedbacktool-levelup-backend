@@ -23,6 +23,9 @@ class FremdBewertungAbgegebenEvent implements DomainEvent
 
     public string $bewerterEmail;
 
-    /** @var FremdBewertungDTO[] */
+    /**
+     * @var array<array<string, int>>
+     * @see FremdBewertungDTO
+     */
     public array $fremdBewertungen;
 }

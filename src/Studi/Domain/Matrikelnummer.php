@@ -15,12 +15,12 @@ final class Matrikelnummer implements DDDValueObject
 
     const INVALID_STELLEN = "Die Matrikelnummer muss sechs- oder siebenstellig sein: ";
 
-    private string $value;
+    private int $value;
 
-    public static function fromInt(string $value): self {
+    public static function fromInt(int $value): self {
         Assertion::integerish($value);
 
-        $value = (int) $value;
+        $value = $value;
         Assertion::greaterOrEqualThan($value, self::MIN_VALUE, self::INVALID_STELLEN . $value);
         Assertion::lessOrEqualThan($value, self::MAX_VALUE, self::INVALID_STELLEN . $value);
 
@@ -30,12 +30,12 @@ final class Matrikelnummer implements DDDValueObject
         return $object;
     }
 
-    public function getValue(): string {
+    public function getValue(): int {
         return $this->value;
     }
 
     public function __toString(): string {
-        return $this->value;
+        return (string) $this->value;
     }
 
 }

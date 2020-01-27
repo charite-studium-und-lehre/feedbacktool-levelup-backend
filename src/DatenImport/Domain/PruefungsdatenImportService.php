@@ -6,6 +6,7 @@ interface PruefungsdatenImportService
 {
     const DEFAULT_OUT_ENCODING = "UTF-8";
 
+    /** @return array<int, array<string,mixed>> */
     public function getData(
         string $inputFile,
         string $delimiter = ",",

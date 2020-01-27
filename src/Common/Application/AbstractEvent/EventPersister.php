@@ -49,6 +49,7 @@ class EventPersister
         return $domainEvent;
     }
 
+    /** @return Array<String, String> */
     private function createEventValuesDict(DomainEvent $domainEvent): array {
         $valuesDict = [];
         foreach ((new ReflectionObject($domainEvent))->getProperties() as $property) {

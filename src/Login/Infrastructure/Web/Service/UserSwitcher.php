@@ -37,7 +37,7 @@ class UserSwitcher
     }
 
     public function unsetUserSwitched(): void {
-        $this->session->remove(self::SWITCHED_LOGIN_HASH_SESSION_KEY, NULL);
+        $this->session->remove(self::SWITCHED_LOGIN_HASH_SESSION_KEY);
     }
 
 }

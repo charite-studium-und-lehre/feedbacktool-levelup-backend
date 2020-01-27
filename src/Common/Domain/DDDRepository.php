@@ -12,5 +12,6 @@ namespace Common\Domain;
  */
 interface DDDRepository
 {
-    public function all();
+    /** @return DDDEntity[] */
+    public function all(): array;
 }

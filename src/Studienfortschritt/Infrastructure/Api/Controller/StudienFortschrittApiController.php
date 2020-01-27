@@ -23,7 +23,7 @@ class StudienFortschrittApiController extends BaseController
      * @Route("/api/meilensteine")
      * @Route("/api/studienfortschritt", name="studienfortschritt")
      */
-    public function jsonMeilensteineAction() {
+    public function jsonMeilensteineAction(): Response {
         session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {

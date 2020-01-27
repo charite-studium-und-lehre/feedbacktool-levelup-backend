@@ -15,12 +15,18 @@ class StudiHashType extends Type
         return "VARCHAR(100)";
     }
 
-    /** @return StudiHash */
+    /**
+     * @param ?string $value
+     * @return ?StudiHash
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         return $value ? StudiHash::fromString($value) : NULL;
     }
 
-    /** @param StudiHash $value */
+    /**
+     * @param ?StudiHash $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         return ($value instanceof StudiHash) ? $value->getValue() : $value;
     }

@@ -23,7 +23,7 @@ final class DBStudiMeilensteinRepository implements StudiMeilensteinRepository
     }
 
     public function byId(StudiMeilensteinId $id): ?StudiMeilenstein {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): StudiMeilensteinId {
