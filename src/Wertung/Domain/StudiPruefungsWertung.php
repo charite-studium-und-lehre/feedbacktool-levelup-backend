@@ -11,17 +11,13 @@ class StudiPruefungsWertung implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var StudiPruefungsId */
-    private $studiPruefungsId;
+    private StudiPruefungsId $studiPruefungsId;
 
-    /** @var Wertung */
-    private $gesamtErgebnis;
+    private Wertung $gesamtErgebnis;
 
-    /** @var ?Wertung */
-    private $bestehensGrenze;
+    private ?Wertung $bestehensGrenze;
 
-    /** @var ?Wertung */
-    private $kohortenWertung;
+    private ?Wertung $kohortenWertung;
 
     public static function create(
         StudiPruefungsId $studiPruefungsId,
@@ -65,6 +61,5 @@ class StudiPruefungsWertung implements DDDEntity
     public function setKohortenWertung(?Wertung $kohortenWertung = NULL): void {
         $this->kohortenWertung = $kohortenWertung;
     }
-
 
 }

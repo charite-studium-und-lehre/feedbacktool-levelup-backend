@@ -13,8 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudienFortschrittApiController extends BaseController
 {
 
-    /** @var StudienFortschrittExportService */
-    private $meilensteinExportService;
+    private StudienFortschrittExportService $meilensteinExportService;
 
     public function __construct(StudienFortschrittExportService $meilensteinExportService) {
         $this->meilensteinExportService = $meilensteinExportService;

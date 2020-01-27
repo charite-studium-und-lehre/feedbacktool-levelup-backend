@@ -45,7 +45,10 @@ class WertungType extends Type
         return "BIGINT SIGNED";
     }
 
-    /** @return Wertung */
+    /**
+     * @param $value int
+     * @return Wertung
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;
@@ -65,7 +68,10 @@ class WertungType extends Type
         }
     }
 
-    /** @return integer */
+    /**
+     * @param $value Wertung
+     * @return int
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;

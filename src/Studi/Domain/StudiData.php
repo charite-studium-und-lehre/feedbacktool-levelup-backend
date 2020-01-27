@@ -11,17 +11,13 @@ final class StudiData implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    /** @var Matrikelnummer */
-    private $matrikelnummer;
+    private Matrikelnummer $matrikelnummer;
 
-    /** @var Vorname */
-    private $vorname;
+    private Vorname $vorname;
 
-    /** @var Nachname */
-    private $nachname;
+    private Nachname $nachname;
 
-    /** @var array */
-    private $dataLine;
+    private array $dataLine;
 
     public static function fromValues(
         Matrikelnummer $matrikelnummer,

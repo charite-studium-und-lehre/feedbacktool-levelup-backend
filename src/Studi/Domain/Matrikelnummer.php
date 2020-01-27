@@ -10,12 +10,12 @@ final class Matrikelnummer implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    const MIN_VALUE = 100000;
-    const MAX_VALUE = 10000000;
+    const MIN_VALUE = 100_000;
+    const MAX_VALUE = 10_000_000;
 
     const INVALID_STELLEN = "Die Matrikelnummer muss sechs- oder siebenstellig sein: ";
 
-    private $value;
+    private string $value;
 
     public static function fromInt(string $value): self {
         Assertion::integerish($value);

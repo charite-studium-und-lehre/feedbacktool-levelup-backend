@@ -15,7 +15,7 @@ final class LoginHash implements DDDValueObject
 
     const UNGUELTIG = "Scheint kein Login-Hash zu sein: ";
 
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);

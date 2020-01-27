@@ -7,11 +7,9 @@ use Common\Domain\User\LoginUser;
 
 class Studi extends LoginUser
 {
-    /** @var StudiHash */
-    private $studiHash;
+    private StudiHash $studiHash;
 
-    /** @var LoginHash|null */
-    private $loginHash = NULL;
+    private ?LoginHash $loginHash = NULL;
 
     use DefaultEntityComparison;
 
@@ -31,9 +29,9 @@ class Studi extends LoginUser
         $object->usernameVO = $loginUser->usernameVO;
         $object->istAdmin = $loginUser->istAdmin;
         $object->email = $loginUser->email;
+
         return $object;
     }
-
 
     public function getStudiHash(): StudiHash {
         return $this->studiHash;

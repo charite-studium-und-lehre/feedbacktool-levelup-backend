@@ -2,23 +2,20 @@
 
 namespace Wertung\Domain\Wertung;
 
+use Exception;
 use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Skala\Skala;
 
 class RichtigFalschWeissnichtWertung extends AbstractWertung
 {
 
-    /** @var Punktzahl */
-    protected $punktzahlRichtig;
+    protected Punktzahl $punktzahlRichtig;
 
-    /** @var Punktzahl */
-    protected $punktzahlFalsch;
+    protected Punktzahl $punktzahlFalsch;
 
-    /** @var Punktzahl */
-    protected $punktzahlWeissnicht;
+    protected Punktzahl $punktzahlWeissnicht;
 
-    /** @var PunktSkala */
-    protected $skala;
+    protected Skala $skala;
 
     public static function fromPunktzahlen(
         Punktzahl $punktzahlRichtig,
@@ -53,7 +50,7 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
 
         foreach ($wertungen as $wertung) {
             if (!$wertung instanceof RichtigFalschWeissnichtWertung) {
-                throw new \Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
+                throw new Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
             }
             $richtigWertungen[] = $wertung->getPunktzahlRichtig()->getValue();
             $falschWertungen[] = $wertung->getPunktzahlFalsch()->getValue();
@@ -71,6 +68,45 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
                 round(self::getDurchschnittAusZahlen($weissnichtWertungen), 2),
                 ),
             );
+    }
+
+    public function getSkala(): Skala {
+        return $this->skala;
+    }
+
+    public function getRelativeWertung(): float {
+        return $this->punktzahlRichtig->getValue() / $this->skala->getMaxPunktzahl();
+    }
+
+    public static function getDurchschnittsWertung(array $wertungen) {
+        $richtigWertungen = [];
+        $falschWertungen = [];
+        $weissnichtWertungen = [];
+
+        foreach ($wertungen as $wertung) {
+            if (!$wertung instanceof RichtigFalschWeissnichtWertung) {
+                throw new Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
+            }
+            $richtigWertungen[] = $wertung->getPunktzahlRichtig()->getValue();
+            $falschWertungen[] = $wertung->getPunktzahlFalsch()->getValue();
+        }
+        $anzahlGesamtPunkte = $wertungen[0]->getGesamtPunktzahl()->getValue();
+        $durchschnittRichtig = self::getDurchschnittAusZahlen($richtigWertungen);
+        $durchschnittFalsch = self::getDurchschnittAusZahlen($falschWertungen);
+        $durchschnittWeissnicht = $anzahlGesamtPunkte - $durchschnittRichtig - $durchschnittFalsch;
+
+        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat($durchschnittRichtig),
+            Punktzahl::fromFloat($durchschnittFalsch),
+            Punktzahl::fromFloat($durchschnittWeissnicht)
+        );
+    }
+
+    /**
+     * @param float[] $zahlen
+     */
+    protected static function getDurchschnittAusZahlen(array $zahlen): float {
+        return round(array_sum($zahlen) / count($zahlen));
     }
 
     public function getPunktzahlRichtig(): Punktzahl {
@@ -92,45 +128,6 @@ class RichtigFalschWeissnichtWertung extends AbstractWertung
                 + $this->punktzahlFalsch->getValue()
                 + $this->punktzahlWeissnicht->getValue()
             );
-    }
-
-    public function getSkala(): Skala {
-        return $this->skala;
-    }
-
-    public function getRelativeWertung(): float {
-        return $this->punktzahlRichtig->getValue() / $this->skala->getMaxPunktzahl();
-    }
-
-    public static function getDurchschnittsWertung(array $wertungen) {
-        $richtigWertungen = [];
-        $falschWertungen = [];
-        $weissnichtWertungen = [];
-
-        foreach ($wertungen as $wertung) {
-            if (!$wertung instanceof RichtigFalschWeissnichtWertung) {
-                throw new \Exception("Muss RichtigFalschWeissnichtWertung sein!" . get_class($wertung));
-            }
-            $richtigWertungen[] = $wertung->getPunktzahlRichtig()->getValue();
-            $falschWertungen[] = $wertung->getPunktzahlFalsch()->getValue();
-        }
-        $anzahlGesamtPunkte = $wertungen[0]->getGesamtPunktzahl()->getValue();
-        $durchschnittRichtig =  self::getDurchschnittAusZahlen($richtigWertungen);
-        $durchschnittFalsch =  self::getDurchschnittAusZahlen($falschWertungen);
-        $durchschnittWeissnicht = $anzahlGesamtPunkte - $durchschnittRichtig - $durchschnittFalsch;
-
-        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
-            Punktzahl::fromFloat($durchschnittRichtig),
-            Punktzahl::fromFloat($durchschnittFalsch),
-            Punktzahl::fromFloat($durchschnittWeissnicht)
-        );
-    }
-
-    /**
-     * @param float[] $zahlen
-     */
-    protected static function getDurchschnittAusZahlen(array $zahlen): float {
-        return round(array_sum($zahlen) / count($zahlen));
     }
 
 }

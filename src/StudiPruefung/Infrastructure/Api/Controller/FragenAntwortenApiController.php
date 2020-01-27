@@ -13,11 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class FragenAntwortenApiController extends AbstractController
 {
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var StudiPruefungFragenAntwortenService */
-    private $studiPruefungFragenAntwortenService;
+    private StudiPruefungFragenAntwortenService $studiPruefungFragenAntwortenService;
 
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,
@@ -37,9 +35,9 @@ class FragenAntwortenApiController extends AbstractController
         }
         $studiPruefungsId = StudiPruefungsId::fromInt($studiPruefungsIdInt);
         $studiPruefung = $this->studiPruefungsRepository->byId($studiPruefungsId);
-//        if (!$studiPruefung->getStudiHash()->equals($eingeloggterStudi->getStudiHash())) {
-//            return new JsonResponse("Studiprüfungs-ID entspricht nicht eingeloggtem Studi.", 400);
-//        }
+        //        if (!$studiPruefung->getStudiHash()->equals($eingeloggterStudi->getStudiHash())) {
+        //            return new JsonResponse("Studiprüfungs-ID entspricht nicht eingeloggtem Studi.", 400);
+        //        }
 
         $fragenUndAntworten = $this->studiPruefungFragenAntwortenService
             ->getErgebnisAlsJsonArray($studiPruefung);

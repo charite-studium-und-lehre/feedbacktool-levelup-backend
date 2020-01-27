@@ -4,13 +4,13 @@ Wertung\Domain\ItemWertung:
 
   id:
     id:
-      type: aggregateId
+      type: itemWertungsId
 
   fields:
     pruefungsItemId:
-      type: aggregateIdString
+      type: pruefungsItemId
     studiPruefungsId:
-      type: aggregateId
+      type: studiPruefungsId
     wertung:
       type: wertung
     kohortenWertung:

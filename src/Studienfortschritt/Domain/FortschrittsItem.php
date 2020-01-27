@@ -98,11 +98,9 @@ class FortschrittsItem implements DDDValueObject
         309 => [310],  // wer 309 hat, hat immer auch 310
     ];
 
-    /** @var int */
-    private $code;
+    private int $code;
 
-    /** @var ?StudiPruefungsId */
-    private $studiPruefungsId;
+    private ?StudiPruefungsId $studiPruefungsId;
 
     public static function fromCode(int $code, ?StudiPruefungsId $studiPruefungsId = NULL): self {
         Assertion::inArray($code, self::FORTSCHRITT_KUERZEL_ZU_CODE, self::UNGUELTIG . $code);
@@ -128,6 +126,7 @@ class FortschrittsItem implements DDDValueObject
             if ($pruefungsFormat->getValue() == PruefungsFormat::STATION_OSCE_SEM9) {
                 $code = 509;
             }
+
             return FortschrittsItem::fromCode($code, $studiPruefungsId);
         }
 

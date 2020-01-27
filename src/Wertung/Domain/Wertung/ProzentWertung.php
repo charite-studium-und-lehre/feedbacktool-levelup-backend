@@ -2,13 +2,13 @@
 
 namespace Wertung\Domain\Wertung;
 
+use Exception;
 use Wertung\Domain\Skala\ProzentSkala;
 use Wertung\Domain\Skala\Skala;
 
 class ProzentWertung extends AbstractWertung
 {
-    /** @var Prozentzahl */
-    private $prozentzahl;
+    private Prozentzahl $prozentzahl;
 
     public static function fromProzentzahl(Prozentzahl $prozentzahl): self {
 
@@ -27,7 +27,7 @@ class ProzentWertung extends AbstractWertung
 
         foreach ($wertungen as $wertung) {
             if (!$wertung instanceof ProzentWertung) {
-                throw new \Exception("Muss ProzentWertung sein!" . get_class($wertung));
+                throw new Exception("Muss ProzentWertung sein!" . get_class($wertung));
             }
             $prozentzahlen[] = $wertung->getProzentzahl()->getValue();
         }
@@ -67,11 +67,11 @@ class ProzentWertung extends AbstractWertung
         return $this->prozentzahl->equals($otherObject->getProzentzahl());
     }
 
-    public function getProzentzahl(): Prozentzahl {
-        return $this->prozentzahl;
+    public static function getSummenWertung(array $wertungen) {
+        throw new Exception("Macht hier keinen Sinn!");
     }
 
-    public static function getSummenWertung(array $wertungen) {
-        throw new \Exception("Macht hier keinen Sinn!");
+    public function getProzentzahl(): Prozentzahl {
+        return $this->prozentzahl;
     }
 }

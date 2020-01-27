@@ -8,17 +8,13 @@ use Studi\Domain\StudiHash;
 
 class StudiPruefung
 {
-    /** @var StudiPruefungsId */
-    private $id;
+    private StudiPruefungsId $id;
 
-    /** @var StudiHash */
-    private $studiHash;
+    private StudiHash $studiHash;
 
-    /** @var PruefungsId */
-    private $pruefungsId;
+    private PruefungsId $pruefungsId;
 
-    /** @var bool */
-    private $bestanden;
+    private bool $bestanden;
 
     use DefaultEntityComparison;
 

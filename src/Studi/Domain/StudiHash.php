@@ -15,7 +15,7 @@ final class StudiHash implements DDDValueObject
 
     const UNGUELTIG = "Scheint kein Studi-Data-Hash zu sein: ";
 
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG . $value);

@@ -2,16 +2,15 @@
 
 namespace Wertung\Domain\Wertung;
 
+use Exception;
 use Wertung\Domain\Skala\PunktSkala;
 use Wertung\Domain\Skala\Skala;
 
 class PunktWertung extends AbstractWertung
 {
-    /** @var Punktzahl */
-    protected $punktzahl;
+    protected Punktzahl $punktzahl;
 
-    /** @var PunktSkala */
-    protected $skala;
+    protected Skala $skala;
 
     public static function fromPunktzahlUndSkala(Punktzahl $punktzahl, PunktSkala $skala): self {
         $object = new static();
@@ -49,7 +48,7 @@ class PunktWertung extends AbstractWertung
 
         foreach ($wertungen as $wertung) {
             if (!$wertung instanceof PunktWertung) {
-                throw new \Exception("Muss Punktwertung sein!" . get_class($wertung));
+                throw new Exception("Muss Punktwertung sein!" . get_class($wertung));
             }
             $punktzahlen[] = $wertung->getPunktzahl()->getValue();
             $skalaMaxPunkte[] = $wertung->getSkala()->getMaxPunktzahl()->getValue();

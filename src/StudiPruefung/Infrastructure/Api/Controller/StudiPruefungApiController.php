@@ -13,11 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudiPruefungApiController extends AbstractController
 {
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var StudiPruefungErgebnisService */
-    private $studiPruefungsErgebnisService;
+    private StudiPruefungErgebnisService $studiPruefungsErgebnisService;
 
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,

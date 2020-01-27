@@ -6,11 +6,9 @@ use Common\Domain\DefaultEntityComparison;
 
 class StudiIntern
 {
-    /** @var StudiHash */
-    private $studiHash;
+    private StudiHash $studiHash;
 
-    /** @var Matrikelnummer */
-    private $matrikelnummer;
+    private Matrikelnummer $matrikelnummer;
 
     use DefaultEntityComparison;
 

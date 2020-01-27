@@ -6,6 +6,7 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
+use Exception;
 use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsItemRepository;
@@ -24,26 +25,19 @@ use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
 class StudiPruefungErgebnisService
 {
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var ClusterZuordnungsService */
-    private $clusterZuordnungsService;
+    private ClusterZuordnungsService $clusterZuordnungsService;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
     public function __construct(
         StudiPruefungsWertungRepository $studiPruefungsWertungRepository,
@@ -166,7 +160,7 @@ class StudiPruefungErgebnisService
 
             return $returnArray;
         } else {
-            throw new \Exception("Unbekanntes Format: " . $pruefung->getFormat()->getTitel());
+            throw new Exception("Unbekanntes Format: " . $pruefung->getFormat()->getTitel());
         }
     }
 
@@ -184,7 +178,7 @@ class StudiPruefungErgebnisService
         if (!$clusteredItems) {
             $clusteredItems = $this->getItemsNachClusterTyp($itemWertungen, ClusterTyp::getStationsModulTyp());
         }
-        $itemsNachWissensTyp = $this->getItemsNachClusterTyp($itemWertungen, ClusterTyp::getStationsWissensTyp());;
+        $itemsNachWissensTyp = $this->getItemsNachClusterTyp($itemWertungen, ClusterTyp::getStationsWissensTyp());
 
         $itemsNachWissenFakten = [];
         $itemsNachWissenZusammenhang = [];

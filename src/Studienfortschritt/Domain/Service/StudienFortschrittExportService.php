@@ -11,14 +11,11 @@ use StudiPruefung\Domain\StudiPruefungsRepository;
 /** Vereint abgespeicherte Meilsteine und indirekt, durch Prüfungsteilnahmen, erworbene Fortschritts-Items */
 class StudienFortschrittExportService
 {
-    /** @var StudiMeilensteinRepository */
-    private $studiMeilensteinRepository;
+    private \Studienfortschritt\Domain\StudiMeilensteinRepository $studiMeilensteinRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private \StudiPruefung\Domain\StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private \Pruefung\Domain\PruefungsRepository $pruefungsRepository;
 
     public function __construct(
         StudiMeilensteinRepository $studiMeilensteinRepository,

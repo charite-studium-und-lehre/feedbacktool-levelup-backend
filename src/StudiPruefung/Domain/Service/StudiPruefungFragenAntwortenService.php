@@ -19,32 +19,25 @@ use Wertung\Domain\StudiPruefungsWertungRepository;
 
 class StudiPruefungFragenAntwortenService
 {
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var ClusterZuordnungsService */
-    private $clusterZuordnungsService;
+    private ClusterZuordnungsService $clusterZuordnungsService;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
     /** …@var FragenRepository */
-    private $fragenRepository;
+    private FragenRepository $fragenRepository;
 
     /** …@var AntwortRepository */
-    private $antwortRepository;
+    private AntwortRepository $antwortRepository;
 
     public function __construct(
         StudiPruefungsWertungRepository $studiPruefungsWertungRepository,
@@ -106,9 +99,11 @@ class StudiPruefungFragenAntwortenService
                 $antwortenArray[] = [
                     "text"        => $antwort->getAntwortCode()->getValue() . ") "
                         . $antwort->getAntwortText()->getValue(),
-                    "richtig"     => $antwort->istRichtig() ? true : false,
-                    "ausgewaehlt" => $antwortGewaehlt && $antwort->getAntwortCode()->equals($antwortGewaehlt) ? true :
-                    false,
+                    "richtig"     => $antwort->istRichtig() ? TRUE : FALSE,
+                    "ausgewaehlt" => $antwortGewaehlt && $antwort->getAntwortCode()->equals($antwortGewaehlt)
+                        ? TRUE
+                        :
+                        FALSE,
                 ];
             }
 

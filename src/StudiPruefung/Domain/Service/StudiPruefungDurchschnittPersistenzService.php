@@ -13,14 +13,11 @@ use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 /** @TODO Tests */
 class StudiPruefungDurchschnittPersistenzService
 {
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -58,5 +55,5 @@ class StudiPruefungDurchschnittPersistenzService
             $studiPruefungsWertung->setKohortenWertung($kohortenWertung);
         }
         $this->studiPruefungsWertungRepository->flush();
-   }
+    }
 }
