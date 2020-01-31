@@ -9,14 +9,13 @@ use Common\Domain\DefaultValueObjectComparison;
 class FremdBewertungsAnfrageTaetigkeiten implements DDDValueObject
 {
     const MIN_LENGTH = 5;
-    const MAX_LENGTH = 2000;
+    const MAX_LENGTH = 2_000;
     const UNGUELTIG_KURZ = "Die Angabe zu Tätigkeiten/Kurs muss - wenn gegeben - mindestens " . self::MIN_LENGTH . " Zeichen haben: ";
     const UNGUELTIG_LANG = "Die Angabe zu Tätigkeiten/Kurs der Anfrage darf höchstens " . self::MAX_LENGTH . " Zeichen haben: ";
 
     use DefaultValueObjectComparison;
 
-    /** @var string */
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::String($value, "Ungültig: " . $value);

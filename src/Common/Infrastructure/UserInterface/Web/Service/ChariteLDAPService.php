@@ -13,20 +13,15 @@ class ChariteLDAPService
     const AUTH_FAILED = "authFailed";
     const SUCCESS = "success";
 
-    /** @var string */
-    private $host;
+    private string $host;
 
-    /** @var int */
-    private $port;
+    private int $port;
 
-    /** @var bool */
-    private $tls;
+    private bool $tls;
 
-    /** @var string */
-    private $baseDn;
+    private string $baseDn;
 
-    /** @var string */
-    private $bindDn;
+    private string $bindDn;
 
     /** @var ?resource */
     private $connection;
@@ -133,6 +128,7 @@ class ChariteLDAPService
 
     /**
      * Given a username, get the whole user info array from the LDAP user
+     * @return array<String, String>
      */
     public function getUserInfoByUsername(string $username): ?array {
         $this->checkConnection();
@@ -163,7 +159,7 @@ class ChariteLDAPService
             );
     }
 
-    public function tryLdapCredentials(string $username, string $password) {
+    public function tryLdapCredentials(string $username, string $password): bool {
         try {
             $this->connect($username, $password);
         } catch (\Exception $e) {
@@ -178,7 +174,8 @@ class ChariteLDAPService
         return $this->getLdapAktivStudentByEmail($email) ? TRUE : FALSE;
     }
 
-    private function getLdapAktivStudentByEmail($email, $aktiv = TRUE): ?array {
+    /** @return Array<String, String> */
+    private function getLdapAktivStudentByEmail(string $email, bool $aktiv = TRUE): ?array {
         $aktivString = $aktiv ? "Y" : "N";
         $this->checkConnection();
         $filter = "(&(aktivstudent=$aktivString)(mail=$email))";
@@ -186,7 +183,8 @@ class ChariteLDAPService
         return $this->getLdapInfoByFilter($filter);
     }
 
-    private function getLdapInfoByEmail(string $email) {
+    /** @return Array<String, String> */
+    private function getLdapInfoByEmail(string $email): array {
         $this->checkConnection();
         $filter = "(mail=$email)";
 
@@ -199,6 +197,7 @@ class ChariteLDAPService
      * Existente Nutzer haben
      * * eine uid
      * * KEINEN Eintrag stopinformation
+     * @return Array<String, String>
      */
     private function getLdapInfoByFilter(string $filter): ?array {
         $read = ldap_search($this->connection, $this->baseDn, $filter);

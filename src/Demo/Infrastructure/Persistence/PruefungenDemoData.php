@@ -4,7 +4,7 @@ namespace Demo\Infrastructure\Persistence;
 
 class PruefungenDemoData extends AbstractJsonDemoData
 {
-    protected $jsonData =
+    protected array $jsonData =
         [
             "pruefungen" => [
                 [
@@ -13,9 +13,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "Stat-9",
                     "format"           => "station",
                     "fachsemester"     => 9,
-                    "studiPruefungsId" => 100008,
+                    "studiPruefungsId" => 100_008,
                     "zeitsemester"     => "SoSe 2019",
-                    "periodeCode"      => 201912,
+                    "periodeCode"      => 201_912,
                     "periodeText"      => "SoSe 2019 (Prüfungszeitraum 2)",
                     "gesamtErgebnis"   => [
                         "ergebnisProzentzahl"     => 0.85,
@@ -72,9 +72,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "Stat-3",
                     "format"           => "station",
                     "fachsemester"     => 4,
-                    "studiPruefungsId" => 100007,
+                    "studiPruefungsId" => 100_007,
                     "zeitsemester"     => "WiSe 2016",
-                    "periodeCode"      => 201622,
+                    "periodeCode"      => 201_622,
                     "periodeText"      => "WiSe 2016 (Prüfungszeitraum 2)",
                     "gesamtErgebnis"   => [
                         "ergebnisProzentzahl"     => 0.65,
@@ -117,9 +117,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "Stat-2",
                     "format"           => "station",
                     "fachsemester"     => 4,
-                    "studiPruefungsId" => 100006,
+                    "studiPruefungsId" => 100_006,
                     "zeitsemester"     => "WiSe 2016",
-                    "periodeCode"      => 201622,
+                    "periodeCode"      => 201_622,
                     "periodeText"      => "WiSe 2016 (Prüfungszeitraum 2)",
                     "gesamtErgebnis"   => [
                         "ergebnisProzentzahl"     => 0.99,
@@ -175,9 +175,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200100,
+                    "studiPruefungsId" => 200_100,
                     "zeitsemester"     => "SoSe 2019",
-                    "periodeCode"      => 20191,
+                    "periodeCode"      => 20_191,
                     "periodeText"      => "SoSe 2019",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 115,
@@ -520,9 +520,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200099,
+                    "studiPruefungsId" => 200_099,
                     "zeitsemester"     => "WiSe 2018",
-                    "periodeCode"      => 20182,
+                    "periodeCode"      => 20_182,
                     "periodeText"      => "WiSe 2018",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 95,
@@ -865,9 +865,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200098,
+                    "studiPruefungsId" => 200_098,
                     "zeitsemester"     => "SoSe 2018",
-                    "periodeCode"      => 20181,
+                    "periodeCode"      => 20_181,
                     "periodeText"      => "SoSe 2018",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 75,
@@ -1210,9 +1210,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200097,
+                    "studiPruefungsId" => 200_097,
                     "zeitsemester"     => "WiSe 2017",
-                    "periodeCode"      => 20172,
+                    "periodeCode"      => 20_172,
                     "periodeText"      => "WiSe 2017",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 65,
@@ -1555,9 +1555,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200096,
+                    "studiPruefungsId" => 200_096,
                     "zeitsemester"     => "SoSe 2017",
-                    "periodeCode"      => 20171,
+                    "periodeCode"      => 20_171,
                     "periodeText"      => "SoSe 2017",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 50,
@@ -1900,9 +1900,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200095,
+                    "studiPruefungsId" => 200_095,
                     "zeitsemester"     => "WiSe 2016",
-                    "periodeCode"      => 20162,
+                    "periodeCode"      => 20_162,
                     "periodeText"      => "WiSe 2016",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 37,
@@ -2245,9 +2245,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200094,
+                    "studiPruefungsId" => 200_094,
                     "zeitsemester"     => "SoSe 2016",
-                    "periodeCode"      => 20161,
+                    "periodeCode"      => 20_161,
                     "periodeText"      => "SoSe 2016",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 17,
@@ -2578,9 +2578,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "kurzName"         => "PTM",
                     "typ"              => "PTM",
                     "format"           => "ptm",
-                    "studiPruefungsId" => 200093,
+                    "studiPruefungsId" => 200_093,
                     "zeitsemester"     => "WiSe 2015",
-                    "periodeCode"      => 20152,
+                    "periodeCode"      => 20_152,
                     "periodeText"      => "WiSe 2015",
                     "gesamtErgebnis"   => [
                         "ergebnisRichtigPunktzahl"        => 15,
@@ -2924,9 +2924,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem9",
                     "format"           => "mc",
                     "fachsemester"     => 9,
-                    "studiPruefungsId" => 100005,
+                    "studiPruefungsId" => 100_005,
                     "zeitsemester"     => "SoSe 2019",
-                    "periodeCode"      => 201911,
+                    "periodeCode"      => 201_911,
                     "periodeText"      => "SoSe 2019 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 66,
@@ -3277,9 +3277,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem8",
                     "format"           => "mc",
                     "fachsemester"     => 8,
-                    "studiPruefungsId" => 100004,
+                    "studiPruefungsId" => 100_004,
                     "zeitsemester"     => "WiSe 2018",
-                    "periodeCode"      => 201821,
+                    "periodeCode"      => 201_821,
                     "periodeText"      => "WiSe 2018 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 51,
@@ -3587,9 +3587,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem7",
                     "format"           => "mc",
                     "fachsemester"     => 7,
-                    "studiPruefungsId" => 100003,
+                    "studiPruefungsId" => 100_003,
                     "zeitsemester"     => "SoSe 2018",
-                    "periodeCode"      => 201811,
+                    "periodeCode"      => 201_811,
                     "periodeText"      => "SoSe 2018 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 47,
@@ -3933,9 +3933,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem6",
                     "format"           => "mc",
                     "fachsemester"     => 6,
-                    "studiPruefungsId" => 100002,
+                    "studiPruefungsId" => 100_002,
                     "zeitsemester"     => "WiSe 2017",
-                    "periodeCode"      => 201721,
+                    "periodeCode"      => 201_721,
                     "periodeText"      => "WiSe 2017 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 45,
@@ -4348,9 +4348,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem5",
                     "format"           => "mc",
                     "fachsemester"     => 5,
-                    "studiPruefungsId" => 100001,
+                    "studiPruefungsId" => 100_001,
                     "zeitsemester"     => "SoSe 2017",
-                    "periodeCode"      => 201711,
+                    "periodeCode"      => 201_711,
                     "periodeText"      => "SoSe 2017 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 77,
@@ -4775,9 +4775,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem4",
                     "format"           => "mc",
                     "fachsemester"     => 4,
-                    "studiPruefungsId" => 100000,
+                    "studiPruefungsId" => 100_000,
                     "zeitsemester"     => "WiSe 2016",
-                    "periodeCode"      => 201621,
+                    "periodeCode"      => 201_621,
                     "periodeText"      => "WiSe 2016 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 60,
@@ -5232,9 +5232,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem3",
                     "format"           => "mc",
                     "fachsemester"     => 3,
-                    "studiPruefungsId" => 100100,
+                    "studiPruefungsId" => 100_100,
                     "zeitsemester"     => "SoSe 2016",
-                    "periodeCode"      => 201611,
+                    "periodeCode"      => 201_611,
                     "periodeText"      => "SoSe 2016 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 43,
@@ -5695,9 +5695,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem2",
                     "format"           => "mc",
                     "fachsemester"     => 2,
-                    "studiPruefungsId" => 789456,
+                    "studiPruefungsId" => 789_456,
                     "zeitsemester"     => "WiSe 2015",
-                    "periodeCode"      => 201521,
+                    "periodeCode"      => 201_521,
                     "periodeText"      => "WiSe 2015 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 57,
@@ -6179,9 +6179,9 @@ class PruefungenDemoData extends AbstractJsonDemoData
                     "typ"              => "MC-Sem1",
                     "format"           => "mc",
                     "fachsemester"     => 1,
-                    "studiPruefungsId" => 987654,
+                    "studiPruefungsId" => 987_654,
                     "zeitsemester"     => "SoSe 2015",
-                    "periodeCode"      => 201511,
+                    "periodeCode"      => 201_511,
                     "periodeText"      => "SoSe 2015 (Prüfungszeitraum 1)",
                     "gesamtErgebnis"   => [
                         "ergebnisPunktzahl"        => 45,

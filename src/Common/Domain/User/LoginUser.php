@@ -5,26 +5,20 @@ namespace Common\Domain\User;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Role\Role;
 
 class LoginUser implements DDDValueObject, UserInterface
 {
     use DefaultValueObjectComparison;
 
-    /** @var Vorname */
-    protected $vorname;
+    protected Vorname $vorname;
 
-    /** @var Nachname */
-    protected $nachname;
+    protected Nachname $nachname;
 
-    /** @var Email */
-    protected $email;
+    protected Email $email;
 
-    /** @var Username */
-    protected $usernameVO;
+    protected Username $usernameVO;
 
-    /** @var bool */
-    protected $istAdmin = FALSE;
+    protected bool $istAdmin = FALSE;
 
     public static function fromValues(
         Vorname $vorname,
@@ -59,9 +53,9 @@ class LoginUser implements DDDValueObject, UserInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return (Role|string)[] The user roles
+     * @return string[]
      */
-    public function getRoles() {
+    public function getRoles(): array {
         return $this->istAdmin
             ? ["ROLE_USER", "ROLE_ADMIN"]
             : ["ROLE_USER"];
@@ -74,7 +68,7 @@ class LoginUser implements DDDValueObject, UserInterface
      *
      * @return string|null The encoded password if any
      */
-    public function getPassword() {
+    public function getPassword(): ?string {
         return NULL;
     }
 
@@ -84,7 +78,7 @@ class LoginUser implements DDDValueObject, UserInterface
      *
      * @return string|null The salt
      */
-    public function getSalt() {
+    public function getSalt(): ?string {
         return NULL;
     }
 
@@ -93,7 +87,7 @@ class LoginUser implements DDDValueObject, UserInterface
      *
      * @return string The username
      */
-    public function getUsername() {
+    public function getUsername(): string {
         return $this->usernameVO->getValue();
     }
 
@@ -102,7 +96,7 @@ class LoginUser implements DDDValueObject, UserInterface
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
      */
-    public function eraseCredentials() {
+    public function eraseCredentials(): void {
     }
 
     public function getVorname(): Vorname {

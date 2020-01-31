@@ -9,14 +9,11 @@ class StoredEvent implements DomainEvent
 {
     use AbstractEventTrait;
 
-    /** @var StoredEventId */
-    private $id;
+    private StoredEventId $id;
 
-    /** @var StoredEventBody */
-    private $eventBody;
+    private StoredEventBody $eventBody;
 
-    /** @var StoredEventClass */
-    private $eventClass;
+    private StoredEventClass $eventClass;
 
     public static function fromData(
         StoredEventId $id,
@@ -24,7 +21,7 @@ class StoredEvent implements DomainEvent
         StoredEventBody $eventBody,
         DateTimeImmutable $occurredOn,
         ?int $byUserId = NULL
-    ) {
+    ): self {
         $object = new static();
         $object->id = $id;
         $object->eventClass = $eventClass;

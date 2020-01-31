@@ -12,11 +12,9 @@ class MCFragenAntwortenImportCommand extends AbstractCSVPruefungsImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcFragenTexte';
 
-    /** @var ChariteFragenCSVImportService */
-    private $chariteFragenCSVImportService;
+    private ChariteFragenCSVImportService $chariteFragenCSVImportService;
 
-    /** @var ChariteFragenPersistenzService */
-    private $chariteFragenPersistenzService;
+    private ChariteFragenPersistenzService $chariteFragenPersistenzService;
 
     public function __construct(
         ChariteFragenCSVImportService $chariteFragenCSVImportService,

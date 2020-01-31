@@ -6,7 +6,6 @@ use Common\Application\Command\CommandBus;
 use Common\Application\DomainEvent\DomainEvent;
 use Common\Application\DomainEvent\DomainEventSubscriber;
 use Common\Application\DomainEvent\DomainEventSubscriberTrait;
-use EPA\Application\Command\FremdBewertungAnfrageLoeschenCommand;
 use EPA\Application\Command\StudiUeberFremdbewertungInformierenCommand;
 use EPA\Application\Event\FremdBewertungAbgegebenEvent;
 
@@ -14,10 +13,10 @@ class KontaktiereStudiNachFremdbewertungSubscriber implements DomainEventSubscri
 {
     use DomainEventSubscriberTrait;
 
-    private $isSubscribedTo = [FremdBewertungAbgegebenEvent::class];
+    /** @var string[] */
+    private array $isSubscribedTo = [FremdBewertungAbgegebenEvent::class];
 
-    /** @var CommandBus */
-    private $commandBus;
+    private CommandBus $commandBus;
 
     public function __construct(CommandBus $commandBus) {
         $this->commandBus = $commandBus;

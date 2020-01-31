@@ -12,16 +12,15 @@ use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\FremdBewertung\FremdBewertungsId;
 use EPA\Domain\FremdBewertung\FremdBewertungsRepository;
+use Exception;
 
 final class FremdBewertungAbgebenHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /** @var FremdBewertungsAnfrageRepository */
-    private $fremdBewertungsAnfrageRepository;
+    private FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
 
-    /** @var FremdBewertungsRepository */
-    private $fremdBewertungsRepository;
+    private FremdBewertungsRepository $fremdBewertungsRepository;
 
     public function __construct(
         FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository,
@@ -44,7 +43,7 @@ final class FremdBewertungAbgebenHandler implements CommandHandler
                 );
         }
         if (!$epaBewertungen) {
-            throw new \Exception("Es muss mindestens eine Bewertung abgegeben werden!");
+            throw new Exception("Es muss mindestens eine Bewertung abgegeben werden!");
         }
         $fremdBewertung = FremdBewertung::create(
             FremdBewertungsId::fromInt($command->fremdBewertungsId),

@@ -6,13 +6,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MCFragenDemoData extends AbstractJsonDemoData
 {
-    protected $jsonData = [
+    protected array $jsonData = [
         "name"             => "MC-Test Semester 6 WiSe 2017 (Prüfungszeitraum 1)",
         "typ"              => "MC-Sem6",
         "format"           => "mc",
-        "studiPruefungsId" => 5620,
+        "studiPruefungsId" => 5_620,
         "zeitsemester"     => "WiSe 2017",
-        "periodeCode"      => 201721,
+        "periodeCode"      => 201_721,
         "periodeText"      => "WiSe 2017 (Prüfungszeitraum 1)",
         "fragen"           => [
             [
@@ -2255,12 +2255,10 @@ class MCFragenDemoData extends AbstractJsonDemoData
         preg_match("/\/[0-9]+\//", $pathInfo, $matches);
         if ($matches[0]) {
             $studiPruefungsId = str_replace("/", "", $matches[0]);
+            $this->jsonData["studiPruefungsId"] = $studiPruefungsId;
         }
-        $this->jsonData["studiPruefungsId"] = $studiPruefungsId;
 
-        return function() {
-            return new JsonResponse($this->jsonData);
-        };
+        return fn() => new JsonResponse($this->jsonData);
     }
 
     public function isResponsibleFor(string $pathInfo): bool {

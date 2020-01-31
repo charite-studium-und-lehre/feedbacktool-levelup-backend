@@ -9,7 +9,8 @@ use Pruefung\Domain\FrageAntwort\AntwortId;
 use Pruefung\Domain\FrageAntwort\AntwortRepository;
 use Pruefung\Domain\FrageAntwort\FragenId;
 
-/** @method all() : Antwort[] */
+/** @method Antwort[] all()
+ */
 final class FileBasedSimpleAntwortRepository extends AbstractCommonRepository implements AntwortRepository
 {
     use FileBasedRepoTrait;

@@ -9,27 +9,23 @@ class FremdBewertungAbgegebenEvent implements DomainEvent
 {
     use DomainEventTrait;
 
-    /** @var int */
-    public $fremdBewertungsId;
+    public int $fremdBewertungsId;
 
-    /** @var int */
-    public $fremdBewertungsAnfrageId;
+    public int $fremdBewertungsAnfrageId;
 
-    /** @var string */
-    public $loginHash;
+    public string $loginHash;
 
-    /** @var string */
-    public $studiEmail;
+    public string $studiEmail;
 
-    /** @var string */
-    public $studiName;
+    public string $studiName;
 
-    /** @var string */
-    public $bewerterName;
+    public string $bewerterName;
 
-    /** @var string */
-    public $bewerterEmail;
+    public string $bewerterEmail;
 
-    /** @var FremdBewertungDTO[] */
-    public $fremdBewertungen;
+    /**
+     * @var array<array<string, int>>
+     * @see FremdBewertungDTO
+     */
+    public array $fremdBewertungen;
 }

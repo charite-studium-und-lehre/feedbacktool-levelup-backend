@@ -15,8 +15,7 @@ class FremdBewerterName implements DDDValueObject
 
     use DefaultValueObjectComparison;
 
-    /** @var string */
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::String($value, self::UNGUELTIG_KURZ . $value);

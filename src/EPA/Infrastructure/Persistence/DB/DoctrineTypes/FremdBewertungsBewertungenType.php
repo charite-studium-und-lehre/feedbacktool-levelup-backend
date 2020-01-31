@@ -16,7 +16,10 @@ class FremdBewertungsBewertungenType extends Type
         return "VARCHAR(300)";
     }
 
-    /** @return EPABewertung[] */
+    /**
+     * @param ?string $value
+     * @return ?EPABewertung[]
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;
@@ -33,11 +36,15 @@ class FremdBewertungsBewertungenType extends Type
         return $returnArray;
     }
 
-    /** @param EPABewertung[] $value */
+    /**
+     * @param ?EPABewertung[] $value
+     * @return void
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!is_array($value)) {
             return NULL;
         }
+        $valueArray = [];
         foreach ($value as $epaBewertung) {
             /** @var EPABewertung $epaBewertung */
             $valueArray[$epaBewertung->getEpa()->getNummer()] = $epaBewertung->getBewertungInt();

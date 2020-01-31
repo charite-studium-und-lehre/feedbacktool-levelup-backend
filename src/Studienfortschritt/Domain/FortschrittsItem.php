@@ -98,16 +98,14 @@ class FortschrittsItem implements DDDValueObject
         309 => [310],  // wer 309 hat, hat immer auch 310
     ];
 
-    /** @var int */
-    private $code;
+    private int $code;
 
-    /** @var ?StudiPruefungsId */
-    private $studiPruefungsId;
+    private ?StudiPruefungsId $studiPruefungsId;
 
     public static function fromCode(int $code, ?StudiPruefungsId $studiPruefungsId = NULL): self {
         Assertion::inArray($code, self::FORTSCHRITT_KUERZEL_ZU_CODE, self::UNGUELTIG . $code);
         if ($code < 100 && $studiPruefungsId) {
-            throw new InvalidArgumentException("Ein Meilenstein kann keinen Bezug zu einer Prüfung haben");
+            throw new Exception("Ein Meilenstein kann keinen Bezug zu einer Prüfung haben");
         }
 
         $object = new self();
@@ -128,6 +126,7 @@ class FortschrittsItem implements DDDValueObject
             if ($pruefungsFormat->getValue() == PruefungsFormat::STATION_OSCE_SEM9) {
                 $code = 509;
             }
+
             return FortschrittsItem::fromCode($code, $studiPruefungsId);
         }
 
@@ -148,11 +147,11 @@ class FortschrittsItem implements DDDValueObject
         return $newObject;
     }
 
-    public function getCode() {
+    public function getCode(): int {
         return $this->code;
     }
 
-    public function getKuerzel() {
+    public function getKuerzel(): string {
         return array_flip(self::FORTSCHRITT_KUERZEL_ZU_CODE)[$this->code];
     }
 
@@ -160,7 +159,7 @@ class FortschrittsItem implements DDDValueObject
         return $this->studiPruefungsId;
     }
 
-    public function getTitel() {
+    public function getTitel(): string {
         if (isset(self::MEILENSTEINE[$this->code])) {
             return self::MEILENSTEINE[$this->code];
         }
@@ -196,15 +195,7 @@ class FortschrittsItem implements DDDValueObject
 
             return "Stationen-Prüfung Sem. $fachsemester";
         }
-    }
-
-    public function alleTitelNachCode(): array {
-        $alleTitel = [];
-        foreach (self::FORTSCHRITT_KUERZEL_ZU_CODE as $code) {
-            $alleTitel[$code] = FortschrittsItem::fromCode($code)->getTitel();
-        }
-
-        return $alleTitel;
+        throw new \Error("Code nicht gefunden: " . $this->code);
     }
 
     public function getFachsemester(): int {

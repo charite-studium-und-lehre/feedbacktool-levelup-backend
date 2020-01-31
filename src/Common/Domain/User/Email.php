@@ -12,7 +12,7 @@ class Email implements DDDValueObject
 
     const UNGUELTIG = "Die Mailadresse ist ungültig: ";
 
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::email($value, self::UNGUELTIG . $value);
@@ -23,7 +23,7 @@ class Email implements DDDValueObject
         return $object;
     }
 
-    public function getValue() {
+    public function getValue(): string {
         return $this->value;
     }
 

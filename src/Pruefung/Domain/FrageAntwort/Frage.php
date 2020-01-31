@@ -10,24 +10,20 @@ class Frage implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var FragenId */
-    private $id;
+    private FragenId $id;
 
-    /** @var PruefungsItemId */
-    private $pruefungsItemId;
+    private PruefungsItemId $pruefungsItemId;
 
-    /** @var FragenNummer */
-    private $fragenNummer;
+    private FragenNummer $fragenNummer;
 
-    /** @var FragenText */
-    private $fragenText;
+    private FragenText $fragenText;
 
     public static function fromPruefungsItemIdUndFrage(
         FragenId $fragenId,
         PruefungsItemId $pruefungsItemId,
         FragenNummer $fragenNummer,
         FragenText $fragenText
-    ) {
+    ): self {
         $object = new self();
         $object->id = $fragenId;
         $object->pruefungsItemId = $pruefungsItemId;
@@ -50,20 +46,16 @@ class Frage implements DDDEntity
         return $this->fragenNummer;
     }
 
-    public function getFragenText(): FragenText {
-        return $this->fragenText;
-    }
-
     public function setFragenNummer(FragenNummer $fragenNummer): void {
         $this->fragenNummer = $fragenNummer;
+    }
+
+    public function getFragenText(): FragenText {
+        return $this->fragenText;
     }
 
     public function setFragenText(FragenText $fragenText): void {
         $this->fragenText = $fragenText;
     }
-
-
-
-
 
 }

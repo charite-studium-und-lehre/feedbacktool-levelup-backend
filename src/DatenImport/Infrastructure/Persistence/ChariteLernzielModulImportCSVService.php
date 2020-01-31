@@ -3,20 +3,15 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use Cluster\Domain\ClusterCode;
-use Cluster\Domain\ClusterTitel;
 use Studi\Domain\MatrikelnummerMitStudiHash;
 
 class ChariteLernzielModulImportCSVService extends AbstractCSVImportService
 {
 
-    /** return Array<int, ClusterTitel>
-     *  returns <lernzielNummer => ClusterTitel(modulCode) >
+    /**
+     * returns <lernzielNummer => ClusterTitel(modulCode) >
      *
-     * @param string $inputFile
-     * @param string $delimiter
-     * @param bool $hasHeaders
-     * @param string $fromEncoding
-     * @return array
+     * @return array<int, ClusterCode>
      */
     public function getLernzielZuModulData(
         string $inputFile,

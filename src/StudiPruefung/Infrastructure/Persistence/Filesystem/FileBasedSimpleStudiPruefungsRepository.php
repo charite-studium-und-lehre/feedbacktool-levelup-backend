@@ -20,7 +20,7 @@ final class FileBasedSimpleStudiPruefungsRepository extends AbstractCommonReposi
     }
 
     public function nextIdentity(): StudiPruefungsId {
-        return StudiPruefungsId::fromInt($this->abstractNextIdentity());
+        return StudiPruefungsId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
     public function byStudiHashUndPruefungsId(StudiHash $studiHash, PruefungsId $pruefungsId): ?StudiPruefung {

@@ -16,20 +16,16 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcCSVFachUndModule';
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var Charite_Ergebnisse_CSVImportService */
-    private $chariteMCErgebnisseCSVImportService;
+    private Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
 
-    /** @var ChariteMCPruefungLernzielModulPersistenzService */
-    private $chariteMCPruefungLernzielModulPersistenz;
+    private ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz;
 
     /** ChariteMCPruefungFachPersistenzService */
-    private $chariteMCPruefungFachPersistenzService;
+    private ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService;
 
-    /** @var ChariteLernzielModulImportCSVService */
-    private $chariteLernzielModulImportCSVService;
+    private ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -60,8 +56,8 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $importOptionen = $this->getParameters($input);
-        $dateiPfadLzModule = $input->getArgument("dateiPfadLzModule");
-        $delimiterLzModule = $input->getArgument("delimiterLzModule") ?: ";";
+        $dateiPfadLzModule = (string) $input->getArgument("dateiPfadLzModule");
+        $delimiterLzModule = (string) $input->getArgument("delimiterLzModule") ?: ";";
 
         $mcPruefungsDaten = $this->chariteMCErgebnisseCSVImportService->getData(
             $importOptionen->dateiPfad, $importOptionen->delimiter,

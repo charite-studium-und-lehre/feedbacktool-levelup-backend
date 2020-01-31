@@ -20,8 +20,7 @@ final class FremdBewertungAnfragenHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /** @var FremdBewertungsAnfrageRepository */
-    private $fremdBewertungsAnfrageRepository;
+    private \EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
 
     public function __construct(FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository) {
         $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;

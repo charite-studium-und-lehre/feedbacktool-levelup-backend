@@ -22,11 +22,9 @@ class Zeitsemester
 
     const INVALID_SEMESTER = "Kein gültige Semesterbezeichnung: ";
 
-    /** @var int */
-    private $halbjahr;
+    private int $halbjahr;
 
-    /** @var int */
-    private $jahr;
+    private int $jahr;
 
     public static function fromString(string $zeitsemester): self {
         $invalidMessage = self::INVALID_SEMESTER . $zeitsemester;
@@ -45,7 +43,7 @@ class Zeitsemester
         $invalidMessage = self::INVALID_SEMESTER . "$halbjahr-$jahr";
         Assertion::inArray($halbjahr, [self::SOSE, self::WISE]);
         Assertion::date((string) $jahr, "Y", $invalidMessage);
-        Assertion::between($jahr, 2000, 10000, $invalidMessage);
+        Assertion::between($jahr, 2_000, 10_000, $invalidMessage);
 
         $object = new self();
         $object->halbjahr = $halbjahr;
@@ -105,11 +103,13 @@ class Zeitsemester
         return $this->halbjahr;
     }
 
-    /** @return z.B. "WiSe2019 */
+    /** z.B. "WiSe2019
+     */
     public function getStandardString(): string {
         return self::SEMESTER_STRING[$this->halbjahr] . $this->jahr;
     }
-    /** @return z.B. "WiSe 2019 */
+    /** z.B. "WiSe 2019"
+     */
     public function getStandardStringLesbar(): string {
         return self::SEMESTER_STRING[$this->halbjahr] . " " . $this->jahr;
     }

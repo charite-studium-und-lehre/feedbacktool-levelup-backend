@@ -11,7 +11,7 @@ use Cluster\Domain\ClusterTyp;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 
-/** @method Cluster[] all() */
+/** @method Array<Cluster> all() */
 final class FileBasedSimpleClusterRepository extends AbstractCommonRepository implements ClusterRepository
 {
     use FileBasedRepoTrait;
@@ -31,7 +31,7 @@ final class FileBasedSimpleClusterRepository extends AbstractCommonRepository im
     }
 
     public function nextIdentity(): ClusterId {
-        return ClusterId::fromInt($this->abstractNextIdentity());
+        return ClusterId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
     public function byClusterTypUndTitel(ClusterTyp $clusterTyp, ClusterTitel $clusterTitel): ?Cluster {

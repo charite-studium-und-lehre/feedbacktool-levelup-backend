@@ -6,9 +6,7 @@ abstract class AbstractHashCreator
 {
     const SEPARATOR = "|";
 
-
-    /** @var string */
-    private $appSecret;
+    private string $appSecret;
 
     public function __construct(string $appSecret) {
         $this->appSecret = $appSecret;

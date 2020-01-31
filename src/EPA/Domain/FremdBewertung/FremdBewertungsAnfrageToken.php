@@ -15,7 +15,7 @@ class FremdBewertungsAnfrageToken implements DDDValueObject
 
     const UNGUELTIG = "Scheint kein FremdBewertungsAnfrageToken zu sein: ";
 
-    private $value;
+    private string $value;
 
     public static function create(): self {
         return self::fromString(
@@ -37,7 +37,7 @@ class FremdBewertungsAnfrageToken implements DDDValueObject
         return $object;
     }
 
-    public function getValue() {
+    public function getValue(): string {
         return $this->value;
     }
 

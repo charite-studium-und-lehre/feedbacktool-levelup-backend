@@ -5,40 +5,41 @@ namespace EPA\Infrastructure\UserInterface\EMail;
 use EPA\Application\Command\StudiUeberFremdbewertungInformierenCommand;
 use EPA\Application\Services\KontaktiereStudiUeberFremdbewertungService;
 use Login\Infrastructure\Web\Service\FrontendUrlService;
+use Swift_Mailer;
+use Swift_Message;
 
 class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereStudiUeberFremdbewertungService
 {
-    /** @var \Swift_Mailer */
-    private $swiftMailer;
+    private Swift_Mailer $swiftMailer;
 
-    /** @var FrontendUrlService */
-    private $frontendUrlService;
+    private FrontendUrlService $frontendUrlService;
 
-    public function __construct(\Swift_Mailer $swiftMailer, FrontendUrlService $frontendUrlService) {
+    public function __construct(Swift_Mailer $swiftMailer, FrontendUrlService $frontendUrlService) {
         $this->swiftMailer = $swiftMailer;
         $this->frontendUrlService = $frontendUrlService;
     }
 
     public function run(StudiUeberFremdbewertungInformierenCommand $command): void {
         $this->sendMassage(
-            $this->getMailSubject($command,),
-            $this->getMailBody($command, $this->getLink($command)),
+            $this->getMailSubject($command),
+            $this->getMailBody($command, $this->getLink()),
             $command->studiEmail
         );
     }
 
-    private function getLink(StudiUeberFremdbewertungInformierenCommand $command): string {
+    private function getLink(): string {
         $frontendUrl = $this->frontendUrlService->getFrontendUrl();
+
         return "https://levelup.charite.de$frontendUrl/epas";
     }
 
     private function sendMassage(
-        $subject,
-        $body,
-        $to,
-        $from = "levelup@charite.de"
-    ) {
-        $message = new \Swift_Message();
+        string $subject,
+        string $body,
+        string $to,
+        string $from = "levelup@charite.de"
+    ): void {
+        $message = new Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
@@ -46,7 +47,7 @@ class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereSt
         $this->swiftMailer->send($message);
     }
 
-    private function getMailSubject(StudiUeberFremdbewertungInformierenCommand $command) {
+    private function getMailSubject(StudiUeberFremdbewertungInformierenCommand $command): string {
         return "Neue Fremdbewertung wurde abgegeben von "
             . $command->fremdBewerterName;
     }
@@ -54,7 +55,7 @@ class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereSt
     private function getMailBody(
         StudiUeberFremdbewertungInformierenCommand $command,
         string $link
-    ) {
+    ): string {
         $text = "Liebe/r " . $command->studiName . "\n\n"
             . "\n"
             . "Sie haben soeben eine neue Fremdbewertung erhalten von\n"

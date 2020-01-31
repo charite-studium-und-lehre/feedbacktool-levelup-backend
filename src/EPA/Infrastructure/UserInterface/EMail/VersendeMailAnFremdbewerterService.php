@@ -7,20 +7,19 @@ use EPA\Application\Services\KontaktiereFremdBewerterService;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use Login\Infrastructure\Web\Service\FrontendUrlService;
+use Swift_Mailer;
+use Swift_Message;
 
 class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterService
 {
-    /** @var \Swift_Mailer */
-    private $swiftMailer;
+    private Swift_Mailer $swiftMailer;
 
-    /** @var FremdBewertungsAnfrageRepository */
-    private $fremdBewertungsAnfrageRepository;
+    private FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
 
-    /** @var FrontendUrlService */
-    private $frontendUrlService;
+    private FrontendUrlService $frontendUrlService;
 
     public function __construct(
-        \Swift_Mailer $swiftMailer,
+        Swift_Mailer $swiftMailer,
         FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository,
         FrontendUrlService $frontendUrlService
     ) {
@@ -44,11 +43,17 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         )->getAnfrageToken();
 
         $appUrl = $this->frontendUrlService->getFrontendUrl();
+
         return "https://levelup.charite.de$appUrl/epas/fremdbewertung/" . $token->getValue();
     }
 
-    private function sendeMailAnBewerter($subject, $body, $to, $from = "levelup@charite.de") {
-        $message = new \Swift_Message();
+    private function sendeMailAnBewerter(
+        string $subject,
+        string $body,
+        string $to,
+        string $from = "levelup@charite.de"
+    ): void {
+        $message = new Swift_Message();
         $message->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
@@ -56,13 +61,19 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         $this->swiftMailer->send($message);
     }
 
-    private function sendeKopieAnStudi($subject, $body, $to, $originalTo, $from = "levelup@charite.de") {
+    private function sendeKopieAnStudi(
+        string $subject,
+        string $body,
+        string $to,
+        string $originalTo,
+        string $from = "levelup@charite.de"
+    ): void {
         $subjectStudi = "Levelup: Anfrage zu Fremdbewertug versendet an $originalTo";
         $body = "Folgende Nachricht wurde gerade verschickt:\n\n"
             . "An: $originalTo\n"
             . "Betreff: $subject\n"
             . "Inhalt:\n\n" . $body;
-        $message = new \Swift_Message();
+        $message = new Swift_Message();
         $message->setSubject($subjectStudi)
             ->setFrom($from)
             ->setTo($to)
@@ -70,12 +81,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         $this->swiftMailer->send($message);
     }
 
-    private function getMailSubject(FremdBewertungAnfrageVerschickenCommand $command) {
+    private function getMailSubject(FremdBewertungAnfrageVerschickenCommand $command): string {
         return "Anfrage zur Fremdbewertung ärztlicher Tätigkeiten von Studierende/r "
             . $command->studiName;
     }
 
-    private function getMailBody(FremdBewertungAnfrageVerschickenCommand $command, string $link) {
+    private function getMailBody(FremdBewertungAnfrageVerschickenCommand $command, string $link): string {
         $text = "Sehr geehrte/r Frau/Herr " . $command->fremdBewerterName . "\n\n"
             . "Studierenden des MSM 2.0 der Charité steht seit November 2019 die interne Feedback-Seite "
             . "LevelUp mit detailliert aufbereiteten Ergebnissen diverser Prüfungsformate auf einen Blick zur "

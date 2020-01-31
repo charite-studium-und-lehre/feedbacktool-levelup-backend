@@ -5,6 +5,7 @@ namespace Pruefung\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use Exception;
 
 class PruefungsFormat implements DDDValueObject
 {
@@ -120,8 +121,7 @@ class PruefungsFormat implements DDDValueObject
 
     const INVALID_PRUEFUNGSFORMAT = "Kein gültiges Prüfungsformat: ";
 
-    /** @var int */
-    private $value;
+    private int $value;
 
     public static function fromConst(int $value): self {
 
@@ -214,7 +214,7 @@ class PruefungsFormat implements DDDValueObject
         } elseif ($this->isMc()) {
             return "mc";
         }
-        throw new \Exception("Format nicht bekannt: " . $this->value);
+        throw new Exception("Format nicht bekannt: " . $this->value);
     }
 
 }

@@ -10,10 +10,10 @@ class AggregateId implements DDDValueObject
 
     const INVALID_ID = "Ist keine gültige ID: ";
 
-    protected $id;
+    protected int $id;
 
     /** @return static */
-    public static function fromInt(string $id): self {
+    public static function fromInt(int $id): self {
         Assertion::integerish($id, self::INVALID_ID . $id);
         Assertion::greaterThan($id, 0, self::INVALID_ID . $id);
 

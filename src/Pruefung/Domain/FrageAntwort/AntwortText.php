@@ -15,7 +15,7 @@ final class AntwortText implements DDDValueObject
 
     const INVALID_TEXT = "Der Antworttext ist nicht gültig: ";
 
-    private $value;
+    private string $value;
 
     public static function fromString(string $value): self {
         Assertion::string($value);

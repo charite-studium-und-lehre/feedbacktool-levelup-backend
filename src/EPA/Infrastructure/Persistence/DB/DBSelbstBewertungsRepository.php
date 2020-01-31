@@ -23,14 +23,14 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
     }
 
     public function byId(SelbstBewertungsId $id): ?SelbstBewertung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): SelbstBewertungsId {
         return SelbstBewertungsId::fromInt($this->abstractNextIdentityAsInt());
     }
 
-    /** SelbstBewertung[] */
+    /** @return SelbstBewertung[] */
     public function allLatestByStudiUndTyp(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
         /** @var SelbstBewertung[] $alleSelbstBewertungenNeueste */
         $alleSelbstBewertungenNeueste = [];

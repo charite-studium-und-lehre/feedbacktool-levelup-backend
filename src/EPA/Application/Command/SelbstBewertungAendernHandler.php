@@ -17,10 +17,7 @@ final class SelbstBewertungAendernHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /**
-     * @var SelbstBewertungsRepository
-     */
-    private $selbstBewertungsRepository;
+    private SelbstBewertungsRepository $selbstBewertungsRepository;
 
     public function __construct(SelbstBewertungsRepository $selbstBewertungsRepository) {
         $this->selbstBewertungsRepository = $selbstBewertungsRepository;
@@ -33,7 +30,7 @@ final class SelbstBewertungAendernHandler implements CommandHandler
 
         foreach ([SelbstBewertungsTyp::getGemachtObject(), SelbstBewertungsTyp::getZutrauenObject()]
             as $selbstBewertungsTyp) {
-            /** @var \EPA\Domain\SelbstBewertung\SelbstBewertungsTyp $selbstBewertungsTyp */
+            /** @var SelbstBewertungsTyp $selbstBewertungsTyp */
             if ($selbstBewertungsTyp->istGemacht()) {
                 $neuerWert = $command->gemacht;
             } else {

@@ -4,6 +4,7 @@ namespace Wertung\Domain;
 
 use Common\Domain\DDDEntity;
 use Common\Domain\DefaultEntityComparison;
+use Exception;
 use Pruefung\Domain\FrageAntwort\AntwortCode;
 use Pruefung\Domain\PruefungsItemId;
 use StudiPruefung\Domain\StudiPruefungsId;
@@ -13,23 +14,17 @@ class ItemWertung implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var ItemWertungsId */
-    private $id;
+    private ItemWertungsId $id;
 
-    /** @var PruefungsItemId */
-    private $pruefungsItemId;
+    private PruefungsItemId $pruefungsItemId;
 
-    /** @var StudiPruefungsId */
-    private $studiPruefungsId;
+    private StudiPruefungsId $studiPruefungsId;
 
-    /** @var Wertung */
-    private $wertung;
+    private Wertung $wertung;
 
-    /** @var ?Wertung */
-    private $kohortenWertung;
+    private ?Wertung $kohortenWertung;
 
-    /** @var AntwortCode */
-    private $antwortCode;
+    private ?AntwortCode $antwortCode;
 
     public static function create(
         ItemWertungsId $id,
@@ -54,13 +49,13 @@ class ItemWertung implements DDDEntity
 
     public function setKohortenWertung(?Wertung $kohortenWertung): void {
         if (get_class($kohortenWertung) != get_class($this->wertung)) {
-            throw new \Exception("Kohortenwertung muss gleiche Wertungsart sein wie Wertung selbst!");
+            throw new Exception("Kohortenwertung muss gleiche Wertungsart sein wie Wertung selbst!");
         }
         $this->kohortenWertung = $kohortenWertung;
     }
 
     public function getId(): ItemWertungsId {
-        return ItemWertungsId::fromInt($this->id);
+        return $this->id;
     }
 
     public function getPruefungsItemId(): PruefungsItemId {
@@ -76,7 +71,7 @@ class ItemWertung implements DDDEntity
     }
 
     public function getStudiPruefungsId(): StudiPruefungsId {
-        return StudiPruefungsId::fromInt($this->studiPruefungsId);
+        return $this->studiPruefungsId;
     }
 
     public function getAntwortCode(): ?AntwortCode {

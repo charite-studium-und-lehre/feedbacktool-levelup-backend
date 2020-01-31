@@ -9,14 +9,8 @@ class StudiInternHinzufuegenEvent implements DomainEvent
 {
     use DomainEventTrait;
 
-    /**
-     * @var string
-     */
-    public $studiHash;
+    public string $studiHash;
 
-    /**
-     * @var string
-     */
-    public $matrikelnummer;
+    public string $matrikelnummer;
 
 }

@@ -21,7 +21,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
     }
 
     public function nextIdentity(): SelbstBewertungsId {
-        return SelbstBewertungsId::fromString($this->abstractNextIdentity());
+        return SelbstBewertungsId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
     public function allLatestByStudiUndTyp(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
@@ -44,7 +44,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
         return array_values($gefundeneBewertungen);
     }
 
-    /** @return \EPA\Domain\Selbstbewertung\SelbstBewertung[] */
+    /** @return SelbstBewertung[] */
     public function allByStudi(LoginHash $loginHash): array {
         $resultArray = [];
         foreach ($this->all() as $bewertung) {

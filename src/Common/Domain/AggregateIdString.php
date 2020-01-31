@@ -13,7 +13,7 @@ class AggregateIdString implements DDDValueObject
 
     const MAX_CHARS = 30;
 
-    protected $id;
+    protected string $id;
 
     /** @return static */
     public static function fromString(string $id): self {

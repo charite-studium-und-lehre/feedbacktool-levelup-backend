@@ -4,7 +4,7 @@ namespace Common\lib\Math;
 
 use Assert\Assertion;
 
-/** Kodiert mehrere kleine int-Zahlen in einer großen int-Zahl,
+/** Kodiert eine Float-Zahlen mit definierten Nachkommastellen zu einer großen int-Zahl,
  * Verwendet Modulus und ganzzahlige Division
  */
 class FloatToIntKodierer

@@ -11,15 +11,16 @@ trait DomainEventTrait
 {
     use AbstractEventTrait, Immutable;
 
+    /** @return self */
     public function fromCommand(DomainCommand $command) {
 
         $object = new static();
 
         if (!is_a($command, get_class($object))) {
-            return new RuntimeException("Command and Event do not match: "
-                                         . get_class($object)
-                                         . " - "
-                                         . get_class($command));
+            throw new RuntimeException("Command and Event do not match: "
+                                        . get_class($object)
+                                        . " - "
+                                        . get_class($command));
         }
 
         $all_properties = get_object_vars($command);

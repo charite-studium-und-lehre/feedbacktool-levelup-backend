@@ -21,7 +21,7 @@ final class DBStudiPruefungsWertungRepository implements StudiPruefungsWertungRe
     }
 
     public function byId(StudiPruefungsId $id): ?StudiPruefungsWertung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function byStudiPruefungsId(StudiPruefungsId $studiPruefungsId): ?StudiPruefungsWertung {

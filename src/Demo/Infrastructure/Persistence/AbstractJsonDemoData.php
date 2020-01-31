@@ -6,13 +6,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class AbstractJsonDemoData
 {
-    /** @var array */
-    protected $jsonData;
+    protected array $jsonData;
 
     public function getController(string $pathInfo): callable {
-        return function() {
-            return new JsonResponse($this->jsonData);
-        };
+        return fn() => new JsonResponse($this->jsonData);
     }
 
     abstract public function isResponsibleFor(string $pathInfo): bool;

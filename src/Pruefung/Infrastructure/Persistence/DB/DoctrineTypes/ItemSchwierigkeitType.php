@@ -15,7 +15,10 @@ class ItemSchwierigkeitType extends Type
         return "INTEGER";
     }
 
-    /** @return ItemSchwierigkeit */
+    /**
+     * @param ?int $value
+     * @return ?ItemSchwierigkeit
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (is_int($value)) {
             return ItemSchwierigkeit::fromConst($value);
@@ -24,7 +27,10 @@ class ItemSchwierigkeitType extends Type
         return NULL;
     }
 
-    /** @param ItemSchwierigkeit $value */
+    /**
+     * @param ?ItemSchwierigkeit $value
+     * @return int
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;

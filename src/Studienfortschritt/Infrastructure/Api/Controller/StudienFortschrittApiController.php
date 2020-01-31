@@ -13,8 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudienFortschrittApiController extends BaseController
 {
 
-    /** @var StudienFortschrittExportService */
-    private $meilensteinExportService;
+    private StudienFortschrittExportService $meilensteinExportService;
 
     public function __construct(StudienFortschrittExportService $meilensteinExportService) {
         $this->meilensteinExportService = $meilensteinExportService;
@@ -24,7 +23,7 @@ class StudienFortschrittApiController extends BaseController
      * @Route("/api/meilensteine")
      * @Route("/api/studienfortschritt", name="studienfortschritt")
      */
-    public function jsonMeilensteineAction() {
+    public function jsonMeilensteineAction(): Response {
         session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {

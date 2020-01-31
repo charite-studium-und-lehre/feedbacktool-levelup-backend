@@ -20,8 +20,7 @@ class ItemSchwierigkeit implements DDDValueObject
         self::SCHWIERIGKEIT_SCHWER,
     ];
 
-    /** @var int */
-    private $const;
+    private int $const;
 
     public static function fromConst(string $const): self {
         Assertion::integerish($const);
@@ -71,6 +70,7 @@ class ItemSchwierigkeit implements DDDValueObject
             case self::SCHWIERIGKEIT_SCHWER:
                 return "schwer";
         }
+        throw new \Exception("Unbekannte Schwierigkeit: " . $this->const);
     }
 
 }

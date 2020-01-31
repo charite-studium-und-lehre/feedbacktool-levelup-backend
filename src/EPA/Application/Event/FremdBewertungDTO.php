@@ -8,9 +8,7 @@ class FremdBewertungDTO
 {
     use Immutable;
 
-    /** @var int */
-    public $epaId;
+    public int $epaId;
 
-    /** @var int */
-    public $fremdBewertung;
+    public int $fremdBewertung;
 }

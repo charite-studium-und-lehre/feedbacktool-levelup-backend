@@ -20,7 +20,7 @@ abstract class BaseController extends AbstractController
         if ($user) {
             if ($user instanceof Studi && $user->getLoginHash()) {
                 return $user->getLoginHash();
-            } else {
+            } elseif ($user instanceof LoginUser) {
                 return $loginHashCreator->createLoginHash($user->getUsernameVO());
             }
         }
@@ -28,11 +28,12 @@ abstract class BaseController extends AbstractController
         return NULL;
     }
 
-    protected function getJsonContentParams(Request $request) {
+    /** @return ArrayCollection<string, array> */
+    protected function getJsonContentParams(Request $request): ArrayCollection {
+        /** @var string $content */
         $content = $request->getContent();
 
         if (empty($content)) {
-            return $request;
             throw new BadRequestHttpException("Content is empty");
         }
 
@@ -49,7 +50,7 @@ abstract class BaseController extends AbstractController
         return $this->getUser();
     }
 
-    protected function checkLogin() {
+    protected function checkLogin(): void {
         if (!$this->getUser()) {
             throw new HttpException(401, "Nicht eingeloggt");
         }

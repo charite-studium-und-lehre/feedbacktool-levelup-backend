@@ -14,8 +14,7 @@ final class StudiInternHinzufuegenHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private StudiInternRepository $studiInternRepository;
 
     public function __construct(StudiInternRepository $studiInternRepository) {
         $this->studiInternRepository = $studiInternRepository;

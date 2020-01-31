@@ -9,19 +9,14 @@ class ImportOptionenDTO
 {
     use Immutable;
 
-    /** @var string */
-    public $dateiPfad;
+    public string $dateiPfad;
 
-    /** @var string */
-    public $delimiter;
+    public string $delimiter;
 
-    /** @var string */
-    public $encoding;
+    public string $encoding;
 
-    /** @var boolean */
-    public $hasHeaders;
+    public bool $hasHeaders;
 
-    /** @var PruefungsPeriode */
-    public $pruefungsPeriode;
+    public PruefungsPeriode $pruefungsPeriode;
 
 }

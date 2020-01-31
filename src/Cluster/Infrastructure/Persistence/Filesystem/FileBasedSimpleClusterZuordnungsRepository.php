@@ -9,6 +9,7 @@ use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use Pruefung\Domain\PruefungsItemId;
 
+/** @methdod ClusterZuordnung all() */
 final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRepository implements ClusterZuordnungsRepository
 {
     use FileBasedRepoTrait;
@@ -23,7 +24,6 @@ final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRep
     public function alleClusterIdsVonPruefungsItem(PruefungsItemId $pruefungsItemId): array {
         $resultArray = [];
         foreach ($this->all() as $aktuelleZuordnung) {
-            /* @var $aktuelleZuordnung ClusterZuordnung */
             if ($aktuelleZuordnung->getPruefungsItemId()->equals($pruefungsItemId)) {
                 $resultArray[] = $aktuelleZuordnung->getClusterId();
             }
@@ -45,6 +45,7 @@ final class FileBasedSimpleClusterZuordnungsRepository extends AbstractCommonRep
         return $resultArray;
     }
 
+    /** @param ClusterZuordnung $clusterZuordnung */
     public function delete($clusterZuordnung): void {
         if ($this->sucheAktuelleZuordnung($clusterZuordnung)) {
             parent::delete($clusterZuordnung);

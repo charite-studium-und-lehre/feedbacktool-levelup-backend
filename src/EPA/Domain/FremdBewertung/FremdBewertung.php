@@ -12,21 +12,18 @@ class FremdBewertung implements DDDEntity
 {
     use DefaultEntityComparison;
 
-    /** @var FremdBewertungsId */
-    private $id;
+    private FremdBewertungsId $id;
 
-    /** @var LoginHash */
-    private $loginHash;
+    private LoginHash $loginHash;
 
     /** @var EPABewertung[] */
-    private $bewertungen;
+    private array $bewertungen;
 
-    /** @var FremdBewertungsAnfrageDaten */
-    private $anfrageDaten;
+    private FremdBewertungsAnfrageDaten $anfrageDaten;
 
-    /** @var EPABewertungsDatum */
-    private $bewertungsDatum;
+    private EPABewertungsDatum $bewertungsDatum;
 
+    /** @param EPABewertung[] $bewertungen */
     public static function create(
         FremdBewertungsId $id,
         LoginHash $loginHash,
@@ -44,7 +41,7 @@ class FremdBewertung implements DDDEntity
     }
 
     public function getId(): FremdBewertungsId {
-        return FremdBewertungsId::fromInt($this->id);
+        return $this->id;
     }
 
     public function getLoginHash(): LoginHash {

@@ -10,14 +10,11 @@ use Wertung\Domain\ItemWertungsRepository;
 /** @TODO Tests */
 class ItemWertungDurchschnittPersistenzService
 {
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,

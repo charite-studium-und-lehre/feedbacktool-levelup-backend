@@ -2,14 +2,12 @@
 
 namespace DatenImport\Domain;
 
-use DatenImport\Infrastructure\UserInterface\CLI\MCCSVPruefungsFaecherUndModuleImportCommand;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\Matrikelnummer;
-use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
@@ -23,23 +21,17 @@ use Wertung\Domain\Wertung\Prozentzahl;
 class ChariteStationenPruefungPersistenzService
 {
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private StudiInternRepository $studiInternRepository;
 
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -57,15 +49,21 @@ class ChariteStationenPruefungPersistenzService
         $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
-    public static function getPruefungsItemId(PruefungsId $pruefungsId, $fach, $ergebnisKey): PruefungsItemId {
+    public static function getPruefungsItemId(
+        PruefungsId $pruefungsId,
+        string $fach,
+        string $ergebnisKey
+    ): PruefungsItemId {
         $itemCode = $fach . "-" . $ergebnisKey;
         $pruefungsItemIdString = $pruefungsId->getValue() . "-" . $itemCode;
 
         return PruefungsItemId::fromString($pruefungsItemIdString);
     }
 
-    /** @param StudiIntern[] $studiInternArray */
-    public function persistierePruefung($pruefungsDaten, PruefungsId $pruefungsId) {
+    /**
+     * @param array<int, array<string, mixed>> $pruefungsDaten
+     */
+    public function persistierePruefung(array $pruefungsDaten, PruefungsId $pruefungsId): void {
         foreach ($pruefungsDaten as $key => $dataLine) {
             $ergebnisse = $dataLine["ergebnisse"];
             $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikelnummer"]);
@@ -142,6 +140,7 @@ class ChariteStationenPruefungPersistenzService
 
     }
 
+    /** @param array<int, ProzentWertung> $einzelWertungen */
     private function createOrUpdateGesamtWertung(
         StudiPruefung $studiPruefung,
         array $einzelWertungen

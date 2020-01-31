@@ -16,12 +16,18 @@ class FremdBewertungsAnfrageKommentarType extends Type
         return "VARCHAR(" . FremdBewertungsAnfrageKommentar::MAX_LENGTH . ")";
     }
 
-    /** @return FremdBewertungsAnfrageKommentar */
+    /**
+     * @param ?string $value
+     * @return ?FremdBewertungsAnfrageKommentar
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         return $value ? FremdBewertungsAnfrageKommentar::fromString($value) : NULL;
     }
 
-    /** @param FremdBewertungsAnfrageKommentar $value */
+    /**
+     * @param ?FremdBewertungsAnfrageKommentar $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         return $value ? $value->getValue() : NULL;
     }

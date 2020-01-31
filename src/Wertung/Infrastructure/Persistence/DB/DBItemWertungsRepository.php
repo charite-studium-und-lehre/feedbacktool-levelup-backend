@@ -22,7 +22,7 @@ final class DBItemWertungsRepository implements ItemWertungsRepository
     }
 
     public function byId(ItemWertungsId $id): ?ItemWertung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): ItemWertungsId {

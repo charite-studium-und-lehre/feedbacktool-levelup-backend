@@ -13,11 +13,11 @@ final class DBLernzielFachRepository implements LernzielFachRepository
     use DDDDoctrineRepoTrait;
 
     public function getFachClusterIdByLernzielNummer(LernzielNummer $lernzielNummer): ?ClusterId {
+        /** @var ?LernzielFach $lernzielFach */
         $lernzielFach = $this->doctrineRepo->findOneBy(
             ["lernzielNummer" => $lernzielNummer]
         );
 
-        /** @var $lernzielFach LernzielFach */
         return $lernzielFach ? $lernzielFach->getClusterId() : NULL;
     }
 

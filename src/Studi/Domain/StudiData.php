@@ -11,18 +11,16 @@ final class StudiData implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    /** @var Matrikelnummer */
-    private $matrikelnummer;
+    private Matrikelnummer $matrikelnummer;
 
-    /** @var Vorname */
-    private $vorname;
+    private Vorname $vorname;
 
-    /** @var Nachname */
-    private $nachname;
+    private Nachname $nachname;
 
-    /** @var array */
-    private $dataLine;
+    /** @var array<string, string> */
+    private array $dataLine;
 
+    /** @param array<string, string> $dataLine */
     public static function fromValues(
         Matrikelnummer $matrikelnummer,
         Vorname $vorname,
@@ -34,7 +32,6 @@ final class StudiData implements DDDValueObject
         $object->vorname = $vorname;
         $object->nachname = $nachname;
         $object->dataLine = $dataLine;
-
         return $object;
     }
 
@@ -53,8 +50,8 @@ final class StudiData implements DDDValueObject
         return $this->nachname;
     }
 
+    /** @return array<string, string> */
     public function getDataLine(): array {
         return $this->dataLine;
     }
-
 }

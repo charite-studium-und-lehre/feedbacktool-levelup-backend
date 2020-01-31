@@ -15,14 +15,24 @@ class MatrikelnummerType extends Type
         return "INTEGER";
     }
 
-    /** @return Matrikelnummer */
+    /**
+     * @param ?int $value
+     * @return ?Matrikelnummer
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
-        return Matrikelnummer::fromInt($value);
+        return $value
+            ? Matrikelnummer::fromInt($value)
+            : NULL;
     }
 
-    /** @param Matrikelnummer $value */
+    /**
+     * @param ?Matrikelnummer $value
+     * @return ?int
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-        return $value->getValue();
+        return $value
+            ? $value->getValue()
+            : NULL;
     }
 
     public function getName() {

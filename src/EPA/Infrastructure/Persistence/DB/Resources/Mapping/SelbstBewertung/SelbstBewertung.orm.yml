@@ -4,7 +4,7 @@ EPA\Domain\SelbstBewertung\SelbstBewertung:
 
   id:
     id:
-      type: aggregateId
+      type: selbstBewertungsId
 
   embedded:
     selbstBewertungsTyp:

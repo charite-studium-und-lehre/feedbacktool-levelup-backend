@@ -22,7 +22,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
     }
 
     public function byId(StudiPruefungsId $id): ?StudiPruefung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): StudiPruefungsId {
@@ -33,7 +33,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
         return $this->doctrineRepo->findOneBy(
             [
                 "studiHash"      => $studiHash,
-                "pruefungsId.id" => $pruefungsId->getValue(),
+                "pruefungsId" => $pruefungsId,
             ]
         );
     }
@@ -44,7 +44,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
             [
                 "studiHash" => $studiHash,
             ],
-            ["pruefungsId.id" => "DESC"]
+            ["pruefungsId" => "DESC"]
         );
     }
 
@@ -52,7 +52,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
     public function allByPruefungsId(PruefungsId $pruefungsId): array {
         return $this->doctrineRepo->findBy(
             [
-                "pruefungsId.id" => $pruefungsId,
+                "pruefungsId" => $pruefungsId,
             ],
         );
     }

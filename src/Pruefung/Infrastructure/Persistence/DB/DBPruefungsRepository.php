@@ -20,7 +20,7 @@ final class DBPruefungsRepository implements PruefungsRepository
     }
 
     public function byId(PruefungsId $id): ?Pruefung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): PruefungsId {

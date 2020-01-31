@@ -7,15 +7,13 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ClusterZuordnung
 {
-    /** @var ClusterId */
-    private $clusterId;
+    private ClusterId $clusterId;
 
-    /** @var PruefungsItemId */
-    private $pruefungsItemId;
+    private PruefungsItemId $pruefungsItemId;
 
     use DefaultValueObjectComparison;
 
-    public static function byIds(ClusterId $clusterId, PruefungsItemId $pruefungsItemId) {
+    public static function byIds(ClusterId $clusterId, PruefungsItemId $pruefungsItemId): ClusterZuordnung {
         $object = new self();
         $object->clusterId = $clusterId;
         $object->pruefungsItemId = $pruefungsItemId;
@@ -24,7 +22,7 @@ class ClusterZuordnung
     }
 
     public function getClusterId(): ClusterId {
-        return ClusterId::fromInt($this->clusterId);
+        return $this->clusterId;
     }
 
     public function getPruefungsItemId(): PruefungsItemId {

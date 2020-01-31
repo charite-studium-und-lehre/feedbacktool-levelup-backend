@@ -9,11 +9,9 @@ use DateTimeImmutable;
 final class EntityZeitstempel
 {
 
-    /** @var DateTimeImmutable */
-    private $erzeugungsZeit;
+    private \DateTimeImmutable $erzeugungsZeit;
 
-    /** @var DateTimeImmutable|NULL */
-    private $aenderungsZeit = NULL;
+    private ?\DateTimeImmutable $aenderungsZeit = NULL;
 
     public static function createErzeugungsZeitstempel(): EntityZeitstempel {
         $entityZeitstempel = new self();
@@ -39,7 +37,7 @@ final class EntityZeitstempel
         return $this->aenderungsZeit;
     }
 
-    public function setzeErzeugungRelativ_fuerTest(int $sekunden) {
+    public function setzeErzeugungRelativ_fuerTest(int $sekunden): void {
         $this->erzeugungsZeit = DateTimeImmutable::createFromMutable(
             (new DateTime())
                 ->add(new DateInterval("PT$sekunden" . "S"))

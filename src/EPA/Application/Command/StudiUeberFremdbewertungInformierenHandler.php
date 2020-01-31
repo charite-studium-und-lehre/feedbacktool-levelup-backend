@@ -11,15 +11,14 @@ final class StudiUeberFremdbewertungInformierenHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /** @var KontaktiereStudiUeberFremdbewertungService */
-    private $kontaktiereStudiUeberFremdbewertungService;
+    private KontaktiereStudiUeberFremdbewertungService $kontaktiereStudiUeberFremdbewertungService;
 
     public function __construct(KontaktiereStudiUeberFremdbewertungService $kontaktiereStudiUeberFremdbewertungService
     ) {
         $this->kontaktiereStudiUeberFremdbewertungService = $kontaktiereStudiUeberFremdbewertungService;
     }
 
-    /** @param StudiUeberFremdbewertungInformierenHandler $command */
+    /** @param StudiUeberFremdbewertungInformierenCommand $command */
     public function handle(DomainCommand $command): void {
         $this->kontaktiereStudiUeberFremdbewertungService->run($command);
     }

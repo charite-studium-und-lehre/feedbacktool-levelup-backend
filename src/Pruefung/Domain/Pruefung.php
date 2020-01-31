@@ -9,17 +9,13 @@ class Pruefung
 {
     use DefaultEntityComparison;
 
-    /** @var PruefungsId */
-    private $id;
+    private PruefungsId $id;
 
-    /** @var PruefungsPeriode */
-    private $pruefungsPeriode;
+    private PruefungsPeriode $pruefungsPeriode;
 
-    /** @var PruefungsFormat */
-    private $format;
+    private PruefungsFormat $format;
 
-    /** @var ?Skala */
-    private $benotungsSkala;
+    private ?Skala $benotungsSkala;
 
     public static function create(
         PruefungsId $id,
@@ -38,7 +34,7 @@ class Pruefung
     }
 
     public function getId(): PruefungsId {
-        return PruefungsId::fromString($this->id->getValue());
+        return $this->id;
     }
 
     public function getPruefungsPeriode(): PruefungsPeriode {

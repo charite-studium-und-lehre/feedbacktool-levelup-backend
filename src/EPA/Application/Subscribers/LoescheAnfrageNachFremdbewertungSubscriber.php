@@ -13,10 +13,10 @@ class LoescheAnfrageNachFremdbewertungSubscriber implements DomainEventSubscribe
 {
     use DomainEventSubscriberTrait;
 
-    private $isSubscribedTo = [FremdBewertungAbgegebenEvent::class];
+    /** @var string[] */
+    private array $isSubscribedTo = [FremdBewertungAbgegebenEvent::class];
 
-    /** @var CommandBus */
-    private $commandBus;
+    private CommandBus $commandBus;
 
     public function __construct(CommandBus $commandBus) {
         $this->commandBus = $commandBus;

@@ -16,20 +16,15 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:ptm';
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var CharitePTMCSVImportService */
-    private $charitePTMCSVImportService;
+    private CharitePTMCSVImportService $charitePTMCSVImportService;
 
-    /** @var CharitePTMPersistenzService */
-    private $charitePTMPersistenzService;
+    private CharitePTMPersistenzService $charitePTMPersistenzService;
 
-    /** @var StudiPruefungDurchschnittPersistenzService */
-    private $studiPruefungDurchschnittPersistenzService;
+    private StudiPruefungDurchschnittPersistenzService $studiPruefungDurchschnittPersistenzService;
 
-    /** @var ItemWertungDurchschnittPersistenzService */
-    private $itemWertungDurchschnittPersistenzService;
+    private ItemWertungDurchschnittPersistenzService $itemWertungDurchschnittPersistenzService;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -54,7 +49,7 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $importOptionenDTO = $this->getParameters($input);
-        $delimiter = $input->getArgument("delimiter") ?: ";";
+        $delimiter = (string) $input->getArgument("delimiter") ?: ";";
         $this->pruefeHatKeineUnterPeriode($importOptionenDTO->pruefungsPeriode);
 
         $pruefungsId = $this->erzeugePruefung($output, PruefungsFormat::getPTM(),
@@ -63,8 +58,7 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
 
         $ptmPruefungsDaten = $this->charitePTMCSVImportService->getData(
             $importOptionenDTO->dateiPfad, $delimiter,
-            $importOptionenDTO->hasHeaders, $importOptionenDTO->encoding,
-            $pruefungsId
+            $importOptionenDTO->hasHeaders, $importOptionenDTO->encoding
         );
         $output->writeln(count($ptmPruefungsDaten) . " Zeilen gelesen. Persistiere.");
 
@@ -78,8 +72,6 @@ class PTMCSVPruefungsImportCommand extends AbstractCSVPruefungsImportCommand
         $output->writeln("Persistiere Durchschnittswerte der Gesamtwertungen");
         $this->studiPruefungDurchschnittPersistenzService
             ->berechneUndPersistiereGesamtDurchschnitt($pruefungsId);
-
-
 
         $output->writeln("\nFertig. ");
 

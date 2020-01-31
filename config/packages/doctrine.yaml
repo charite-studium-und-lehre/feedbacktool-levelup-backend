@@ -32,20 +32,38 @@ doctrine:
         class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
       wertung:
         class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
+      itemWertungsId:
+        class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemWertungsIdType"
+      clusterId:
+        class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterIdType"
       clusterCode:
         class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
       itemSchwierigkeit:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
+      pruefungsId:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsIdType"
+      pruefungsItemId:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsItemIdType"
       pruefungsPeriode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
+      studiPruefungsId:
+        class: "StudiPruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiPruefungsIdType"
       antwortCode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AntwortCodeType"
+      selbstBewertungsId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\SelbstBewertungsIdType"
+      fremdBewertungsId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsIdType"
+      fremdBewertungsAnfrageId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageIdType"
       fremdBewertungsAnfrageTaetigkeiten:
         class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageTaetigkeitenType"
       fremdBewertungsAnfrageKommentar:
         class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageKommentarType"
       fremdBewertungsBewertungen:
         class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsBewertungenType"
+      lernzielNummer:
+        class: "DatenImport\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LernzielNummerType"
 
     mapping_types:
       aggregateId: integer
@@ -55,13 +73,22 @@ doctrine:
       studiHash: string
       loginHash: string
       wertung: integer
+      itemWertungsId: integer
+      clusterId: integer
       clusterCode: string
       itemSchwierigkeit: integer
+      pruefungsId: string
+      pruefungsItemId: string
       pruefungsPeriode: integer
+      studiPruefungsId: integer
       antwortCode: string
+      selbstBewertungsId: integer
+      fremdBewertungsId: integer
+      fremdBewertungsAnfrageId: integer
       fremdBewertungsAnfrageTaetigkeiten: string
       fremdBewertungsAnfrageKommentar: string
       fremdBewertungsBewertungen: string
+      lernzielNummer: integer
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'

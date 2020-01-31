@@ -8,16 +8,15 @@ use StudiPruefung\Domain\StudiPruefungsId;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class StudiPruefungApiController extends AbstractController
 {
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var StudiPruefungErgebnisService */
-    private $studiPruefungsErgebnisService;
+    private StudiPruefungErgebnisService $studiPruefungsErgebnisService;
 
     public function __construct(
         StudiPruefungsRepository $studiPruefungsRepository,
@@ -30,7 +29,7 @@ class StudiPruefungApiController extends AbstractController
     /**
      * @Route("/api/pruefungen")
      */
-    public function jsonStudiPruefungAction() {
+    public function jsonStudiPruefungAction(): Response {
         session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
@@ -50,7 +49,7 @@ class StudiPruefungApiController extends AbstractController
     /**
      * @Route("/api/pruefungen/{studiPruefungsIdInt}")
      */
-    public function jsonStudiPruefungsDetailsAction(int $studiPruefungsIdInt) {
+    public function jsonStudiPruefungsDetailsAction(int $studiPruefungsIdInt): Response {
         session_write_close();
         $eingeloggterStudi = $this->getUser();
         if (!$eingeloggterStudi instanceof Studi) {
