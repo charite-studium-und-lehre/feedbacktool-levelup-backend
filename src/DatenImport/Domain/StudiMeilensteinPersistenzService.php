@@ -63,20 +63,20 @@ class StudiMeilensteinPersistenzService
 
             $zuLoeschen = [];
             foreach ($alleMeilensteineDesStudis as $existierenderMeilenstein) {
-                $codeExistierend = $existierenderMeilenstein->getMeilenstein()->getCode();
+                $codeExistierend = $existierenderMeilenstein->getFortschrittsItem()->getCode();
                 if (!in_array($codeExistierend, $meilensteinCodesHinzuzufuegen)) {
                     $zuLoeschen[] = $existierenderMeilenstein;
                 } else {
                     $meilensteinCodesHinzuzufuegen =
                         array_diff($meilensteinCodesHinzuzufuegen,
-                                   [$existierenderMeilenstein->getMeilenstein()->getCode()]
+                                   [$existierenderMeilenstein->getFortschrittsItem()->getCode()]
                         );
                 }
             }
             foreach ($meilensteinCodesHinzuzufuegen as $meilensteinCodeHinzuzufuegen) {
                 $gefunden = FALSE;
                 foreach ($alleMeilensteineDesStudis as $existierenderMeilenstein) {
-                    if ($existierenderMeilenstein->getMeilenstein()->getCode() == $meilensteinCodeHinzuzufuegen) {
+                    if ($existierenderMeilenstein->getFortschrittsItem()->getCode() == $meilensteinCodeHinzuzufuegen) {
                         $gefunden = TRUE;
                         break;
                     }

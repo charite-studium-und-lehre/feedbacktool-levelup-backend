@@ -15,9 +15,9 @@ class FremdBewertungAngefragtEvent implements DomainEvent
 
     public string $fremdBewerterEmail;
 
-    public string $angefragteTaetigkeiten;
+    public ?string $angefragteTaetigkeiten;
 
-    public string $kommentar;
+    public ?string $kommentar;
 
     public string $loginHash;
 

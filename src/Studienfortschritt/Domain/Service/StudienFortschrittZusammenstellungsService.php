@@ -5,12 +5,14 @@ namespace Studienfortschritt\Domain\Service;
 use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\StudiHash;
 use Studienfortschritt\Domain\FortschrittsItem;
-use Studienfortschritt\Domain\StudiMeilenstein;
 use Studienfortschritt\Domain\StudiMeilensteinRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
 
-/** Vereint abgespeicherte Meilsteine und indirekt, durch Prüfungsteilnahmen, erworbene Fortschritts-Items */
-class StudienFortschrittExportService
+/**
+ * Vereint abgespeicherte Meilsteine und indirekt, durch Prüfungsteilnahmen, erworbene Fortschritts-Items
+ * @todo Test
+ */
+class StudienFortschrittZusammenstellungsService
 {
     private StudiMeilensteinRepository $studiMeilensteinRepository;
 
@@ -32,8 +34,8 @@ class StudienFortschrittExportService
     public function alleFortschrittsItemsFuerStudi(StudiHash $studiHash): array {
         $alleItems = [];
         foreach ($this->studiMeilensteinRepository->allByStudiHash($studiHash) as $studiMeilenstein) {
-            $alleItems[] = $studiMeilenstein->getMeilenstein();
-            foreach ($studiMeilenstein->getMeilenstein()->getImplizierteFortschrittsItems() as $item) {
+            $alleItems[] = $studiMeilenstein->getFortschrittsItem();
+            foreach ($studiMeilenstein->getFortschrittsItem()->getImplizierteFortschrittsItems() as $item) {
                 $alleItems[] = $item;
             }
         }

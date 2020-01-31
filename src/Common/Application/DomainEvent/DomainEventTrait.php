@@ -9,7 +9,8 @@ use RuntimeException;
 
 trait DomainEventTrait
 {
-    use AbstractEventTrait, Immutable;
+    use AbstractEventTrait;
+//    use Immutable; // Nicht kompatibel mit PHP 7.4
 
     /** @return self */
     public function fromCommand(DomainCommand $command) {

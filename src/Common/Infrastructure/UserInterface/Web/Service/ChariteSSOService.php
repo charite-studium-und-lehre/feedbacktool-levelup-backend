@@ -34,8 +34,7 @@ class ChariteSSOService
         string $tokenEndpoint,
         string $userinfoEndpoint,
         string $endSessionEndpoint,
-        string $authorizationEndpoint,
-        string $errorMessage
+        string $authorizationEndpoint
     ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -45,7 +44,6 @@ class ChariteSSOService
         $this->userinfoEndpoint = $userinfoEndpoint;
         $this->endSessionEndpoint = $endSessionEndpoint;
         $this->authorizationEndpoint = $authorizationEndpoint;
-        $this->errorMessage = $errorMessage;
     }
 
     public function hasPendingSSOAuth(): bool {

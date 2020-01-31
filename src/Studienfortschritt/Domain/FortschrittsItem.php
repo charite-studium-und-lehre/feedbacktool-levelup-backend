@@ -15,7 +15,6 @@ class FortschrittsItem implements DDDValueObject
     use DefaultValueObjectComparison;
 
     const UNGUELTIG = "Der Meilenstein-Code existiert nicht: ";
-    const UNGUELTIG_KUERZEL = "Das Meilenstein-Kürzel existiert nicht: ";
 
     const MEILENSTEINE = [
         10 => "Hausarbeit",
@@ -100,7 +99,7 @@ class FortschrittsItem implements DDDValueObject
 
     private int $code;
 
-    private ?StudiPruefungsId $studiPruefungsId;
+    private ?StudiPruefungsId $studiPruefungsId = NULL;
 
     public static function fromCode(int $code, ?StudiPruefungsId $studiPruefungsId = NULL): self {
         Assertion::inArray($code, self::FORTSCHRITT_KUERZEL_ZU_CODE, self::UNGUELTIG . $code);
@@ -132,12 +131,6 @@ class FortschrittsItem implements DDDValueObject
 
         return NULL;
 
-    }
-
-    public static function fromKuerzel(string $value): self {
-        Assertion::keyIsset(self::FORTSCHRITT_KUERZEL_ZU_CODE, $value, self::UNGUELTIG_KUERZEL . $value);
-
-        return self::fromCode(self::FORTSCHRITT_KUERZEL_ZU_CODE[$value]);
     }
 
     public function mitStudiPruefungsId(StudiPruefungsId $studiPruefungsId): self {

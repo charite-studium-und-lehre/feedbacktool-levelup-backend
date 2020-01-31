@@ -38,7 +38,7 @@ final class FileBasedSimpleStudiMeilensteinRepository extends AbstractCommonRepo
     public function byStudiIdUndMeilenstein(StudiHash $studiHash, FortschrittsItem $meilenstein): ?StudiMeilenstein {
         foreach ($this->all() as $studiMeilenstein) {
             if ($studiMeilenstein->getStudiHash()->equals($studiHash)
-                && $studiMeilenstein->getMeilenstein()->equals($meilenstein)) {
+                && $studiMeilenstein->getFortschrittsItem()->equals($meilenstein)) {
                 return $studiMeilenstein;
             }
         }

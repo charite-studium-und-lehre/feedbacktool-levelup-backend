@@ -34,7 +34,7 @@ class StudiPruefung
     }
 
     public function getId(): StudiPruefungsId {
-        return StudiPruefungsId::fromInt($this->id->getValue());
+        return $this->id;
     }
 
     public function getStudiHash(): StudiHash {

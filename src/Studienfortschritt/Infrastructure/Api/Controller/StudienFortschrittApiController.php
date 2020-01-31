@@ -5,7 +5,7 @@ namespace Studienfortschritt\Infrastructure\Api\Controller;
 use LevelUpCommon\Infrastructure\UserInterface\Web\Controller\BaseController;
 use Studi\Domain\Studi;
 use Studienfortschritt\Domain\FortschrittsItem;
-use Studienfortschritt\Domain\Service\StudienFortschrittExportService;
+use Studienfortschritt\Domain\Service\StudienFortschrittZusammenstellungsService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,9 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudienFortschrittApiController extends BaseController
 {
 
-    private StudienFortschrittExportService $meilensteinExportService;
+    private StudienFortschrittZusammenstellungsService $meilensteinExportService;
 
-    public function __construct(StudienFortschrittExportService $meilensteinExportService) {
+    public function __construct(StudienFortschrittZusammenstellungsService $meilensteinExportService) {
         $this->meilensteinExportService = $meilensteinExportService;
     }
 

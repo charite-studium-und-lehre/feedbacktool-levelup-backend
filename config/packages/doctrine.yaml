@@ -48,6 +48,8 @@ doctrine:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
       studiPruefungsId:
         class: "StudiPruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiPruefungsIdType"
+      studiMeilensteinId:
+        class: "Studienfortschritt\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiMeilensteinIdType"
       antwortCode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AntwortCodeType"
       selbstBewertungsId:
@@ -81,6 +83,7 @@ doctrine:
       pruefungsItemId: string
       pruefungsPeriode: integer
       studiPruefungsId: integer
+      studiMeilensteinId: string
       antwortCode: string
       selbstBewertungsId: integer
       fremdBewertungsId: integer

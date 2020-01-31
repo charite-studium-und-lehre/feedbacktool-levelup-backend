@@ -38,7 +38,7 @@ class Antwort implements DDDEntity
     }
 
     public function getId(): AntwortId {
-        return AntwortId::fromString($this->id);
+        return $this->id;
     }
 
     public function getFragenId(): FragenId {
