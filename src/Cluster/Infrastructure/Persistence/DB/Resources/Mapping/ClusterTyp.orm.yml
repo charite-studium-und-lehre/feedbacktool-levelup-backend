@@ -1,7 +1,0 @@
-Cluster\Domain\ClusterTyp:
-  type: embeddable
-  fields:
-    const:
-      type: integer
-      nullable: false
-      column: typ

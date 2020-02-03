@@ -1,7 +1,0 @@
-EPA\Domain\EPABewertungsDatum:
-  type: embeddable
-
-  fields:
-    value:
-      type: date
-      column: datum

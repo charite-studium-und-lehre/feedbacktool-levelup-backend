@@ -1,8 +1,0 @@
-Common\Application\AbstractEvent\StoredEventClass:
-  type: embeddable
-  fields:
-    value:
-      type: string
-      length: 100
-      nullable: false
-      column: class

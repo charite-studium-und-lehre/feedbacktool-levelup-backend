@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+  <entity name="EPA\Domain\SelbstBewertung\SelbstBewertung" table="epa_selbstBewertung">
+
+    <id name="id" type="selbstBewertungsId" column="id"/>
+
+    <field name="loginHash" type="loginHash" column="loginHash"/>
+
+    <embedded name="selbstBewertungsTyp" class="SelbstBewertungsTyp" use-column-prefix="false"/>
+    <embedded name="epaBewertungsDatum" class="EPA\Domain\EPABewertungsDatum" use-column-prefix="false"/>
+    <embedded name="epaBewertung" class="EPA\Domain\EPABewertung" use-column-prefix="false"/>
+
+    <indexes>
+      <index name="loginHash" columns="loginHash"/>
+      <index name="datum" columns="datum"/>
+      <index name="typ" columns="typ"/>
+    </indexes>
+
+  </entity>
+</doctrine-mapping>

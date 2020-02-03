@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Wertung\Domain\ItemWertung" table="pruefung_itemWertung">
+
+        <id name="id" type="itemWertungsId" column="id"/>
+
+        <field name="pruefungsItemId" type="pruefungsItemId" column="pruefungsItemId"/>
+        <field name="studiPruefungsId" type="studiPruefungsId" column="studiPruefungsId"/>
+        <field name="wertung" type="wertung" column="wertung"/>
+        <field name="kohortenWertung" type="wertung" column="kohortenWertung" nullable="true"/>
+        <field name="antwortCode" type="antwortCode" column="antwortCode" nullable="true"/>
+
+        <indexes>
+            <index name="pruefungsItemId" columns="pruefungsItemId"/>
+            <index name="studiPruefungsId" columns="studiPruefungsId"/>
+            <index name="pruefungsItemIdUndStudiPruefungsId" columns="pruefungsItemId,studiPruefungsId"/>
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>

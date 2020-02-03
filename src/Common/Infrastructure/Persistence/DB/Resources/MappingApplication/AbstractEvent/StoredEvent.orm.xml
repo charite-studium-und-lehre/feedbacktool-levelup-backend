@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Common\Application\AbstractEvent\StoredEvent" table="__event">
+
+        <id name="id" type="aggregateId" column="id"/>
+
+        <field name="occurredOn" type="datetime_immutable" column="occurredOn"/>
+        <field name="byUserId" type="integer" column="byUserId" nullable="true"/>
+        <embedded name="eventClass" class="StoredEventClass" use-column-prefix="false"/>
+        <embedded name="eventBody" class="StoredEventBody" use-column-prefix="false"/>
+
+        <indexes>
+            <index name="occurredOn" columns="occurredOn"/>
+            <index name="byUserId" columns="byUserId"/>
+            <index name="eventClass" columns="class"/>
+        </indexes>
+
+    </entity>
+</doctrine-mapping>

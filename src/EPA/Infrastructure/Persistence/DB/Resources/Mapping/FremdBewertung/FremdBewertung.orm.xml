@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="EPA\Domain\FremdBewertung\FremdBewertung" table="epa_fremdBewertung">
+
+        <id name="id" type="fremdBewertungsId" column="id"/>
+
+
+        <field name="loginHash" type="loginHash" column="loginHash"/>
+        <field name="bewertungen" type="fremdBewertungsBewertungen" column="bewertungen"/>
+
+        <embedded name="anfrageDaten" class="FremdBewertungsAnfrageDaten" use-column-prefix="false"/>
+        <embedded name="bewertungsDatum" class="EPA\Domain\EPABewertungsDatum" column-prefix="bewertung_"/>
+
+        <indexes>
+            <index name="loginHash" columns="loginHash"/>
+            <index name="datum" columns="bewertung_datum"/>
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>

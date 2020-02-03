@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Pruefung\Domain\Pruefung" table="pruefung">
+
+        <id name="id" type="pruefungsId" column="id"/>
+
+        <field name="pruefungsPeriode" type="pruefungsPeriode" column="pruefungsPeriode" nullable="true"/>
+
+        <embedded name="format" class="PruefungsFormat" use-column-prefix="false"/>
+
+        <indexes>
+            <index name="pruefungsPeriode" columns="pruefungsPeriode"/>
+            <index name="format" columns="format"/>
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>

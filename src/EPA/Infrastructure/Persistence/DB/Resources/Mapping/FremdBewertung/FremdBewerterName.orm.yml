@@ -1,8 +1,0 @@
-EPA\Domain\FremdBewertung\FremdBewerterName:
-  type: embeddable
-
-  fields:
-    value:
-      type: string
-      length: 100
-      column: vollerName

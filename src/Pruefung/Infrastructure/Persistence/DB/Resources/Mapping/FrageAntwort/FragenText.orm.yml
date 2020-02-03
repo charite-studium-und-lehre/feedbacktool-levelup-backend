@@ -1,7 +1,0 @@
-Pruefung\Domain\FrageAntwort\FragenText:
-  type: embeddable
-  fields:
-    value:
-      type: string
-      length: 2000
-      column: text

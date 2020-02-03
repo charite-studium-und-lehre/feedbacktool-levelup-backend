@@ -1,8 +1,0 @@
-Common\Domain\EntityZeitstempel:
-  type: embeddable
-  fields:
-    erzeugungsZeit:
-      type: datetime_immutable
-    aenderungsZeit:
-      type: datetime_immutable
-      nullable: true

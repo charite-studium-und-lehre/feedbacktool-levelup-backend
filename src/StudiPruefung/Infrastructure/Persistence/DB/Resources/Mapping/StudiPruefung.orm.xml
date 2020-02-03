@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="StudiPruefung\Domain\StudiPruefung" table="pruefung_studiPruefung">
+
+        <id name="id" type="studiPruefungsId" column="id"/>
+
+        <field name="studiHash" type="studiHash" column="studiHash"/>
+        <field name="pruefungsId" type="pruefungsId" column="pruefungsId"/>
+        <field name="bestanden" type="boolean" column="bestanden" nullable="false"/>
+
+        <indexes>
+            <index name="pruefungsId" columns="pruefungsId"/>
+            <index name="studiHash" columns="studiHash"/>
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>

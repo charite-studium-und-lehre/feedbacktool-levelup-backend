@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <embeddable name="EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten">
+
+        <field name="anfrageTaetigkeiten" type="fremdBewertungsAnfrageTaetigkeiten" column="anfrageTaetigkeiten" nullable="true"/>
+        <field name="anfrageKommentar" type="fremdBewertungsAnfrageKommentar" column="anfrageKommentar" nullable="true"/>
+
+        <embedded name="datum" class="EPA\Domain\EPABewertungsDatum" use-column-prefix="false"/>
+        <embedded name="fremdBerwerterName" class="FremdBewerterName" column-prefix="bewerter_"/>
+        <embedded name="fremdBerwerterEmail" class="Common\Domain\User\Email" column-prefix="bewerter_"/>
+        <embedded name="studiName" class="AnfragerName" column-prefix="studi_"/>
+        <embedded name="studiEmail" class="Common\Domain\User\Email" column-prefix="studi_"/>
+
+    </embeddable>
+
+</doctrine-mapping>

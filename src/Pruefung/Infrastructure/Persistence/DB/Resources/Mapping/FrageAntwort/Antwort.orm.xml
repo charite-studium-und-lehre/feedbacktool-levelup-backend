@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Pruefung\Domain\FrageAntwort\Antwort" table="pruefung_frage_antwort">
+
+        <id name="id" type="antwortId" column="id"/>
+
+        <field name="fragenId" type="fragenId" column="fragenId"/>
+        <field name="antwortCode" type="antwortCode" column="antwortCode"/>
+        <field name="istRichtig" type="boolean" column="istRichtig"/>
+
+        <embedded name="antwortText" class="AntwortText" use-column-prefix="false"/>
+
+        <indexes>
+            <index name="fragenId" columns="fragenId"/>
+            <index name="istRichtig" columns="istRichtig"/>
+        </indexes>
+
+    </entity>
+</doctrine-mapping>

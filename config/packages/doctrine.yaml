@@ -109,96 +109,96 @@ doctrine:
       CommmonMapping:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Common\\Domain"
       CommmonUserMapping:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping/User"
         prefix:               "Common\\Domain\\User"
 
       AbstractEvent:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/MappingApplication/AbstractEvent"
         prefix:               "Common\\Application\\AbstractEvent"
 
       Cluster:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Cluster/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Cluster\\Domain"
 
       EPA:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "EPA\\Domain"
 
       EPASelbstBEwertung:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/SelbstBewertung"
         prefix:               "EPA\\Domain\\SelbstBewertung"
 
-      EPAFremdBEwertung:
+      EPAFremdBewertung:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/FremdBewertung"
         prefix:               "EPA\\Domain\\FremdBewertung"
 
       Pruefung:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Pruefung\\Domain"
 
       Pruefung_FrageAntwort:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Pruefung/Infrastructure/Persistence/DB/Resources/Mapping/FrageAntwort"
         prefix:               "Pruefung\\Domain\\FrageAntwort"
 
       Studi:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Studi/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Studi\\Domain"
 
       StudiPruefung:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/StudiPruefung/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "StudiPruefung\\Domain"
 
       Studienfortschritt:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Studienfortschritt/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Studienfortschritt\\Domain"
 
       Wertung:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/Wertung/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Wertung\\Domain"
 
       DatenImport:
         is_bundle:            false
         mapping:              true
-        type:                 yml
+        type:                 xml
         dir:                  "%kernel.project_dir%/src/DatenImport/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "DatenImport\\Domain"

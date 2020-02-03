@@ -1,6 +1,0 @@
-Studienfortschritt\Domain\FortschrittsItem:
-  type: embeddable
-  fields:
-    code:
-      type: smallint
-      column: meilenstein

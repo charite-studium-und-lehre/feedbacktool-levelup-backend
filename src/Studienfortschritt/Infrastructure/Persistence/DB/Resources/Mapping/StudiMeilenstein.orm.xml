@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+  <entity name="Studienfortschritt\Domain\StudiMeilenstein" table="studi_meilenstein">
+
+
+    <id name="id" type="studiMeilensteinId" column="id"/>
+
+    <field name="studiHash" type="studiHash" column="studiHash"/>
+    <embedded name="meilenstein" class="FortschrittsItem" use-column-prefix="false"/>
+
+    <unique-constraints>
+      <unique-constraint name="Studienfortschritt" columns="studiHash,meilenstein"/>
+    </unique-constraints>
+
+    <indexes>
+      <index name="studiHash" columns="studiHash"/>
+      <index name="meilenstein" columns="meilenstein"/>
+    </indexes>
+
+  </entity>
+
+</doctrine-mapping>

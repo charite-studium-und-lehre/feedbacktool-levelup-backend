@@ -1,9 +1,0 @@
-Cluster\Domain\ClusterZuordnung:
-  type: entity
-  table: cluster_zuordnung
-
-  id:
-    clusterId:
-      type: clusterId
-    pruefungsItemId:
-      type: pruefungsItemId

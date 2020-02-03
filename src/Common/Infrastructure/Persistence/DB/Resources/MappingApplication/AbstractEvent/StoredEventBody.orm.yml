@@ -1,7 +1,0 @@
-Common\Application\AbstractEvent\StoredEventBody:
-  type: embeddable
-  fields:
-    value:
-      type: text
-      nullable: false
-      column: body

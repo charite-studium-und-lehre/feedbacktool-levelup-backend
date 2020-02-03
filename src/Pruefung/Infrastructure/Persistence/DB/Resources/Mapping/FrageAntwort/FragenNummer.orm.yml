@@ -1,6 +1,0 @@
-Pruefung\Domain\FrageAntwort\FragenNummer:
-  type: embeddable
-  fields:
-    value:
-      type: integer
-      column: nummer

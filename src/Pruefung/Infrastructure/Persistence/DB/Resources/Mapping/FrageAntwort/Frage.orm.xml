@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Pruefung\Domain\FrageAntwort\Frage" table="pruefung_frage">
+
+        <id name="id" type="fragenId" column="id"/>
+
+        <field name="pruefungsItemId" type="pruefungsItemId" column="pruefungsItemId" nullable="false"/>
+
+        <embedded name="fragenNummer" class="FragenNummer" use-column-prefix="false"/>
+        <embedded name="fragenText" class="FragenText" use-column-prefix="false"/>
+
+        <indexes>
+            <index name="pruefungsItemId" columns="pruefungsItemId"/>
+            <index name="fragenNummer" columns="nummer"/>
+        </indexes>
+
+    </entity>
+
+</doctrine-mapping>
