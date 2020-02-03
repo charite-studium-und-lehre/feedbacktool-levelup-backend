@@ -4,7 +4,7 @@ Pruefung\Domain\FrageAntwort\Antwort:
 
   id:
     id:
-      type: aggregateIdString
+      type: antwortId
 
   embedded:
     antwortText:
@@ -13,7 +13,7 @@ Pruefung\Domain\FrageAntwort\Antwort:
 
   fields:
     fragenId:
-      type: aggregateIdString
+      type: fragenId
       nullable: false
     antwortCode:
       type: antwortCode
