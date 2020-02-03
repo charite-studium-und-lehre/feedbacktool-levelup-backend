@@ -18,6 +18,6 @@ class EpasFremdBewertungsAnfragenData extends AbstractJsonDemoData
     ];
 
     public function isResponsibleFor(string $pathInfo): bool {
-        return $pathInfo == "api/epas/fremdbewertungen/anfragen";
+        return $pathInfo == "/api/epas/fremdbewertungen/anfragen";
     }
 }
