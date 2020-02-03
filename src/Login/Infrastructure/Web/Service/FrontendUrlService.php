@@ -13,7 +13,7 @@ final class FrontendUrlService
     }
 
     public function getFrontendUrl(): string {
-        if ($this->environment == "production") {
+        if ($this->environment == "prod") {
             return "/app";
         }
         return "/app-develop";

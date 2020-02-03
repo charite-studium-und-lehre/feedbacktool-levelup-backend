@@ -69,6 +69,6 @@ class StudiUserProvider extends ChariteLDAPUserProvider
      * @return bool
      */
     public function supportsClass($class) {
-        return $class === Studi::class;
+        return $class === Studi::class || $class === LoginUser::class;
     }
 }
