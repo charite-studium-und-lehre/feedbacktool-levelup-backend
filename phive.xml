@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
-  <phar name="dephpend" version="^0.6.2" installed="0.6.2" location="./tools/dephpend" copy="false"/>
+  <phar name="dephpend" version="^0.6.2" installed="0.6.3" location="./bin/tools/dephpend" copy="false"/>
   <phar name="phpcpd" version="^4.0" installed="4.1.0" location="./bin/tools/phpcpd" copy="false"/>
 </phive>

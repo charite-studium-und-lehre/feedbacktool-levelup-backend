@@ -9,8 +9,6 @@ use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
-use phpDocumentor\Reflection\Types\Array_;
-use Studi\Domain\StudiIntern;
 
 class ChariteMCPruefungLernzielModulPersistenzService
 {

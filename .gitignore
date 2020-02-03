@@ -1,5 +1,6 @@
 .idea
 bin/symfony
+bin/tools/*
 symfony.lock
 
 ### Symfony template

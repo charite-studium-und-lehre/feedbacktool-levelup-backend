@@ -2,8 +2,8 @@
 
 namespace Demo\Infrastructure\UserInterface\Web;
 
-use App\Controller\TokenAuthenticatedController;
 use Demo\Infrastructure\Persistence\AbstractJsonDemoData;
+use Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -36,11 +36,12 @@ class DemoControllerSubscriber implements EventSubscriberInterface
             if ($demoDataClass->isResponsibleFor($pathInfo)) {
                 $event->stopPropagation();
                 $event->setController($demoDataClass->getController($pathInfo));
+
                 return;
             }
         }
 
-        throw new \Exception("Nicht gefunden: " . $pathInfo);
+        throw new Exception("Nicht gefunden: " . $pathInfo);
     }
 
     private function isDemo(Request $request): bool {
