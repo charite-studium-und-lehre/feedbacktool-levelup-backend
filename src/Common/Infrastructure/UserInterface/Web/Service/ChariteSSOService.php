@@ -7,34 +7,34 @@ use Jumbojett\OpenIDConnectClient;
 
 class ChariteSSOService
 {
-    private $clientId;
+    private string $clientId;
 
-    private $clientSecret;
+    private string $clientSecret;
 
-    private $redirectURL;
+    private string $redirectURL;
 
-    private $providerUrl;
+    private string $providerUrl;
 
-    private $tokenEndpoint;
+    private string $tokenEndpoint;
 
-    private $userinfoEndpoint;
+    private string $userinfoEndpoint;
 
-    private $endSessionEndpoint;
+    private string $endSessionEndpoint;
 
-    private $authorizationEndpoint;
+    private string $authorizationEndpoint;
 
-    /** @var string */
-    private $errorMessage = "";
+    private string $errorMessage = "";
+
 
     public function __construct(
-        $clientId,
-        $clientSecret,
-        $redirectURL,
-        $providerUrl,
-        $tokenEndpoint,
-        $userinfoEndpoint,
-        $endSessionEndpoint,
-        $authorizationEndpoint
+        string $clientId,
+        string $clientSecret,
+        string $redirectURL,
+        string $providerUrl,
+        string $tokenEndpoint,
+        string $userinfoEndpoint,
+        string $endSessionEndpoint,
+        string $authorizationEndpoint
     ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -90,8 +90,9 @@ class ChariteSSOService
         } catch (\Exception $e) {
             $this->errorMessage = $e->getMessage();
 
-            return NULL;
+            return FALSE;
         }
+        return TRUE;
     }
 
     public function getErrorMessage(): string {

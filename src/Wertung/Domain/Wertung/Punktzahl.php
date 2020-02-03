@@ -9,15 +9,14 @@ class Punktzahl
 {
     use DefaultValueObjectComparison;
 
-    const MAX_PUNKTZAHL = 100000;
+    const MAX_PUNKTZAHL = 100_000;
     const NACHKOMMASTELLEN = 2;
 
     const INVALID_WERT = "Punktzahl darf max. " . self::MAX_PUNKTZAHL . " (+/-) sein: ";
     const INVALID_WERT_ZU_GENAU = "Punktzahlen dürfen höchstens " . self::NACHKOMMASTELLEN
     . " Nachkommastellen haben: ";
 
-    /** @var float */
-    private $value;
+    private float $value;
 
     public static function fromFloatMitRunden(float $punktzahl): Punktzahl {
         return self::fromFloat(round($punktzahl, 2));

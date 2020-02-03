@@ -8,14 +8,11 @@ class PruefungsItem
 {
     use DefaultEntityComparison;
 
-    /** @var PruefungsItemId */
-    private $id;
+    private PruefungsItemId $id;
 
-    /** @var PruefungsId */
-    private $pruefungsId;
+    private PruefungsId $pruefungsId;
 
-    /** @var ?ItemSchwierigkeit */
-    private $itemSchwierigkeit;
+    private ?ItemSchwierigkeit $itemSchwierigkeit;
 
     public static function create(
         PruefungsItemId $id,
@@ -32,11 +29,11 @@ class PruefungsItem
     }
 
     public function getId(): PruefungsItemId {
-        return PruefungsItemId::fromString($this->id);
+        return $this->id;
     }
 
     public function getPruefungsId(): PruefungsId {
-        return PruefungsId::fromString($this->pruefungsId);
+        return $this->pruefungsId;
     }
 
     public function getItemSchwierigkeit(): ?ItemSchwierigkeit {

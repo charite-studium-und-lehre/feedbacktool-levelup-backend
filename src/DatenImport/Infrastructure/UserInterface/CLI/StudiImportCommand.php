@@ -13,14 +13,11 @@ class StudiImportCommand extends AbstractCSVImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:studi';
 
-    /** @var ChariteStudiStammdatenHIS_CSVImportService */
-    private $chariteStudiStammdatenHIS_CSVImportService;
+    private ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private StudiHashCreator $studiHashCreator;
 
-    /** @var StudiStammdatenPersistenzService */
-    private $studiStammdatenPersistenzService;
+    private StudiStammdatenPersistenzService $studiStammdatenPersistenzService;
 
     public function __construct(
         ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService,
@@ -41,8 +38,8 @@ class StudiImportCommand extends AbstractCSVImportCommand
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $importOptionenDTO = $this->getParameters($input);
-        $delimiter = $input->getArgument("delimiter") ?: ";";
-        $encoding = $input->getArgument("encoding") ?: "ISO-8859-15";
+        $delimiter = (string) $input->getArgument("delimiter") ?: ";";
+        $encoding = (string) $input->getArgument("encoding") ?: "ISO-8859-15";
 
         $studiObjects = $this->chariteStudiStammdatenHIS_CSVImportService->getStudiData(
             $importOptionenDTO->dateiPfad, $delimiter,

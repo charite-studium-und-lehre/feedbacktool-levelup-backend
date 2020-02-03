@@ -15,8 +15,7 @@ class Prozentzahl
     const INVALID_WERT_ZU_GENAU = "Prozentwert-Floats dürfen höchstens " . (self::NACHKOMMASTELLEN + 2)
     . " Nachkommastellen haben (also " . self::NACHKOMMASTELLEN . " Nachkommastellen der Prozentzahl): ";
 
-    /** @var float */
-    private $prozentzahl;
+    private float $prozentzahl;
 
     public static function fromFloat(float $prozentWert): Prozentzahl {
         Assertion::between($prozentWert, 0, 1, self::INVALID_WERT . $prozentWert);

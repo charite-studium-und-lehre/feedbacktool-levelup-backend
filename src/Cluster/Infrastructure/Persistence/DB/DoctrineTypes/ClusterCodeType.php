@@ -15,12 +15,18 @@ class ClusterCodeType extends Type
         return "VARCHAR(" . ClusterCode::MAX_TAG_LAENGE . ")";
     }
 
-    /** @return ClusterCode */
+    /**
+     * @param ?string $value
+     * @return ClusterCode
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         return $value ? ClusterCode::fromString($value) : NULL;
     }
 
-    /** @param ClusterCode $value */
+    /**
+     * @param ?ClusterCode $value
+     * @return string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         return $value ? $value->getValue() : NULL;
     }

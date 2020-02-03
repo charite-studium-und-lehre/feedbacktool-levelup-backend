@@ -4,7 +4,7 @@ namespace Demo\Infrastructure\Persistence;
 
 class MeilensteineJsonDemoData extends AbstractJsonDemoData
 {
-    protected $jsonData = [
+    protected array $jsonData = [
         "meilensteine" => [
             [
                 "code"             => 10,
@@ -309,7 +309,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 1",
                 "fachsemester"     => 1,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 987654,
+                "studiPruefungsId" => 987_654,
                 "format"           => "mc",
             ],
             [
@@ -318,7 +318,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 2",
                 "fachsemester"     => 2,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 789456,
+                "studiPruefungsId" => 789_456,
                 "format"           => "mc",
             ],
             [
@@ -336,7 +336,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 4",
                 "fachsemester"     => 4,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100000,
+                "studiPruefungsId" => 100_000,
                 "format"           => "mc",
             ],
             [
@@ -345,7 +345,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 5",
                 "fachsemester"     => 5,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100001,
+                "studiPruefungsId" => 100_001,
                 "format"           => "mc",
             ],
             [
@@ -354,7 +354,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 6",
                 "fachsemester"     => 6,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100002,
+                "studiPruefungsId" => 100_002,
                 "format"           => "mc",
             ],
             [
@@ -363,7 +363,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 7",
                 "fachsemester"     => 7,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100003,
+                "studiPruefungsId" => 100_003,
                 "format"           => "mc",
             ],
             [
@@ -372,7 +372,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 8",
                 "fachsemester"     => 8,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100004,
+                "studiPruefungsId" => 100_004,
                 "format"           => "mc",
             ],
             [
@@ -381,7 +381,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "MC-Prüfung Sem. 9",
                 "fachsemester"     => 9,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100005,
+                "studiPruefungsId" => 100_005,
                 "format"           => "mc",
             ],
             [
@@ -408,7 +408,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "Mündliche Prüfung Sem. 4 (Vorklinik)",
                 "fachsemester"     => 4,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100006,
+                "studiPruefungsId" => 100_006,
                 "format"           => "station",
             ],
             [
@@ -417,7 +417,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "Praktische Prüfung Sem. 4 (Klinik)",
                 "fachsemester"     => 4,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100007,
+                "studiPruefungsId" => 100_007,
                 "format"           => "station",
             ],
             [
@@ -426,7 +426,7 @@ class MeilensteineJsonDemoData extends AbstractJsonDemoData
                 "beschreibung"     => "OSCE-Prüfung Sem. 9",
                 "fachsemester"     => 9,
                 "erfuellt"         => TRUE,
-                "studiPruefungsId" => 100008,
+                "studiPruefungsId" => 100_008,
                 "format"           => "station",
             ],
         ],

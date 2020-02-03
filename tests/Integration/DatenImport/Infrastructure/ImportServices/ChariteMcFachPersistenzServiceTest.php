@@ -46,7 +46,7 @@ class ChariteMcFachPersistenzServiceTest extends DbRepoTestCase
         ClusterZuordnungsRepository $clusterZuordnungsRepository,
         LernzielFachRepository $lernzielFachRepository
     ) {
-        $this->clearRepos([$clusterRepository, $clusterZuordnungsRepository]);
+        $this->clearRepos([$clusterRepository, $clusterZuordnungsRepository, $lernzielFachRepository]);
         (new ChariteFaecherAnlegenService($clusterRepository))->addAlleFaecherZuDB();
         $clusterZuordnungsRepository->flush();
         LernzielFachPersistenzServiceTest::createLernzielFaecher($clusterRepository, $lernzielFachRepository);

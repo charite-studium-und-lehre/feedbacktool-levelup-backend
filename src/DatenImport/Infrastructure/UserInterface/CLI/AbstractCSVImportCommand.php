@@ -9,21 +9,17 @@ use Symfony\Component\Console\Input\InputInterface;
 
 abstract class AbstractCSVImportCommand extends Command
 {
+    /** @return void */
     protected function configure() {
         $this->addArgumentDateiPfad();
         $this->addAndereArgumente();
     }
 
-    /**
-     * @param InputInterface $input
-     * @return array
-     * @throws Exception
-     */
     protected function getParameters(InputInterface $input): ImportOptionenDTO {
-        $dateiPfad = $input->getArgument("dateiPfad");
-        $delimiter = $input->getArgument("delimiter") ?: ",";
-        $encoding = $input->getArgument("encoding") ?: "UTF-8";
-        $hasHeaders = $input->getArgument("hasHeaders") ?: TRUE;
+        $dateiPfad = (string) $input->getArgument("dateiPfad");
+        $delimiter = (string) $input->getArgument("delimiter") ?: ",";
+        $encoding = (string) $input->getArgument("encoding") ?: "UTF-8";
+        $hasHeaders = (string) $input->getArgument("hasHeaders") ?: TRUE;
 
         $this->checkDelimiter($delimiter);
         $this->checkEncoding($encoding);

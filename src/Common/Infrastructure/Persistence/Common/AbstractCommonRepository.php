@@ -3,12 +3,14 @@
 namespace Common\Infrastructure\Persistence\Common;
 
 use Common\Domain\AggregateId;
+use Common\Domain\AggregateIdString;
+use Common\Domain\DDDEntity;
 
 /** @method array all() */
 class AbstractCommonRepository
 {
 
-    protected $persistedEntities = [];
+    protected array $persistedEntities = [];
 
     public function add($entity): void {
         $entities = $this->all();
@@ -27,6 +29,10 @@ class AbstractCommonRepository
         $this->persistEntities($newArray);
     }
 
+    /**
+     * @param AggregateId|AggregateIdString $entityId
+     * @return ?DDDEntity
+     */
     public function abstractById($entityId) {
         foreach ($this->all() as $entity) {
             if ($entity->getId()->equals($entityId)) {
@@ -37,6 +43,7 @@ class AbstractCommonRepository
         return NULL;
     }
 
+    /** @return AggregateId */
     public function abstractNextIdentity(): AggregateId {
         return AggregateId::fromInt(random_int(1, PHP_INT_MAX));
     }
@@ -48,7 +55,8 @@ class AbstractCommonRepository
         $this->persistEntities($this->all());
     }
 
-    protected function persistEntities(array $entities) {
+    /** @param DDDEntity[] $entities */
+    protected function persistEntities(array $entities): void {
         $this->persistedEntities = $entities;
     }
 

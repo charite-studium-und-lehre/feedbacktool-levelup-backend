@@ -45,7 +45,10 @@ class WertungType extends Type
         return "BIGINT SIGNED";
     }
 
-    /** @return Wertung */
+    /**
+     * @param integer $value
+     * @return Wertung
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;
@@ -65,7 +68,10 @@ class WertungType extends Type
         }
     }
 
-    /** @return integer */
+    /**
+     * @param Wertung $value
+     * @return integer
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;
@@ -92,7 +98,7 @@ class WertungType extends Type
         return TRUE;
     }
 
-    private function kodiereRichtigFalschWeissnichtWertung($value): int {
+    private function kodiereRichtigFalschWeissnichtWertung(RichtigFalschWeissnichtWertung $value): int {
         $stellenzahlVon = 0;
         $stellenzahlBis = self::TYP_STELLEN;
         $typSummand = IntsToIntKodierer::erzeugeSummand(self::RICHTIG_FALSCH_WEISSNICHT_WERTUNG, $stellenzahlVon,
@@ -101,21 +107,21 @@ class WertungType extends Type
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis +=  self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $richtigSummand = IntsToIntKodierer::erzeugeSummand(
-            $value->getPunktzahlRichtig()->getValue(),
+            (int) $value->getPunktzahlRichtig()->getValue(),
             $stellenzahlVon,
             $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis += self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $falschSummand = IntsToIntKodierer::erzeugeSummand(
-            $value->getPunktzahlFalsch()->getValue(),
+            (int) $value->getPunktzahlFalsch()->getValue(),
             $stellenzahlVon,
             $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
         $stellenzahlBis += self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $weissnichtSummand = IntsToIntKodierer::erzeugeSummand(
-            $value->getPunktzahlWeissnicht()->getValue(),
+            (int) $value->getPunktzahlWeissnicht()->getValue(),
             $stellenzahlVon,
             $stellenzahlBis);
 

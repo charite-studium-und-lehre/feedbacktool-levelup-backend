@@ -20,7 +20,7 @@ final class DBFragenRepository implements FragenRepository
     }
 
     public function byId(FragenId $id): ?Frage {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): FragenId {

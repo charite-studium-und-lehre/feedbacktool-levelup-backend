@@ -9,12 +9,16 @@ use Doctrine\DBAL\Types\Type;
 class AggregateIdStringType extends Type
 {
 
-    const AGGREGATE_ID_STRING_TYPE = 'aggregateIdString'; // modify to match your type name
+    const TYPE_NAME = 'aggregateIdString'; // modify to match your type name
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
         return "VARCHAR(30)";
     }
 
+    /**
+     * @param ?string $value
+     * @return ?AggregateIdString
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;
@@ -23,21 +27,23 @@ class AggregateIdStringType extends Type
         return AggregateIdString::fromString($value);
     }
 
+    /**
+     * @param ?AggregateIdString $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-        if (!$value) {
+        if (!$value instanceof AggregateIdString) {
             return NULL;
         }
-        if ($value instanceof AggregateIdString) {
-            return $value->getValue();
-        } else {
-            return $value;
-        }
+        return $value->getValue();
     }
 
-    public function getName() {
-        return self::AGGREGATE_ID_STRING_TYPE; // modify to match your constant name
+    /** @return string */
+    public function getName(): string {
+        return static::TYPE_NAME; // modify to match your constant name
     }
 
+    /** @return bool */
     public function requiresSQLCommentHint(AbstractPlatform $platform) {
         return TRUE;
     }

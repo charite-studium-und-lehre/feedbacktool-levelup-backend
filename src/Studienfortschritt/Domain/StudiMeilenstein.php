@@ -9,33 +9,34 @@ class StudiMeilenstein
 {
     use DefaultEntityComparison;
 
-    /** @var StudiMeilensteinId */
-    private $id;
+    private StudiMeilensteinId $id;
 
-    /** @var StudiHash */
-    private $studiHash;
+    private StudiHash $studiHash;
 
-    /** @var FortschrittsItem */
-    private $meilenstein;
+    private FortschrittsItem $meilenstein;
 
-    public static function fromValues(StudiMeilensteinId $id, StudiHash $studiHash, FortschrittsItem $meilenstein) {
+    public static function fromValues(
+        StudiMeilensteinId $id,
+        StudiHash $studiHash,
+        FortschrittsItem $fortschrittsItem
+    ): self {
         $object = new self();
         $object->id = $id;
         $object->studiHash = $studiHash;
-        $object->meilenstein = $meilenstein;
+        $object->meilenstein = $fortschrittsItem;
 
         return $object;
     }
 
     public function getId(): StudiMeilensteinId {
-        return StudiMeilensteinId::fromInt($this->id->getValue());
+        return $this->id;
     }
 
     public function getStudiHash(): StudiHash {
         return $this->studiHash;
     }
 
-    public function getMeilenstein(): FortschrittsItem {
+    public function getFortschrittsItem(): FortschrittsItem {
         return $this->meilenstein;
     }
 

@@ -8,34 +8,22 @@ abstract class AbstractWertung implements Wertung
 {
     use DefaultValueObjectComparison;
 
-    public function istPunktWertung(): bool {
-        return $this instanceof PunktWertung;
-    }
-
     public function getPunktWertung(): PunktWertung {
-        if ($this->istPunktWertung()) {
+        if ($this instanceof PunktWertung) {
             return $this;
         }
         throw new \Exception("Ist keine Punktwertung!");
     }
 
-    public function istProzentWertung(): bool {
-        return $this instanceof ProzentWertung;
-    }
-
     public function getProzentWertung(): ProzentWertung {
-        if ($this->istProzentWertung()) {
+        if ($this instanceof ProzentWertung) {
             return $this;
         }
         throw new \Exception("Ist keine Prozentwertung!");
     }
 
-    public function istRichtigFalschWeissnichtWertung(): bool {
-        return $this instanceof RichtigFalschWeissnichtWertung;
-    }
-
     public function getRichtigFalschWeissnichtWertung(): RichtigFalschWeissnichtWertung {
-        if ($this->istRichtigFalschWeissnichtWertung()) {
+        if ($this instanceof RichtigFalschWeissnichtWertung) {
             return $this;
         }
         throw new \Exception("Ist keine RichtigFalschWeissnichtWertung!");

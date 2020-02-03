@@ -2,73 +2,129 @@
 
 namespace EPA\Domain\Service;
 
-use EPA\Domain\EPAKategorie;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageDaten;
+use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
+use EPA\Domain\FremdBewertung\FremdBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Studi\Domain\LoginHash;
 
 class EpasFuerStudiService
 {
-    /** @var SelbstBewertungsRepository */
-    private $selbstBewertungsRepository;
+    private SelbstBewertungsRepository $selbstBewertungsRepository;
 
-    public function __construct(SelbstBewertungsRepository $selbstBewertungsRepository) {
+    private FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
+
+    private FremdBewertungsRepository $fremdBewertungsRepository;
+
+    public function __construct(
+        SelbstBewertungsRepository $selbstBewertungsRepository,
+        FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository,
+        FremdBewertungsRepository $fremdBewertungsRepository
+    ) {
         $this->selbstBewertungsRepository = $selbstBewertungsRepository;
+        $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;
+        $this->fremdBewertungsRepository = $fremdBewertungsRepository;
     }
 
-    /** Erzeugt die Sturktur wie im ZIM für das Frontend dokumentiert. */
-    public function getEpaStudiData(LoginHash $loginHash) {
-        $gemachtArray = $this->getSelbstEinschaetzungen($loginHash, SelbstBewertungsTyp::getGemachtObject());
-        $zutrauenArray = $this->getSelbstEinschaetzungen($loginHash, SelbstBewertungsTyp::getZutrauenObject());
-        $epaStruktur = EPAKategorie::getEPAStrukturFlach();
+    /**
+     * Erzeugt die Struktur wie im ZIM für das Frontend dokumentiert.
+     *
+     * @return array<string, array<int, array<string, mixed>>>
+     */
+    public function getEpaStudiData(LoginHash $loginHash): array {
+        $bewertungenZutrauen = $this->selbstBewertungsRepository->allLatestByStudiUndTyp(
+            $loginHash, SelbstBewertungsTyp::getZutrauenObject()
+        );
+        $bewertungenGemacht = $this->selbstBewertungsRepository->allLatestByStudiUndTyp(
+            $loginHash, SelbstBewertungsTyp::getGemachtObject()
+        );
+        $bewertungsArrays = ["zutrauen" => $bewertungenZutrauen, "gemacht" => $bewertungenGemacht];
+        $bewertungenNachId = [];
 
-        $meineEPAs = [];
-        foreach ($epaStruktur as $epaElement) {
-            $gemacht = NULL;
-            $zutrauen = NULL;
-            if ($epaElement->istBlatt()) {
-                $gemacht =
-                    isset($gemachtArray[$epaElement->getNummer()]) ? $gemachtArray[$epaElement->getNummer()] : NULL;
-                $zutrauen =
-                    isset($zutrauenArray[$epaElement->getNummer()]) ? $zutrauenArray[$epaElement->getNummer()] : NULL;
+        foreach ($bewertungsArrays as $typ => $selbstBewertungen) {
+            foreach ($selbstBewertungen as $selbstBewertung) {
+                /** @var SelbstBewertung $selbstBewertung */
+                $bewertungenNachId[$selbstBewertung->getEpaBewertung()->getEpa()->getNummer()][$typ]
+                    = $selbstBewertung->getEpaBewertung()->getBewertungInt();
             }
-            $meineEPAs[] = [
-                "id"           => $epaElement->getNummer(),
-                "beschreibung" => $epaElement->getBeschreibung(),
-                "parentId"     => $epaElement->getParent() ? $epaElement->getParent()->getNummer() : NULL,
-                "istBlatt"     => $epaElement->istBlatt(),
-                "gemacht"      => $gemacht,
-                "zutrauen"     => $zutrauen,
+        }
+
+        $alleBewertungen = [];
+
+        $fremdBewertungen = $this->fremdBewertungsRepository->allByStudi($loginHash);
+        foreach ($fremdBewertungen as $fremdBewertung) {
+            $fremdBewertungsId = $fremdBewertung->getId();
+            foreach ($fremdBewertung->getBewertungen() as $bewertung) {
+                $bewertungenNachId[$bewertung->getEpa()->getNummer()]["fremdbewertungen"][] =
+                    [
+                        "fremdbewertungsId" => $fremdBewertungsId->getValue(),
+                        "wert"              => $bewertung->getBewertungInt(),
+                    ];
+            }
+        }
+
+        foreach ($bewertungenNachId as $epaId => $bewertung) {
+            $alleBewertungen[] = [
+                "epaId"            => $epaId,
+                "gemacht"          => $bewertungenNachId[$epaId]["gemacht"] ?? NULL,
+                "zutrauen"         => $bewertungenNachId[$epaId]["zutrauen"] ?? NULL,
+                "fremdbewertungen" => $bewertungenNachId[$epaId]["fremdbewertungen"] ?? NULL,
             ];
         }
 
-        return [
-            "meineEPAs"            => $meineEPAs,
-            "fremdeinschaetzungen" => [],
-        ];
+        return ["bewertungen" => $alleBewertungen];
 
     }
 
     /**
      * @param LoginHash $loginHash
-     * @return array
+     * @return array<string, array<int, array>>
      */
-    private function getSelbstEinschaetzungen(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
-        $bewertungen = $this->selbstBewertungsRepository->allLatestByStudiUndTyp($loginHash, $typ);
-
-        return $this->selbstBewertungsListeZuIdWertung($bewertungen);
-    }
-
-    /** @param SelbstBewertung[] $selbstbewertungen */
-    private function selbstBewertungsListeZuIdWertung(array $selbstbewertungen) {
+    public function getFremdBewertungen(LoginHash $loginHash): array {
         $returnArray = [];
-        foreach ($selbstbewertungen as $einzelSelbstBewertung) {
-            $bewertung = $einzelSelbstBewertung->getEpaBewertung();
-            $returnArray[$bewertung->getEpa()->getNummer()] = $bewertung->getBewertung();
+        $fremdbewertungen = $this->fremdBewertungsRepository->allByStudi($loginHash);
+        foreach ($fremdbewertungen as $fremdbewertung) {
+            $bewertungsArray = ["id" => $fremdbewertung->getId()->getValue()];
+            $bewertungsArray += $this->bewertungsDatenAusAnfrageDaten($fremdbewertung->getAnfrageDaten());
+            $returnArray[] = $bewertungsArray;
         }
 
-        return $returnArray;
+        return ["fremdbewertungen" => $returnArray];
     }
 
+    /**
+     * @param LoginHash $loginHash
+     * @return array<string, array<int, array>>
+     */
+    public function getFremdBewertungsAnfragen(LoginHash $loginHash): array {
+        $returnArray = [];
+        $anfragen = $this->fremdBewertungsAnfrageRepository->allByStudi($loginHash);
+        foreach ($anfragen as $anfrage) {
+            $returnArray[] = $this->getFremdBewertungAnfrageDaten($anfrage);
+        }
+
+        return ["fremdbewertungsAnfragen" => $returnArray];
+    }
+
+    /** @return array<string, int|string> */
+    public function getFremdBewertungAnfrageDaten(FremdBewertungsAnfrage $anfrage): array {
+        $result = ["id" => $anfrage->getId()->getValue()];
+        $result += $this->bewertungsDatenAusAnfrageDaten($anfrage->getAnfrageDaten());
+
+        return $result;
+    }
+
+    /** @return array<string, string> */
+    private function bewertungsDatenAusAnfrageDaten(FremdBewertungsAnfrageDaten $anfrageDaten): array {
+        return [
+            "name"                => $anfrageDaten->getFremdBerwerterName()->getValue(),
+            "email"               => $anfrageDaten->getFremdBerwerterEmail()->getValue(),
+            "anfrageTaetigkeiten" => $anfrageDaten->getAnfrageTaetigkeiten() . "",
+            "anfrageKommentar"    => $anfrageDaten->getAnfrageKommentar() . "",
+            "datum"               => $anfrageDaten->getDatum()->toIsoString(),
+        ];
+    }
 }

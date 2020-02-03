@@ -30,6 +30,7 @@ final class FileBasedSimpleLernzielFachRepository extends AbstractCommonReposito
         }
     }
 
+    /** @param LernzielFach $lernzielFach */
     public function delete($lernzielFach): void {
         if ($this->getFachClusterIdByLernzielNummer($lernzielFach->getLernzielNummer())) {
             parent::delete($lernzielFach);

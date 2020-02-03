@@ -6,7 +6,7 @@ use Common\Domain\FlushableRepository;
 
 interface StoredEventRepository extends FlushableRepository
 {
-    public function add(StoredEvent $storedEvent);
+    public function add(StoredEvent $storedEvent): void;
 
     public function byId(StoredEventId $idstoredEventId): ?StoredEvent;
 

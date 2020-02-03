@@ -15,7 +15,10 @@ class PruefungsPeriodeType extends Type
         return "INTEGER";
     }
 
-    /** @return PruefungsPeriode */
+    /**
+     * @param ?string $value
+     * @return ?PruefungsPeriode
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform) {
         if (is_numeric($value)) {
             return PruefungsPeriode::fromInt($value);
@@ -24,7 +27,10 @@ class PruefungsPeriodeType extends Type
         return NULL;
     }
 
-    /** @param PruefungsPeriode $value */
+    /**
+     * @param PruefungsPeriode $value
+     * @return ?string
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform) {
         if (!$value) {
             return NULL;

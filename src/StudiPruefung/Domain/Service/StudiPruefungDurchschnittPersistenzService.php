@@ -13,14 +13,11 @@ use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 /** @TODO Tests */
 class StudiPruefungDurchschnittPersistenzService
 {
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -47,16 +44,20 @@ class StudiPruefungDurchschnittPersistenzService
             $alleStudiPruefungsWertungen[] = $studiPruefungsWertung;
             $alleGesamtWertungen[] = $studiPruefungsWertung->getGesamtErgebnis();
         }
+        $kohortenWertung = NULL;
         if ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof PunktWertung)) {
+            /** @var PunktWertung[] $kohortenWertung */
             $kohortenWertung = PunktWertung::getDurchschnittsWertung($alleGesamtWertungen);
         } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof ProzentWertung)) {
+            /** @var ProzentWertung[] $kohortenWertung */
             $kohortenWertung = ProzentWertung::getDurchschnittsWertung($alleGesamtWertungen);
         } elseif ($alleGesamtWertungen && ($alleGesamtWertungen[0] instanceof RichtigFalschWeissnichtWertung)) {
+            /** @var RichtigFalschWeissnichtWertung[] $kohortenWertung */
             $kohortenWertung = RichtigFalschWeissnichtWertung::getDurchschnittsWertung($alleGesamtWertungen);
         }
         foreach ($alleStudiPruefungsWertungen as $studiPruefungsWertung) {
             $studiPruefungsWertung->setKohortenWertung($kohortenWertung);
         }
         $this->studiPruefungsWertungRepository->flush();
-   }
+    }
 }

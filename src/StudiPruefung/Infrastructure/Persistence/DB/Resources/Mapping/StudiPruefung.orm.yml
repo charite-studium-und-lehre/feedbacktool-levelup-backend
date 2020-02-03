@@ -4,24 +4,21 @@ StudiPruefung\Domain\StudiPruefung:
 
   id:
     id:
-      type: aggregateId
+      type: studiPruefungsId
 
   fields:
     studiHash:
       type: studiHash
+    pruefungsId:
+      type: pruefungsId
     bestanden:
       type: boolean
       nullable: false
 
-  embedded:
-    pruefungsId:
-      class: Common\Domain\AggregateIdString
-      columnPrefix: "pruefungs_"
-
   indexes:
-    pruefungs_id:
+    pruefungsId:
       columns:
-        pruefungs_id
+        pruefungsId
     studiHash:
       columns:
         studiHash

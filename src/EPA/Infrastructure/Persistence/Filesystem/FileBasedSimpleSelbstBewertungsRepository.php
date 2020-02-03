@@ -5,10 +5,10 @@ namespace EPA\Infrastructure\Persistence\Filesystem;
 use Common\Infrastructure\Persistence\Common\AbstractCommonRepository;
 use Common\Infrastructure\Persistence\Common\FileBasedRepoTrait;
 use EPA\Domain\EPA;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsId;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsId;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Studi\Domain\LoginHash;
 
 /** @method SelbstBewertung[] all() */
@@ -21,7 +21,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
     }
 
     public function nextIdentity(): SelbstBewertungsId {
-        return SelbstBewertungsId::fromString($this->abstractNextIdentity());
+        return SelbstBewertungsId::fromInt($this->abstractNextIdentity()->getValue());
     }
 
     public function allLatestByStudiUndTyp(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
@@ -63,7 +63,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
         EPA $epa
     ): ?SelbstBewertung {
         foreach ($this->allLatestByStudiUndTyp($loginHash, $typ) as $bewertung) {
-            /** @var $bewertung SelbstBewertung */
+            /** @var $bewertung \EPA\Domain\Selbstbewertung\SelbstBewertung */
             if ($bewertung->getEpaBewertung()->getEpa()->equals($epa)) {
                 return $bewertung;
             }

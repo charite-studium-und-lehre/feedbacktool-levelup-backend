@@ -8,10 +8,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CSRFChecker
 {
-    protected $csrfTokenManager;
+    protected CsrfTokenManagerInterface $csrfTokenManager;
 
-    /** @var CurrentUserIdService */
-    protected $currentUserIdService;
+    protected CurrentUserIdService $currentUserIdService;
 
     public function __construct(
         CsrfTokenManagerInterface $tokenGeneratorcsrfTokenManager,
@@ -27,7 +26,7 @@ class CSRFChecker
         return $token->getValue();
     }
 
-    public function checkToken(string $intention, string $tokenString) {
+    public function checkToken(string $intention, string $tokenString): bool {
         $token = $this->generateTokenObject($intention);
 
         return $token->getValue() == $tokenString;
@@ -39,7 +38,7 @@ class CSRFChecker
         return $this->csrfTokenManager->getToken($tokenId);
     }
 
-    private function getTokenString($intention) {
+    private function getTokenString(string $intention): string {
         return $intention
             . "_"
             . $this->currentUserIdService->getUserId();

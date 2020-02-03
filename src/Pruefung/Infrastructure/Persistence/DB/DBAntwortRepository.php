@@ -21,7 +21,7 @@ final class DBAntwortRepository implements AntwortRepository
     }
 
     public function byId(AntwortId $id): ?Antwort {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): AntwortId {

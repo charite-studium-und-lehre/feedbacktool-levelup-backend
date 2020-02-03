@@ -30,8 +30,7 @@ class ClusterTyp implements DDDValueObject
 
     const INVALID = "Der Clustertyp ist nicht bekannt: ";
 
-    /** @var int */
-    private $const;
+    private int $const;
 
     public static function fromConst(int $const): self {
         Assertion::inArray($const, self::ALLE_KONSTANTEN, self::INVALID . $const);
@@ -71,27 +70,27 @@ class ClusterTyp implements DDDValueObject
     }
 
     public function isFachTyp(): bool {
-        return $this->getConst() == self::TYP_ID_FACH;
+        return $this->getConst() === self::TYP_ID_FACH;
     }
 
     public function isOrgansystemTyp(): bool {
-        return $this->getConst() == self::TYP_ID_ORGANSYSTEM;
+        return $this->getConst() === self::TYP_ID_ORGANSYSTEM;
     }
 
     public function isModulTyp(): bool {
-        return $this->getConst() == self::TYP_ID_MODUL;
+        return $this->getConst() === self::TYP_ID_MODUL;
     }
 
     public function isStationsFachTyp(): bool {
-        return $this->getConst() == self::TYP_ID_STATIONS_FACH;
+        return $this->getConst() === self::TYP_ID_STATIONS_FACH;
     }
 
     public function isStationsModulTyp(): bool {
-        return $this->getConst() == self::TYP_ID_STATION_MODUL;
+        return $this->getConst() === self::TYP_ID_STATION_MODUL;
     }
 
     public function isStationsWissenTyp(): bool {
-        return $this->getConst() == self::TYP_ID_STATION_WISSENS_TYP;
+        return $this->getConst() === self::TYP_ID_STATION_WISSENS_TYP;
     }
 
 }

@@ -2,7 +2,7 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         chariteLDAPUserProvider:
-            id: SSO\Infrastructure\Web\Service\StudiUserProvider
+            id: Login\Infrastructure\Web\Service\StudiUserProvider
 
     firewalls:
         dev:
@@ -18,7 +18,7 @@ security:
 
             guard:
                 authenticators:
-                    - SSO\Infrastructure\Web\Service\ChariteGuardAuthenticator
+                    - Login\Infrastructure\Web\Service\ChariteGuardAuthenticator
 
             logout:
                 # The route name the user can go to in order to logout

@@ -9,17 +9,15 @@ use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemId;
-use Studi\Domain\StudiIntern;
 
 class ChariteStationsClusterungPersistenzService
 {
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
-    /** @var ClusterZuordnungsService */
-    private $clusterZuordnungsService;
+    private ClusterZuordnungsService $clusterZuordnungsService;
 
     public function __construct(
         ClusterRepository $clusterRepository,
@@ -29,8 +27,10 @@ class ChariteStationsClusterungPersistenzService
         $this->clusterZuordnungsService = $clusterZuordnungsService;
     }
 
-    /** @param StudiIntern[] $studiInternArray */
-    public function persistiereClusterZuordnungen($pruefungsDaten, PruefungsId $pruefungsId) {
+    /**
+     * @param array<int, array<string, mixed>> $pruefungsDaten
+     */
+    public function persistiereClusterZuordnungen(array $pruefungsDaten, PruefungsId $pruefungsId): void {
         $counter = 0;
         $lineCount = count($pruefungsDaten);
         $einProzent = round($lineCount / 10);

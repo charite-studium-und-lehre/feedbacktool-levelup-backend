@@ -17,6 +17,7 @@ use Wertung\Domain\Wertung\Punktzahl;
 
 class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService implements PruefungsdatenImportService
 {
+    /** @return array<array<mixed>> */
     public function getData(
         string $inputFile,
         string $delimiter = ",",
@@ -33,7 +34,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
             if (!$matrikelnummer) {
                 continue;
             }
-            $punktzahl = Punktzahl::fromFloat($dataLine["richtig"]);
+            $punktzahl = Punktzahl::fromFloat((float) $dataLine["richtig"]);
 
             $pruefungSemester = isset($dataLine["Kl_Nr"])
                 ? $dataLine["Kl_Nr"]
@@ -60,6 +61,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 continue;
             }
 
+            $pruefungsId = NULL;
             try {
                 $pruefungsId = PruefungsId::fromPruefungsformatUndPeriode(
                     PruefungsFormat::getMC($pruefungSemester),

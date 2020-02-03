@@ -6,15 +6,13 @@ use Common\Domain\DefaultEntityComparison;
 
 class StudiIntern
 {
-    /** @var StudiHash */
-    private $studiHash;
+    private StudiHash $studiHash;
 
-    /** @var Matrikelnummer */
-    private $matrikelnummer;
+    private Matrikelnummer $matrikelnummer;
 
     use DefaultEntityComparison;
 
-    public static function fromMatrikelUndStudiHash(Matrikelnummer $matrikelnummer, StudiHash $studiHash) {
+    public static function fromMatrikelUndStudiHash(Matrikelnummer $matrikelnummer, StudiHash $studiHash): self {
         $object = new self();
         $object->matrikelnummer = $matrikelnummer;
         $object->studiHash = $studiHash;

@@ -5,17 +5,15 @@ namespace Pruefung\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
-use FBToolCommon\Domain\Zeitsemester;
+use LevelUpCommon\Domain\Zeitsemester;
 
 class PruefungsPeriode implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    /** @var Zeitsemester */
-    private $zeitsemester;
+    private Zeitsemester $zeitsemester;
 
-    /** @var PruefungsUnterPeriode|NULL */
-    private $unterPeriode;
+    private ?PruefungsUnterPeriode $unterPeriode;
 
     public static function fromZeitsemester(Zeitsemester $zeitsemester): self {
         return self::fromZeitsemesterUndPeriode($zeitsemester);
@@ -32,9 +30,9 @@ class PruefungsPeriode implements DDDValueObject
         return $object;
     }
 
-    public static function fromInt(string $value): PruefungsPeriode {
+    public static function fromInt(int $value): PruefungsPeriode {
         Assertion::integerish($value);
-        if ($value < 100000) {
+        if ($value < 100_000) {
             $value *= 10;
         }
 
@@ -57,6 +55,7 @@ class PruefungsPeriode implements DDDValueObject
         if ($this->unterPeriode) {
             $returnString .= "-" . (string) $this->unterPeriode;
         }
+
         return "$returnString";
     }
 
@@ -78,6 +77,7 @@ class PruefungsPeriode implements DDDValueObject
 
         return $returnString;
     }
+
     public function getPeriodeBeschreibungKurz(): string {
         $returnString = "";
         if ($this->unterPeriode) {

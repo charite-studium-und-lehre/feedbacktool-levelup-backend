@@ -1,7 +1,0 @@
-EPA\Domain\SelbstBewertungsTyp:
-  type: embeddable
-
-  fields:
-    value:
-      type: integer
-      column: typ

@@ -11,7 +11,7 @@
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" />
         <env name="SHELL_VERBOSITY" value="-1" />
-        <env name="KERNEL_CLASS" value="FBToolCommon\Infrastructure\UserInterface\SymfonyKernel" />
+        <env name="KERNEL_CLASS" value="LevelUpCommon\Infrastructure\UserInterface\SymfonyKernel" />
     </php>
 
     <testsuites>

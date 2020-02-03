@@ -13,8 +13,9 @@ class AggregateIdString implements DDDValueObject
 
     const MAX_CHARS = 30;
 
-    protected $id;
+    protected string $id;
 
+    /** @return static */
     public static function fromString(string $id): self {
         Assertion::string($id, 0, self::INVALID_ID . $id);
         Assertion::maxLength($id, self::MAX_CHARS, self::INVALID_SIZE . $id);

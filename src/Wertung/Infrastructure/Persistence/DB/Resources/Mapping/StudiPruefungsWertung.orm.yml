@@ -4,7 +4,7 @@ Wertung\Domain\StudiPruefungsWertung:
 
   id:
     studiPruefungsId:
-      type: aggregateId
+      type: studiPruefungsId
 
   fields:
     gesamtErgebnis:

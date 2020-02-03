@@ -13,19 +13,17 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ChariteFragenPersistenzService
 {
-    /** @var FragenRepository */
-    private $fragenRepository;
+    private FragenRepository $fragenRepository;
 
-    /** @var AntwortRepository */
-    private $antwortRepository;
+    private AntwortRepository $antwortRepository;
 
     public function __construct(FragenRepository $fragenRepository, AntwortRepository $antwortRepository) {
         $this->fragenRepository = $fragenRepository;
         $this->antwortRepository = $antwortRepository;
     }
 
-    /** @param $fragenDTOs ChariteFragenDTO[] */
-    public function persistiereFragenUndAntworten(array $fragenDTOs) {
+    /** @param ChariteFragenDTO[] $fragenDTOs */
+    public function persistiereFragenUndAntworten(array $fragenDTOs): void {
         foreach ($fragenDTOs as $fragenDTO) {
             $pruefungsItemId = PruefungsItemId::fromPruefungsIdUndFragenNummer(
                 $fragenDTO->pruefungsId, $fragenDTO->fragenNr

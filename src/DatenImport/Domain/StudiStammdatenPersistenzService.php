@@ -3,28 +3,21 @@
 namespace DatenImport\Domain;
 
 use Studi\Domain\Service\StudiHashCreator;
-use Studi\Domain\Studi;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiIntern;
 use Studi\Domain\StudiInternRepository;
-use Studi\Domain\StudiRepository;
 
 class StudiStammdatenPersistenzService
 {
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private StudiInternRepository $studiInternRepository;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private StudiHashCreator $studiHashCreator;
 
-    /** @var int */
-    private $hinzugefuegt = 0;
+    private int $hinzugefuegt = 0;
 
-    /** @var int */
-    private $geloescht = 0;
+    private int $geloescht = 0;
 
-    /** @var int */
-    private $geaendert = 0;
+    private int $geaendert = 0;
 
     public function __construct(
         StudiInternRepository $studiInternRepository,
@@ -34,11 +27,13 @@ class StudiStammdatenPersistenzService
         $this->studiHashCreator = $studiHashCreator;
     }
 
-    public function persistiereStudiListe($studiDataObjectsToImport) {
+    /**
+     * @param StudiData[] $studiDataObjectsToImport
+     */
+    public function persistiereStudiListe(array $studiDataObjectsToImport): void {
 
         $this->neueStudisInternHinzufuegenOderUpdate($studiDataObjectsToImport);
         $this->loescheObsoleteStudis($studiDataObjectsToImport);
-
 
     }
 
@@ -55,9 +50,9 @@ class StudiStammdatenPersistenzService
     }
 
     /**
-     * @param $alleStudisImport StudiIntern[]
+     * @param StudiData[] $studiDataObjectsToImport
      */
-    private function loescheObsoleteStudis(array $alleStudisImport): void {
+    private function loescheObsoleteStudis(array $studiDataObjectsToImport): void {
         $alleStudisInternAktuell = $this->studiInternRepository->all();
         $matrikelZuLoeschen = [];
 
@@ -67,7 +62,7 @@ class StudiStammdatenPersistenzService
         }
 
         // Studis, die im Import vorhanden sind, werden von Löschliste entfernt.
-        foreach ($alleStudisImport as $studiImport) {
+        foreach ($studiDataObjectsToImport as $studiImport) {
             unset($matrikelZuLoeschen[$studiImport->getMatrikelnummer()->getValue()]);
         }
 
@@ -80,7 +75,7 @@ class StudiStammdatenPersistenzService
     }
 
     /**
-     * @param $studiDataObjectsToImport StudiData[]
+     * @param StudiData[] $studiDataObjectsToImport
      */
     private function neueStudisInternHinzufuegenOderUpdate($studiDataObjectsToImport): void {
         foreach ($studiDataObjectsToImport as $studiDataObject) {

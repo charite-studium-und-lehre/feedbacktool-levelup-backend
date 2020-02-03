@@ -23,23 +23,21 @@ class EPABewertung
         5 => "5 - eigenständig, Wichtiges wird nachgeprüft (Arzt nur telefonisch erreichbar)",
     ];
 
-    /** @var int */
-    private $bewertung;
+    private int $bewertung;
 
-    /** @var epa */
-    private $epa;
+    private EPA $epa;
 
     public function getEpa(): EPA {
         return $this->epa;
     }
 
-    public static function fromValues(string $bewertung, EPA $epa): self {
-        Assertion::integerish($bewertung, self::INVALID);
-        Assertion::between($bewertung, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);
+    public static function fromValues(int $bewertungsInt, EPA $epa): self {
+        Assertion::integerish($bewertungsInt, self::INVALID);
+        Assertion::between($bewertungsInt, self::BEWERTUNG_MIN, self::BEWERTUNG_MAX, self::INVALID);
 
         $object = new self();
         $object->epa = $epa;
-        $object->bewertung = $bewertung;
+        $object->bewertung = $bewertungsInt;
 
         return $object;
     }
@@ -64,12 +62,11 @@ class EPABewertung
         );
     }
 
-    public function getBewertung(): int {
+    public function getBewertungInt(): int {
         return $this->bewertung;
     }
 
     public function getBeschreibung(): string {
         return self::BEWERTUNG_BESCHREIBUNG[$this->bewertung];
     }
-
 }

@@ -3,6 +3,7 @@
 namespace DatenImport\Infrastructure\Persistence;
 
 use DatenImport\Domain\ChariteFragenDTO;
+use Exception;
 use Pruefung\Domain\FrageAntwort\AntwortCode;
 use Pruefung\Domain\FrageAntwort\AntwortText;
 use Pruefung\Domain\FrageAntwort\FragenNummer;
@@ -32,31 +33,32 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
                 if (strstr($dataLine["Kl_Bezeichnung"], "MC Semester ") == FALSE) {
                     continue;
                 }
-                $semester = substr($dataLine["Kl_Bezeichnung"], 12);
+                $semester = (int) substr($dataLine["Kl_Bezeichnung"], 12);
 
             } elseif (isset($dataLine["Kl_Name"])) {
                 if (strstr($dataLine["Kl_Name"], "MC Semester ") == FALSE) {
                     continue;
                 }
-                $semester = substr($dataLine["Kl_Name"], 12);
+                $semester = (int) substr($dataLine["Kl_Name"], 12);
             } elseif (isset($dataLine["Modulnr"])) {
                 if (strstr($dataLine["Modulnr"], "S") === FALSE) {
                     continue;
                 }
-                $semester = str_replace("S", "", $dataLine["Modulnr"]);
+                $semester = (int) str_replace("S", "", $dataLine["Modulnr"]);
             } elseif (isset($dataLine["Modulname"])) {
                 $modulCode = substr($dataLine["Modulname"], 1, 2);
                 if (!is_numeric($modulCode) || $modulCode >= 17) {
                     continue; // MSM2
                 }
-                $semester = ceil($modulCode / 4);
+                $semester = (int) ceil($modulCode / 4);
             }
 
             if (!$semester) {
                 dump($dataLine);
-                throw new \Exception("Kein Semester gefunden in Zeile:");
+                throw new Exception("Kein Semester gefunden in Zeile:");
             }
 
+            $pruefungsId = NULL;
             try {
                 $pruefungsId = PruefungsId::fromPruefungsformatUndPeriode(
                     PruefungsFormat::getMC($semester),
@@ -98,10 +100,11 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
         return $data;
     }
 
-    private
-    function getAntworten(
-        array $dataLine
-    ) {
+    /**
+     * @param array<string, string> $dataLine
+     * @return array<string, AntwortText>
+     */
+    private function getAntworten(array $dataLine): array {
         if (array_key_exists("Antwort_A", $dataLine)) {
             $antwortHeaderArray =
                 ["Antwort_A", "Antwort_B", "Antwort_C", "Antwort_D", "Antwort_E", "Antwort_F", "Antwort_G",

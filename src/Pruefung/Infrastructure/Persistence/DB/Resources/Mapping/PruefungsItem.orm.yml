@@ -4,11 +4,11 @@ Pruefung\Domain\PruefungsItem:
 
   id:
     id:
-      type: aggregateIdString
+      type: pruefungsItemId
 
   fields:
     pruefungsId:
-      type: aggregateIdString
+      type: pruefungsId
       column: pruefungsId
     itemSchwierigkeit:
       type: itemSchwierigkeit

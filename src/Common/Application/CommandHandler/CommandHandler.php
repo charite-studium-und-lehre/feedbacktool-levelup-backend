@@ -3,6 +3,7 @@
 namespace Common\Application\CommandHandler;
 
 use Common\Application\Command\DomainCommand;
+use Common\Application\DomainEvent\DomainEvent;
 
 interface CommandHandler
 {
@@ -11,5 +12,6 @@ interface CommandHandler
 
     public function handle(DomainCommand $command): void;
 
+    /** @return DomainEvent[] */
     public function getAdditionalFiredEvents(): array;
 }

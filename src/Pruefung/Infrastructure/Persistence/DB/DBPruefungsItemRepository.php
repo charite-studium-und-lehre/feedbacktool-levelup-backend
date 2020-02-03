@@ -21,12 +21,12 @@ final class DBPruefungsItemRepository implements PruefungsItemRepository
     }
 
     public function byId(PruefungsItemId $studiHash): ?PruefungsItem {
-        return $this->abstractById($studiHash->getValue());
+        return $this->abstractById($studiHash);
     }
 
 
     public function nextIdentity(): PruefungsItemId {
-        return PruefungsItem::fromInt($this->abstractNextIdentityAsInt());
+        return PruefungsItemId::fromString($this->abstractNextIdentityAsInt());
     }
 
     public function allByPruefungsId(PruefungsId $id): array {

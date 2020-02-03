@@ -8,7 +8,7 @@ class StoredEventClass
 {
     const CLASS_NOT_EXISTS = "Die als String gegebene Stored-DomainEvent-Klasse muss existieren!";
 
-    private $value;
+    private string $value;
 
     public static function fromString(string $eventClassName): self {
         Assertion::classExists($eventClassName, self::CLASS_NOT_EXISTS);
@@ -19,7 +19,7 @@ class StoredEventClass
         return $object;
     }
 
-    public function getValue() {
+    public function getValue(): string {
         return $this->value;
     }
 

@@ -32,14 +32,40 @@ doctrine:
         class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LoginHashType"
       wertung:
         class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\WertungType"
+      itemWertungsId:
+        class: "Wertung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemWertungsIdType"
+      clusterId:
+        class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterIdType"
       clusterCode:
         class: "Cluster\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ClusterCodeType"
       itemSchwierigkeit:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\ItemSchwierigkeitType"
+      pruefungsId:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsIdType"
+      pruefungsItemId:
+        class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsItemIdType"
       pruefungsPeriode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\PruefungsPeriodeType"
+      studiPruefungsId:
+        class: "StudiPruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiPruefungsIdType"
+      studiMeilensteinId:
+        class: "Studienfortschritt\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StudiMeilensteinIdType"
       antwortCode:
         class: "Pruefung\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AntwortCodeType"
+      selbstBewertungsId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\SelbstBewertungsIdType"
+      fremdBewertungsId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsIdType"
+      fremdBewertungsAnfrageId:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageIdType"
+      fremdBewertungsAnfrageTaetigkeiten:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageTaetigkeitenType"
+      fremdBewertungsAnfrageKommentar:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsAnfrageKommentarType"
+      fremdBewertungsBewertungen:
+        class: "EPA\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\FremdBewertungsBewertungenType"
+      lernzielNummer:
+        class: "DatenImport\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\LernzielNummerType"
 
     mapping_types:
       aggregateId: integer
@@ -49,10 +75,23 @@ doctrine:
       studiHash: string
       loginHash: string
       wertung: integer
+      itemWertungsId: integer
+      clusterId: integer
       clusterCode: string
       itemSchwierigkeit: integer
+      pruefungsId: string
+      pruefungsItemId: string
       pruefungsPeriode: integer
+      studiPruefungsId: integer
+      studiMeilensteinId: string
       antwortCode: string
+      selbstBewertungsId: integer
+      fremdBewertungsId: integer
+      fremdBewertungsAnfrageId: integer
+      fremdBewertungsAnfrageTaetigkeiten: string
+      fremdBewertungsAnfrageKommentar: string
+      fremdBewertungsBewertungen: string
+      lernzielNummer: integer
 
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'
@@ -67,6 +106,12 @@ doctrine:
         type:                 yml
         dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "Common\\Domain"
+      CommmonUserMapping:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/Common/Infrastructure/Persistence/DB/Resources/Mapping/User"
+        prefix:               "Common\\Domain\\User"
 
       AbstractEvent:
         is_bundle:            false
@@ -88,6 +133,20 @@ doctrine:
         type:                 yml
         dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping"
         prefix:               "EPA\\Domain"
+
+      EPASelbstBEwertung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/SelbstBewertung"
+        prefix:               "EPA\\Domain\\SelbstBewertung"
+
+      EPAFremdBEwertung:
+        is_bundle:            false
+        mapping:              true
+        type:                 yml
+        dir:                  "%kernel.project_dir%/src/EPA/Infrastructure/Persistence/DB/Resources/Mapping/FremdBewertung"
+        prefix:               "EPA\\Domain\\FremdBewertung"
 
       Pruefung:
         is_bundle:            false

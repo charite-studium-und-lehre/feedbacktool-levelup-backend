@@ -8,6 +8,7 @@ use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnung;
 use Cluster\Domain\ClusterZuordnungsRepository;
 use Exception;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
@@ -30,29 +31,21 @@ class CharitePTMPersistenzService
     public const TYP_RICHTIG = 'r';
     public const TYP_WEISSNICHT = 'w';
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var StudiInternRepository */
-    private $studiInternRepository;
+    private StudiInternRepository $studiInternRepository;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
-    /** @var ClusterZuordnungsRepository */
-    private $clusterZuordnungsRepository;
+    private ClusterZuordnungsRepository $clusterZuordnungsRepository;
 
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
     public function __construct(
         PruefungsRepository $pruefungsRepository,
@@ -74,14 +67,17 @@ class CharitePTMPersistenzService
         $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
     }
 
-    public function persistierePruefung($ptmPruefungsDaten, PruefungsId $pruefungsId) {
+    /**
+     * @param array<int|string, array<int|string, array<string, array<string, float|int|string>>>> $ptmPruefungsDaten
+     */
+    public function persistierePruefung(array $ptmPruefungsDaten, PruefungsId $pruefungsId): void {
         $counter = 0;
         $lineCount = count($ptmPruefungsDaten);
         $einProzent = max(1, round($lineCount / 100));
 
         foreach ($ptmPruefungsDaten as $matrikelnummer => $studiErgebnis) {
             try {
-                $matrikelnummerVO = Matrikelnummer::fromInt($matrikelnummer);
+                $matrikelnummerVO = Matrikelnummer::fromInt((int) $matrikelnummer);
             } catch (Exception $e) {
                 echo "\n" . $e->getMessage() . " --- Skipping!";
                 continue;
@@ -93,7 +89,7 @@ class CharitePTMPersistenzService
             foreach ($studiErgebnis as $clusterTypValue => $clusterTypErgebnis) {
                 foreach ($clusterTypErgebnis as $clusterPTMCode => $bewertungsTypArray) {
 
-                    if ($clusterTypValue == "gesamtergebnis") {
+                    if ($clusterTypValue === "gesamtergebnis") {
                         $this->createOrUpdateGesamtWertung(
                             $matrikelnummerVO,
                             $clusterTypErgebnis["all"],
@@ -119,13 +115,13 @@ class CharitePTMPersistenzService
 
     }
 
+    /** @param array<string, float|int|string>  $bewertungsTypArray */
     private function createOrUpdateWertung(
         Matrikelnummer $matrikelnummer,
-        $clusterPTMCode,
-        $bewertungsTypArray,
+        string $clusterPTMCode,
+        array $bewertungsTypArray,
         PruefungsId $pruefungsId
-    ):
-    void {
+    ): void {
         $studiPruefung = $this->getOrAddStudiPruefung($pruefungsId, $matrikelnummer);
         if (!$studiPruefung) {
             return;
@@ -140,9 +136,9 @@ class CharitePTMPersistenzService
             $pruefungsItemId
         );
         $richtigFalschWeissnichtWertung = RichtigFalschWeissnichtWertung::fromPunktzahlen(
-            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_RICHTIG]),
-            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_FALSCH]),
-            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_WEISSNICHT])
+            Punktzahl::fromFloat((float) $bewertungsTypArray[SELF::TYP_RICHTIG]),
+            Punktzahl::fromFloat((float) $bewertungsTypArray[SELF::TYP_FALSCH]),
+            Punktzahl::fromFloat((float) $bewertungsTypArray[SELF::TYP_WEISSNICHT])
         );
         if (!$itemWertung
             || !$itemWertung->getWertung()->equals($richtigFalschWeissnichtWertung)) {
@@ -161,19 +157,20 @@ class CharitePTMPersistenzService
         }
     }
 
-    private function getPruefungsItemId($clusterPTMCode, $pruefungsId): PruefungsItemId {
+    private function getPruefungsItemId(string $clusterPTMCode, PruefungsId $pruefungsId): PruefungsItemId {
         $pruefungsItemIdInt = $pruefungsId->getValue() . "-" . $clusterPTMCode;
         $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdInt);
 
         return $pruefungsItemId;
     }
 
-    /**
-     * @param $clusterTypValue
-     * @param $clusterPTMCode
-     */
-    private function createFachClusterZuordnung($clusterTypValue, $clusterPTMCode, PruefungsId $pruefungsId): void {
-        $clusterTyp = ClusterTyp::fromConst($clusterTypValue);
+    /** @param int|string $clusterTypValue */
+    private function createFachClusterZuordnung(
+        $clusterTypValue,
+        string $clusterPTMCode,
+        PruefungsId $pruefungsId
+    ): void {
+        $clusterTyp = ClusterTyp::fromConst((int) $clusterTypValue);
         if (!$clusterTyp->isFachTyp()) {
             return;
         }
@@ -199,7 +196,6 @@ class CharitePTMPersistenzService
             $cluster = $this->clusterRepository->byId($clusterId);
             if (!$cluster->getClusterTyp()->equals($clusterTyp)) {
                 continue;
-                echo "C";
             }
 
             if ($cluster->equals($fachCluster)) {
@@ -227,6 +223,7 @@ class CharitePTMPersistenzService
                 echo "\nMatrikelnummer nicht gefunden: $matrikelnummer -> überspringe;";
                 $nichtGefundeneNummern[] = $matrikelnummer;
             }
+
             return NULL;
         }
         $studiHash = $studiIntern->getStudiHash();
@@ -261,6 +258,9 @@ class CharitePTMPersistenzService
         }
     }
 
+    /**
+     * @param array<string,float|int|string> $bewertungsTypArray
+     */
     private function createOrUpdateGesamtWertung(
         Matrikelnummer $matrikelnummer,
         array $bewertungsTypArray,
@@ -272,9 +272,9 @@ class CharitePTMPersistenzService
         }
 
         $richtigFalschWeissnichtWertung = RichtigFalschWeissnichtWertung::fromPunktzahlen(
-            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_RICHTIG]),
-            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_FALSCH]),
-            Punktzahl::fromFloat($bewertungsTypArray[SELF::TYP_WEISSNICHT])
+            Punktzahl::fromFloat((float) $bewertungsTypArray[SELF::TYP_RICHTIG]),
+            Punktzahl::fromFloat((float) $bewertungsTypArray[SELF::TYP_FALSCH]),
+            Punktzahl::fromFloat((float) $bewertungsTypArray[SELF::TYP_WEISSNICHT])
         );
         $studiPruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());
         if (!$studiPruefungsWertung) {

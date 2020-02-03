@@ -2,7 +2,6 @@
 
 namespace DatenImport\Infrastructure\UserInterface\CLI;
 
-use Exception;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
@@ -21,11 +20,6 @@ abstract class AbstractCSVPruefungsImportCommand extends AbstractCSVImportComman
         $this->addAndereArgumente();
     }
 
-    /**
-     * @param InputInterface $input
-     * @return array
-     * @throws Exception
-     */
     protected function getParameters(InputInterface $input): ImportOptionenDTO {
         $periode = PruefungsPeriode::fromInt((int) $input->getArgument("periode"));
 
@@ -40,12 +34,6 @@ abstract class AbstractCSVPruefungsImportCommand extends AbstractCSVImportComman
                            'Die Prüfungsperiode. 20181 Für SoSe2018; 20182 für WiSe2018; 201811 für SoSe2018, Unterperiode 1');
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param PruefungsFormat $pruefungsFormat
-     * @param $periode
-     * @return PruefungsId
-     */
     protected function erzeugePruefung(
         OutputInterface $output,
         PruefungsFormat $pruefungsFormat,
@@ -69,15 +57,14 @@ abstract class AbstractCSVPruefungsImportCommand extends AbstractCSVImportComman
         return $pruefungsId;
     }
 
-    protected function pruefeHatUnterPeriode(PruefungsPeriode $periode) {
+    protected function pruefeHatUnterPeriode(PruefungsPeriode $periode): void {
         if (!$periode->getUnterPeriode()) {
             throw new InvalidArgumentException("Parameter Periode: Dieser Import braucht verpflichtend auch eine Unterperiode (6-stellige Periode) (Periode <Jahr><Halbjahr><Unterperiode>)");
         }
     }
 
-    protected function pruefeHatKeineUnterPeriode(PruefungsPeriode $periode) {
+    protected function pruefeHatKeineUnterPeriode(PruefungsPeriode $periode): void {
         if ($periode->getUnterPeriode()) {
-
             throw new InvalidArgumentException("Parameter Periode: Dieser Import darf keine Unterperiode haben (5-stellige Periode) (Periode <Jahr><Halbjahr>)");
         }
     }

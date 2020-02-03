@@ -27,16 +27,14 @@ class StudiHashCreatorTest extends TestCase
             StudiData::fromValues(
                 Matrikelnummer::fromInt(456789),
                 Vorname::fromString("Petra-Maria"),
-                Nachname::fromString("Meier"),
-                []
+                Nachname::fromString("Meier")
             )
         );
         $studiHash2 = $hashCreator->createStudiHash(
             StudiData::fromValues(
                 Matrikelnummer::fromInt(456789),
                 Vorname::fromString("Petra-Maria"),
-                Nachname::fromString("Maier"),
-                []
+                Nachname::fromString("Maier")
             )
         );
         $this->assertFalse($studiHash1->equals($studiHash2));

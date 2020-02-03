@@ -5,9 +5,9 @@ namespace Tests\Unit\EPA\Domain;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
 use EPA\Domain\EPABewertungsDatum;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsId;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsId;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use PHPUnit\Framework\TestCase;
 use Studi\Domain\LoginHash;
 
@@ -54,7 +54,7 @@ class SelbstBewertungsTest extends TestCase
     }
 
     public function testFromInt_Falsch() {
-        $this->expectExceptionMessage(SelbstBewertungsTyp::INVALID);
+        $this->expectExceptionMessage(\EPA\Domain\SelbstBewertung\SelbstBewertungsTyp::INVALID);
         SelbstBewertungsTyp::fromInt(7);
     }
 

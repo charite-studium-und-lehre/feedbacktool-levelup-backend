@@ -7,17 +7,17 @@ use Cluster\Domain\ClusterCode;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTitel;
 use Cluster\Domain\ClusterTyp;
+use Pruefung\Domain\FachCodeKonstanten;
 
 class ChariteFaecherAnlegenService
 {
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
     public function __construct(ClusterRepository $clusterRepository) {
         $this->clusterRepository = $clusterRepository;
     }
 
-    public function addAlleFaecherZuDB() {
+    public function addAlleFaecherZuDB(): void {
         foreach (FachCodeKonstanten::FACH_CODES as $fachCode => $fachTitel) {
             $clusterCode = ClusterCode::fromString($fachCode);
             $cluster = $this->clusterRepository->byClusterTypUndCode(ClusterTyp::getFachTyp(), $clusterCode);
@@ -35,7 +35,7 @@ class ChariteFaecherAnlegenService
                     NULL,
                     $clusterCode,
                     );
-                $this->clusterRepository->add($cluster);;
+                $this->clusterRepository->add($cluster);
             }
         }
 

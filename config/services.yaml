@@ -1,8 +1,8 @@
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 imports:
     - { resource: "../src/**/ServiceDefinition/*.yaml" }
 
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.file-based-repository-dir: '%kernel.project_dir%/var/data/fileBasedRepositoryData'
 
@@ -12,7 +12,7 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false       # Allows optimizing the container by removing unused services; this also means
-          # fetching services directly from the container via $container->get() won't work.
+        # fetching services directly from the container via $container->get() won't work.
         # The best practice is to be explicit about your dependencies anyway.
 
     #    router.default:
@@ -37,7 +37,7 @@ services:
             - [setDomainEventPublisher, ['@Common\Application\DomainEvent\DomainEventPublisher']]
 
     Common\Domain\Services\CurrentUserIdService:
-        class: FBToolCommon\Infrastructure\UserInterface\Web\Service\CurrentWebUserIdService
+        class: LevelUpCommon\Infrastructure\UserInterface\Web\Service\CurrentWebUserIdService
 
     Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService:
         arguments:
@@ -58,7 +58,9 @@ services:
             - '%env(LDAP_BASE_DN)%'
             - '%env(LDAP_BIND_DN)%'
 
-    api.cors_listener:
-        class: Common\Infrastructure\UserInterface\Web\Service\Listener\CorsListener
+    Common\Infrastructure\UserInterface\Web\Service\Listener\CorsListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    Login\Infrastructure\Web\Service\FrontendUrlService:
+        arguments: ["%kernel.environment%"]

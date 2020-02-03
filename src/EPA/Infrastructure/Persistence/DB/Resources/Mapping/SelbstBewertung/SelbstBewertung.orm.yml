@@ -1,0 +1,31 @@
+EPA\Domain\SelbstBewertung\SelbstBewertung:
+  type: entity
+  table: epa_selbstBewertung
+
+  id:
+    id:
+      type: selbstBewertungsId
+
+  embedded:
+    selbstBewertungsTyp:
+      class: EPA\Domain\SelbstBewertung\SelbstBewertungsTyp
+      columnPrefix: false
+    epaBewertungsDatum:
+      class: EPA\Domain\EPABewertungsDatum
+      columnPrefix: false
+    epaBewertung:
+      class: EPA\Domain\EPABewertung
+      columnPrefix: false
+
+  fields:
+    loginHash:
+      type: loginHash
+      nullable: false
+
+  indexes:
+    loginHash:
+      columns: loginHash
+    datum:
+      columns: datum
+    typ:
+      columns: typ

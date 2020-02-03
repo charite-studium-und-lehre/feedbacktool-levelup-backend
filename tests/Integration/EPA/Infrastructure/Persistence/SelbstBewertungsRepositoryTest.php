@@ -5,10 +5,10 @@ namespace Tests\Integration\EPA\Infrastructure\Persistence;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
 use EPA\Domain\EPABewertungsDatum;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsId;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsId;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use EPA\Infrastructure\Persistence\Filesystem\FileBasedSimpleSelbstBewertungsRepository;
 use Studi\Domain\LoginHash;
 use Tests\Integration\Common\DbRepoTestCase;
@@ -115,8 +115,8 @@ final class SelbstBewertungsRepositoryTest extends DbRepoTestCase
             $latestObjectsGemacht[0]->getEpaBewertung()->getEpa()->equals(
                 EPA::fromInt(111))
         );
-        $this->assertEquals(4, $latestObjectsGemacht[0]->getEpaBewertung()->getBewertung());
-        $this->assertEquals(0, $latestObjectsZutrauen[0]->getEpaBewertung()->getBewertung());
+        $this->assertEquals(4, $latestObjectsGemacht[0]->getEpaBewertung()->getBewertungInt());
+        $this->assertEquals(0, $latestObjectsZutrauen[0]->getEpaBewertung()->getBewertungInt());
     }
 
     /**

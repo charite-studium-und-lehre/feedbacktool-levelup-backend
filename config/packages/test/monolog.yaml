@@ -1,7 +1,42 @@
+#monolog:
+#    handlers:
+#        main:
+#            type: stream
+#            path: "%kernel.logs_dir%/%kernel.environment%.log"
+#            level: error
+#            channels: ["!event"]
+
+
 monolog:
     handlers:
         main:
-            type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            type: fingers_crossed
+            action_level: error
+            handler: grouped
+            excluded_404s:
+                # regex: exclude all 404 errors from the logs
+                - ^/
+        grouped:
+            type:    group
+            members: [streamed, deduplicated]
+        streamed:
+            type:  stream
+            path:  '%kernel.logs_dir%/%kernel.environment%.log'
             level: error
-            channels: ["!event"]
+        deduplicated:
+            type:    deduplication
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: 'levelup@charite.de'
+            to_email:   'martin.dittmar@charite.de'
+            # or list of recipients
+            # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
+            subject:    '[LEVELUP-DEV][ERROR] %%message%%'
+            level:      error
+            formatter:  monolog.formatter.html
+            content_type: text/html
+        console:
+            type:   console
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine"]

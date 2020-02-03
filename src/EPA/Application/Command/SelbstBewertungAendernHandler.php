@@ -8,27 +8,16 @@ use Common\Application\CommandHandler\CommandHandlerTrait;
 use EPA\Domain\EPA;
 use EPA\Domain\EPABewertung;
 use EPA\Domain\EPABewertungsDatum;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
-use Lehrberechtigung\Domain\Lehrberechtigung;
-use Lehrberechtigung\Domain\LehrberechtigungRepository;
-use Lehrberechtigung\Domain\LehrberechtigungsId;
-use Lehrberechtigung\Domain\LehrberechtigungsTyp;
-use Lehrberechtigung\Domain\LehrberechtigungsUmfang;
-use Lehrberechtigung\Domain\Service\LehrberechtigungValidatorService;
-use LLPCommon\Domain\Zeitsemester;
-use Person\Domain\PersonId;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Studi\Domain\LoginHash;
 
 final class SelbstBewertungAendernHandler implements CommandHandler
 {
     use CommandHandlerTrait;
 
-    /**
-     * @var SelbstBewertungsRepository
-     */
-    private $selbstBewertungsRepository;
+    private SelbstBewertungsRepository $selbstBewertungsRepository;
 
     public function __construct(SelbstBewertungsRepository $selbstBewertungsRepository) {
         $this->selbstBewertungsRepository = $selbstBewertungsRepository;

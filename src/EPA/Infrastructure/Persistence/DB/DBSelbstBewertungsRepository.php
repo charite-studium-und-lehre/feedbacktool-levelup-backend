@@ -4,10 +4,10 @@ namespace EPA\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use EPA\Domain\EPA;
-use EPA\Domain\SelbstBewertung;
-use EPA\Domain\SelbstBewertungsId;
-use EPA\Domain\SelbstBewertungsRepository;
-use EPA\Domain\SelbstBewertungsTyp;
+use EPA\Domain\SelbstBewertung\SelbstBewertung;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsId;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsRepository;
+use EPA\Domain\SelbstBewertung\SelbstBewertungsTyp;
 use Studi\Domain\LoginHash;
 
 final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
@@ -23,14 +23,14 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
     }
 
     public function byId(SelbstBewertungsId $id): ?SelbstBewertung {
-        return $this->abstractById($id->getValue());
+        return $this->abstractById($id);
     }
 
     public function nextIdentity(): SelbstBewertungsId {
         return SelbstBewertungsId::fromInt($this->abstractNextIdentityAsInt());
     }
 
-    /** SelbstBewertung[] */
+    /** @return SelbstBewertung[] */
     public function allLatestByStudiUndTyp(LoginHash $loginHash, SelbstBewertungsTyp $typ): array {
         /** @var SelbstBewertung[] $alleSelbstBewertungenNeueste */
         $alleSelbstBewertungenNeueste = [];
@@ -51,7 +51,7 @@ final class DBSelbstBewertungsRepository implements SelbstBewertungsRepository
                 $alleSelbstBewertungenNeueste[$epaNummer] = $selbstbewertung;
             }
         }
-        return $alleSelbstBewertungenNeueste;
+        return array_values($alleSelbstBewertungenNeueste);
     }
 
     /** @return SelbstBewertung[] */

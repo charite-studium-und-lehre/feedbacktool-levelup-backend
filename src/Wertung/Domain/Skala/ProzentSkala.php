@@ -8,9 +8,9 @@ class ProzentSkala implements Skala
 {
     use DefaultValueObjectComparison;
 
-    private static $singleton;
+    private static ProzentSkala $singleton;
 
-    public static function create() {
+    public static function create(): ProzentSkala {
         if (!self::$singleton) {
             self::$singleton = new self();
         }

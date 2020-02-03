@@ -12,8 +12,7 @@ class EPA implements EPAElement, DDDValueObject
 
     const INVALID = "Ist keine gültige ID für eine EPA: ";
 
-    /** @var int */
-    private $nummer;
+    private int $nummer;
 
     public static function fromInt(string $nummer): self {
         $intVal = (int) $nummer;
@@ -23,7 +22,7 @@ class EPA implements EPAElement, DDDValueObject
             array_keys(EPAKonstanten::EPAS),
             self::INVALID . $nummer);
         $object = new self();
-        $object->nummer = $intVal;
+        $object->nummer = (int) $intVal;
 
         return $object;
     }
@@ -37,7 +36,7 @@ class EPA implements EPAElement, DDDValueObject
     }
 
     public function getParent(): EPAKategorie {
-        return EPAKategorie::fromInt(floor($this->nummer / 10) * 10);
+        return EPAKategorie::fromInt((int) floor($this->nummer / 10) * 10);
     }
 
     public function istBlatt(): bool {

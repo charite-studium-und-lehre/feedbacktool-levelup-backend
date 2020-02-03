@@ -1,22 +1,44 @@
 parameters:
 
    paths:
-     - %currentWorkingDirectory%/src/
-     - %currentWorkingDirectory%/tests/
+#     - %currentWorkingDirectory%/src
+     - %currentWorkingDirectory%/src/DatenImport
+     - %currentWorkingDirectory%/src/Common
+     - %currentWorkingDirectory%/src/Cluster
+     - %currentWorkingDirectory%/src/Demo
+     - %currentWorkingDirectory%/src/EPA
+     - %currentWorkingDirectory%/src/LevelUpCommon
+     - %currentWorkingDirectory%/src/Login
+     - %currentWorkingDirectory%/src/Pruefung
+     - %currentWorkingDirectory%/src/Studi
+     - %currentWorkingDirectory%/src/Studienfortschritt
+     - %currentWorkingDirectory%/src/StudiPruefung
+     - %currentWorkingDirectory%/src/Wertung
+#     - %currentWorkingDirectory%/tests/
 
    level: max
+   inferPrivatePropertyTypeFromConstructor: true
+
 
    excludes_analyse:
-       - src/FBToolCommon/Infrastructure/Persistence/Migrations/
+       - src/LevelUpCommon/Infrastructure/Persistence/Migrations/
        - src/Common/Infrastructure/Export/Service/ExcelExportService.php
-
+       - src/Common/Infrastructure/UserInterface/Web/Twig/CsrfLinkExtension.php
+       - src/Common/Infrastructure/Persistence/Common/AbstractCommonRepository.php
+       - src/StudiPruefung/Domain/Service/StudiPruefungErgebnisService.php
+       # Folgende Dateien werden wegen Größe weggelassen (Performance, Demo-Daten)
+       - src/Demo/Infrastructure/Persistence/PruefungenDemoData.php
+       - src/Demo/Infrastructure/Persistence/MCFragenDemoData.php
+       - src/Demo/Infrastructure/Persistence/EpasDemoData.php
 
    ignoreErrors:
    		- '#Parameter .* of function call_user_func expects callable.*#'
-   		- '#Strict comparison using === between .* and object will always evaluate to false.#'
    		- '#Parameter .* expects string, int given#'
    		- '#Parameter .* expects int, string given#'
    		- '#Method .*DB.*Repository::byId() should return .*|null but returns object|null.#'
    		- '#Parameter .* $serializedEventBody of static method Common\Application\AbstractEvent\StoredEventBody::fromString() expects string, string|false given.#'
    		- '#Cannot call method getTimestamp() on DateTimeImmutable|false.#'
+   		- '#Unsafe usage of new static().#'
+   		- '#Property .*::.*jsonData type has no value type specified in iterable type array.#'
+   		- '#.*has parameter .demoDataClasses with no value type specified in iterable type iterable.#'
 

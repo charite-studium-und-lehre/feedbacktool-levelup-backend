@@ -24,7 +24,7 @@ final class DBStudiRepository implements StudiRepository
     }
 
     public function byStudiHash(StudiHash $studiHash): ?Studi {
-        return $this->abstractById($studiHash->getValue());
+        return $this->abstractById($studiHash);
     }
 
     public function byLoginHash(LoginHash $loginHash): ?Studi {

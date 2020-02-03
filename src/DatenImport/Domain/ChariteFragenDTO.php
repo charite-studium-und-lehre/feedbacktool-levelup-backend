@@ -13,25 +13,19 @@ class ChariteFragenDTO
 {
     use Immutable;
 
-    /** @var FragenNummer */
-    public $fragenNr;
+    public FragenNummer $fragenNr;
 
-    /** @var AntwortCode */
-    public $loesung;
+    public AntwortCode $loesung;
 
-    /** @var int */
-    public $semester;
+    public int $semester;
 
-    /** @var PruefungsId */
-    public $pruefungsId;
+    public PruefungsId $pruefungsId;
 
-    /** @var FragenText */
-    public $fragenText;
+    public FragenText $fragenText;
 
-    /** @var AntwortText[] */
-    public $antworten;
+    /** @var array<string, AntwortText> */
+    public array $antworten;
 
-    /** @var boolean */
-    public $mitAbbildung;
+    public bool $mitAbbildung;
 
 }

@@ -13,14 +13,11 @@ class StudiMeilensteinImportCommand extends AbstractCSVImportCommand
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:StudiMeilenstein';
 
-    /** @var ChariteStudiStammdatenHIS_CSVImportService */
-    private $chariteStudiStammdatenHIS_CSVImportService;
+    private ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService;
 
-    /** @var StudiHashCreator */
-    private $studiHashCreator;
+    private StudiHashCreator $studiHashCreator;
 
-    /** @var StudiMeilensteinPersistenzService */
-    private $StudiMeilensteinPersistenzService;
+    private StudiMeilensteinPersistenzService $StudiMeilensteinPersistenzService;
 
     public function __construct(
         ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService,
@@ -33,7 +30,7 @@ class StudiMeilensteinImportCommand extends AbstractCSVImportCommand
         parent::__construct();
     }
 
-    protected function configure() {
+    protected function configure(): void {
         parent::configure();
         $this->setDescription('Studi-Meilenstein-Datenimport aus Datei');
         $this->setHelp("Aufruf: bin/console l:i:StudiMeilenstein <CSV-Dateipfad>");
@@ -41,7 +38,7 @@ class StudiMeilensteinImportCommand extends AbstractCSVImportCommand
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $importOptionenDTO = $this->getParameters($input);
-        $delimiter = $input->getArgument("delimiter") ?: ";";
+        $delimiter = (string) $input->getArgument("delimiter") ?: ";";
 
         $studiObjects = $this->chariteStudiStammdatenHIS_CSVImportService->getStudiData(
             $importOptionenDTO->dateiPfad, $delimiter,

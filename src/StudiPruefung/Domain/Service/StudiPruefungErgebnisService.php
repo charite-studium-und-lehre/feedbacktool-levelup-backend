@@ -6,7 +6,8 @@ use Cluster\Domain\ClusterId;
 use Cluster\Domain\ClusterRepository;
 use Cluster\Domain\ClusterTyp;
 use Cluster\Domain\ClusterZuordnungsService;
-use DatenImport\Domain\FachCodeKonstanten;
+use Exception;
+use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
@@ -24,26 +25,19 @@ use Wertung\Domain\Wertung\RichtigFalschWeissnichtWertung;
 
 class StudiPruefungErgebnisService
 {
-    /** @var StudiPruefungsWertungRepository */
-    private $studiPruefungsWertungRepository;
+    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
-    /** @var StudiPruefungsRepository */
-    private $studiPruefungsRepository;
+    private StudiPruefungsRepository $studiPruefungsRepository;
 
-    /** @var PruefungsRepository */
-    private $pruefungsRepository;
+    private PruefungsRepository $pruefungsRepository;
 
-    /** @var PruefungsItemRepository */
-    private $pruefungsItemRepository;
+    private PruefungsItemRepository $pruefungsItemRepository;
 
-    /** @var ItemWertungsRepository */
-    private $itemWertungsRepository;
+    private ItemWertungsRepository $itemWertungsRepository;
 
-    /** @var ClusterZuordnungsService */
-    private $clusterZuordnungsService;
+    private ClusterZuordnungsService $clusterZuordnungsService;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
     public function __construct(
         StudiPruefungsWertungRepository $studiPruefungsWertungRepository,
@@ -63,6 +57,7 @@ class StudiPruefungErgebnisService
         $this->clusterRepository = $clusterRepository;
     }
 
+    /** @return array<string,string> */
     public function getErgebnisAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
 
@@ -91,6 +86,7 @@ class StudiPruefungErgebnisService
         return $returnArray;
     }
 
+    /** @return array<string,string> */
     private function getErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         if ($pruefung->getFormat()->isMc()) {
@@ -104,6 +100,7 @@ class StudiPruefungErgebnisService
         return [];
     }
 
+    /** @return array<string,string> */
     private function getStudiPruefungGesamtWertung(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         $pruefungsWertung = $this->studiPruefungsWertungRepository->byStudiPruefungsId($studiPruefung->getId());
@@ -166,14 +163,12 @@ class StudiPruefungErgebnisService
 
             return $returnArray;
         } else {
-            throw new \Exception("Unbekanntes Format: " . $pruefung->getFormat()->getTitel());
+            throw new Exception("Unbekanntes Format: " . $pruefung->getFormat()->getTitel());
         }
     }
 
-    private
-    function getStationsErgebnisDetailsAlsJsonArray(
-        StudiPruefung $studiPruefung
-    ): array {
+    /** @return array<string,string> */
+    private function getStationsErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         /** @var Pruefung $pruefung */
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isStation()) {
@@ -184,7 +179,7 @@ class StudiPruefungErgebnisService
         if (!$clusteredItems) {
             $clusteredItems = $this->getItemsNachClusterTyp($itemWertungen, ClusterTyp::getStationsModulTyp());
         }
-        $itemsNachWissensTyp = $this->getItemsNachClusterTyp($itemWertungen, ClusterTyp::getStationsWissensTyp());;
+        $itemsNachWissensTyp = $this->getItemsNachClusterTyp($itemWertungen, ClusterTyp::getStationsWissensTyp());
 
         $itemsNachWissenFakten = [];
         $itemsNachWissenZusammenhang = [];
@@ -267,10 +262,8 @@ class StudiPruefungErgebnisService
 
     }
 
-    private
-    function getPTMErgebnisDetailsAlsJsonArray(
-        StudiPruefung $studiPruefung
-    ): array {
+    /** @return array<string,string> */
+    private function getPTMErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isPTM()) {
             return [];
@@ -311,10 +304,8 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private
-    function getMCErgebnisDetailsAlsJsonArray(
-        StudiPruefung $studiPruefung
-    ): array {
+    /** @return array<string,string> */
+    private function getMCErgebnisDetailsAlsJsonArray(StudiPruefung $studiPruefung): array {
         [$pruefung, $itemWertungen] = $this->getPruefungUndWertungen($studiPruefung);
         if (!$pruefung->getFormat()->isMc()) {
             return [];
@@ -381,10 +372,11 @@ class StudiPruefungErgebnisService
         ];
     }
 
-    private
-    function getWertungen(
-        $itemWertungen
-    ): array {
+    /**
+     * @param ItemWertung[] $itemWertungen
+     * @return array<string,string>
+     */
+    private function getWertungen(array $itemWertungen): array {
         $alleMeineWertungen = [];
         $alleKohortenWertungen = [];
         foreach ($itemWertungen as $itemWertung) {
@@ -398,11 +390,7 @@ class StudiPruefungErgebnisService
     }
 
     /** @return ItemWertung[] */
-    private
-    function getItemsNachClusterTyp(
-        $itemWertungen,
-        ClusterTyp $clusterTyp
-    ): array {
+    private function getItemsNachClusterTyp($itemWertungen, ClusterTyp $clusterTyp): array {
         $itemsNachFach = [];
         foreach ($itemWertungen as $itemWertung) {
             $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
@@ -418,14 +406,11 @@ class StudiPruefungErgebnisService
         return $itemsNachFach;
     }
 
-    private
-    function getPruefungUndWertungen(
-        StudiPruefung $studiPruefung
-    ): array {
+    private function getPruefungUndWertungen(StudiPruefung $studiPruefung): array {
         $pruefung = $this->pruefungsRepository->byId($studiPruefung->getPruefungsId());
         $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
 
-        return array($pruefung, $itemWertungen);
+        return [$pruefung, $itemWertungen];
     }
 
 }

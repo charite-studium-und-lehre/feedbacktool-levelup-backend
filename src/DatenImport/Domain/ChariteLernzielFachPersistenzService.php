@@ -8,19 +8,17 @@ use Cluster\Domain\ClusterTyp;
 
 class ChariteLernzielFachPersistenzService
 {
-    /** @var LernzielFachRepository */
-    private $lernzielFachRepository;
+    private LernzielFachRepository $lernzielFachRepository;
 
-    /** @var ClusterRepository */
-    private $clusterRepository;
+    private ClusterRepository $clusterRepository;
 
     public function __construct(LernzielFachRepository $lernzielFachRepository, ClusterRepository $clusterRepository) {
         $this->lernzielFachRepository = $lernzielFachRepository;
         $this->clusterRepository = $clusterRepository;
     }
 
-    /** @param array<int $lernzielNummer => string $fachCode */
-    public function persistiereLernzielFaecher(array $lernzielFaecher) {
+    /** @param array<int, string> $lernzielFaecher */
+    public function persistiereLernzielFaecher(array $lernzielFaecher): void {
 
         $alleFaecherNachCode = $this->alleFaecherNachCode();
         $alleLernzielFaecherNachLernzielNummer = $this->alleLernzielFaecherNachLernzielNummer();

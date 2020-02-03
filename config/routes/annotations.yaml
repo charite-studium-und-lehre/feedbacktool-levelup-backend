@@ -1,6 +1,6 @@
-SSOController:
+LoginController:
   type: annotation
-  resource: "../../src/SSO/Infrastructure"
+  resource: "../../src/Login/Infrastructure"
 
 StudienfortschrittController:
   type: annotation
