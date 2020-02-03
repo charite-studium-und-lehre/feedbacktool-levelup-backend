@@ -4,7 +4,7 @@ Pruefung\Domain\FrageAntwort\Frage:
 
   id:
     id:
-      type: aggregateIdString
+      type: fragenId
 
   embedded:
     fragenNummer:
@@ -15,7 +15,7 @@ Pruefung\Domain\FrageAntwort\Frage:
       columnPrefix: false
   fields:
     pruefungsItemId:
-      type: aggregateIdString
+      type: pruefungsItemId
       nullable: false
 
   indexes:

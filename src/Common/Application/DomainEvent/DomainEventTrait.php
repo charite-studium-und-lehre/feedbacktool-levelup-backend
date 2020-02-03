@@ -13,7 +13,7 @@ trait DomainEventTrait
     use Immutable;
 
     /** @return self */
-    public function fromCommand(DomainCommand $command) {
+    public static function fromCommand(DomainCommand $command) {
 
         $object = new static();
 

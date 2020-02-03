@@ -15,7 +15,7 @@ class StudiUeberFremdbewertungInformiertEvent implements DomainEvent
 
     public string $fremdBewerterEmail;
 
-    public string $loginHash;
+    public ?string $loginHash;
 
     public string $studiName;
 

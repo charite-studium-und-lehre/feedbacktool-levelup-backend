@@ -72,7 +72,7 @@ final class StudiMeilensteinRepositoryTest extends DbRepoTestCase
      * @test
      * @dataProvider getAllRepositories
      */
-    public function testDelete(StudiPruefungsRepository $repo) {
+    public function testDelete(StudiMeilensteinRepository $repo) {
         $this->kann_speichern_und_wiederholen($repo);
         $this->assertCount(3, $repo->all());
         foreach ($repo->all() as $entity) {
@@ -80,35 +80,6 @@ final class StudiMeilensteinRepositoryTest extends DbRepoTestCase
         }
         $repo->flush();
         $this->assertCount(0, $repo->all());
-    }
-
-    /** * @dataProvider getAllRepositories */
-    public function testByStudiHashUndPruefungsId(StudiPruefungsRepository $repo) {
-        $this->kann_speichern_und_wiederholen($repo);
-        $studiPruefung = $repo->byStudiHashUndPruefungsId(
-            $this->studiHash1, PruefungsId::fromString(7890)
-        );
-        $this->assertTrue($studiPruefung->getId()->equals(StudiPruefungsId::fromInt(123)));
-
-        $studiPruefung = $repo->byStudiHashUndPruefungsId(
-            $this->studiHash1, PruefungsId::fromString(7891)
-        );
-        $this->assertNull($studiPruefung);
-
-    }
-
-    /** * @dataProvider getAllRepositories */
-    public function testAllByStudiHash(StudiPruefungsRepository $repo) {
-        $this->kann_speichern_und_wiederholen($repo);
-        $studiPruefungen = $repo->allByStudiHash($this->studiHash1);
-        $this->assertCount(2, $studiPruefungen);
-    }
-
-    /** * @dataProvider getAllRepositories */
-    public function testAllByPruefungsId(StudiPruefungsRepository $repo) {
-        $this->kann_speichern_und_wiederholen($repo);
-        $studiPruefungen = $repo->allByPruefungsId(PruefungsId::fromString(7890));
-        $this->assertCount(1, $studiPruefungen);
     }
 
     protected function clearDatabase(): void {
