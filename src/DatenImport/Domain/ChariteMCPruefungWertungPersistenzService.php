@@ -77,6 +77,8 @@ class ChariteMCPruefungWertungPersistenzService
             $antwortCode]
         ) {
 
+            $gesamtErreichtePunktzahl = (float) $gesamtErreichtePunktzahl;
+
             $counter++;
             if ($counter % $einProzent == 0) {
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
