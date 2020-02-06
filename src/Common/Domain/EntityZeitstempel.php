@@ -43,4 +43,14 @@ final class EntityZeitstempel
                 ->add(new DateInterval("PT$sekunden" . "S"))
         );
     }
+
+    public function erzeugungAelterAlsSekunden(int $sekunden): bool {
+        return $this->zeitstempelAelterAlsSekunden($this->erzeugungsZeit, $sekunden);
+    }
+
+    private function zeitstempelAelterAlsSekunden(DateTimeImmutable $zeitstempel, int $sekunden): bool {
+        $dateTimePast = new \DateTime('now');
+        $dateTimePast->modify("- $sekunden seconds");
+        return $zeitstempel < $dateTimePast;
+    }
 }

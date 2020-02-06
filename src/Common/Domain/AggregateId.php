@@ -3,16 +3,20 @@
 namespace Common\Domain;
 
 use Assert\Assertion;
+use Assert\AssertionFailedException;
 
 class AggregateId implements DDDValueObject
 {
     use DefaultValueObjectComparison;
 
-    const INVALID_ID = "Ist keine gültige ID: ";
+    public const INVALID_ID = 'Ist keine gültige ID: ';
 
     protected int $id;
 
-    /** @return static */
+    /**
+     * @return static
+     * @throws AssertionFailedException
+     */
     public static function fromInt(int $id): self {
         Assertion::integerish($id, self::INVALID_ID . $id);
         Assertion::greaterThan($id, 0, self::INVALID_ID . $id);

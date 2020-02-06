@@ -13,9 +13,9 @@ final class DBStoredEventRepository implements StoredEventRepository
     use DoctrineAutoIncrementTrait;
     use DoctrineFlushTrait;
 
-    private \Doctrine\ORM\EntityRepository $doctrineRepo;
+    private EntityRepository $doctrineRepo;
 
-    private \Doctrine\ORM\EntityManager $entityManager;
+    private EntityManager $entityManager;
 
     public function __construct(EntityRepository $doctrineRepo, EntityManager $entityManager) {
         $this->doctrineRepo = $doctrineRepo;

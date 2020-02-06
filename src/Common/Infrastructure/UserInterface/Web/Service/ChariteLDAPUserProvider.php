@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class ChariteLDAPUserProvider implements UserProviderInterface
 {
 
-    private \Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService $chariteLDAPService;
+    private ChariteLDAPService $chariteLDAPService;
 
     public function __construct(ChariteLDAPService $chariteLDAPService) {
         $this->chariteLDAPService = $chariteLDAPService;
