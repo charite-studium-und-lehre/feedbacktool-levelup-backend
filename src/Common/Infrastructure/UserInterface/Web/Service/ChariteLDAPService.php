@@ -205,6 +205,9 @@ class ChariteLDAPService
             return NULL;
         }
         $info = ldap_get_entries($this->connection, $read);
+        if (!$info) {
+            throw new \Exception("Fehler bei LDAP-Abfrage");
+        }
         foreach ($info as $infoEntry) {
             //if (isset($infoEntry["uid"][0]) && !isset($infoEntry["stopinformation"])) {
             if (isset($infoEntry["uid"][0]) && isset($infoEntry["mail"][0])) {
