@@ -1,24 +1,10 @@
 parameters:
 
    paths:
-#     - %currentWorkingDirectory%/src
-     - %currentWorkingDirectory%/src/DatenImport
-     - %currentWorkingDirectory%/src/Common
-     - %currentWorkingDirectory%/src/Cluster
-     - %currentWorkingDirectory%/src/Demo
-     - %currentWorkingDirectory%/src/EPA
-     - %currentWorkingDirectory%/src/LevelUpCommon
-     - %currentWorkingDirectory%/src/Login
-     - %currentWorkingDirectory%/src/Pruefung
-     - %currentWorkingDirectory%/src/Studi
-     - %currentWorkingDirectory%/src/Studienfortschritt
-     - %currentWorkingDirectory%/src/StudiPruefung
-     - %currentWorkingDirectory%/src/Wertung
+     - %currentWorkingDirectory%/src
 #     - %currentWorkingDirectory%/tests/
 
    level: max
-   inferPrivatePropertyTypeFromConstructor: true
-
 
    excludes_analyse:
        - src/LevelUpCommon/Infrastructure/Persistence/Migrations/

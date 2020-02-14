@@ -9,7 +9,7 @@ class EpasFremdBewertungsAnfragenData extends AbstractJsonDemoData
             [
                 "id"                  => 51,
                 "name"                => "March Simpson",
-                "email"               => "mdi@posteo.de",
+                "email"               => "march@simpson.de",
                 "anfrageTaetigkeiten" => "",
                 "anfrageKommentar"    => "Gelbsucht",
                 "datum"               => "2019-11-13",

@@ -66,7 +66,7 @@ class ChariteStationenPruefungPersistenzService
     public function persistierePruefung(array $pruefungsDaten, PruefungsId $pruefungsId): void {
         foreach ($pruefungsDaten as $key => $dataLine) {
             $ergebnisse = $dataLine["ergebnisse"];
-            $matrikelnummer = Matrikelnummer::fromInt($dataLine["matrikelnummer"]);
+            $matrikelnummer = $dataLine["matrikelnummer"];
             $studiIntern = $this->studiInternRepository->byMatrikelnummer($matrikelnummer);
             if (!$studiIntern) {
                 echo "\nWarnung: Studi mit Matrikel " . $dataLine["matrikelnummer"] . " nicht gef. Ignoriere Zeile.";
