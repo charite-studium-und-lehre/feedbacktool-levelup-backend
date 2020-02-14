@@ -34,7 +34,10 @@ abstract class AbstractCSVImportService
             $counter++;
             $dataLineFixed = [];
             foreach ($dataLine as $dataCell) {
-                $dataCell = $this->fixEncoding($dataCell, $fromEncoding);
+                if (!is_string($dataCell) && !is_numeric($dataCell)) {
+                    $dataCell = "";
+                }
+                $dataCell = $this->fixEncoding((string) $dataCell, $fromEncoding);
                 $dataCell = $this->trimDataCell($dataCell);
                 $dataLineFixed[] = $dataCell;
             }
@@ -62,7 +65,7 @@ abstract class AbstractCSVImportService
         return $dataAsArray;
     }
 
-    protected function fixEncoding(
+    private function fixEncoding(
         string $string,
         string $fromEncoding,
         string $toEncoding = self::OUT_ENCODING
