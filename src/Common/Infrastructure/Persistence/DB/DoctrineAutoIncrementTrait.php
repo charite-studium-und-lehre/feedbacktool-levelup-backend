@@ -39,7 +39,7 @@ trait DoctrineAutoIncrementTrait
         /** @var TableAutoIncrement $currentAiObject */
         $currentAiObject = $this->entityManager->getRepository(TableAutoIncrement::class)
             ->find($tableName);
-        if (!$currentAiObject) {
+        if ($currentAiObject === NULL) {
             return 0;
         }
         $this->entityManager->refresh($currentAiObject);
