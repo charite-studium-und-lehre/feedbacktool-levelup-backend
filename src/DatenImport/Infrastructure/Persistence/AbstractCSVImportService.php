@@ -34,7 +34,8 @@ abstract class AbstractCSVImportService
             $counter++;
             $dataLineFixed = [];
             foreach ($dataLine as $dataCell) {
-                if (!is_string($dataCell) && !is_numeric($dataCell)) {
+                if (!$dataCell ||
+                    (!is_string($dataCell) && !is_numeric($dataCell))) {
                     $dataCell = "";
                 }
                 $dataCell = $this->fixEncoding((string) $dataCell, $fromEncoding);
