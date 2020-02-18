@@ -7,3 +7,5 @@ parameters:
         - 'symfony50-types'
     autoload_paths:
         - 'vendor/autoload.php'
+    exclude_paths:
+        - '*/src/*/Migrations/*'
