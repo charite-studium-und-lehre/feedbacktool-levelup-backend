@@ -11,6 +11,7 @@ parameters:
        - src/Common/Infrastructure/Export/Service/ExcelExportService.php
        - src/Common/Infrastructure/UserInterface/Web/Twig/CsrfLinkExtension.php
        - src/Common/Infrastructure/Persistence/Common/AbstractCommonRepository.php
+       - src/Common/Application/AbstractEvent/EventPersister.php
        - src/StudiPruefung/Domain/Service/StudiPruefungErgebnisService.php
        # Folgende Dateien werden wegen Größe weggelassen (Performance, Demo-Daten)
        - src/Demo/Infrastructure/Persistence/PruefungenDemoData.php

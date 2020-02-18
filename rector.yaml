@@ -12,7 +12,6 @@ parameters:
         - 'dead-classes'
         - 'symfony'
         - 'twig'
-#        - 'type-declaration'
         - 'phpstan'
     autoload_paths:
         - 'vendor/autoload.php'
