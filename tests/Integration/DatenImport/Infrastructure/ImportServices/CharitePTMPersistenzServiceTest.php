@@ -12,9 +12,7 @@ use DatenImport\Domain\CharitePTMPersistenzService;
 use DatenImport\Infrastructure\Persistence\CharitePTMCSVImportService;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItemRepository;
-use Pruefung\Domain\PruefungsRepository;
 use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsItemRepository;
-use Pruefung\Infrastructure\Persistence\Filesystem\FileBasedSimplePruefungsRepository;
 use Studi\Domain\StudiInternRepository;
 use Studi\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiInternRepository;
 use StudiPruefung\Domain\StudiPruefungsRepository;
@@ -34,7 +32,6 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
 
         return [
             'file-based-repos' => [
-                FileBasedSimplePruefungsRepository::createTempFileRepo(),
                 FileBasedSimpleStudiPruefungsRepository::createTempFileRepo(),
                 FileBasedSimpleItemWertungsRepository::createTempFileRepo(),
                 FileBasedSimplePruefungsItemRepository::createTempFileRepo(),
@@ -44,7 +41,6 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
                 FileBasedSimpleStudiPruefungsWertungRepository::createTempFileRepo(),
             ],
             'db-repos'         => [
-                $this->currentContainer->get(PruefungsRepository::class),
                 $this->currentContainer->get(StudiPruefungsRepository::class),
                 $this->currentContainer->get(ItemWertungsRepository::class),
                 $this->currentContainer->get(PruefungsItemRepository::class),
@@ -60,7 +56,6 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
      * @dataProvider getNeededRepos
      */
     public function testPersistierePruefung(
-        PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         ItemWertungsRepository $itemWertungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
@@ -81,7 +76,6 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
         $pruefungsId = PruefungsId::fromString("PT38");
 
         $service = new CharitePTMPersistenzService(
-            $pruefungsRepository,
             $studiPruefungsRepository,
             $itemWertungsRepository,
             $pruefungsItemRepository,
@@ -98,11 +92,6 @@ class CharitePTMPersistenzServiceTest extends DbRepoTestCase
 
         $service->persistierePruefung($data, $pruefungsId);
 
-        //        $clusters = $clusterRepository->all();
-        //        $this->assertCount(40, $clusters);
-        //
-        //        $this->assertTrue($clusters[0]->getTitel()->equals(ClusterTitel::fromString("Kinderheilkunde")));
-        //
         $this->assertCount(27, $pruefungsItemRepository->all());
         $this->assertCount(27, $clusterZuordnungsRepository->all());
 
