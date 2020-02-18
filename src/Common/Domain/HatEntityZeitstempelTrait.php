@@ -10,11 +10,11 @@ trait HatEntityZeitstempelTrait
         return $this->entityZeitstempel;
     }
 
-    public function aktualisiereZeitstempel() {
+    public function aktualisiereZeitstempel(): void {
         $this->entityZeitstempel = $this->entityZeitstempel->setzeGeandert();
     }
 
-    private function erzeugeZeitstempel() {
+    private function erzeugeZeitstempel(): void {
         $this->entityZeitstempel = EntityZeitstempel::createErzeugungsZeitstempel();
     }
 

@@ -6,7 +6,6 @@ use DatenImport\Domain\ChariteMCPruefungFachPersistenzService;
 use DatenImport\Domain\ChariteMCPruefungLernzielModulPersistenzService;
 use DatenImport\Infrastructure\Persistence\Charite_Ergebnisse_CSVImportService;
 use DatenImport\Infrastructure\Persistence\ChariteLernzielModulImportCSVService;
-use Pruefung\Domain\PruefungsRepository;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,8 +14,6 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
 {
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'levelup:importFile:mcCSVFachUndModule';
-
-    private PruefungsRepository $pruefungsRepository;
 
     private Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService;
 
@@ -28,13 +25,11 @@ class MCCSVPruefungsFaecherUndModuleImportCommand extends AbstractCSVPruefungsIm
     private ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService;
 
     public function __construct(
-        PruefungsRepository $pruefungsRepository,
         Charite_Ergebnisse_CSVImportService $chariteMCErgebnisseCSVImportService,
         ChariteMCPruefungLernzielModulPersistenzService $chariteMCPruefungLernzielModulPersistenz,
         ChariteMCPruefungFachPersistenzService $chariteMCPruefungFachPersistenzService,
         ChariteLernzielModulImportCSVService $chariteLernzielModulImportCSVService
     ) {
-        $this->pruefungsRepository = $pruefungsRepository;
         $this->chariteMCErgebnisseCSVImportService = $chariteMCErgebnisseCSVImportService;
         $this->chariteMCPruefungLernzielModulPersistenz = $chariteMCPruefungLernzielModulPersistenz;
         $this->chariteMCPruefungFachPersistenzService = $chariteMCPruefungFachPersistenzService;

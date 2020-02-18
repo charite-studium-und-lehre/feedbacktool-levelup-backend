@@ -7,7 +7,6 @@ use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
-use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;
@@ -20,9 +19,6 @@ use Wertung\Domain\Wertung\Prozentzahl;
 
 class ChariteStationenPruefungPersistenzService
 {
-
-    private PruefungsRepository $pruefungsRepository;
-
     private StudiPruefungsRepository $studiPruefungsRepository;
 
     private ItemWertungsRepository $itemWertungsRepository;
@@ -34,14 +30,12 @@ class ChariteStationenPruefungPersistenzService
     private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
     public function __construct(
-        PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         StudiInternRepository $studiInternRepository,
         StudiPruefungsWertungRepository $studiPruefungsWertungRepository
     ) {
-        $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->pruefungsItemRepository = $pruefungsItemRepository;
@@ -164,5 +158,4 @@ class ChariteStationenPruefungPersistenzService
         }
         $this->studiPruefungsWertungRepository->flush();
     }
-
 }

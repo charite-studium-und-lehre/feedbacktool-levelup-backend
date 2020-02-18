@@ -28,9 +28,8 @@ class ChariteFragenPersistenzService
             $pruefungsItemId = PruefungsItemId::fromPruefungsIdUndFragenNummer(
                 $fragenDTO->pruefungsId, $fragenDTO->fragenNr
             );
-            $fragenId = FragenId::fromPruefungItemIdUndFragenNummer(
-                $pruefungsItemId, $fragenDTO->fragenNr
-            );
+            $fragenId = FragenId::fromString($pruefungsItemId->getValue());
+
             $frage = $this->fragenRepository->byId($fragenId);
             if ($frage) {
                 $frage->setFragenNummer($fragenDTO->fragenNr);

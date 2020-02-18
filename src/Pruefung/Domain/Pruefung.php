@@ -3,7 +3,6 @@
 namespace Pruefung\Domain;
 
 use Common\Domain\DefaultEntityComparison;
-use Wertung\Domain\Skala\Skala;
 
 class Pruefung
 {
@@ -15,20 +14,16 @@ class Pruefung
 
     private PruefungsFormat $format;
 
-    private ?Skala $benotungsSkala;
-
     public static function create(
         PruefungsId $id,
         PruefungsPeriode $pruefungsPeriode,
-        PruefungsFormat $format,
-        ?Skala $benotungsSakala = NULL
+        PruefungsFormat $format
     ): self {
 
         $object = new self();
         $object->id = $id;
         $object->pruefungsPeriode = $pruefungsPeriode;
         $object->format = $format;
-        $object->benotungsSkala = $benotungsSakala;
 
         return $object;
     }

@@ -19,8 +19,6 @@ final class Matrikelnummer implements DDDValueObject
 
     public static function fromInt(int $value): self {
         Assertion::integerish($value);
-
-        $value = $value;
         Assertion::greaterOrEqualThan($value, self::MIN_VALUE, self::INVALID_STELLEN . $value);
         Assertion::lessOrEqualThan($value, self::MAX_VALUE, self::INVALID_STELLEN . $value);
 

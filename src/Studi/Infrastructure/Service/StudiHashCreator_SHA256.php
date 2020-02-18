@@ -27,11 +27,9 @@ class StudiHashCreator_SHA256 extends AbstractHashCreator implements StudiHashCr
         $vorname = $studiData->getVorname();
         $nachname = $studiData->getNachname();
 
-        $hash_string = $matrikelnummer
+        return $matrikelnummer
             . self::SEPARATOR . $vorname
             . self::SEPARATOR . $nachname;
-
-        return $hash_string;
     }
 
 }

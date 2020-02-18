@@ -4,7 +4,6 @@ namespace DatenImport\Infrastructure\UserInterface\CLI;
 
 use DatenImport\Domain\StudiStammdatenPersistenzService;
 use DatenImport\Infrastructure\Persistence\ChariteStudiStammdatenHIS_CSVImportService;
-use Studi\Domain\Service\StudiHashCreator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -15,17 +14,13 @@ class StudiImportCommand extends AbstractCSVImportCommand
 
     private ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService;
 
-    private StudiHashCreator $studiHashCreator;
-
     private StudiStammdatenPersistenzService $studiStammdatenPersistenzService;
 
     public function __construct(
         ChariteStudiStammdatenHIS_CSVImportService $chariteStudiStammdatenHIS_CSVImportService,
-        StudiStammdatenPersistenzService $studiStammdatenPersistenzService,
-        StudiHashCreator $studiHashCreator
+        StudiStammdatenPersistenzService $studiStammdatenPersistenzService
     ) {
         $this->chariteStudiStammdatenHIS_CSVImportService = $chariteStudiStammdatenHIS_CSVImportService;
-        $this->studiHashCreator = $studiHashCreator;
         $this->studiStammdatenPersistenzService = $studiStammdatenPersistenzService;
         parent::__construct();
     }

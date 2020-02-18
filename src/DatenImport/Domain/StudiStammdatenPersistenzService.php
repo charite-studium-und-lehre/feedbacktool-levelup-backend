@@ -77,7 +77,7 @@ class StudiStammdatenPersistenzService
     /**
      * @param StudiData[] $studiDataObjectsToImport
      */
-    private function neueStudisInternHinzufuegenOderUpdate($studiDataObjectsToImport): void {
+    private function neueStudisInternHinzufuegenOderUpdate(array $studiDataObjectsToImport): void {
         foreach ($studiDataObjectsToImport as $studiDataObject) {
             $existierenderStudiIntern = $this->studiInternRepository->byMatrikelnummer(
                 $studiDataObject->getMatrikelnummer()

@@ -22,7 +22,7 @@ class EPA implements EPAElement, DDDValueObject
             array_keys(EPAKonstanten::EPAS),
             self::INVALID . $nummer);
         $object = new self();
-        $object->nummer = (int) $intVal;
+        $object->nummer = $intVal;
 
         return $object;
     }

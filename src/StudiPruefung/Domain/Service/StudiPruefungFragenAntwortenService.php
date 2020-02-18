@@ -9,23 +9,14 @@ use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\FrageAntwort\AntwortRepository;
 use Pruefung\Domain\FrageAntwort\FragenId;
 use Pruefung\Domain\FrageAntwort\FragenRepository;
-use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
 use StudiPruefung\Domain\StudiPruefung;
-use StudiPruefung\Domain\StudiPruefungsRepository;
 use Wertung\Domain\ItemWertung;
 use Wertung\Domain\ItemWertungsRepository;
-use Wertung\Domain\StudiPruefungsWertungRepository;
 
 class StudiPruefungFragenAntwortenService
 {
-    private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
-
-    private StudiPruefungsRepository $studiPruefungsRepository;
-
     private PruefungsRepository $pruefungsRepository;
-
-    private PruefungsItemRepository $pruefungsItemRepository;
 
     private ItemWertungsRepository $itemWertungsRepository;
 
@@ -40,20 +31,14 @@ class StudiPruefungFragenAntwortenService
     private AntwortRepository $antwortRepository;
 
     public function __construct(
-        StudiPruefungsWertungRepository $studiPruefungsWertungRepository,
-        StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsRepository $pruefungsRepository,
-        PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         ClusterZuordnungsService $clusterZuordnungsService,
         ClusterRepository $clusterRepository,
         FragenRepository $fragenRepository,
         AntwortRepository $antwortRepository
     ) {
-        $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
-        $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->pruefungsRepository = $pruefungsRepository;
-        $this->pruefungsItemRepository = $pruefungsItemRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->clusterZuordnungsService = $clusterZuordnungsService;
         $this->clusterRepository = $clusterRepository;
@@ -101,11 +86,8 @@ class StudiPruefungFragenAntwortenService
                 $antwortenArray[] = [
                     "text"        => $antwort->getAntwortCode()->getValue() . ") "
                         . $antwort->getAntwortText()->getValue(),
-                    "richtig"     => $antwort->istRichtig() ? TRUE : FALSE,
-                    "ausgewaehlt" => $antwortGewaehlt && $antwort->getAntwortCode()->equals($antwortGewaehlt)
-                        ? TRUE
-                        :
-                        FALSE,
+                    "richtig"     => $antwort->istRichtig(),
+                    "ausgewaehlt" => $antwortGewaehlt && $antwort->getAntwortCode()->equals($antwortGewaehlt),
                 ];
             }
 
@@ -148,46 +130,8 @@ class StudiPruefungFragenAntwortenService
         return ["fragen" => $fragen];
     }
 
-    /**
-     * @param ItemWertung[] $itemWertungen
-     * @return array<array<ItemWertung>>
-     */
-    private function getWertungen($itemWertungen): array {
-        $alleMeineWertungen = [];
-        $alleKohortenWertungen = [];
-        foreach ($itemWertungen as $itemWertung) {
-            $alleMeineWertungen[] = $itemWertung->getWertung();
-            $alleKohortenWertungen[] = $itemWertung->getKohortenWertung();
-        }
-
-        return [$alleMeineWertungen, $alleKohortenWertungen];
-    }
-
-    /**
-     * @param ItemWertung[] $itemWertungen
-     * @return array<int, array<ItemWertung>>
-     */
-    private function getItemsNachClusterTyp(array $itemWertungen, ClusterTyp $clusterTyp): array {
-        $itemsNachFach = [];
-        foreach ($itemWertungen as $itemWertung) {
-            $clusterIds = $this->clusterZuordnungsService->getVorhandeneClusterIdsNachTyp(
-                $itemWertung->getPruefungsItemId(),
-                $clusterTyp
-            );
-            if ($clusterIds) {
-                $fachClusterId = $clusterIds[0];
-                $itemsNachFach[$fachClusterId->getValue()][] = $itemWertung;
-            }
-        }
-
-        return $itemsNachFach;
-    }
-
     /** @return ItemWertung[] */
     private function getItemWertungen(StudiPruefung $studiPruefung): array {
-        $itemWertungen = $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
-
-        return $itemWertungen;
+        return $this->itemWertungsRepository->allByStudiPruefungsId($studiPruefung->getId());
     }
-
 }

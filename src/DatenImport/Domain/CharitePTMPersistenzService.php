@@ -13,7 +13,6 @@ use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
-use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
@@ -31,8 +30,6 @@ class CharitePTMPersistenzService
     public const TYP_RICHTIG = 'r';
     public const TYP_WEISSNICHT = 'w';
 
-    private PruefungsRepository $pruefungsRepository;
-
     private StudiPruefungsRepository $studiPruefungsRepository;
 
     private ItemWertungsRepository $itemWertungsRepository;
@@ -48,7 +45,6 @@ class CharitePTMPersistenzService
     private StudiPruefungsWertungRepository $studiPruefungsWertungRepository;
 
     public function __construct(
-        PruefungsRepository $pruefungsRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         ItemWertungsRepository $itemWertungsRepository,
         PruefungsItemRepository $pruefungsItemRepository,
@@ -57,7 +53,6 @@ class CharitePTMPersistenzService
         ClusterZuordnungsRepository $clusterZuordnungsRepository,
         StudiPruefungsWertungRepository $studiPruefungsWertungRepository
     ) {
-        $this->pruefungsRepository = $pruefungsRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->pruefungsItemRepository = $pruefungsItemRepository;
@@ -115,7 +110,7 @@ class CharitePTMPersistenzService
 
     }
 
-    /** @param array<string, float|int|string>  $bewertungsTypArray */
+    /** @param array<string, float|int|string> $bewertungsTypArray */
     private function createOrUpdateWertung(
         Matrikelnummer $matrikelnummer,
         string $clusterPTMCode,
@@ -159,9 +154,8 @@ class CharitePTMPersistenzService
 
     private function getPruefungsItemId(string $clusterPTMCode, PruefungsId $pruefungsId): PruefungsItemId {
         $pruefungsItemIdInt = $pruefungsId->getValue() . "-" . $clusterPTMCode;
-        $pruefungsItemId = PruefungsItemId::fromString($pruefungsItemIdInt);
 
-        return $pruefungsItemId;
+        return PruefungsItemId::fromString($pruefungsItemIdInt);
     }
 
     /** @param int|string $clusterTypValue */

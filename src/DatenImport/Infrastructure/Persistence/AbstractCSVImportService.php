@@ -9,14 +9,6 @@ abstract class AbstractCSVImportService
     const OUT_ENCODING = "UTF-8";
     const DEFAULT_DELIMITER = ";";
 
-    /** @var array<string, string> */
-    private array $options;
-
-    /** @param array<string, string> $options */
-    public function __construct(array $options = []) {
-        $this->options = $options;
-    }
-
     /** @return array<array<string,string>> */
     protected function getCSVDataAsArray(
         string $inputFile,

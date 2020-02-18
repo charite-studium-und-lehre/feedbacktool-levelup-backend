@@ -53,7 +53,7 @@ class PruefungsPeriode implements DDDValueObject
     public function __toString(): string {
         $returnString = $this->zeitsemester->getStandardString();
         if ($this->unterPeriode) {
-            $returnString .= "-" . (string) $this->unterPeriode;
+            $returnString .= "-" . $this->unterPeriode;
         }
 
         return "$returnString";

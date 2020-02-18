@@ -2,9 +2,18 @@
 parameters:
     sets:
 #        - 'code-quality'
+        - 'php73'
         - 'php74'
-        - 'symfony50'
+        - 'symfony'
         - 'symfony50-types'
+        - 'doctrine-code-quality'
+        - 'doctrine'
+        - 'dead-code'
+        - 'dead-classes'
+        - 'symfony'
+        - 'twig'
+#        - 'type-declaration'
+        - 'phpstan'
     autoload_paths:
         - 'vendor/autoload.php'
     exclude_paths:

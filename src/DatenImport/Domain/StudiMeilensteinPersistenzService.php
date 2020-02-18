@@ -2,7 +2,6 @@
 
 namespace DatenImport\Domain;
 
-use Studi\Domain\Service\StudiHashCreator;
 use Studi\Domain\StudiData;
 use Studi\Domain\StudiInternRepository;
 use Studienfortschritt\Domain\FortschrittsItem;
@@ -13,8 +12,6 @@ class StudiMeilensteinPersistenzService
 {
     private StudiInternRepository $studiInternRepository;
 
-    private StudiHashCreator $studiHashCreator;
-
     private StudiMeilensteinRepository $StudiMeilensteinRepository;
 
     private int $hinzugefuegt = 0;
@@ -23,11 +20,9 @@ class StudiMeilensteinPersistenzService
 
     public function __construct(
         StudiInternRepository $studiInternRepository,
-        StudiHashCreator $studiHashCreator,
         StudiMeilensteinRepository $StudiMeilensteinRepository
     ) {
         $this->studiInternRepository = $studiInternRepository;
-        $this->studiHashCreator = $studiHashCreator;
         $this->StudiMeilensteinRepository = $StudiMeilensteinRepository;
     }
 

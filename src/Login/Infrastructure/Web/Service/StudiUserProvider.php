@@ -56,9 +56,8 @@ class StudiUserProvider extends ChariteLDAPUserProvider
             // setze LoginHash nicht auf von Doctrine verwaltetem Studi
             $studi->setLoginHash($this->userSwitcher->getSwitchedLoginHash());
         }
-        $studi = $studi->macheZuLoginUser($loginUser);
 
-        return $studi;
+        return $studi->macheZuLoginUser($loginUser);
 
     }
 

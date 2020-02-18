@@ -31,8 +31,6 @@ class StudiPruefungErgebnisService
 
     private PruefungsRepository $pruefungsRepository;
 
-    private PruefungsItemRepository $pruefungsItemRepository;
-
     private ItemWertungsRepository $itemWertungsRepository;
 
     private ClusterZuordnungsService $clusterZuordnungsService;
@@ -43,7 +41,6 @@ class StudiPruefungErgebnisService
         StudiPruefungsWertungRepository $studiPruefungsWertungRepository,
         StudiPruefungsRepository $studiPruefungsRepository,
         PruefungsRepository $pruefungsRepository,
-        PruefungsItemRepository $pruefungsItemRepository,
         ItemWertungsRepository $itemWertungsRepository,
         ClusterZuordnungsService $clusterZuordnungsService,
         ClusterRepository $clusterRepository
@@ -51,7 +48,6 @@ class StudiPruefungErgebnisService
         $this->studiPruefungsWertungRepository = $studiPruefungsWertungRepository;
         $this->studiPruefungsRepository = $studiPruefungsRepository;
         $this->pruefungsRepository = $pruefungsRepository;
-        $this->pruefungsItemRepository = $pruefungsItemRepository;
         $this->itemWertungsRepository = $itemWertungsRepository;
         $this->clusterZuordnungsService = $clusterZuordnungsService;
         $this->clusterRepository = $clusterRepository;
@@ -374,7 +370,7 @@ class StudiPruefungErgebnisService
 
     /**
      * @param ItemWertung[] $itemWertungen
-     * @return array<string,string>
+     * @return Wertung[][]|null[][]
      */
     private function getWertungen(array $itemWertungen): array {
         $alleMeineWertungen = [];

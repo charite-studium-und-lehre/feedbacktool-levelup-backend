@@ -10,6 +10,9 @@ use Common\Domain\DDDEntity;
 class AbstractCommonRepository
 {
 
+    /**
+     * @var mixed[]
+     */
     protected array $persistedEntities = [];
 
     public function add($entity): void {

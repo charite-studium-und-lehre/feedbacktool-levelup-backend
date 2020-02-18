@@ -22,7 +22,7 @@ class AggregateId implements DDDValueObject
         Assertion::greaterThan($id, 0, self::INVALID_ID . $id);
 
         $object = new static();
-        $object->id = (int) $id;
+        $object->id = $id;
 
         return $object;
     }

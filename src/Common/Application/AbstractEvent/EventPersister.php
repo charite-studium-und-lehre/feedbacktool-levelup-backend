@@ -7,9 +7,9 @@ use ReflectionObject;
 
 class EventPersister
 {
-    private \Common\Application\AbstractEvent\EventSerializer $eventSerializer;
+    private EventSerializer $eventSerializer;
 
-    private \Common\Application\AbstractEvent\StoredEventRepository $storedEventRepository;
+    private StoredEventRepository $storedEventRepository;
 
     public function __construct(EventSerializer $eventSerializer, StoredEventRepository $storedEventRepository) {
         $this->eventSerializer = $eventSerializer;
@@ -22,22 +22,19 @@ class EventPersister
         $eventValuesDict = $this->createEventValuesDict($domainEvent);
         $storedEventBody = $this->eventSerializer->serializeEventBody($eventValuesDict);
 
-        $storedEvent = StoredEvent::fromData(
+        return StoredEvent::fromData(
             $storedEventId,
             $storedEventClass,
             $storedEventBody,
             $domainEvent->getOccurredOn(),
             $domainEvent->getByUserId()
         );
-
-        return $storedEvent;
     }
 
     public function recoverDomainEvent(StoredEvent $storedEvent): DomainEvent {
         $domainEventClass = $storedEvent->getEventClass()->getValue();
+        /** @var DomainEvent $domainEvent */
         $domainEvent = new $domainEventClass();
-        /* @var $domainEvent DomainEvent */
-
         $domainEvent->byUserId = $storedEvent->getByUserId();
         $domainEvent->occurredOn = $storedEvent->getOccurredOn();
 

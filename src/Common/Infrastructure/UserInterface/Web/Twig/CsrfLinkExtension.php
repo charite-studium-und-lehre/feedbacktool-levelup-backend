@@ -47,13 +47,11 @@ class CsrfLinkExtension extends AbstractExtension
 
         $return = '<a href="%s"%s>%s</a>';
 
-        $return = sprintf($return,
+        return sprintf($return,
                           htmlspecialchars($path, ENT_COMPAT),
                           $this->_tagOptions($this->_options2javascript($options)),
                           ($ecape) ? htmlspecialchars($title, ENT_COMPAT) : $title
         );
-
-        return $return;
     }
 
     function _tagOptions(array $options = array()): string {
