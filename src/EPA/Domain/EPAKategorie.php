@@ -28,21 +28,21 @@ class EPAKategorie implements EPAElement, DDDValueObject
         return $object;
     }
 
-//    private static function getEPAStruktur(): array {
-//        $resultArray = [];
-//        foreach (array_keys(EPAKonstanten::EPAS) as $epaInt) {
-//            $epa = EPA::fromInt($epaInt);
-//            if ($epa->getParent()->getParent()) {
-//                $resultArray
-//                [$epa->getParent()->getParent()->getValue()][$epa->getParent()->getValue()][$epa->getValue()] = $epa;
-//            } else {
-//                $resultArray
-//                [$epa->getParent()->getValue()][$epa->getValue()] = $epa;
-//            }
-//        }
-//
-//        return $resultArray;
-//    }
+    //    private static function getEPAStruktur(): array {
+    //        $resultArray = [];
+    //        foreach (array_keys(EPAKonstanten::EPAS) as $epaInt) {
+    //            $epa = EPA::fromInt($epaInt);
+    //            if ($epa->getParent()->getParent()) {
+    //                $resultArray
+    //                [$epa->getParent()->getParent()->getValue()][$epa->getParent()->getValue()][$epa->getValue()] = $epa;
+    //            } else {
+    //                $resultArray
+    //                [$epa->getParent()->getValue()][$epa->getValue()] = $epa;
+    //            }
+    //        }
+    //
+    //        return $resultArray;
+    //    }
 
     /** @return EPAElement[] */
     public static function getEPAStrukturFlach(): array {

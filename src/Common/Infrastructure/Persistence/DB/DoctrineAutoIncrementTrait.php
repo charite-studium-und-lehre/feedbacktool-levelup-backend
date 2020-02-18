@@ -75,7 +75,6 @@ trait DoctrineAutoIncrementTrait
         return max((int) $result[0]["maxId"], 0);
     }
 
-
     private function createAutoIncrement(string $tableName): void {
         $nextAIFromDB = $this->getDbAutoIncrement($tableName);
         $maxIdFromTable = $this->getMaxIdFromDb($tableName);

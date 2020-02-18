@@ -4,9 +4,6 @@ namespace EPA\Infrastructure\Persistence\DB;
 
 use Common\Infrastructure\Persistence\DB\DDDDoctrineRepoTrait;
 use EPA\Domain\FremdBewertung\FremdBewertung;
-use EPA\Domain\FremdBewertung\FremdBewertungsAnfrage;
-use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
-use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use EPA\Domain\FremdBewertung\FremdBewertungsId;
 use EPA\Domain\FremdBewertung\FremdBewertungsRepository;
 use Studi\Domain\LoginHash;

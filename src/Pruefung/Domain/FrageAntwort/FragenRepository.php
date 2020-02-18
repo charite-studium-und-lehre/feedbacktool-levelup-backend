@@ -11,7 +11,7 @@ interface FragenRepository extends DDDRepository, FlushableRepository
 
     public function byId(FragenId $id): ?Frage;
 
-//    public function byFragenNummerUndPruefungsItemId(FragenId $id): ?Frage;
+    //    public function byFragenNummerUndPruefungsItemId(FragenId $id): ?Frage;
 
     /** @return Frage[] */
     public function all(): array;

@@ -24,7 +24,6 @@ final class DBPruefungsItemRepository implements PruefungsItemRepository
         return $this->abstractById($studiHash);
     }
 
-
     public function nextIdentity(): PruefungsItemId {
         return PruefungsItemId::fromString($this->abstractNextIdentityAsInt());
     }

@@ -5,6 +5,7 @@ namespace Pruefung\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use Exception;
 
 class ItemSchwierigkeit implements DDDValueObject
 {
@@ -70,7 +71,7 @@ class ItemSchwierigkeit implements DDDValueObject
             case self::SCHWIERIGKEIT_SCHWER:
                 return "schwer";
         }
-        throw new \Exception("Unbekannte Schwierigkeit: " . $this->const);
+        throw new Exception("Unbekannte Schwierigkeit: " . $this->const);
     }
 
 }

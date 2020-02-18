@@ -6,7 +6,6 @@ use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
-use Pruefung\Domain\PruefungsRepository;
 use Studi\Domain\StudiInternRepository;
 use StudiPruefung\Domain\StudiPruefung;
 use StudiPruefung\Domain\StudiPruefungsRepository;

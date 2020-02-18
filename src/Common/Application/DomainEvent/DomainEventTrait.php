@@ -19,9 +19,9 @@ trait DomainEventTrait
 
         if (!is_a($command, get_class($object))) {
             throw new RuntimeException("Command and Event do not match: "
-                                        . get_class($object)
-                                        . " - "
-                                        . get_class($command));
+                                       . get_class($object)
+                                       . " - "
+                                       . get_class($command));
         }
 
         $all_properties = get_object_vars($command);

@@ -44,7 +44,7 @@ final class DBStudiPruefungsRepository implements StudiPruefungsRepository
             [
                 "studiHash" => $studiHash,
             ],
-//            ["pruefungsId" => "DESC"]
+        //            ["pruefungsId" => "DESC"]
         );
     }
 

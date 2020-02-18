@@ -9,9 +9,9 @@ use Common\Application\DomainEvent\DomainEventSubscriber;
 
 class PersistEventSubscriber implements DomainEventSubscriber
 {
-    private \Common\Application\AbstractEvent\EventPersister $eventPersister;
+    private EventPersister $eventPersister;
 
-    private \Common\Application\AbstractEvent\StoredEventRepository $storedEventRepository;
+    private StoredEventRepository $storedEventRepository;
 
     public function __construct(
         EventPersister $eventPersister,

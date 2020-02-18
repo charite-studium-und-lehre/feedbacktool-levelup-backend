@@ -68,6 +68,7 @@ final class FileBasedSimpleSelbstBewertungsRepository extends AbstractCommonRepo
                 return $bewertung;
             }
         }
+
         return NULL;
     }
 }

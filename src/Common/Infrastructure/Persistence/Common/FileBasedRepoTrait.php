@@ -2,8 +2,6 @@
 
 namespace Common\Infrastructure\Persistence\Common;
 
-use Common\Domain\DDDEntity;
-
 trait FileBasedRepoTrait
 {
     protected string $filePath;

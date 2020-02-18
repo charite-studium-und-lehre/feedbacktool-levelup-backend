@@ -13,7 +13,7 @@ class SimpleDomainEventPublisher implements DomainEventPublisher
     /** @var DomainEventSubscriber[] */
     private array $subscribers = [];
 
-    private \Common\Domain\Services\CurrentUserIdService $currentUserIdService;
+    private CurrentUserIdService $currentUserIdService;
 
     /**
      * @param DomainEventSubscriber[] $domainEventSubscribers

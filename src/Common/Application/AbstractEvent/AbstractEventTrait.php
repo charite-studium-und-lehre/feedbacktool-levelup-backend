@@ -6,7 +6,7 @@ use DateTimeImmutable;
 
 trait AbstractEventTrait
 {
-    public \DateTimeImmutable $occurredOn;
+    public DateTimeImmutable $occurredOn;
 
     public int $byUserId;
 

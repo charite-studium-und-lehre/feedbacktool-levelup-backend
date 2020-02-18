@@ -48,6 +48,7 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
                 $resultArray[] = $wertung;
             }
         }
+
         return $resultArray;
     }
 
@@ -59,6 +60,7 @@ final class FileBasedSimpleItemWertungsRepository extends AbstractCommonReposito
                 $resultArray[] = $wertung;
             }
         }
+
         return $resultArray;
     }
 }

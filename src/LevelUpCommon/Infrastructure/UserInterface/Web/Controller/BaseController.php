@@ -4,6 +4,7 @@ namespace LevelUpCommon\Infrastructure\UserInterface\Web\Controller;
 
 use Common\Domain\User\LoginUser;
 use Doctrine\Common\Collections\ArrayCollection;
+use Error;
 use Exception;
 use Studi\Domain\LoginHash;
 use Studi\Domain\Service\LoginHashCreator;
@@ -41,7 +42,7 @@ abstract class BaseController extends AbstractController
             return new ArrayCollection(json_decode($content, TRUE));
         } catch (Exception $e) {
             throw new BadRequestHttpException("Content is not a valid json");
-        } catch (\Error $e) {
+        } catch (Error $e) {
             throw new BadRequestHttpException("Content is not a valid json");
         }
     }

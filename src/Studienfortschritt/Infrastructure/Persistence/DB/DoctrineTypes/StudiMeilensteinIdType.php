@@ -5,7 +5,6 @@ namespace Studienfortschritt\Infrastructure\Persistence\DB\DoctrineTypes;
 use Common\Infrastructure\Persistence\DB\DoctrineTypes\AggregateIdType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Studienfortschritt\Domain\StudiMeilensteinId;
-use StudiPruefung\Domain\StudiPruefungsId;
 
 class StudiMeilensteinIdType extends AggregateIdType
 {

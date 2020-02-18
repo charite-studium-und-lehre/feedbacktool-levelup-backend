@@ -19,5 +19,4 @@ class Vorname implements DDDValueObject
     private string $value;
 
     use NameTrait;
-
 }

@@ -10,6 +10,7 @@ use StudiPruefung\Domain\StudiPruefungsRepository;
 
 /**
  * Vereint abgespeicherte Meilsteine und indirekt, durch Prüfungsteilnahmen, erworbene Fortschritts-Items
+ *
  * @todo Test
  */
 class StudienFortschrittZusammenstellungsService

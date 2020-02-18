@@ -14,10 +14,10 @@ interface AntwortRepository extends DDDRepository, FlushableRepository
     /** @return Antwort[] */
     public function all(): array;
 
+    public function delete(Antwort $object): void;
+
     /** @return Antwort[] */
     public function allByFragenId(FragenId $fragenId): array;
-
-    public function delete(Antwort $object): void;
 
     public function nextIdentity(): AntwortId;
 }

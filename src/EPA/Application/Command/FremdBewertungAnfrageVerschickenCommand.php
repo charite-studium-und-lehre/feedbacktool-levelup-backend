@@ -10,5 +10,4 @@ use EPA\Application\Event\FremdBewertungsAnfrageVerschicktEvent;
 class FremdBewertungAnfrageVerschickenCommand extends FremdBewertungsAnfrageVerschicktEvent implements DomainCommand
 {
     use DomainCommandTrait;
-
 }

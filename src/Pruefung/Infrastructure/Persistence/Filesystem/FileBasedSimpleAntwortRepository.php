@@ -31,6 +31,7 @@ final class FileBasedSimpleAntwortRepository extends AbstractCommonRepository im
                 $returnArray[] = $antwort;
             }
         }
+
         return $returnArray;
     }
 }

@@ -23,7 +23,7 @@ class VersendeMailNachFremdBewertungsAnfrageSubscriber implements DomainEventSub
         $this->commandBus = $commandBus;
     }
 
-    /** @param FremdBewertungAngefragtEvent $event  */
+    /** @param FremdBewertungAngefragtEvent $event */
     public function handle(DomainEvent $event): void {
         $command = new FremdBewertungAnfrageVerschickenCommand();
 

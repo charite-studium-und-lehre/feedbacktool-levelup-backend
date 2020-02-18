@@ -57,6 +57,10 @@ abstract class AbstractCSVImportService
         return $dataAsArray;
     }
 
+    protected function trimDataCell(string $string): string {
+        return trim($string);
+    }
+
     private function fixEncoding(
         string $string,
         string $fromEncoding,
@@ -67,10 +71,6 @@ abstract class AbstractCSVImportService
         }
 
         return $string;
-    }
-
-    protected function trimDataCell(string $string): string {
-        return trim($string);
     }
 
 }

@@ -3,7 +3,6 @@
 namespace Pruefung\Domain\FrageAntwort;
 
 use Common\Domain\AggregateIdString;
-use Pruefung\Domain\PruefungsItemId;
 
 class AntwortId extends AggregateIdString
 {

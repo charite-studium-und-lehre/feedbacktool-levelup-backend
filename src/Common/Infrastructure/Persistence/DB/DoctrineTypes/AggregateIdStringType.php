@@ -35,6 +35,7 @@ class AggregateIdStringType extends Type
         if (!$value instanceof AggregateIdString) {
             return NULL;
         }
+
         return $value->getValue();
     }
 

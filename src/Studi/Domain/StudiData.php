@@ -32,6 +32,7 @@ final class StudiData implements DDDValueObject
         $object->vorname = $vorname;
         $object->nachname = $nachname;
         $object->dataLine = $dataLine;
+
         return $object;
     }
 

@@ -12,15 +12,14 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200127152404 extends AbstractMigration
 {
-    public function getDescription() : string
-    {
+    public function getDescription(): string {
         return '';
     }
 
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema): void {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
+                       'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP INDEX pruefungs_id ON pruefung_studiPruefung');
         $this->addSql('ALTER TABLE pruefung_studiPruefung CHANGE id id INTEGER NOT NULL COMMENT \'(DC2Type:studiPruefungsId)\'');
@@ -30,10 +29,10 @@ final class Version20200127152404 extends AbstractMigration
         $this->addSql('ALTER TABLE pruefung_studiPruefungsWertung CHANGE studiPruefungsId studiPruefungsId INTEGER NOT NULL COMMENT \'(DC2Type:studiPruefungsId)\'');
     }
 
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema): void {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
+                       'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE pruefung_itemWertung CHANGE id id INTEGER NOT NULL COMMENT \'(DC2Type:aggregateId)\', CHANGE pruefungsItemId pruefungsItemId VARCHAR(30) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci` COMMENT \'(DC2Type:aggregateIdString)\', CHANGE studiPruefungsId studiPruefungsId INTEGER NOT NULL COMMENT \'(DC2Type:aggregateId)\'');
         $this->addSql('DROP INDEX pruefungsId ON pruefung_studiPruefung');

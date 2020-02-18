@@ -12,15 +12,14 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191011115107 extends AbstractMigration
 {
-    public function getDescription() : string
-    {
+    public function getDescription(): string {
         return '';
     }
 
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema): void {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
+                       'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE __tableAutoIncrement (tableName VARCHAR(200) NOT NULL, autoIncrement INT NOT NULL, INDEX tableName (tableName), PRIMARY KEY(tableName)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE __event (id INTEGER NOT NULL COMMENT \'(DC2Type:aggregateId)\', occurredOn DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', byUserId INT DEFAULT NULL, class VARCHAR(100) NOT NULL, body LONGTEXT NOT NULL, INDEX occurredOn (occurredOn), INDEX byUserId (byUserId), INDEX eventClass (class), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -38,10 +37,10 @@ final class Version20191011115107 extends AbstractMigration
         $this->addSql('CREATE TABLE importData_lernziel_fach (lernzielNummer INTEGER NOT NULL COMMENT \'(DC2Type:aggregateId)\', clusterId INTEGER NOT NULL COMMENT \'(DC2Type:aggregateId)\', PRIMARY KEY(lernzielNummer, clusterId)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
     }
 
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema): void {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
+                       'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP TABLE __tableAutoIncrement');
         $this->addSql('DROP TABLE __event');

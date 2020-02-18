@@ -16,6 +16,7 @@ final class FrontendUrlService
         if ($this->environment == "prod") {
             return "/app";
         }
+
         return "/app-develop";
     }
 

@@ -5,7 +5,6 @@ namespace EPA\Infrastructure\Persistence\DB\DoctrineTypes;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageKommentar;
-use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageTaetigkeiten;
 
 class FremdBewertungsAnfrageKommentarType extends Type
 {

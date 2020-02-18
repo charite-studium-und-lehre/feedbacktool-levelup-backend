@@ -41,6 +41,7 @@ final class FileBasedSimpleFremdBewertungsAnfrageRepository extends AbstractComm
                 return $anfrage;
             }
         }
+
         return NULL;
     }
 }

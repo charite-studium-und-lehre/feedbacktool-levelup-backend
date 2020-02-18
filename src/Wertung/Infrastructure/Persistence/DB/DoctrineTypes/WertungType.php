@@ -41,6 +41,39 @@ class WertungType extends Type
     /** 4 Nachkommastellen = 2 Nachkommastellen der Prozentzahl */
     const PROZENT_SKALA_NACHKOMMASTELLEN = 2 + Prozentzahl::NACHKOMMASTELLEN;
 
+    public static function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
+        //        echo $wertungsWert . ";";
+        $stellenzahlVon = 0;
+        $stellenzahlBis = self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+
+        $richtigPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
+                                                                     $stellenzahlVon,
+                                                                     $stellenzahlBis);
+        //        echo "r$richtigPunktzahl";
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+
+        $falschPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
+                                                                    $stellenzahlVon,
+                                                                    $stellenzahlBis);
+        //        echo "f$falschPunktzahl";
+        $stellenzahlVon = $stellenzahlBis;
+        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+
+        $weissnichtPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
+                                                                        $stellenzahlVon,
+                                                                        $stellenzahlBis);
+
+        //        echo "w$weissnichtPunktzahl;";
+
+        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
+            Punktzahl::fromFloat($richtigPunktzahl),
+            Punktzahl::fromFloat($falschPunktzahl),
+            Punktzahl::fromFloat($weissnichtPunktzahl)
+        );
+
+    }
+
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
         return "BIGINT SIGNED";
     }
@@ -105,7 +138,7 @@ class WertungType extends Type
                                                         $stellenzahlBis);
 
         $stellenzahlVon = $stellenzahlBis;
-        $stellenzahlBis +=  self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
+        $stellenzahlBis += self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
         $richtigSummand = IntsToIntKodierer::erzeugeSummand(
             (int) $value->getPunktzahlRichtig()->getValue(),
             $stellenzahlVon,
@@ -171,37 +204,5 @@ class WertungType extends Type
         $prozentZahl = Prozentzahl::fromFloat($prozentZahlFloat);
 
         return ProzentWertung::fromProzentzahl($prozentZahl);
-    }
-
-    public static function dekodiereRichtigFalschWeissnichtWertung(int $wertungsWert): RichtigFalschWeissnichtWertung {
-//        echo $wertungsWert . ";";
-        $stellenzahlVon = 0;
-        $stellenzahlBis = self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
-
-        $richtigPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
-                                                                     $stellenzahlVon,
-                                                                     $stellenzahlBis);
-//        echo "r$richtigPunktzahl";
-        $stellenzahlVon = $stellenzahlBis;
-        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
-
-        $falschPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
-                                                                    $stellenzahlVon,
-                                                                    $stellenzahlBis);
-//        echo "f$falschPunktzahl";
-        $stellenzahlVon = $stellenzahlBis;
-        $stellenzahlBis = $stellenzahlBis + self::RICHTIG_FALSCH_WEISSNICHT_STELLEN;
-
-        $weissnichtPunktzahl = IntsToIntKodierer::extrahiereIntAusSumme($wertungsWert,
-                                                                        $stellenzahlVon,
-                                                                        $stellenzahlBis);
-//        echo "w$weissnichtPunktzahl;";
-
-        return RichtigFalschWeissnichtWertung::fromPunktzahlen(
-            Punktzahl::fromFloat($richtigPunktzahl),
-            Punktzahl::fromFloat($falschPunktzahl),
-            Punktzahl::fromFloat($weissnichtPunktzahl)
-        );
-
     }
 }

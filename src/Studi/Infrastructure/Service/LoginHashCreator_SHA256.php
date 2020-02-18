@@ -18,5 +18,4 @@ class LoginHashCreator_SHA256 extends AbstractHashCreator implements LoginHashCr
         return $this->verifyHash($username->getValue(), $loginHash->getValue());
     }
 
-
 }

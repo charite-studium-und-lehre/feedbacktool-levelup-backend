@@ -3,7 +3,9 @@
 namespace Common\Infrastructure\UserInterface\Web\Service;
 
 use Common\Domain\User\Username;
+use Exception;
 use Jumbojett\OpenIDConnectClient;
+use UnexpectedValueException;
 
 class ChariteSSOService
 {
@@ -24,7 +26,6 @@ class ChariteSSOService
     private string $authorizationEndpoint;
 
     private string $errorMessage = "";
-
 
     public function __construct(
         string $clientId,
@@ -49,6 +50,7 @@ class ChariteSSOService
     public function hasPendingSSOAuth(): bool {
         return (!empty($_SESSION["openid_connect_state"]));
     }
+
     public function deletePendingSSOAuth(): void {
         unset ($_SESSION["openid_connect_state"]);
         unset ($_SESSION["openid_connect_nonce"]);
@@ -63,7 +65,7 @@ class ChariteSSOService
 
         try {
             $oidc->authenticate();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
 
             return NULL;
@@ -87,11 +89,12 @@ class ChariteSSOService
 
         try {
             $oidc->signOut(NULL, NULL);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
 
             return FALSE;
         }
+
         return TRUE;
     }
 
@@ -104,7 +107,7 @@ class ChariteSSOService
      */
     private function initializeOpenid(): OpenIDConnectClient {
         if (!$this->clientId || !$this->clientSecret || !$this->redirectURL) {
-            throw new \UnexpectedValueException(
+            throw new UnexpectedValueException(
                 "Für Charite-OpenID-SSO müssen clientId, clientSecret und redirectURL konfiguriert sein!"
             );
         }

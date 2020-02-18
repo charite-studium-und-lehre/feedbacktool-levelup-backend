@@ -9,9 +9,9 @@ use DateTimeImmutable;
 final class EntityZeitstempel
 {
 
-    private \DateTimeImmutable $erzeugungsZeit;
+    private DateTimeImmutable $erzeugungsZeit;
 
-    private ?\DateTimeImmutable $aenderungsZeit = NULL;
+    private ?DateTimeImmutable $aenderungsZeit = NULL;
 
     public static function createErzeugungsZeitstempel(): EntityZeitstempel {
         $entityZeitstempel = new self();
@@ -49,8 +49,9 @@ final class EntityZeitstempel
     }
 
     private function zeitstempelAelterAlsSekunden(DateTimeImmutable $zeitstempel, int $sekunden): bool {
-        $dateTimePast = new \DateTime('now');
+        $dateTimePast = new DateTime('now');
         $dateTimePast->modify("- $sekunden seconds");
+
         return $zeitstempel < $dateTimePast;
     }
 }

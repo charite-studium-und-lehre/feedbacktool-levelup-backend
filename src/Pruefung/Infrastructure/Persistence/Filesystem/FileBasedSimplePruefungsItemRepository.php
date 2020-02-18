@@ -29,6 +29,7 @@ final class FileBasedSimplePruefungsItemRepository extends AbstractCommonReposit
                 $resultArray[] = $pruefungsItem;
             }
         }
+
         return $resultArray;
     }
 }

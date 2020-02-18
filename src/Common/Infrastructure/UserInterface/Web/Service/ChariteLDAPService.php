@@ -7,6 +7,7 @@ use Common\Domain\User\LoginUser;
 use Common\Domain\User\Nachname;
 use Common\Domain\User\Username;
 use Common\Domain\User\Vorname;
+use Exception;
 
 class ChariteLDAPService
 {
@@ -49,7 +50,7 @@ class ChariteLDAPService
         $protocol = $this->port == 389 ? "ldap://" : "ldaps://";
         $this->connection = ldap_connect($protocol . $this->host, $this->port);
         if (!$this->connection) {
-            throw new \Exception("Cannot connect to LDAP - NO CONNECTION!");
+            throw new Exception("Cannot connect to LDAP - NO CONNECTION!");
         }
 
         ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, 3);
@@ -67,7 +68,7 @@ class ChariteLDAPService
 
         if (!$bind) {
             $this->connection = NULL;
-            throw new \Exception("Cannot connect to LDAP - BIND FAILED!");
+            throw new Exception("Cannot connect to LDAP - BIND FAILED!");
         }
     }
 
@@ -128,6 +129,7 @@ class ChariteLDAPService
 
     /**
      * Given a username, get the whole user info array from the LDAP user
+     *
      * @return array<String, String>
      */
     public function getUserInfoByUsername(string $username): ?array {
@@ -162,7 +164,7 @@ class ChariteLDAPService
     public function tryLdapCredentials(string $username, string $password): bool {
         try {
             $this->connect($username, $password);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return TRUE;
         }
         $this->unconnect();
@@ -197,6 +199,7 @@ class ChariteLDAPService
      * Existente Nutzer haben
      * * eine uid
      * * KEINEN Eintrag stopinformation
+     *
      * @return Array<String, String>
      */
     private function getLdapInfoByFilter(string $filter): ?array {
@@ -206,7 +209,7 @@ class ChariteLDAPService
         }
         $info = ldap_get_entries($this->connection, $read);
         if (!$info) {
-            throw new \Exception("Fehler bei LDAP-Abfrage");
+            throw new Exception("Fehler bei LDAP-Abfrage");
         }
         foreach ($info as $infoEntry) {
             //if (isset($infoEntry["uid"][0]) && !isset($infoEntry["stopinformation"])) {

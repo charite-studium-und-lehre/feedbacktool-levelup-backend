@@ -5,6 +5,7 @@ namespace Studienfortschritt\Domain;
 use Assert\Assertion;
 use Common\Domain\DDDValueObject;
 use Common\Domain\DefaultValueObjectComparison;
+use Error;
 use Exception;
 use Pruefung\Domain\Pruefung;
 use Pruefung\Domain\PruefungsFormat;
@@ -188,7 +189,7 @@ class FortschrittsItem implements DDDValueObject
 
             return "Stationen-Prüfung Sem. $fachsemester";
         }
-        throw new \Error("Code nicht gefunden: " . $this->code);
+        throw new Error("Code nicht gefunden: " . $this->code);
     }
 
     public function getFachsemester(): int {

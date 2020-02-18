@@ -9,7 +9,6 @@ use Cluster\Domain\ClusterZuordnungsService;
 use Exception;
 use Pruefung\Domain\FachCodeKonstanten;
 use Pruefung\Domain\Pruefung;
-use Pruefung\Domain\PruefungsItemRepository;
 use Pruefung\Domain\PruefungsRepository;
 use Studienfortschritt\Domain\FortschrittsItem;
 use StudiPruefung\Domain\StudiPruefung;

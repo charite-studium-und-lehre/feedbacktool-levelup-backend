@@ -14,7 +14,7 @@ class SimpleCommandBus implements CommandBus
     /** @var CommandHandler[] */
     private array $allhandlers;
 
-    private \Common\Application\DomainEvent\DomainEventPublisher $domainEventPublisher;
+    private DomainEventPublisher $domainEventPublisher;
 
     /**
      * @param CommandHandler[] $allHandlers

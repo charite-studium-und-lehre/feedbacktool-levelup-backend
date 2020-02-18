@@ -12,25 +12,24 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191011155336 extends AbstractMigration
 {
-    public function getDescription() : string
-    {
+    public function getDescription(): string {
         return '';
     }
 
-    public function up(Schema $schema) : void
-    {
+    public function up(Schema $schema): void {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
+                       'Migration can only be executed safely on \'mysql\'.');
 
-//        $this->addSql('DROP INDEX studiHash ON epa_selbstBewertung');
+        //        $this->addSql('DROP INDEX studiHash ON epa_selbstBewertung');
         $this->addSql('ALTER TABLE epa_selbstBewertung ADD loginHash VARCHAR(100) NOT NULL COMMENT \'(DC2Type:loginHash)\' AFTER id , DROP studiHash');
         $this->addSql('CREATE INDEX loginHash ON epa_selbstBewertung (loginHash)');
     }
 
-    public function down(Schema $schema) : void
-    {
+    public function down(Schema $schema): void {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql',
+                       'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP INDEX loginHash ON epa_selbstBewertung');
         $this->addSql('ALTER TABLE epa_selbstBewertung ADD studiHash VARCHAR(100) NOT NULL COLLATE utf8mb4_unicode_ci COMMENT \'(DC2Type:studiHash)\', DROP loginHash');

@@ -8,7 +8,6 @@ use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsItem;
 use Pruefung\Domain\PruefungsItemId;
 use Pruefung\Domain\PruefungsItemRepository;
-use Pruefung\Infrastructure\Persistence\DB\DoctrineTypes\PruefungsItemIdType;
 use Studi\Domain\Matrikelnummer;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiIntern;

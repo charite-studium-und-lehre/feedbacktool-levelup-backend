@@ -10,5 +10,4 @@ use EPA\Application\Event\SelbstBewertungGeandertEvent;
 class SelbstBewertungAendernCommand extends SelbstBewertungGeandertEvent implements DomainCommand
 {
     use DomainCommandTrait;
-
 }

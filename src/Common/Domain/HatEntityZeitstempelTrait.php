@@ -4,7 +4,7 @@ namespace Common\Domain;
 
 trait HatEntityZeitstempelTrait
 {
-    private \Common\Domain\EntityZeitstempel $entityZeitstempel;
+    private EntityZeitstempel $entityZeitstempel;
 
     public function getZeitstempel(): EntityZeitstempel {
         return $this->entityZeitstempel;
