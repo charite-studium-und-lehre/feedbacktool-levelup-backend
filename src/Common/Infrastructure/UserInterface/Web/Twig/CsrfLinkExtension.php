@@ -120,9 +120,8 @@ class CsrfLinkExtension extends AbstractExtension
      */
     function _escapeJs($javascript = '') {
         $javascript = preg_replace('/\r\n|\n|\r/', "\\n", $javascript);
-        $javascript = preg_replace('/(["\'])/', '\\\\\1', $javascript);
 
-        return $javascript;
+        return preg_replace('/(["\'])/', '\\\\\1', $javascript);
     }
 
     function _methodJsFunction($method, $csrfIntention, $csrfField) {
@@ -143,9 +142,7 @@ class CsrfLinkExtension extends AbstractExtension
                                  $csrfField, $this->csrfChecker->generateToken($csrfIntention));
         }
 
-        $function .= "f.submit();";
-
-        return $function;
+        return $function . "f.submit();";
     }
 
     public function getName() {

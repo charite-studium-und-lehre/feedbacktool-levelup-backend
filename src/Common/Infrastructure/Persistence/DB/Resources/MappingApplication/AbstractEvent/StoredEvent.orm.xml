@@ -3,7 +3,7 @@
 
     <entity name="Common\Application\AbstractEvent\StoredEvent" table="__event">
 
-        <id name="id" type="aggregateId" column="id"/>
+        <id name="id" type="storedEventId" column="id"/>
 
         <field name="occurredOn" type="datetime_immutable" column="occurredOn"/>
         <field name="byUserId" type="integer" column="byUserId" nullable="true"/>

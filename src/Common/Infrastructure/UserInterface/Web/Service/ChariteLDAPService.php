@@ -18,8 +18,6 @@ class ChariteLDAPService
 
     private int $port;
 
-    private bool $tls;
-
     private string $baseDn;
 
     private string $bindDn;
@@ -27,10 +25,9 @@ class ChariteLDAPService
     /** @var ?resource */
     private $connection;
 
-    public function __construct(string $host, int $port, bool $tls, string $baseDn, string $bindDn) {
+    public function __construct(string $host, int $port, string $baseDn, string $bindDn) {
         $this->host = $host;
         $this->port = $port;
-        $this->tls = $tls;
         $this->baseDn = $baseDn;
         $this->bindDn = $bindDn;
     }
@@ -87,7 +84,7 @@ class ChariteLDAPService
             $this->connect();
         }
 
-        return $this->connection ? TRUE : FALSE;
+        return $this->connection;
     }
 
     /**
@@ -112,7 +109,7 @@ class ChariteLDAPService
      * Given an email, return if the email exists in LDAP
      */
     public function emailExists(string $email): bool {
-        return $this->getLdapInfoByEmail($email) ? TRUE : FALSE;
+        return $this->getLdapInfoByEmail($email) !== NULL;
     }
 
     /**
@@ -173,7 +170,7 @@ class ChariteLDAPService
     }
 
     public function isLdapAktivStudent(string $email): bool {
-        return $this->getLdapAktivStudentByEmail($email) ? TRUE : FALSE;
+        return $this->getLdapAktivStudentByEmail($email);
     }
 
     /** @return Array<String, String> */
@@ -185,7 +182,7 @@ class ChariteLDAPService
         return $this->getLdapInfoByFilter($filter);
     }
 
-    /** @return Array<String, String> */
+    /** @return Array<String, String>|NULL */
     private function getLdapInfoByEmail(string $email): array {
         $this->checkConnection();
         $filter = "(mail=$email)";
@@ -200,7 +197,7 @@ class ChariteLDAPService
      * * eine uid
      * * KEINEN Eintrag stopinformation
      *
-     * @return Array<String, String>
+     * @return Array<String, String>|NULL
      */
     private function getLdapInfoByFilter(string $filter): ?array {
         $read = ldap_search($this->connection, $this->baseDn, $filter);

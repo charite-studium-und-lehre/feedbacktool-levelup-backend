@@ -31,7 +31,7 @@ final class DBStoredEventRepository implements StoredEventRepository
     }
 
     public function byId(StoredEventId $id): ?StoredEvent {
-        return $this->doctrineRepo->find($id->getValue());
+        return $this->doctrineRepo->find($id);
     }
 
     public function nextIdentity(): StoredEventId {

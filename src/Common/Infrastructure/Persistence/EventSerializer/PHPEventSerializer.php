@@ -25,7 +25,7 @@ final class PHPEventSerializer implements EventSerializer
             throw new Exception("unserialized event body must be array!");
         }
 
-        foreach ($unserializedArray as $key => $value) {
+        foreach ($unserializedArray as $value) {
             if (!is_scalar($value) && !empty($value)) {
                 throw new Exception("unserialized event body array must have only scalar values!");
             }
