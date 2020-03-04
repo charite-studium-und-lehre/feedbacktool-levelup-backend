@@ -84,7 +84,7 @@ class ChariteLDAPService
             $this->connect();
         }
 
-        return $this->connection;
+        return $this->connection !== NULL;
     }
 
     /**

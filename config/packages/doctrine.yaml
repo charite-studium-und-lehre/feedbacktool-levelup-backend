@@ -24,6 +24,8 @@ doctrine:
         class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdAIType"
       aggregateIdString:
         class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\AggregateIdStringType"
+      storedEventId:
+        class: "Common\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\StoredEventIdType"
       matrikelnummer:
         class: "Studi\\Infrastructure\\Persistence\\DB\\DoctrineTypes\\MatrikelnummerType"
       studiHash:
@@ -75,6 +77,7 @@ doctrine:
       aggregateId: integer
       aggregateId_AutoIncrement: integer
       aggregateString: string
+      storedEventId: integer
       matrikelnummer: integer
       studiHash: string
       loginHash: string
