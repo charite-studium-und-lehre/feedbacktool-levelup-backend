@@ -26,7 +26,7 @@ abstract class AbstractCSVImportService
             $counter++;
             $dataLineFixed = [];
             foreach ($dataLine as $dataCell) {
-                if (!$dataCell ||
+                if ((!$dataCell && $dataCell !== "0" && $dataCell !== 0) ||
                     (!is_string($dataCell) && !is_numeric($dataCell))) {
                     $dataCell = "";
                 }
