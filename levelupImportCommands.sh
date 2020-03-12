@@ -104,6 +104,7 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT39_ws_1819.csv 20182 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT40\ 2019-06-03.csv 20191 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT40\ 2019-08-16.csv 20191 -vvv
+bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT41\ 2020-03-02.csv 20192 -vvv
 
 ### MC ###
 
