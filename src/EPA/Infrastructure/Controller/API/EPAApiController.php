@@ -62,7 +62,7 @@ class EPAApiController extends BaseController
         }
         $this->checkLogin();
         $params = $this->getJsonContentParams($request);
-        $epaID = $params->get("bewertungen")[0]["epaId"] ?? 0;
+        $epaID = $params->get("bewertungen")[0]["epaId"];
         $zutrauen = $params->get("bewertungen")[0]["zutrauen"] ?? 0;
         $gemacht = $params->get("bewertungen")[0]["gemacht"] ?? 0;
 
