@@ -43,8 +43,8 @@ if [ $? -ne 0 ]; then
     fi
 fi
 
-ls bin/tools/deptrac > /dev/null 2>/dev/null
-if [ $? -ne 0 ]; then
+#ls bin/tools/deptrac > /dev/null 2>/dev/null
+#if [ $? -ne 0 ]; then
     echo "Installiere deptrac"
     curl -LS http://get.sensiolabs.de/deptrac.phar -o deptrac.phar
     chmod +x deptrac.phar
@@ -57,7 +57,7 @@ if [ $? -ne 0 ]; then
     else
         echo  "To run deptrac on osx + brew, run:   brew install graphviz"
     fi
-fi
+#fi
 
 
 echo -e "\e[32mDEV TOOLS: \e[0m"
