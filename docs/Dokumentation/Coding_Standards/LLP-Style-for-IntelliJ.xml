@@ -1,0 +1,109 @@
+<code_scheme name="LLP-Style" version="173">
+  <HTMLCodeStyleSettings>
+    <option name="HTML_ATTRIBUTE_WRAP" value="4" />
+    <option name="HTML_TEXT_WRAP" value="0" />
+    <option name="HTML_ALIGN_TEXT" value="true" />
+    <option name="HTML_ELEMENTS_TO_INSERT_NEW_LINE_BEFORE" value="body,div,p,form,h1,h2,h3,img" />
+    <option name="HTML_INLINE_ELEMENTS" value="abbr,acronym,b,basefont,bdo,big,br,cite,cite,code,dfn,em,font,i,input,kbd,label,q,s,samp,select,small,span,strike,strong,sub,sup,textarea,tt,u,var" />
+    <option name="HTML_ENFORCE_QUOTES" value="true" />
+  </HTMLCodeStyleSettings>
+  <JSCodeStyleSettings version="0">
+    <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false" />
+    <option name="FORCE_SEMICOLON_STYLE" value="true" />
+    <option name="USE_DOUBLE_QUOTES" value="false" />
+    <option name="FORCE_QUOTE_STYlE" value="true" />
+    <option name="ENFORCE_TRAILING_COMMA" value="Remove" />
+    <option name="ALIGN_IMPORTS" value="true" />
+    <option name="IMPORT_SORT_MODULE_NAME" value="true" />
+    <option name="IMPORT_USE_NODE_RESOLUTION" value="FALSE" />
+  </JSCodeStyleSettings>
+  <PHPCodeStyleSettings>
+    <option name="ALIGN_KEY_VALUE_PAIRS" value="true" />
+    <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />
+    <option name="PHPDOC_BLANK_LINE_BEFORE_TAGS" value="true" />
+    <option name="PHPDOC_KEEP_BLANK_LINES" value="false" />
+    <option name="UPPER_CASE_BOOLEAN_CONST" value="true" />
+    <option name="UPPER_CASE_NULL_CONST" value="true" />
+    <option name="ELSE_IF_STYLE" value="COMBINE" />
+    <option name="VARIABLE_NAMING_STYLE" value="CAMEL_CASE" />
+    <option name="BLANK_LINES_BEFORE_RETURN_STATEMENT" value="1" />
+    <option name="KEEP_RPAREN_AND_LBRACE_ON_ONE_LINE" value="true" />
+    <option name="KEEP_BLANK_LINES_AFTER_LBRACE" value="1" />
+    <option name="SPACE_BEFORE_CLOSURE_LEFT_PARENTHESIS" value="false" />
+    <option name="PLACE_PARENS_FOR_CONSTRUCTOR" value="1" />
+  </PHPCodeStyleSettings>
+  <codeStyleSettings language="HTML">
+    <option name="SOFT_MARGINS" value="120" />
+    <indentOptions>
+      <option name="CONTINUATION_INDENT_SIZE" value="6" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="JSON">
+    <option name="SPACE_BEFORE_COMMA" value="true" />
+  </codeStyleSettings>
+  <codeStyleSettings language="JavaScript">
+    <option name="LINE_COMMENT_ADD_SPACE" value="false" />
+    <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+    <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
+    <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
+    <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true" />
+    <option name="ALIGN_MULTILINE_ARRAY_INITIALIZER_EXPRESSION" value="true" />
+    <option name="EXTENDS_LIST_WRAP" value="5" />
+    <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
+    <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
+    <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
+    <option name="SOFT_MARGINS" value="120" />
+  </codeStyleSettings>
+  <codeStyleSettings language="PHP">
+    <option name="RIGHT_MARGIN" value="120" />
+    <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
+    <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false" />
+    <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
+    <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+    <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1" />
+    <option name="BLANK_LINES_AFTER_PACKAGE" value="1" />
+    <option name="BLANK_LINES_AROUND_FIELD" value="1" />
+    <option name="METHOD_BRACE_STYLE" value="1" />
+    <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+    <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+    <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
+    <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
+    <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true" />
+    <option name="ALIGN_MULTILINE_ARRAY_INITIALIZER_EXPRESSION" value="true" />
+    <option name="SPACE_AFTER_TYPE_CAST" value="true" />
+    <option name="CALL_PARAMETERS_WRAP" value="1" />
+    <option name="METHOD_PARAMETERS_WRAP" value="5" />
+    <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
+    <option name="BINARY_OPERATION_WRAP" value="1" />
+    <option name="BINARY_OPERATION_SIGN_ON_NEXT_LINE" value="true" />
+    <option name="TERNARY_OPERATION_WRAP" value="5" />
+    <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
+    <option name="FOR_STATEMENT_WRAP" value="1" />
+    <option name="ARRAY_INITIALIZER_WRAP" value="1" />
+    <option name="ASSIGNMENT_WRAP" value="1" />
+    <option name="IF_BRACE_FORCE" value="3" />
+    <option name="DOWHILE_BRACE_FORCE" value="3" />
+    <option name="WHILE_BRACE_FORCE" value="3" />
+    <option name="WRAP_ON_TYPING" value="1" />
+    <option name="SOFT_MARGINS" value="120" />
+    <arrangement>
+      <groups>
+        <group>
+          <type>GETTERS_AND_SETTERS</type>
+          <order>KEEP</order>
+        </group>
+        <group>
+          <type>OVERRIDDEN_METHODS</type>
+          <order>KEEP</order>
+        </group>
+      </groups>
+    </arrangement>
+  </codeStyleSettings>
+  <codeStyleSettings language="yaml">
+    <indentOptions>
+      <option name="INDENT_SIZE" value="4" />
+    </indentOptions>
+  </codeStyleSettings>
+</code_scheme>

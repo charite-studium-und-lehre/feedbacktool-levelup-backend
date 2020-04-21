@@ -29,7 +29,7 @@ class MatrikelnummerTest extends TestCase
     }
 
     public function testFromInt_FalschString() {
-        $this->expectException(\ErrorException::class);
+        $this->expectError();
         Matrikelnummer::fromInt("123456ab");
     }
 

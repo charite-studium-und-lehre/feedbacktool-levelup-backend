@@ -16,7 +16,7 @@ use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudienfo
 use StudiPruefung\Infrastructure\Persistence\Filesystem\FileBasedSimpleStudiPruefungsRepository;
 use Tests\Integration\Common\DbRepoTestCase;
 
-final class StudiMeilensteinRepositoryTest extends DbRepoTestCase
+final class StudiPruefungsRepositoryTest extends DbRepoTestCase
 {
     protected $dbRepoInterface = StudiMeilensteinRepository::class;
 
