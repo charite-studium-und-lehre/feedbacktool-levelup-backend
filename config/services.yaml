@@ -63,3 +63,8 @@ services:
 
     Login\Infrastructure\Web\Service\FrontendUrlService:
         arguments: ["%kernel.environment%"]
+
+
+    Symfony\Bridge\Monolog\Processor\WebProcessor:
+        tags:
+            - { name: monolog.processor }
