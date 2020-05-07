@@ -65,6 +65,3 @@ services:
         arguments: ["%kernel.environment%"]
 
 
-    Symfony\Bridge\Monolog\Processor\WebProcessor:
-        tags:
-            - { name: monolog.processor }
