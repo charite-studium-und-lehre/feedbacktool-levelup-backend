@@ -36,12 +36,10 @@ bin/console d:mi:mi
 
 erstellt die DB-Struktur bzw ändert sie auf die neueste vorhandene Version durch die Ausführung von Doctrine-Migrations.
 
-Dies wird in  [install.sh](../bin/install.sh) automatisch mit erledigt.
+Dies wird in  [install.sh](../../bin/install.sh) automatisch mit erledigt.
 
 ### Start der Anwendung
 
 Lokal: `bin/symfony serve`
 
 Server: Einbindung des public-Ordners in Apache
-
-Genauere Konfiguration von Apache und Installation auf Ubuntu ist bei Bedarf an der Charité verfügbar

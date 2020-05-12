@@ -8,10 +8,10 @@ Anforderungen:
 
 #### UML-Diagramm 1: Prüfungen und Clusterung
 
-![Items-Fächer](/home/didi/src/levelup-backend/docs/Architektur/Datenstruktur/Items-Fächer.png)
+![Items-Fächer](./Items-Fächer.png)
 
 
 
 #### UML-Diagramm 2: Wertungen
 
-#### ![Wertungen](/home/didi/src/levelup-backend/docs/Architektur/Datenstruktur/Wertungen.png)
+#### ![Wertungen](./Wertungen.png)
