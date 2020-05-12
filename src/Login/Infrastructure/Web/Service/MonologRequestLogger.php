@@ -9,28 +9,32 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class MonologRequestLogger implements EventSubscriberInterface, ProcessorInterface
 {
+    private RequestEvent $requestEvent;
 
-    private array $data = [];
-
+    /** @return array<string, array<int, int|string>> */
     public static function getSubscribedEvents(): array {
         return [
             KernelEvents::REQUEST => ['onKernelRequest', 4096],
         ];
     }
 
+    /**
+     * @param array<string, array<string, string>> $record
+     * @return array<string, array<string, array<string, string>|string>>
+     */
     public function __invoke(array $record): array {
-        $record["extra"] += $this->data;
+        if (isset($this->requestEvent)) {
+            $record["extra"]["query"] = $this->requestEvent->getRequest()->query;
+            $record["extra"]["headers"] = $this->requestEvent->getRequest()->headers;
+            $record["extra"]["content"] = $this->requestEvent->getRequest()->getContent();
+        }
 
         return $record;
     }
 
-    public function onKernelRequest(RequestEvent $event) {
+    public function onKernelRequest(RequestEvent $event): void {
         if ($event->isMasterRequest()) {
-            $this->data["SERVER"] = $event->getRequest()->server->all();
-            $this->data["SERVER"]['REMOTE_ADDR'] = $event->getRequest()->getClientIp();
-            $this->data["REQUEST"] = $event->getRequest()->request->all();
-            $this->data["HEADERS"] = $event->getRequest()->headers->all();
-            $this->data["ATTRIBUTES"] = $event->getRequest()->attributes->all();
+            $this->requestEvent = $event;
         }
     }
 }
