@@ -20,6 +20,7 @@ services:
       - db
     volumes:
       - webroot_data:/shared/app-webroot
+      - ../src:/var/www/levelup/src
     environment:
       DATABASE_URL: mysql://${LEVELUP_USER}:${LEVELUP_PASSWORD}@db:3306/${COMPOSE_PROJECT_NAME}
       APP_SECRET: $APP_KEY
