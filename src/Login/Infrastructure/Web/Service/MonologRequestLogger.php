@@ -20,13 +20,13 @@ class MonologRequestLogger implements EventSubscriberInterface, ProcessorInterfa
 
     /**
      * @param array<string, array<string, string>> $record
-     * @return array<string, array<string, array<string, string>|string>>
+     * @return array<mixed>
      */
     public function __invoke(array $record): array {
         if (isset($this->requestEvent)) {
-            $record["extra"]["query"] = $this->requestEvent->getRequest()->query;
-            $record["extra"]["headers"] = $this->requestEvent->getRequest()->headers;
-            $record["extra"]["content"] = $this->requestEvent->getRequest()->getContent();
+            $record["extra"]["query"] = (array) $this->requestEvent->getRequest()->query;
+            $record["extra"]["headers"] = (array) $this->requestEvent->getRequest()->headers;
+            $record["extra"]["content"] = (array) $this->requestEvent->getRequest()->getContent();
         }
 
         return $record;
