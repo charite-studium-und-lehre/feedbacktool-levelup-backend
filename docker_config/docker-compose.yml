@@ -35,6 +35,10 @@ services:
       SSO_OPENID_USERINFO_ENDPOINT: http://sso:9000/me
       SSO_OPENID_END_SESSION_ENDPOINT: http://sso:9000/session/end
       SSO_OPENID_AUTHORIZATION_ENDPOINT: http://localhost:8081/auth
+      LDAP_HOST: ldap
+      LDAP_PORT: 389
+      LDAP_BASE_DN: dc=levelup,dc=de
+      LDAP_BIND_DN: cn=%,dc=levelup,dc=de
 
   db:
     image: mysql:8
@@ -59,6 +63,19 @@ services:
       REDIRECTS: http://localhost:8080/ssoSuccess
       CONFIG_FILE: /sso_config.json
       USERS_FILE: /sso_users.json
+
+  ldap:
+    image: osixia/openldap
+    environment:
+      LDAP_ORGANISATION: LevelUp
+      LDAP_DOMAIN: levelup.de
+      LDAP_ADMIN_PASSWORD: secret
+      LDAP_TLS: "false"
+    command: --copy-service
+    volumes:
+      - ./ldap_users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/00_users.ldif:ro
+      - ./ldap_config.ldif:/container/service/slapd/assets/config/bootstrap/ldif/02-security.ldif:ro
+      - ./ldap_student.schema:/container/service/slapd/assets/config/bootstrap/schema/student.schema:ro
 
 volumes:
   db_data:

@@ -1,0 +1,19 @@
+dn: cn=Max Mustermann,dc=levelup,dc=de
+cn: Max Mustermann
+givenname: Max
+sn: Mustermann
+objectClass: top
+objectClass: student
+aktivstudent: Y
+uid: mmuste01
+mail: max@mustermann.de
+
+dn: cn=Maxi Musterfrau,dc=levelup,dc=de
+cn: Maxi Musterfrau
+givenname: Maxi
+sn: Musterfrau
+objectClass: top
+objectClass: student
+aktivstudent: Y
+uid: mmuste02
+mail: maxi@musterfrau.de
