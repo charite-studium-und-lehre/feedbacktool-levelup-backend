@@ -1,0 +1,28 @@
+.git
+.gitattributes
+.gitignore
+.env.*
+.env
+vendor
+.reviewboardrc
+phive.xml
+phpunit.xml
+phpunit.xml.*
+rector.yaml
+docs/**
+
+# External frameworks
+bower.json
+bower_components
+package.json
+node_modules
+gulpfile.js
+.dockerignore
+
+# Tests
+phpspec.yml
+phpunit.xml
+tests
+
+LICENSE
+README.md
