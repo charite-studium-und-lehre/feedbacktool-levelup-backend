@@ -5,6 +5,7 @@ Dokumentation siehe [./docs](./docs)
 ## Development with Docker
 
 - Go into docker folder `cd docker_config`
+- Copy the default docker environment file `cp .env.example .env`
 - Pull all needed images (especially to avoid building the app image): `docker-compose pull`
 - Start environment with `docker-compose up -d`
 - Migrate DB on first start with `docker-compose exec -T app php bin/console d:mi:mi`
