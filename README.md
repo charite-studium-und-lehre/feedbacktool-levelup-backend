@@ -6,7 +6,7 @@ Dokumentation siehe [./docs](./docs)
 
 - Go into docker folder `cd docker_config`
 - Copy the default docker environment file `cp .env.example .env`
-- Pull all needed images (especially to avoid building the app image): `docker-compose pull`
+- Pull app image to avoid building it (which takes some time and memory): `docker-compose pull app`
 - Start environment with `docker-compose up -d`
 - Migrate DB on first start with `docker-compose exec -T app php bin/console d:mi:mi`
 - Go to `http://localhost:8080/login`
