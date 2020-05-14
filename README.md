@@ -11,6 +11,7 @@ Dokumentation siehe [./docs](./docs)
 - Migrate DB on first start with `docker-compose exec -T app php bin/console d:mi:mi`
 - Go to `http://localhost:8080/login`
 - Login with `max@mustermann.de` and `secret`
+- Go to `http://localhost:8080/api/stammdaten` to verify you are logged in
 
 ### TODO
 - connect with frontend
