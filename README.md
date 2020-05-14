@@ -15,3 +15,4 @@ Dokumentation siehe [./docs](./docs)
 ### TODO
 - connect with frontend
 - provide demo data (csv-files from test folder) for dummy users
+- prepare for production (clean files and folders, no additional dummy servies, volumes etc.)
