@@ -1,3 +1,3 @@
 # Backend-Framework LevelUp
 
-Dokumentation siehe [./docs](./docs)
+Dokumentation siehe [./doc](doc)
