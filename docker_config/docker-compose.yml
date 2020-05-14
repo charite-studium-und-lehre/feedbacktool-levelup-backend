@@ -12,6 +12,7 @@ services:
       - webroot_data:/var/www/levelup/public:ro
 
   app:
+    image: pawelka/levelup-backend
     build:
       context: ../
       dockerfile: docker_config/app.dockerfile
