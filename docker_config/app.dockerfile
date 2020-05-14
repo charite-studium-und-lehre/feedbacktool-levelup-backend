@@ -62,8 +62,8 @@ RUN bash app_install_composer.sh &&\
 COPY . /var/www/levelup
 
 # Set correct folder permissions
-RUN chown -R www-data:www-data \
-	var
+RUN mkdir -p var &&\
+	chown -R www-data:www-data var
 
 # Prepare symfony on runtime
 ADD docker_config/app_entrypoint.sh ./entrypoint.sh
