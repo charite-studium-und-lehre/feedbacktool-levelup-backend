@@ -85,6 +85,7 @@ $pusher = $parameters["pusher"]["name"];
 $deployMessage = "Deployment aus GitHub: Branch $comittedBranch, Commit von $commiter, "
     . " Zeit: $commitTime, Push ausgeführt von $pusher,  Commit-Nachricht: $commitMessage ";
 $deployMessage = str_replace( '"', "", $deployMessage);
+$deployMessage = str_replace( '\\', '\\\\', $deployMessage);
 
 putenv("DEPLOY_MESSAGE=$deployMessage");
 echo $deployMessage;
