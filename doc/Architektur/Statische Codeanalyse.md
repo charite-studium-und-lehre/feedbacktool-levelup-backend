@@ -5,3 +5,11 @@ PHPStan ist ein Tool, was den Code analysiert und typische Fehler findet. Außer
 ##### Ausführung:
 
  [bin/phpstan](../../bin/phpstan) 
+
+##### Ergebnis:
+
+![_output_phpstan](_output_phpstan.png)
+
+##### Konfiguration
+Es werden einige Einstellungen gemacht, so dass nicht behebbare Fehler nicht auftauchen.
+Siehe [phpstan.neon](../../phpstan.neon) 
