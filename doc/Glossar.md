@@ -61,4 +61,3 @@
 | **Dashboard**    |                | Hauptansicht im Frontend, bietet auf Cards einen Überblick und Zugriff auf andere Domänen-Teile |
 | **Newsfeed**     |                | Rechte Spalte im Dashboard, zeitlich geordnete Anzeige von -> StudiPrüfungen |
 | **Starke Fächer** | Strengths     | Darstellung von Rankings der Studienleistungen nach verschiedenen Kriterien |
-| ClusterTitel     |                | Im Gegensatz zum ClusterCode die ausgeschrieben Form des Clusters, z.B. "Allgemeinmedizin" |
