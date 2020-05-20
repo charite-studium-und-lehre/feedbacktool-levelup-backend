@@ -61,3 +61,5 @@
 | **Dashboard**    |                | Hauptansicht im Frontend, bietet auf Cards einen Überblick und Zugriff auf andere Domänen-Teile |
 | **Newsfeed**     |                | Rechte Spalte im Dashboard, zeitlich geordnete Anzeige von -> StudiPrüfungen |
 | **Starke Fächer** | Strengths     | Darstellung von Rankings der Studienleistungen nach verschiedenen Kriterien |
+| **EvaSys** |                      | Tool für Nutzerumfragen, das in LevelUp eingebunden ist, damit die Charité-Qualitätssicherung automatisierte Umfragen machen kann |
+| **FAQ** |  | frequently asked questions
