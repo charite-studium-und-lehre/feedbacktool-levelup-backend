@@ -7,11 +7,11 @@ use Pruefung\Domain\PruefungsItemId;
 
 class ClusterZuordnung
 {
+    use DefaultValueObjectComparison;
+
     private ClusterId $clusterId;
 
     private PruefungsItemId $pruefungsItemId;
-
-    use DefaultValueObjectComparison;
 
     public static function byIds(ClusterId $clusterId, PruefungsItemId $pruefungsItemId): ClusterZuordnung {
         $object = new self();
