@@ -17,6 +17,20 @@ Test demo data (no login needed)
 - Test demo data on Backend: `http://localhost:8080/api/meilensteine?demo=1`
 - Test demo data on Frontend: `http://localhost:3000/dashboard?demo`
 
+### Re-build app image
+
+Sometimes one needs to re-build the image (update PHP composer dependencies) (as superuser):
+
+```shell-script
+docker-compose build
+```
+
+or, with the proxy env variable used (inside the Charité network)
+
+```shell script
+docker-compose build --build-arg http_proxy
+```
+
 ### TODO
 - provide "real" test data (not demo data) (csv-files from test folder) for dummy users
 - prepare for production (clean files and folders, no additional dummy servies, volumes etc.)

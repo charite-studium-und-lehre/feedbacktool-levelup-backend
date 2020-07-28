@@ -1,6 +1,10 @@
 FROM php:7.4-fpm-alpine
 # See https://github.com/llaumgui/docker-images/blob/master/php-fpm/7.4/Dockerfile for reference
 
+ARG http_proxy
+ENV http_proxy $http_proxy
+ENV https_proxy $http_proxy
+
 # Install packages and memcached (as special php-ext)
 RUN apk update &&\
 	apk upgrade &&\
@@ -53,7 +57,7 @@ COPY docker_config/app_install_composer.sh composer.json /var/www/levelup/
 WORKDIR /var/www/levelup
 
 # Install PHP libraries
-RUN bash app_install_composer.sh &&\
+RUN ./app_install_composer.sh &&\
 	rm app_install_composer.sh &&\
 	# Do not run scripts as we do this later
 	php -d memory_limit=-1 composer.phar install --no-dev --no-scripts --optimize-autoloader &&\
