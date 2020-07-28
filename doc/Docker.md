@@ -17,29 +17,6 @@ Test demo data (no login needed)
 - Test demo data on Backend: `http://localhost:8080/api/meilensteine?demo=1`
 - Test demo data on Frontend: `http://localhost:3000/dashboard?demo`
 
-##### Issues:
-
-* PHP composer libraries are not up to date
-* Solution
-
-```
-# Increase php CLI memory limit
-nano /etc/php7/php.ini     # Suche nach memory_limit, Einstellen auf 1000000000
-
-# Only in Charité: Define Proxy:
-export http_proxy=http://proxy.charite.de:8080
-export https_proxy=http://proxy.charite.de:8080
-export ftp_proxy=http://proxy.charite.de:8080
-export no_proxy="localhost,127.0.0.1,*.charite.de,charite.de"
-
-# Update dependencies
-bin/install.sh
-```
-
-
-
-/etc/php7/php.ini
-
 ### TODO
 - provide "real" test data (not demo data) (csv-files from test folder) for dummy users
 - prepare for production (clean files and folders, no additional dummy servies, volumes etc.)
