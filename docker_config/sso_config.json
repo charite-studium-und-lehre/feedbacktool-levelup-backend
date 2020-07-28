@@ -1,0 +1,5 @@
+{
+  "claim_mapping": {
+    "openid": [ "sub", "unique_name" ]
+  }
+}
