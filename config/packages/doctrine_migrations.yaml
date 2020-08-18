@@ -1,9 +1,8 @@
 doctrine_migrations:
-    dir_name: '%kernel.project_dir%/src/LevelUpCommon/Infrastructure/Persistence/Migrations'
-    # namespace is arbitrary but should be different from App\Migrations
-    # as migrations classes should NOT be autoloaded
-    namespace: LevelUpCommon\Infrastructure\Persistence\Migrations
-
-    all_or_nothing: true
+    storage:
+        table_storage:
+            table_name: 'migration_versions'
+    migrations_paths:
+        LevelUpCommon\Infrastructure\Persistence\Migrations: '%kernel.project_dir%/src/LevelUpCommon/Infrastructure/Persistence/Migrations'
     organize_migrations: BY_YEAR_AND_MONTH
-    name: 'DB-Migrations für LevelUp-Backend'
+    all_or_nothing: true

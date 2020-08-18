@@ -2,20 +2,20 @@
 
 | Domänenbegriff         | Synonyme                           | Erklärung                                                    |
 | ---------------------- | ---------------------------------- | ------------------------------------------------------------ |
-| **Studienfortschritt** |                                    | Darstellung des Studienerfolgs anhand abgelegter Prüfungen und erreichter Meilensteine |
+| **Studienfortschritt** |     Progress                       | Darstellung des Studienerfolgs anhand abgelegter Prüfungen und erreichter Meilensteine |
 | Zeitsemester           | Akademische Periode, academic term | Kalendarische Periode, in der ein Semester stattfindet.<br />Z.B. SoSe2020, WiSe2019<br />Mögliche Darstellung als Zahl ist z.B. 20201 für "SoSe2020" |
 | Fachsemester           | Semester                           | Fortschreiten im Studienverlauf anhand der Regelstudienzeit. Teilweise gibt es Bedingungen (z.B. Prüfungen), um in ein bestimmtes Fachsemester eingeschrieben zu werden. |
 | Studiensemester        |                                    | Semester, die seit der Einschreibung ins Studium vergangen sind (abzüglich Urlaub und andere Pausen) |
-| Meilenstein            | StudiMeilenstein                   | Ereignis, das zum Studienfortschritt beiträgt und keine Prüfung ist.<br />Z.B.: Erste-Hilfe-Praktikum, Hausarbeit, Famulatur-Reife, Pflegepraktikum, M1-Äquivalenz<br /><br />Meilensteine können nicht aus Prüfungen "gewonnen" weren, die ja LevelUp sowieso speichert, sondern müssen explizit von einem System der Studienverwaltung übertragen werden |
+| Meilenstein            | StudiMeilenstein, Achievements     | Ereignis, das zum Studienfortschritt beiträgt und keine Prüfung ist.<br />Z.B.: Erste-Hilfe-Praktikum, Hausarbeit, Famulatur-Reife, Pflegepraktikum, M1-Äquivalenz<br /><br />Meilensteine können nicht aus Prüfungen "gewonnen" weren, die ja LevelUp sowieso speichert, sondern müssen explizit von einem System der Studienverwaltung übertragen werden |
 | FortschrittsItem       |                                    | Erreichter Meilenstein oder erfolgreich abgelegte Prüfung. In der Ansicht zum Studienfortschritt gibt es einen Eintrag pro FortschrittsItem. |
 
 
 
 | Domänenbegriff                                      | Synonyme | Erklärung                                                    |
 | --------------------------------------------------- | -------- | ------------------------------------------------------------ |
-| **Prüfung**                                         |          | Abstraktion aller Arten von bewerteten Leistungen, die Studierende ablegen |
+| **Prüfung**                                         | Exams    | Abstraktion aller Arten von bewerteten Leistungen, die Studierende ablegen |
 | Prüfungsperiode<br />(enthält PrüfungsUnterperiode) |          | Besteht aus einem →**Zeitsemester** und einer **Unterperiode**.<br />Prüfungen können pro Semester mehrfach stattfinden, z.B. die erste Prüfung und die Nachholprüfung. das legt die Unterperiode fest.<br />Mögliche Darstellung als Zahl ist z.B. 202011 für "SoSe2020, erste Periode" |
-| Prüfungsformat                                      |          | Art der Prüfung, z.B. <br />**MC** (Multiple Choice): "normale" Semesterprüfung<br />**OSCE** (Objective structured clinical examination): Praktische Prüfung, die z.B. Untersuchungen etc. enthält<br /><br />**Stationenprüfung:** Mündlich-theoretische Prüfung<br />**PTM** (Progess Test Medizin): Test, der identisch einmal pro Zeitsemester von allen Studierenden im deutschsprachigen Bereich geschrieben wird. Kann den Fortschritt im Studium besonders gut darstellen, da das Ergebnis mit steicgendem Fachsemester bzw. Studiensemester immer besser werden sollte. |
+| Prüfungsformat                                      |          | Art der Prüfung, z.B. <br />**MC** (Multiple Choice): "normale" Semesterprüfung<br />**OSCE** (Objective structured clinical examination): Praktische Prüfung, die z.B. Untersuchungen etc. enthält<br /><br />**Stationenprüfung:** (Stations) Mündlich-theoretische Prüfung<br />**PTM** (Progess Test Medizin): Test, der identisch einmal pro Zeitsemester von allen Studierenden im deutschsprachigen Bereich geschrieben wird. Kann den Fortschritt im Studium besonders gut darstellen, da das Ergebnis mit steicgendem Fachsemester bzw. Studiensemester immer besser werden sollte. |
 | PrüfungsItem                                        |          | Kleinste bekannte zu bewertende Einheit in einer Prüfung. In MC-Prüfungen z.B. eine Frage, beim PTM typischerweise die Punktzahl für ein Fach (weil hier keine Einzelitems rausgegeben werden) |
 | ItemSchwierigkeit                                   |          | Von LevelUp berechnete Schwierigkeit eines PrüfungsItems anhand des Gesamtergebnisses der Kohorte.<br />Standard an der Charité:<br />*Schwer*: < 40% richtige Antworten<br />*Normal*: 40%-80% richtige Antworten<br />*Leicht*: > 80% richtige Antworten |
 | Frage / Antwort                                     |          | Abgebildete konkrete Frage und mögliche Antworten zu einem PrüfungsItem (typischerweise MC).<br />Die Fragennummer ist die Nummer innerhalb der Prüfung.<br />Der Antwortcode ist die Kurzbezeichnung der Antwort, z.B. "a" oder "b" |
@@ -55,3 +55,11 @@
 | Fremdbewertung         | Fremdeinschätzung                                            | Einschätzung des Kompetenz-Levels für eine EPA anhand eines Lehrenden. Der Lehrende wird dabei vom Studi angefragt und kann einen oder mehrere EPAs anhand der Level 0-5 bewerten. <br />In LevelUp wird die Fremdbewertung einer EPA in der dritten Spalte dargestellt. |
 | FremdbewertungsAnfrage |                                                              | Anfrage eines Studis an einen Lehrenden mit der Bitte um Einschätzung der Kompetenzen. In der Anfrage ist enthalten, wer sie stellt (AnfragerName, Email), an wen sie gerichtet ist (FremdBewerterName, Email), auf welchen Kontext/Zeit sie sich bezieht (z.B. Famulatur Juli 2020), welche Tätigkeiten bewertet werden sollen und ein allgemeiner Kommentar. |
 
+| Domänenbegriff   | Synonyme       | Erklärung                                                    |
+| ---------------- | -------------- | ------------------------------------------------------------ |
+| **Beratung**     | Consulting     | Sammlung von Links mit Beschreibung zum Thema Beratung für Studierende  |
+| **Dashboard**    |                | Hauptansicht im Frontend, bietet auf Cards einen Überblick und Zugriff auf andere Domänen-Teile |
+| **Newsfeed**     |                | Rechte Spalte im Dashboard, zeitlich geordnete Anzeige von -> StudiPrüfungen |
+| **Starke Fächer** | Strengths     | Darstellung von Rankings der Studienleistungen nach verschiedenen Kriterien |
+| **EvaSys** |                      | Tool für Nutzerumfragen, das in LevelUp eingebunden ist, damit die Charité-Qualitätssicherung automatisierte Umfragen machen kann |
+| **FAQ** |  | frequently asked questions

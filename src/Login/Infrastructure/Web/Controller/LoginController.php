@@ -3,7 +3,6 @@
 namespace Login\Infrastructure\Web\Controller;
 
 use Common\Domain\User\LoginUser;
-use Common\Domain\User\Username;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPService;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider;
 use Common\Infrastructure\UserInterface\Web\Service\ChariteSSOService;
@@ -226,22 +225,6 @@ class LoginController extends BaseController
             "switchUser.html.twig",
             ["studis" => $allStudis]
         );
-    }
-
-    /**
-     * @Route("/admin/switchUserToEpaBug", name="switchUserToEpaBug")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function switchUserToEpaBugAction(
-        StudiRepository $studiRepository,
-        UserSwitcher $userSwitcher,
-        TokenStorageInterface $tokenStorage
-    ) {
-        $studi0 = $studiRepository->all()[0];
-        $switchedUser = $studi0->macheZuLoginUser($this->getUser());
-        $this->loginUser($tokenStorage, $switchedUser);
-        $userSwitcher->setUserSwitched(Username::fromString("roaromey"));
-        return $this->redirectToRoute("userInfo");
     }
 
     private function loginUser(TokenStorageInterface $tokenStorage, LoginUser $loginUser): void {

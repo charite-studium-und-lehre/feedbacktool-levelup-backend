@@ -1,0 +1,20 @@
+[
+  {
+    "id": "SIMPLE_OIDC_USER_MAX",
+    "email": "max@mustermann.de",
+    "email_verified": true,
+    "name": "Max Mustermann",
+    "nickname": "max",
+    "password": "secret",
+    "unique_name": "CHARITE\\mmuste01"
+  },
+  {
+    "id": "SIMPLE_OIDC_USER_MAXI",
+    "email": "maxi@musterfrau.de",
+    "email_verified": true,
+    "name": "Maxi Musterfrau",
+    "nickname": "maxi",
+    "password": "secret",
+    "unique_name": "CHARITE\\mmuste02"
+  }
+]
