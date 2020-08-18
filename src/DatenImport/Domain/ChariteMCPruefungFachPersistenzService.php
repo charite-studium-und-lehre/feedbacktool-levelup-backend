@@ -47,7 +47,7 @@ class ChariteMCPruefungFachPersistenzService
                 echo "\n" . round($counter / $lineCount * 100) . "% fertig";
             }
 
-            if (!$lzNummer) {
+            if (!$lzNummer || $lzNummer < 0) {
                 continue;
             }
             $fachClusterId = $this->lernzielFachRepository
