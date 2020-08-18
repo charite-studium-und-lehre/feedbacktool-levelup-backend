@@ -29,7 +29,10 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
             as $dataLine) {
 
             $semester = NULL;
-            if (isset($dataLine["Kl_Bezeichnung"])) {
+
+            if (isset($dataLine["SequenzSemesterNummer"])) {
+                $semester = (int) $dataLine["SequenzSemesterNummer"];
+            } elseif (isset($dataLine["Kl_Bezeichnung"])) {
                 if (strstr($dataLine["Kl_Bezeichnung"], "MC Semester ") == FALSE) {
                     continue;
                 }
@@ -65,9 +68,19 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
                     $periode
                 );
             } catch (Exception $e) {
-                echo "- Fehler beim Import: Prüfungstitel (Sem): " . $dataLine["Kl_Nr"];
+                echo "- Fehler beim Erstellen der Prüfungs-ID: Fachsemester: $semester";
+                throw $e;
             }
-            $fragenNr = isset($dataLine["FragenNr"]) ? $dataLine["FragenNr"] : $dataLine["fragenNr"];
+            $fragenNr = isset($dataLine["Fragennr"])
+                ? $dataLine["Fragennr"]
+                : (
+                    isset($dataLine["fragenNr"])
+                    ? $dataLine["fragenNr"]
+                    : $dataLine["FragenNr"]
+                );
+            if (!$fragenNr) {
+                throw new Exception("Fragennr im Header nicht gefunden!");
+            }
             //            $lernzielNr = isset($dataLine["Lernziel"]) ? $dataLine["Lernziel"] : $dataLine["LernzielNr"];
             $fragenText = $dataLine["Fragentext"];
             $fragenText = str_replace('<$u>', '---', $fragenText);
