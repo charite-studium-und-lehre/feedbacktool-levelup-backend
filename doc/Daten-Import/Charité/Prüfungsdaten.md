@@ -22,14 +22,15 @@ Es gibt eine neue .xls oder .xlsx-Datei in /Upload
 
 1. ##### Kopieren nach /data01/uploadData
    
+
 **Warum?** Wir wollen auf einem eigenen Verzeichnis arbeiten, das der Prüfungsbereich nicht sieht.
-   
+
    ```shell script
    cp /home/upload/MC/<Datei> /data01/uploadData/MC
-```
-   
+   ```
 
-   
+
+
 2. ##### Umwandeln in .csv
 
    **Einzelne Datei**:
@@ -164,8 +165,68 @@ Ja.
 
 ## Ich habe falsche Daten importiert
 
+Diese Daten können pro Semester aus der internen DB gelöscht werden.
+
+Wichtig ist, die Semester-Variable auf das zu löschende Semester zu setzen, z.B. 20202 für das WiSe2020
+
+##### Importierte Daten anzeigen:
+
+```mysql
+SET @SEMESTER="%20112%";
+
+SELECT * FROM pruefung_studiPruefungsWertung INNER JOIN pruefung_studiPruefung ON pruefung_studiPruefungsWertung.studiPruefungsId = pruefung_studiPruefung.id WHERE pruefungsId LIKE @SEMESTER;
+SELECT * FROM pruefung_studiPruefung WHERE pruefungsId LIKE @SEMESTER;
+
+SELECT * FROM pruefung_frage WHERE pruefungsItemId LIKE @SEMESTER;
+SELECT * FROM pruefung_frage_antwort WHERE fragenId LIKE @SEMESTER;
+
+SELECT * FROM pruefung_itemWertung WHERE pruefungsItemId LIKE @SEMESTER;
+SELECT * FROM pruefung_item WHERE pruefungsId LIKE @SEMESTER;
+SELECT * FROM pruefung WHERE pruefungsPeriode LIKE @SEMESTER;
+```
+
+##### Importierte Daten löschen
+
+```mysql
+SET @SEMESTER="%20202%";
+
+DELETE pruefung_studiPruefungsWertung FROM pruefung_studiPruefungsWertung INNER JOIN pruefung_studiPruefung ON pruefung_studiPruefungsWertung.studiPruefungsId = pruefung_studiPruefung.id WHERE pruefungsId LIKE @SEMESTER;
+DELETE FROM pruefung_studiPruefung WHERE pruefungsId LIKE @SEMESTER;
+
+DELETE FROM pruefung_frage WHERE pruefungsItemId LIKE @SEMESTER;
+DELETE FROM pruefung_frage_antwort WHERE fragenId LIKE @SEMESTER;
+
+DELETE FROM pruefung_itemWertung WHERE pruefungsItemId LIKE @SEMESTER;
+DELETE FROM pruefung_item WHERE pruefungsId LIKE @SEMESTER;
+DELETE FROM pruefung WHERE pruefungsPeriode LIKE @SEMESTER;
+```
+
+
+
+### Statische Dateien aktualisieren
+
+Damit der Import richtig läuft, müssen einmal pro Semester die Lernziele aktualisiert werden.
+
+Die Export sind unter 
+
+https://lernziele.charite.de/zend/export/exportquery/id/33
+
+und 
+
+https://lernziele.charite.de/zend/export/exportquery/id/34
+
+Dies müssen auf dem Server an folgende Orte gelegt werden:
+
+`$BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv`
+
+und 
+
+`$BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Fach.csv`
+
+also z.B. als root:
+
 ```shell script
-# SQL-Skript ausführen, um importierte Prüfungen zu löschen
-TODO!
+cp /tmp/LEVELUP-Lernziel-Module.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv
+cp /tmp/LEVELUP-Lernziel-Fach.csv /data01/uploadData//LEVELUP-Lernziel-Fach.csv
 ```
 
