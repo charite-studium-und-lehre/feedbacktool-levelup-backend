@@ -11,6 +11,7 @@ use Pruefung\Domain\FrageAntwort\FragenText;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsPeriode;
+use function Rector\Symfony\Tests\Rector\DependencyInjection\ContainerBuilderCompileEnvArgumentRector\Fixture\containerBuilderCompilerEnvArgument;
 
 class ChariteFragenCSVImportService extends AbstractCSVImportService
 
@@ -39,21 +40,30 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
                 $semester = (int) substr($dataLine["Kl_Bezeichnung"], 12);
 
             } elseif (isset($dataLine["Kl_Name"])) {
-                if (strstr($dataLine["Kl_Name"], "MC Semester ") == FALSE) {
+                if (strstr($dataLine["Kl_Name"], "MC Semester ") !== FALSE) {
+                    $semester = (int) substr($dataLine["Kl_Name"], 12);
+                } else if (strstr($dataLine["Kl_Name"], "Semesterabschlussprüfung S") !== FALSE) {
+                    $semester = (int) substr($dataLine["Kl_Name"], 27);
+                } else {
                     continue;
                 }
-                $semester = (int) substr($dataLine["Kl_Name"], 12);
             } elseif (isset($dataLine["Modulnr"])) {
                 if (strstr($dataLine["Modulnr"], "S") === FALSE) {
                     continue;
                 }
                 $semester = (int) str_replace("S", "", $dataLine["Modulnr"]);
-            } elseif (isset($dataLine["Modulname"])) {
-                $modulCode = substr($dataLine["Modulname"], 1, 2);
+            } elseif (isset($dataLine["Modulname"]) || isset($dataLine["Modul"])) {
+                $modulCode = isset($dataLine["Modulname"])
+                    ? $dataLine["Modulname"]
+                    : $dataLine["Modul"];
+                $modulCode = substr($modulCode, 1, 2);
                 if (!is_numeric($modulCode) || $modulCode >= 17) {
                     continue; // MSM2
                 }
                 $semester = (int) ceil($modulCode / 4);
+                if ((int) $modulCode == 37) {
+                    $semester = 9;
+                }
             }
 
             if (!$semester) {
@@ -74,7 +84,7 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
             $fragenNr = isset($dataLine["Fragennr"])
                 ? $dataLine["Fragennr"]
                 : (
-                    isset($dataLine["fragenNr"])
+                isset($dataLine["fragenNr"])
                     ? $dataLine["fragenNr"]
                     : $dataLine["FragenNr"]
                 );
