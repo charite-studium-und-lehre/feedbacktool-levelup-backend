@@ -201,7 +201,16 @@ DELETE FROM pruefung_item WHERE pruefungsId LIKE @SEMESTER;
 DELETE FROM pruefung WHERE pruefungsPeriode LIKE @SEMESTER;
 ```
 
+### Troubleshooting
 
+```
+In ChariteStationsClusterungPersistenzService.php line 73:
+                                  
+  [ErrorException]                
+  Notice: Undefined index: 27#03  
+```
+
+Der angegebene Code (hier 27#03) ist nicht bekannt.  Er muss im Quellcode in der Datei [FachCodeKonstanten.php](../../../src/Pruefung/Domain/FachCodeKonstanten.php)  hinzugefügt werden
 
 ### Statische Dateien aktualisieren
 
