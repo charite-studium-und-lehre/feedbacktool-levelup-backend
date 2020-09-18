@@ -11,7 +11,6 @@ use Pruefung\Domain\FrageAntwort\FragenText;
 use Pruefung\Domain\PruefungsFormat;
 use Pruefung\Domain\PruefungsId;
 use Pruefung\Domain\PruefungsPeriode;
-use function Rector\Symfony\Tests\Rector\DependencyInjection\ContainerBuilderCompileEnvArgumentRector\Fixture\containerBuilderCompilerEnvArgument;
 
 class ChariteFragenCSVImportService extends AbstractCSVImportService
 
