@@ -192,6 +192,7 @@ class FachCodeKonstanten
         '27#02' => 'Erkrankungen der Extremitäten M27',
         '27#03' => 'Erkrankungen der Extremitäten M27',
         '30#01' => 'Neurologische Erkrankungen M30',
+        '30#02' => 'Neurologische Erkrankungen M30',
         '31#02' => 'Psychiatrische Erkrankungen M31',
         '31#05' => 'Psychiatrische Erkrankungen M31',
         '33#01' => 'Schwangerschaft/Geburt M33',
