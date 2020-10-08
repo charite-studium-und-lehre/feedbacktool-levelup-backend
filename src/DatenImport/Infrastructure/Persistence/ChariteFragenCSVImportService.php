@@ -141,7 +141,7 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
         }
         $returnArray = [];
         foreach ($antwortHeaderArray as $antwortHeader) {
-            $antwortString = $dataLine[$antwortHeader];
+            $antwortString = isset($dataLine[$antwortHeader]) ? $dataLine[$antwortHeader] : NULL;
             if (!$antwortString) {
                 continue;
             }
