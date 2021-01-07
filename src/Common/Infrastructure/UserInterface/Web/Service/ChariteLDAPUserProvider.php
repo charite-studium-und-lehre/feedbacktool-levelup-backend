@@ -35,8 +35,6 @@ class ChariteLDAPUserProvider implements UserProviderInterface
         if (in_array($loginUser->getUsername(),
                      [
                          "dittmarm",
-                         "roaromey",
-                         "wyszynjv",
                          "alhassam",
                          "petzolma",
                          "franzann",
@@ -44,7 +42,8 @@ class ChariteLDAPUserProvider implements UserProviderInterface
                          "linkea",
                          "domansmo",
                          "geppermi",
-                         "aleksanv"
+			 "aleksanv",
+			 "beyers",
                      ]
         )) {
             $loginUser = $loginUser->macheZuAdmin();
