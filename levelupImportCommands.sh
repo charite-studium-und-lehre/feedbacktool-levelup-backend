@@ -100,6 +100,13 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_OSCE_StaPrü\ WiSe\ 1920/OSCE4_LevelUp/OSCE4_WiSe1920_QM.xlsx.csv 201921 Teil3
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_OSCE_StaPrü\ WiSe\ 1920/OSCE9_LevelUp/OSCE\ 9\ für\ Level\ Up\ HZ.xlsx.csv 201921 Sem9
 
+# SoSe2020
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/Teil_1_Grundlagen_SoSe2020T1_QM.csv 202011 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/Teil_2_Grundlagen_SoSe2020T1_QM.csv 202011 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/OSCE2_SoSe2020T1_QM.csv 202011 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/OSCE4_SoSe2020T1_QM.csv 202011 Teil3
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/OSCE9_SoSe2020T1_QM.csv 202011 Sem9
+
 ### PTM ###
 
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT33\ 2015-11-17.csv 20152 -vvv
