@@ -44,7 +44,7 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                         || in_array($key, ["Skala1_erg", "Skala2_erg", "skala1_proz", "skala2_proz",
                                            "ergebnis", "Proz"]))
                     && is_numeric($ergebnis)
-                    && $ergebnis > 0) {
+                ) {
                     if ($ergebnis > 100) {
                         echo "Fehler bei Matr. $matrikel: Prozentzahl ist > 100: $ergebnis -> Überspringe\n";
                         continue;
