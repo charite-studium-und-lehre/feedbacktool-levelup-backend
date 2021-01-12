@@ -101,11 +101,18 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/QM_OSCE_StaPrü\ WiSe\ 1920/OSCE9_LevelUp/OSCE\ 9\ für\ Level\ Up\ HZ.xlsx.csv 201921 Sem9
 
 # SoSe2020
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/Teil_1_Grundlagen_SoSe2020T1_QM.csv 202011 Teil1VK
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/Teil_2_Grundlagen_SoSe2020T1_QM.csv 202011 Teil2
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/OSCE2_SoSe2020T1_QM.csv 202011 Teil1K
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/OSCE4_SoSe2020T1_QM.csv 202011 Teil3
-bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_Haupt/OSCE9_SoSe2020T1_QM.csv 202011 Sem9
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_1.Termin/Teil_1_Grundlagen_SoSe2020T1_QM.csv 202011 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_1.Termin/Teil_2_Grundlagen_SoSe2020T1_QM.csv 202011 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_1.Termin/OSCE2_SoSe2020T1_QM.csv 202011 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_1.Termin/OSCE4_SoSe2020T1_QM.csv 202011 Teil3
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_1.Termin/OSCE9_SoSe2020T1_QM.csv 202011 Sem9
+
+  #WDH
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/Teil_1_Grundlagen_SoSe2020T2_QM.csv 202012 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/Teil_2_Grundlagen_SoSe2020T2_QM.csv 202012 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/OSCE2_SoSe2020T2_QM.csv 202012 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/OSCE4_SoSe2020T2_QM.csv 202012 Teil3
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/OSCE9_SoSe2020T2_QM.csv 202012 Sem9
 
 ### PTM ###
 
