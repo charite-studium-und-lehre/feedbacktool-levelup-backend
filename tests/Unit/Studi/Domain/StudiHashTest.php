@@ -15,8 +15,9 @@ class StudiHashTest extends TestCase
     }
 
     public function testUngueltigeZeichen() {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(StudiHash::UNGUELTIG);
+        //$this->expectException(\InvalidArgumentException::class);
+        // $this->expectExceptionMessage(StudiHash::UNGUELTIG);
+        $this->expectException(\ValueError::class);
         $value = '%0062a008dbcd86fa8d0738e1f6e0f5daefe9fd2a7a9dddcace';
         StudiHash::fromString($value);
     }
