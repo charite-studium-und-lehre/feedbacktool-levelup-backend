@@ -125,7 +125,8 @@ class ChariteStationenPruefungPersistenzService
             if ($einzelWertungen) {
                 $this->createOrUpdateGesamtWertung($studiPruefung, $einzelWertungen);
             } else {
-                echo "Err" . $studiPruefung->getPruefungsId() . "-" . $studiPruefung->getStudiHash();
+                echo "Err: Keine Einzelwertungen in: " . $studiPruefung->getPruefungsId() . " für Studi-Hash: " .
+                     $studiPruefung->getStudiHash() . "\n";
             }
         }
         $this->pruefungsItemRepository->flush();

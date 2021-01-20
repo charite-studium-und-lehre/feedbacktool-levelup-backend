@@ -42,9 +42,9 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                 $ergebnis = str_replace(",", ".", $dataCell);
                 if ((strstr($key, "#") !== FALSE
                         || in_array($key, ["Skala1_erg", "Skala2_erg", "skala1_proz", "skala2_proz",
-                                           "ergebnis", "Proz"]))
+                                           "ergebnis", "Proz", "SCORE"]))
                     && is_numeric($ergebnis)
-                    && $ergebnis > 0) {
+                ) {
                     if ($ergebnis > 100) {
                         echo "Fehler bei Matr. $matrikel: Prozentzahl ist > 100: $ergebnis -> Überspringe\n";
                         continue;
@@ -56,16 +56,19 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                         $key = "Sk2";
                     } elseif (in_array($key, ["ergebnis"])) {
                         $key = "erg";
-                    } elseif (in_array($key, ["Proz"])) {
+                    } elseif (in_array($key, ["Proz", "SCORE"])) {
                         if (isset($dataLine["Perma"])) {
                             $key = $dataLine["Perma"];
                         } elseif (isset($dataLine["Permadummy"])) {
                             $key = $dataLine["Permadummy"];
+                        } elseif (isset($dataLine["permakÃ.rzel"])) {
+                            $key = $dataLine["permakÃ.rzel"];
+                        } elseif (isset($dataLine["permakürzel"])) {
+                            $key = $dataLine["permakürzel"];
                         } else {
                             $key = "erg";
                         }
                     }
-
                     $ergebnisse[$key] = $ergebnis;
                 }
             }
