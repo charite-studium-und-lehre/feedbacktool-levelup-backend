@@ -116,3 +116,4 @@ if ($exitCode !== 0) {
 }
 
 echo "Ergebnis des Deployments:\nExit-Code $exitCode\n$result";
+file_put_contents("/tmp/githubDeployHook.txt", "Ergebnis des Deployments:\nExit-Code $exitCode\n$result");

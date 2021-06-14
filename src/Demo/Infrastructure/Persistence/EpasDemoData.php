@@ -236,7 +236,7 @@ class EpasDemoData extends AbstractJsonDemoData
             ],
             [
                 "id"           => 321,
-                "beschreibung" => "Informieren des Patienten (allgemeine Information zu Art der Beschwerden, dem Krankheitsbild und der Diagnostik und Therapie",
+                "beschreibung" => "Informieren des Patienten (allgemeine Information zu Art der Beschwerden, dem Krankheitsbild und der Diagnostik und Therapie)",
                 "parentId"     => 320,
                 "istBlatt"     => TRUE,
             ],
