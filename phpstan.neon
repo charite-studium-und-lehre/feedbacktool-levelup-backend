@@ -6,7 +6,7 @@ parameters:
 
    level: max
 
-   excludes_analyse:
+   excludePaths:
        - src/LevelUpCommon/Infrastructure/Persistence/Migrations/
        - src/Common/Infrastructure/Export/Service/ExcelExportService.php
        - src/Common/Infrastructure/UserInterface/Web/Twig/CsrfLinkExtension.php
@@ -22,10 +22,6 @@ parameters:
    		- '#Parameter .* of function call_user_func expects callable.*#'
    		- '#Parameter .* expects string, int given#'
    		- '#Parameter .* expects int, string given#'
-   		- '#Method .*DB.*Repository::byId() should return .*|null but returns object|null.#'
-   		- '#Parameter .* $serializedEventBody of static method Common\Application\AbstractEvent\StoredEventBody::fromString() expects string, string|false given.#'
-   		- '#Cannot call method getTimestamp() on DateTimeImmutable|false.#'
-   		- '#Unsafe usage of new static().#'
    		- '#Property .*::.*jsonData type has no value type specified in iterable type array.#'
    		- '#.*has parameter .demoDataClasses with no value type specified in iterable type iterable.#'
 

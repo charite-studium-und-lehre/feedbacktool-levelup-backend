@@ -126,11 +126,15 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT40\ 2019-06-03.csv 20191 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT40\ 2019-08-16.csv 20191 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT41\ 2020-03-02.csv 20192 -vvv
+bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/PT42_Berlin.csv 20201 -vvv
+bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/PT43_Berlin.csv 20202 -vvv
 
 ### MC ###
 
 ### MC-Fragentexte ###
 
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe2021_T1_Fragentexte.xlsx.csv 202021 -vvv
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe20_21_T2_Fragentexte.xlsx.csv 202022 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2020_T1*.csv 202011 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2020_T2*.csv 202012 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/WiSe19_20_T1*.csv 201921 -vvv
@@ -148,6 +152,8 @@ bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragent
 
 ### MC-Ergebnisse ###
 
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_20_21_T1_qs.xlsx.csv 202021 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_20_21_T2_qs.xlsx.csv 202022 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe20_T1_qs.xlsx.csv 202011 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe20_T2_qs.xlsx.csv 202012 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_19_20_T1_qs.csv 201921 -vvv
