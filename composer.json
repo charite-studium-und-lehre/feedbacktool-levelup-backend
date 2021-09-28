@@ -9,15 +9,18 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.4",
+    "php": "^7.4|^8.0",
+    "ext-hash": "*",
+    "ext-iconv": "*",
+    "ext-json": "*",
     "ext-ldap": "*",
+    "ext-mbstring": "*",
     "ext-pdo_mysql": "*",
-    "ext-hash": "*" ,
-    "ext-iconv": "*" ,
-    "ext-json": "*" ,
-    "ext-mbstring": "*" ,
     "beberlei/assert": "^3.2",
+    "composer/package-versions-deprecated": "1.11.99.4",
+    "doctrine/doctrine-bundle": "^2.4",
     "doctrine/doctrine-migrations-bundle": "^3.0",
+    "doctrine/orm": "^2.9",
     "jumbojett/openid-connect-php": "^0.9",
     "matthiasnoback/convenient-immutability": "^0.3",
     "sensio/framework-extra-bundle": "^5.5",
@@ -32,8 +35,7 @@
     "symfony/intl": "^5.1",
     "symfony/maker-bundle": "^1.12",
     "symfony/monolog-bundle": "^3.5",
-    "symfony/orm-pack": "^2.0",
-    "symfony/profiler-pack": "^1.0",
+    "symfony/proxy-manager-bridge": "^5.1",
     "symfony/requirements-checker": "^1.1",
     "symfony/security-bundle": "^5.1",
     "symfony/security-csrf": "^5.1",
@@ -46,8 +48,8 @@
   "require-dev": {
     "phpstan/phpstan": "dev-master",
     "phpunit/phpunit": "^9.2",
-    "rector/rector": "*",
-    "symfony/inflector": "^5.1"
+    "symfony/inflector": "^5.1",
+    "symfony/stopwatch": "^5.1"
   },
 
   "config": {
@@ -63,7 +65,8 @@
       "cache:clear": "symfony-cmd",
       "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
       "requirements-checker": "script",
-      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+      "assets:install %PUBLIC_DIR%": "symfony-cmd",
+      "security-checker security:check": "script"
     },
     "post-root-package-install": [
       "SymfonyStandard\\Composer::hookRootPackageInstall"
