@@ -33,18 +33,19 @@ class ChariteLDAPUserProvider implements UserProviderInterface
             return NULL;
         }
         if (in_array($loginUser->getUsername(),
-                     [
-                         "dittmarm",
-                         "alhassam",
-                         "petzolma",
-                         "franzann",
-                         "htame",
-                         "linkea",
-                         "domansmo",
-                         "geppermi",
-			 "aleksanv",
-			 "beyers",
-                     ]
+            [
+                "dittmarm",
+                "alhassam",
+                "petzolma",
+                "franzann",
+                "htame",
+                "linkea",
+                "domansmo",
+                "geppermi",
+                "aleksanv",
+                "beyers",
+                "moahameb",
+            ]
         )) {
             $loginUser = $loginUser->macheZuAdmin();
         }
