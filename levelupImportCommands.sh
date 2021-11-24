@@ -114,6 +114,17 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/OSCE4_SoSe2020T2_QM.csv 202012 Teil3
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/OSCE9_SoSe2020T2_QM.csv 202012 Sem9
 
+
+# WiSe2021
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t1/Teil_1_Grundlagen_wise2021T1_QM.csv" 202121 Teil1VK
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t2/Teil_2_Grundlagen_wise2021T1_QM.csv" 202121 Teil2
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce2 staprü t1/OSCE2_WiSe2021T1_QM.csv" 202121 Teil1K
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce4 staprü t3/OSCE4_wise2021T1_QM.csv" 202121 Teil3
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce 9 msm2/OSCE9_wise2021_T1_QM.csv" 202121 Sem9
+
+# TODO:
+# WDH
+
 ### PTM ###
 
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT33\ 2015-11-17.csv 20152 -vvv
@@ -128,6 +139,7 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT41\ 2020-03-02.csv 20192 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/PT42_Berlin.csv 20201 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/PT43_Berlin.csv 20202 -vvv
+bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT44\ 2021.csv 20211 -vvv
 
 ### MC ###
 
