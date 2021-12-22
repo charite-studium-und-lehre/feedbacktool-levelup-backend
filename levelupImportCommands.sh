@@ -115,7 +115,7 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüfung\ und\ OSCE\ 9\ FS/SoSe_2020_2.Termin/OSCE9_SoSe2020T2_QM.csv 202012 Sem9
 
 
-# WiSe2021
+# WiSe2020
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t1/Teil_1_Grundlagen_wise2021T1_QM.csv" 202121 Teil1VK
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t2/Teil_2_Grundlagen_wise2021T1_QM.csv" 202121 Teil2
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce2 staprü t1/OSCE2_WiSe2021T1_QM.csv" 202121 Teil1K
