@@ -64,7 +64,7 @@ class FortschrittsItem implements DDDValueObject
         "voraus_sem7"  => 307,
         "voraus_sem8"  => 308,
         "voraus_sem9"  => 309,
-        "voraus_sem10" => 310, // das ergibt sich direkt aus voraus_sem9
+        "voraus_sem9" => 310, // das ergibt sich direkt aus voraus_sem9
 
         "MC-Sem1" => 401,
         "MC-Sem2" => 402,
