@@ -116,11 +116,11 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationenprüf
 
 
 # WiSe2020
-bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t1/Teil_1_Grundlagen_wise2021T1_QM.csv" 202121 Teil1VK
-bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t2/Teil_2_Grundlagen_wise2021T1_QM.csv" 202121 Teil2
-bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce2 staprü t1/OSCE2_WiSe2021T1_QM.csv" 202121 Teil1K
-bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce4 staprü t3/OSCE4_wise2021T1_QM.csv" 202121 Teil3
-bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce 9 msm2/OSCE9_wise2021_T1_QM.csv" 202121 Sem9
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t1/Teil_1_Grundlagen_wise2021T1_QM.csv" 202021 Teil1VK
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/grundlagen staprü  t2/Teil_2_Grundlagen_wise2021T1_QM.csv" 202021 Teil2
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce2 staprü t1/OSCE2_WiSe2021T1_QM.csv" 202021 Teil1K
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce4 staprü t3/OSCE4_wise2021T1_QM.csv" 202021 Teil3
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce 9 msm2/OSCE9_wise2021_T1_QM.csv" 202021 Sem9
 
 # TODO:
 # WDH
