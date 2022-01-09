@@ -122,8 +122,12 @@ bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprü
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce4 staprü t3/OSCE4_wise2021T1_QM.csv" 202021 Teil3
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 HZ/osce 9 msm2/OSCE9_wise2021_T1_QM.csv" 202021 Sem9
 
-# TODO:
 # WDH
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 WDH/grundlagen staprü  t1/Teil_1_Grundlagen_wise2021T2_QM.csv" 202022 Teil1VK
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 WDH/grundlagen staprü  t2/Teil_2_Grundlagen_wise2021T2_QM.csv" 202022 Teil2
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 WDH/osce2 staprü t1/OSCE2_WiSe2021T2_QM.csv" 202022 Teil1K
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 WDH/osce4 staprü t3/OSCE4_wise2021T2_QM.csv" 202022 Teil3
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationenprüfung und OSCE 9 FS/WiSe20_21 WDH/osce 9 msm2/OSCE9_wise2021_T2_QM.csv" 202022 Sem9
 
 ### PTM ###
 
@@ -189,7 +193,10 @@ bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamter
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe15_T1_qs.xlsx.csv 201511 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe15_T2_qs.xlsx.csv 201512 -vvv
 
+### MC-Lernziele ###
 
+bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_20_21_T1_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 202021 -vvv
+bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_20_21_T2_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 202022 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe20_T1_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 202011 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe20_T2_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 202012 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_19_20_T1_qs.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201921 -vvv
@@ -212,8 +219,6 @@ bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/ge
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe15_16_T2_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201522 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe15_T1_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201511 -vvv
 bin/console levelup:importFile:mcCSVFachUndModule $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe15_T2_qs.xlsx.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv 201512 -vvv
-
-
 
 date;
 echo "--- ENDE ---"
