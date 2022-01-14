@@ -12,10 +12,14 @@ class ChariteLDAPUserProvider implements UserProviderInterface
 {
 
     private ChariteLDAPService $chariteLDAPService;
+    /** @var array<string>  */
+    private array $adminUserNames;
 
-    public function __construct(ChariteLDAPService $chariteLDAPService) {
+    public function __construct(ChariteLDAPService $chariteLDAPService, string $adminUserNames) {
         $this->chariteLDAPService = $chariteLDAPService;
+        $this->adminUserNames = json_decode($adminUserNames, FALSE);
     }
+
 
     /**
      * Loads the user for the given username.
@@ -32,21 +36,7 @@ class ChariteLDAPUserProvider implements UserProviderInterface
         if (!$loginUser) {
             return NULL;
         }
-        if (in_array($loginUser->getUsername(),
-            [
-                "dittmarm",
-                "alhassam",
-                "petzolma",
-                "franzann",
-                "htame",
-                "linkea",
-                "domansmo",
-                "geppermi",
-                "aleksanv",
-                "beyers",
-                "moahameb",
-            ]
-        )) {
+        if (in_array($loginUser->getUsername(), $this->adminUserNames)) {
             $loginUser = $loginUser->macheZuAdmin();
         }
 
