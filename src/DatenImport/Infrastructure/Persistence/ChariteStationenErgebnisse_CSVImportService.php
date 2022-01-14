@@ -40,7 +40,8 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
             $ergebnisse = [];
             foreach ($dataLine as $key => $dataCell) {
                 $ergebnis = str_replace(",", ".", $dataCell);
-                if ((strstr($key, "#") !== FALSE
+                if ((
+                    (strstr($key, "#") !== FALSE || strstr($key, "X") !== FALSE)
                         || in_array($key, ["Skala1_erg", "Skala2_erg", "skala1_proz", "skala2_proz",
                                            "ergebnis", "Proz", "SCORE"]))
                     && is_numeric($ergebnis)
