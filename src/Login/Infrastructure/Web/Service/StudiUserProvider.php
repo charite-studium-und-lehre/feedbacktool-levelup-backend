@@ -21,9 +21,10 @@ class StudiUserProvider extends ChariteLDAPUserProvider
     public function __construct(
         StudiRepository $studiRepository,
         UserSwitcher $userSwitcher,
-        ChariteLDAPService $chariteLDAPService
+        ChariteLDAPService $chariteLDAPService,
+        string $adminUserNames
     ) {
-        parent::__construct($chariteLDAPService);
+        parent::__construct($chariteLDAPService, $adminUserNames);
         $this->studiRepository = $studiRepository;
         $this->userSwitcher = $userSwitcher;
     }

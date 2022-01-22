@@ -19,3 +19,11 @@ services:
         class: Studi\Infrastructure\Service\LoginHashCreator_SHA256
         arguments:
             - '%env(APP_SECRET)%'
+
+    Common\Infrastructure\UserInterface\Web\Service\ChariteLDAPUserProvider:
+        arguments:
+            $adminUserNames: '%env(SEE_ALL_STUDENTS_USERNAMES)%'
+
+    Login\Infrastructure\Web\Service\StudiUserProvider:
+        arguments:
+            $adminUserNames: '%env(SEE_ALL_STUDENTS_USERNAMES)%'
