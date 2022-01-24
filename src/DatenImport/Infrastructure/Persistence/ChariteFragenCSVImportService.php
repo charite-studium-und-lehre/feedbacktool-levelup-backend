@@ -43,6 +43,8 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
                     $semester = (int) substr($dataLine["Kl_Name"], 12);
                 } else if (strstr($dataLine["Kl_Name"], "Semesterabschlussprüfung S") !== FALSE) {
                     $semester = (int) substr($dataLine["Kl_Name"], 27);
+                } else if (strstr($dataLine["Kl_Name"], "Semesterabschlussklausur S") !== FALSE) {
+                    $semester = (int) substr($dataLine["Kl_Name"], 27);
                 } else {
                     continue;
                 }
