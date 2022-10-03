@@ -235,7 +235,7 @@ und
 also z.B. als root:
 
 ```shell script
-cp /tmp/LEVELUP-Lernziel-Module.csv $BASE_LEVELUP_IMPORT_DIR/LEVELUP-Lernziel-Module.csv
-cp /tmp/LEVELUP-Lernziel-Fach.csv /data01/uploadData//LEVELUP-Lernziel-Fach.csv
+cp /tmp/LEVELUP-Lernziel-Module.csv /data01/uploadData/LEVELUP-Lernziel-Module.csv
+cp /tmp/LEVELUP-Lernziel-Fach.csv /data01/uploadData/LEVELUP-Lernziel-Fach.csv
 ```
 
