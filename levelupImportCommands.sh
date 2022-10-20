@@ -169,8 +169,8 @@ bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragent
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/Fragentexte/SoSe2017_T2*.csv 201712 -vvv
 
 ### MC-Ergebnisse ###
-bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_21_22_T2_qs.xlsx.csv 212212 -vvv
-bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_21_22_T1_qs.xlsx.csv 212211 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_21_22_T2_qs.xlsx.csv 202212 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_21_22_T1_qs.xlsx.csv 202211 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_21_T1_qs.csv 202111 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_SoSe_21_T2_qs.csv 202112 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/gesamtergebnisse_WiSe_20_21_T1_qs.xlsx.csv 202021 -vvv
