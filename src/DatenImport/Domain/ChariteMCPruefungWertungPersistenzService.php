@@ -261,10 +261,17 @@ class ChariteMCPruefungWertungPersistenzService
             $studiPruefung->getId(),
             $pruefungsItemId
         );
-        $punktWertung = PunktWertung::fromPunktzahlUndSkala(
-            $punktzahl,
-            PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
-        );
+        if ($punktzahl->getValue() == -1) {
+            $punktWertung = PunktWertung::fromPunktzahlUndSkala(
+                Punktzahl::fromFloat(0),
+                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(0))
+            );
+        } else {
+            $punktWertung = PunktWertung::fromPunktzahlUndSkala(
+                $punktzahl,
+                PunktSkala::fromMaxPunktzahl(Punktzahl::fromFloat(1))
+            );
+        }
         if (!$itemWertung
             || !$itemWertung->getWertung()->equals($punktWertung)
             || ($itemWertung->getAntwortCode() != $antwortCode
