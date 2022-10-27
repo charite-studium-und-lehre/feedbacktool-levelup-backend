@@ -66,8 +66,10 @@ class ChariteStationenErgebnisse_CSVImportService extends AbstractCSVImportServi
                             $key = $dataLine["permakÃ.rzel"];
                         } elseif (isset($dataLine["permakürzel"])) {
                             $key = $dataLine["permakürzel"];
-                        } else {
+                        } elseif (isset($dataLine["erg"])) {
                             $key = "erg";
+                        } else {
+                            throw new Exception("Kein Header wie 'Perma' oder 'Permakürzel' oder 'erg' gefunden!");
                         }
                     }
                     $ergebnisse[$key] = $ergebnis;
