@@ -188,6 +188,9 @@ class FachCodeKonstanten
 
         # OSCE 9. FS
         '00#04' => 'KIT Gesprächstechnik ',
+        '26#01' => 'Erkrankungen des Abdomens M26',
+        '26#02' => 'Erkrankungen des Abdomens M26',
+        '26#03' => 'Erkrankungen des Abdomens M26',
         '27#01' => 'Erkrankungen der Extremitäten M27',
         '27#02' => 'Erkrankungen der Extremitäten M27',
         '27#03' => 'Erkrankungen der Extremitäten M27',

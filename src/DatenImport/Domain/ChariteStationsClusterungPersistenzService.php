@@ -46,8 +46,10 @@ class ChariteStationsClusterungPersistenzService
 
             foreach ($ergebnisse as $ergebnisKey => $ergebnis) {
                 $pruefungsKey = NULL;
-                if (strstr($ergebnisKey, "#") !== FALSE) {
+                if (strstr($ergebnisKey, "#") !== FALSE || str_starts_with($ergebnisKey, "X")) {
                     $pruefungsKey = $ergebnisKey;
+                    $pruefungsKey = str_replace(".", "#", $pruefungsKey);
+                    $pruefungsKey = ltrim($pruefungsKey, "X");
                 }
                 $wissensTypConst = NULL;
                 if ($ergebnisKey == "Sk1") {
