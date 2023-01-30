@@ -52,8 +52,8 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 continue;
             } else {
                 $pruefungSemester = str_replace("MC Semester ", "", "$pruefungSemester");
-                $pruefungSemester = str_replace(" Semester", "", "$pruefungSemester");
-                $pruefungSemester = str_replace("MC", "", "$pruefungSemester");
+                $pruefungSemester = str_replace(". Semester", "", "$pruefungSemester");
+                $pruefungSemester = str_replace("MC ", "", "$pruefungSemester");
             }
             if (strstr($pruefungSemester, "Grundlagenfächer_S05") !== FALSE) {
                 continue;
