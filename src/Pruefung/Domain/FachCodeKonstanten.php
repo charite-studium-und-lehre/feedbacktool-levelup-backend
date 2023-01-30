@@ -55,6 +55,8 @@ class FachCodeKonstanten
         'Z02' => 'A',
         'Z03' => 'Q11',
         'Z04' => 'A',
+        'Z05' => 'A',
+        'Z06' => 'A',
         'T01' => 'A',
         'D1'  => 'S03', // GeWi Biologie, ist aus irgendwelchen Gründen zugeordnetz. TODO:  Daten fixen.
     ];
