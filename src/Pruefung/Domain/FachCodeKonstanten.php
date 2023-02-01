@@ -168,6 +168,7 @@ class FachCodeKonstanten
         # OSCE 4. FS (Stationsprüfung Teil 3)
         '00#03' => 'KIT Gesprächstechnik ',
         '09#01' => 'Haut M09',
+        '09#02' => 'Haut M09',
         '10#01' => 'Bewegung M10',
         '10#02' => 'Bewegung M10',
         '10#03' => 'Bewegung M10',
