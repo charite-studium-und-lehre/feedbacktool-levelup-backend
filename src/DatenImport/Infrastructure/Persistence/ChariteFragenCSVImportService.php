@@ -33,14 +33,14 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
             if (isset($dataLine["SequenzSemesterNummer"])) {
                 $semester = (int) $dataLine["SequenzSemesterNummer"];
             } elseif (isset($dataLine["Kl_Bezeichnung"])) {
-                if (strstr($dataLine["Kl_Bezeichnung"], "MC Semester ") == FALSE) {
+                if (strstr($dataLine["Kl_Bezeichnung"], "MC") == FALSE) {
                     continue;
                 }
-                $semester = (int) substr($dataLine["Kl_Bezeichnung"], 12);
+                $semester = (int) (preg_replace('/[^0-9]+/', '', $dataLine["Kl_Bezeichnung"]));
 
             } elseif (isset($dataLine["Kl_Name"])) {
-                if (strstr($dataLine["Kl_Name"], "MC Semester ") !== FALSE) {
-                    $semester = (int) substr($dataLine["Kl_Name"], 12);
+                if (strstr($dataLine["Kl_Name"], "MC") !== FALSE) {
+                    $semester = (int) (preg_replace('/[^0-9]+/', '', $dataLine["Kl_Name"]));
                 } else if (strstr($dataLine["Kl_Name"], "Semesterabschlussprüfung S") !== FALSE) {
                     $semester = (int) substr($dataLine["Kl_Name"], 27);
                 } else if (strstr($dataLine["Kl_Name"], "Semesterabschlussklausur S") !== FALSE) {
