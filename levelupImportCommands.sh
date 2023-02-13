@@ -157,6 +157,8 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/alt/
 
 ### PTM ###
 
+bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten_Berlin_PT47.csv 20222 -vvv
+bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT46.csv 20221 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT45\ 2022-01-17.csv 20212 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Berlin\ PT44\ 2021.csv 20211 -vvv
 bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/PT43_Berlin.csv 20202 -vvv
