@@ -109,14 +109,19 @@ class ChariteFragenCSVImportService extends AbstractCSVImportService
 
             $loesung = !empty($dataLine["Lösung"]) ? $dataLine["Lösung"] : "zzz";
 
-            $fragenDTO = new ChariteFragenDTO();
-            $fragenDTO->fragenNr = FragenNummer::fromInt($fragenNr);
-            $fragenDTO->loesung = AntwortCode::fromString($loesung);
-            $fragenDTO->semester = $semester;
-            $fragenDTO->pruefungsId = $pruefungsId;
-            $fragenDTO->fragenText = FragenText::fromInt($fragenText);
-            $fragenDTO->antworten = $this->getAntworten($dataLine);
-            $fragenDTO->mitAbbildung = $dataLine["Abbildung"] != "keine Abbildung.jpg";
+            try {
+                $fragenDTO = new ChariteFragenDTO();
+                $fragenDTO->fragenNr = FragenNummer::fromInt($fragenNr);
+                $fragenDTO->loesung = AntwortCode::fromString($loesung);
+                $fragenDTO->semester = $semester;
+                $fragenDTO->pruefungsId = $pruefungsId;
+                $fragenDTO->fragenText = FragenText::fromInt($fragenText);
+                $fragenDTO->antworten = $this->getAntworten($dataLine);
+                $fragenDTO->mitAbbildung = $dataLine["Abbildung"] != "keine Abbildung.jpg";
+            } catch (Exception $e) {
+                echo "Warnung: " . $e->getMessage() . "\n";
+                continue;
+            }
 
             $data[] = $fragenDTO;
         }
