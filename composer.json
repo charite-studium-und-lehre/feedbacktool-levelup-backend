@@ -45,7 +45,7 @@
   },
 
   "require-dev": {
-    "phpstan/phpstan": "dev-master",
+    "phpstan/phpstan": "1.0",
     "phpunit/phpunit": "^9.2",
     "symfony/inflector": "^5.1",
     "symfony/stopwatch": "^5.1"
@@ -56,7 +56,10 @@
       "*": "dist"
     },
     "sort-packages": true,
-    "component-dir": "public/assets/vendor"
+    "component-dir": "public/assets/vendor",
+    "allow-plugins": {
+      "symfony/flex": true
+    }
   },
 
   "scripts": {
