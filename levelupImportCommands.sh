@@ -17,6 +17,23 @@ bin/console levelup:importFile:lernzielFaecher $BASE_LEVELUP_IMPORT_DIR/LEVELUP-
 
 ### STATIONEN ###
 
+
+# SoSe2022
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil1VK/HZ/Teil1VK_SoSe2022_HZ.xlsx.csv 202211 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil1K/HZ/Teil1K_SoSe2022_HZ.xlsx.csv 202211 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil2/HZ/Teil2_SoSe2022_HZ.xlsx.csv 202211 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil3/HZ/Teil3_SoSe2022_HZ.xlsx.csv 202211 Teil3
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Sem9/HZ/Sem9_SoSe2022_HZ.xlsx.csv 202211 Sem9
+
+
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil1VK/WZ/Teil1VK_SoSe2022_WZ.xlsx.csv 202212 Teil1VK
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil1K/WZ/Teil1K_SoSe2022_WZ.xlsx.csv 202212 Teil1K
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil2/WZ/Teil2_SoSe2022_WZ.xlsx.csv 202212 Teil2
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Teil3/WZ/Teil3_SoSe2022_WZ.xlsx.csv 202212 Teil3
+bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/SoSe2022/Sem9/WZ/Sem9_SoSe2022_WZ.xlsx.csv 202212 Sem9
+
+
+
 # WiSe2021
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/WiSe2021/Teil1VK/HZ/Teil1VK_WiSe2021_HZ.xlsx.csv 202121 Teil1VK
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/WiSe2021/Teil1K/HZ/Teil1K_WiSe2021_HZ.xlsx.csv 202121 Teil1K
@@ -32,12 +49,11 @@ bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/WiSe
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/WiSe2021/Sem9/WZ/Sem9_WiSe2021_WZ.xlsx.csv 202122 Sem9
 
 
-
 # SoSe2021
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe2021 HZ/grundlagen staprü t1/Teil_1_Grundlagen_sose2021T1_QM.xlsx.csv" 202111 Teil1VK
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe2021 HZ/grundlagen staprü t2/Teil_2_Grundlagen_sose2021T1_QM.xlsx.csv" 202111 Teil2
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe2021 HZ/osce2 staprü t1/OSCE2_WiSe2021T1_QM.xlsx.csv" 202111 Teil1K
-bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe2021 HZ/osce4 staprü t3/OSCE4_sose2021T1_QM.xlsx.csv" 202111 Teil3
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe2021 HZ/osce4 staprü t3/OSCE4_sose2021T1_QM_NEU.xlsx.csv" 202111 Teil3
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe2021 HZ/osce 9 msm2/OSCE9_sose2021_T1_QM.xlsx.csv" 202111 Sem9
 
 # WDH
@@ -60,6 +76,23 @@ bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/WiSe20_21 WDH/osce2 staprü t1/OSCE2_WiSe2021T2_QM.csv" 202022 Teil1K
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/WiSe20_21 WDH/osce4 staprü t3/OSCE4_wise2021T2_QM.csv" 202022 Teil3
 bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/WiSe20_21 WDH/osce 9 msm2/OSCE9_wise2021_T2_QM.csv" 202022 Sem9
+
+
+# SoSe2020
+
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_1.Termin/Teil_1_Grundlagen_SoSe2020T1_QM.xlsx.csv" 202011 Teil1VK
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_1.Termin/OSCE2_SoSe2020T1_QM.xlsx.csv" 202011 Teil1K
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_1.Termin/Teil_2_Grundlagen_SoSe2020T1_QM.xlsx.csv" 202011 Teil2
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_1.Termin/OSCE4_SoSe2020T1_QM.xlsx.csv" 202011 Teil3
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_1.Termin/OSCE9_SoSe2020T1_QM.xlsx.csv" 202011 Sem9
+
+# WDH
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_2.Termin/Teil_1_Grundlagen_SoSe2020T2_QM.xlsx.csv" 202012 Teil1VK
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_2.Termin/OSCE2_SoSe2020T2_QM.xlsx.csv" 202012 Teil1K
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_2.Termin/Teil_2_Grundlagen_SoSe2020T2_QM.xlsx.csv" 202012 Teil2
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_2.Termin/OSCE4_SoSe2020T2_QM.xlsx.csv" 202012 Teil3
+bin/console levelup:importFile:stationen "$BASE_LEVELUP_IMPORT_DIR/Stationen/alt/SoSe_2020_2.Termin/OSCE9_SoSe2020T2_QM.xlsx.csv" 202012 Sem9
+
 
 # WiSe2019
 bin/console levelup:importFile:stationen $BASE_LEVELUP_IMPORT_DIR/Stationen/alt/QM_OSCE_StaPrü\ WiSe\ 1920/Teil1_2.FS_Grundlagenf_LevelUp/Teil_1_Grundlagen_WiSe1920_QM.xlsx.csv 201921 Teil1VK
