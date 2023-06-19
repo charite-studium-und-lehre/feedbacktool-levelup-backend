@@ -63,8 +63,8 @@ class ChariteStationsClusterungPersistenzService
                                                                                   $ergebnisKey);
 
                 if ($fachCodeString) {
-                    if (FachCodeKonstanten::STATION_VK_TITEL[$fachCodeString]) {
-                        throw new \Exception("Fach-Konstante nicht gefunden: " . $fachCodeString);
+                    if (empty(FachCodeKonstanten::STATION_VK_TITEL[$fachCodeString])) {
+                        throw new \Exception("Fach-Konstante nicht gefunden: '" . $fachCodeString . "'");
                     }
                     $this->pruefeClusterZuordnung(
                         ClusterCode::fromString($fachCodeString),
@@ -74,7 +74,7 @@ class ChariteStationsClusterungPersistenzService
                     );
                 } elseif ($pruefungsKey) {
                     if (empty(FachCodeKonstanten::STATIONS_BEZEICHNUNGEN[$pruefungsKey])) {
-                        throw new \Exception("Stations-Bezeichnung nicht gefunden: " . $pruefungsKey);
+                        throw new \Exception("Stations-Bezeichnung nicht gefunden: '" . $pruefungsKey . "'");
                     }
                     $this->pruefeClusterZuordnung(
                         ClusterCode::fromString($ergebnisKey),
