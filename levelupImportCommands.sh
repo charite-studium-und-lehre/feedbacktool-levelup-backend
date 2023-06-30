@@ -212,6 +212,8 @@ bin/console levelup:importFile:ptm $BASE_LEVELUP_IMPORT_DIR/PTM/Einzeldaten\ Ber
 
 ### MC-Fragentexte ###
 
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/WiSe2022/Fragentexte/Fragentexte-WiSe2022-T2.xlsx.csv 202222 -vvv
+bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/WiSe2022/Fragentexte/Fragentexte-WiSe2022-T1.xlsx.csv 202221 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/SoSe2022/Fragentexte/Fragentexte-SoSe2022-T2.xlsx.csv 202212 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/SoSe2022/Fragentexte/Fragentexte-SoSe2022-T1.xslx.csv 202211 -vvv
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/alt/Fragentexte/WiSe21_22_Fragentexte_T2.xlsx.csv 202122 -vvv
@@ -236,8 +238,11 @@ bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/alt/Fra
 bin/console levelup:importFile:mcFragenTexte $BASE_LEVELUP_IMPORT_DIR/MC/alt/Fragentexte/SoSe2017_T2*.csv 201712 -vvv
 
 ### MC-Ergebnisse ###
-bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/SoSe2022/Ergebnisse/Ergebnisse-SoSe2022-T2.xlsx.csv 202212 -vvv
+
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/WiSe2022/Ergebnisse/Ergebnisse-WiSe2022-T1.xlsx.csv 202221 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/WiSe2022/Ergebnisse/Ergebnisse-WiSe2022-T2.xlsx.csv 202222 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/SoSe2022/Ergebnisse/Ergebnisse-SoSe2022-T1.xlsx.csv 202211 -vvv
+bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/SoSe2022/Ergebnisse/Ergebnisse-SoSe2022-T2.xlsx.csv 202212 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/alt/gesamtergebnisse_WiSe_21_22_T1_qs.xlsx.csv 202121 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/alt/gesamtergebnisse_WiSe_21_22_T2_qs.xlsx.csv 202122 -vvv
 bin/console levelup:importFile:mcCSVWertung $BASE_LEVELUP_IMPORT_DIR/MC/alt/gesamtergebnisse_SoSe_21_T1_qs.csv 202111 -vvv
