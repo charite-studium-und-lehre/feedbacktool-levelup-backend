@@ -48,7 +48,7 @@ class Charite_Ergebnisse_CSVImportService extends AbstractCSVImportService imple
                 continue;
             }
 
-            if ($pruefungSemester == "3D-MC") {
+            if ($pruefungSemester == "3D-MC" || $pruefungSemester == "3D_MC") {
                 continue;
             } else {
                 $pruefungSemester = str_replace("MC Semester ", "", "$pruefungSemester");
