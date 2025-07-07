@@ -23,7 +23,7 @@ class MonologRequestLogger implements EventSubscriberInterface, ProcessorInterfa
      * @param array<string, array<string, string>> $record
      * @return array<mixed>
      */
-    public function __invoke(LogRecord $record): LogRecord {
+    public function __invoke(LogRecord $record) {
         if (isset($this->requestEvent)) {
             $record["extra"]["query"] = (array) $this->requestEvent->getRequest()->query;
             $record["extra"]["headers"] = (array) $this->requestEvent->getRequest()->headers;

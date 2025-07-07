@@ -5,13 +5,13 @@ Genauere Konfiguration von Apache und Installation auf Ubuntu ist bei Bedarf an 
 ### PHP-FPM innerhalb von Apache verwenden:
 
 ```shell scribt
-apt install php7.4-fpm
+apt install php8.4-fpm
 apt remove libapache2-mod-php
 a2enmod proxy
 a2enmod proxy_http
 a2enmod proxy_fcgi
-a2enconf php7.4-fpm
-a2dismod php7.4
+a2enconf php8.4-fpm
+a2dismod php8.4
 a2dismod mpm_prefork
 a2enmod mpm_worker
 ```
@@ -60,7 +60,7 @@ pm.max_requests = 300
 ### Benötigte PHP-Pakete in Ubuntu:
 
 ```shell script
-apt install php7.4-fpm php7.4-cli php-apcu php-apcu-bc php7.4-mysql php7.4-ldap php7.4-mbstring php-imagick php7.4-gettext php7.4-xml php7.4-gd  php7.4-zip php7.4-bz2 php7.4-curl php7.4-intl
+apt install php8.4-fpm php8.4-cli php-apcu php-apcu-bc php8.4-mysql php8.4-ldap php8.4-mbstring php-imagick php8.4-gettext php8.4-xml php8.4-gd  php8.4-zip php8.4-bz2 php8.4-curl php8.4-intl
 ```
 
 ### PHP-Konfiguration in Ubuntu

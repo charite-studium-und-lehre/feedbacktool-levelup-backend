@@ -12,11 +12,12 @@ class ChariteLDAPUserProvider implements UserProviderInterface
 
     private ChariteLDAPService $chariteLDAPService;
     /** @var array<string>  */
-    private array $adminUserNames;
+    private array $adminUserNames = [];
 
-    public function __construct(ChariteLDAPService $chariteLDAPService, string $adminUserNames) {
+    public function __construct(ChariteLDAPService $chariteLDAPService, ?string $adminUserNames = null) {
+
         $this->chariteLDAPService = $chariteLDAPService;
-        $this->adminUserNames = json_decode($adminUserNames, FALSE);
+        $this->adminUserNames = json_decode($adminUserNames, FALSE) ?? [];
     }
 
 
