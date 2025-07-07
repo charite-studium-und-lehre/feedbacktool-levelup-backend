@@ -22,7 +22,7 @@ abstract class AbstractCSVImportService
         $headers = [];
         $counter = 0;
 
-        while (($dataLine = fgetcsv($handle, NULL, $delimiter)) !== FALSE) {
+        while (($dataLine = fgetcsv($handle, NULL, $delimiter, escape: '\\')) !== FALSE) {
             $counter++;
             $dataLineFixed = [];
             foreach ($dataLine as $dataCell) {
