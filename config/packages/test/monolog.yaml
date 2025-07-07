@@ -25,9 +25,9 @@ monolog:
             level: error
         deduplicated:
             type:    deduplication
-            handler: swift
-        swift:
-            type:       swift_mailer
+            handler: symfony_mailer
+        symfony_mailer:
+            type:       symfony_mailer
             from_email: 'levelup@charite.de'
             to_email:   'martin.dittmar@charite.de'
             # or list of recipients

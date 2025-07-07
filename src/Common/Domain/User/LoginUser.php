@@ -90,6 +90,9 @@ class LoginUser implements DDDValueObject, UserInterface
     public function getUsername(): string {
         return $this->usernameVO->getValue();
     }
+    public function getUserIdentifier(): string {
+        return $this->usernameVO->getValue();
+    }
 
     /**
      * Removes sensitive data from the user.

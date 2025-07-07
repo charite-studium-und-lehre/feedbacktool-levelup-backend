@@ -49,7 +49,7 @@ class LoginController extends BaseController
         if ($request->get("code") && !$chariteSSOService->hasPendingSSOAuth()) {
             return new Response("Fehler: Kann code ohne gestartetem SSO-Request nicht verarbeiten", 400);
         }
-        if (!$tokenStorage->getToken()->getUser() instanceof LoginUser) {
+        if (!$tokenStorage->getToken()?->getUser() instanceof LoginUser) {
             $username = $chariteSSOService->ssoTryAuthPhase2AndGetUsername();
             if (!$username) {
                 $chariteSSOService->deletePendingSSOAuth();
@@ -228,7 +228,7 @@ class LoginController extends BaseController
     }
 
     private function loginUser(TokenStorageInterface $tokenStorage, LoginUser $loginUser): void {
-        $token = new UsernamePasswordToken($loginUser, [], "main", $loginUser->getRoles());
+        $token = new UsernamePasswordToken($loginUser, "main", $loginUser->getRoles());
         $tokenStorage->setToken($token);
     }
 }

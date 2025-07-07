@@ -22,18 +22,18 @@ class ChariteStationenCSVImportServiceTest extends TestCase
 
         $this->assertEquals("111111", $data[0]["matrikelnummer"]);
         $this->assertIsArray($data[0]["ergebnisse"]);
-        $this->assertCount(2, $data[0]["ergebnisse"]);
-        $this->assertEquals("S1#N4", array_keys($data[0]["ergebnisse"])[0]);
-        $this->assertEquals("S1#U3", array_keys($data[0]["ergebnisse"])[1]);
+        $this->assertCount(5, $data[0]["ergebnisse"]);
+        $this->assertEquals("S1#N4", array_keys($data[0]["ergebnisse"])[1]);
+        $this->assertEquals("S1#U3", array_keys($data[0]["ergebnisse"])[4]);
         $this->assertEquals(0.673684210526316, $data[0]["ergebnisse"]["S1#N4"]);
         $this->assertEquals(0.54, $data[0]["ergebnisse"]["S1#U3"]);
 
 
         $this->assertEquals("111142", $data[31]["matrikelnummer"]);
         $this->assertIsArray($data[31]["ergebnisse"]);
-        $this->assertCount(2, $data[31]["ergebnisse"]);
-        $this->assertEquals("S1#N4", array_keys($data[31]["ergebnisse"])[0]);
-        $this->assertEquals("S1#U2", array_keys($data[31]["ergebnisse"])[1]);
+        $this->assertCount(5, $data[31]["ergebnisse"]);
+        $this->assertEquals("S1#N4", array_keys($data[31]["ergebnisse"])[1]);
+        $this->assertEquals("S1#U2", array_keys($data[31]["ergebnisse"])[3]);
         $this->assertEquals(0.873684210526316, $data[31]["ergebnisse"]["S1#N4"]);
         $this->assertEquals(0.926315789473684, $data[31]["ergebnisse"]["S1#U2"]);
 
@@ -93,9 +93,9 @@ class ChariteStationenCSVImportServiceTest extends TestCase
 
         $this->assertEquals("111112", $data[1]["matrikelnummer"]);
         $this->assertIsArray($data[1]["ergebnisse"]);
-        $this->assertCount(4, $data[1]["ergebnisse"]);
+        $this->assertCount(9, $data[1]["ergebnisse"]);
         $this->assertEquals("00#03", array_keys($data[1]["ergebnisse"])[0]);
-        $this->assertEquals("15#03", array_keys($data[1]["ergebnisse"])[3]);
+        $this->assertEquals("15#03", array_keys($data[1]["ergebnisse"])[7]);
         $this->assertEquals(0.475, $data[1]["ergebnisse"]["00#03"]);
         $this->assertEquals(0.5375, $data[1]["ergebnisse"]["15#03"]);
         $this->assertTrue(empty($data[1]["fach"]));

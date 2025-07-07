@@ -5,17 +5,18 @@ namespace EPA\Infrastructure\UserInterface\EMail;
 use EPA\Application\Command\StudiUeberFremdbewertungInformierenCommand;
 use EPA\Application\Services\KontaktiereStudiUeberFremdbewertungService;
 use Login\Infrastructure\Web\Service\FrontendUrlService;
-use Swift_Mailer;
-use Swift_Message;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereStudiUeberFremdbewertungService
 {
-    private Swift_Mailer $swiftMailer;
+    private Mailer $mailer;
 
     private FrontendUrlService $frontendUrlService;
 
-    public function __construct(Swift_Mailer $swiftMailer, FrontendUrlService $frontendUrlService) {
-        $this->swiftMailer = $swiftMailer;
+    public function __construct(MailerInterface $mailer, FrontendUrlService $frontendUrlService) {
+        $this->mailer = $mailer;
         $this->frontendUrlService = $frontendUrlService;
     }
 
@@ -39,12 +40,12 @@ class KontaktiereStudiUeberFremdbewertungPerMailService implements KontaktiereSt
         string $to,
         string $from = "levelup@charite.de"
     ): void {
-        $message = new Swift_Message();
-        $message->setSubject($subject)
-            ->setFrom($from)
-            ->setTo($to)
-            ->setBody($body, 'text/plain');
-        $this->swiftMailer->send($message);
+        $email = new Email();
+        $email->subject($subject)
+            ->from($from)
+            ->to($to)
+            ->text($body);
+        $this->mailer->send($email);
     }
 
     private function getMailSubject(StudiUeberFremdbewertungInformierenCommand $command): string {

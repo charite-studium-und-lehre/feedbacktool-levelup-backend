@@ -9,7 +9,6 @@ use Exception;
 use Studi\Domain\Studi;
 use Studi\Domain\StudiHash;
 use Studi\Domain\StudiRepository;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class StudiUserProvider extends ChariteLDAPUserProvider
@@ -31,12 +30,9 @@ class StudiUserProvider extends ChariteLDAPUserProvider
 
     /**
      * Loads the user for the given username.
-     * This method must throw UsernameNotFoundException if the user is not
-     * found.
      *
      * @param string $username The username
      * @return UserInterface
-     * @throws UsernameNotFoundException if the user is not found
      */
 
     public function loadUserByUsername($username): ?LoginUser {

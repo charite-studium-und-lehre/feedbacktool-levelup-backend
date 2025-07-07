@@ -4,7 +4,6 @@ namespace Common\Infrastructure\UserInterface\Web\Service;
 
 use Common\Domain\User\LoginUser;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -13,11 +12,12 @@ class ChariteLDAPUserProvider implements UserProviderInterface
 
     private ChariteLDAPService $chariteLDAPService;
     /** @var array<string>  */
-    private array $adminUserNames;
+    private array $adminUserNames = [];
 
-    public function __construct(ChariteLDAPService $chariteLDAPService, string $adminUserNames) {
+    public function __construct(ChariteLDAPService $chariteLDAPService, ?string $adminUserNames = null) {
+
         $this->chariteLDAPService = $chariteLDAPService;
-        $this->adminUserNames = json_decode($adminUserNames, FALSE);
+        $this->adminUserNames = json_decode($adminUserNames, FALSE) ?? [];
     }
 
 
@@ -28,7 +28,6 @@ class ChariteLDAPUserProvider implements UserProviderInterface
      *
      * @param string $username The username
      * @return UserInterface
-     * @throws UsernameNotFoundException if the user is not found
      */
 
     public function loadUserByUsername($username): ?LoginUser {
@@ -52,7 +51,6 @@ class ChariteLDAPUserProvider implements UserProviderInterface
      *
      * @return UserInterface
      * @throws UnsupportedUserException  if the user is not supported
-     * @throws UsernameNotFoundException if the user is not found
      */
     public function refreshUser(UserInterface $user) {
         return $this->loadUserByUsername($user->getUsername());
@@ -66,5 +64,10 @@ class ChariteLDAPUserProvider implements UserProviderInterface
      */
     public function supportsClass($class) {
         return $class === LoginUser::class;
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->loadUserByUsername($identifier);
     }
 }

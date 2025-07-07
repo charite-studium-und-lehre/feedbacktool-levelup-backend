@@ -7,23 +7,24 @@ use EPA\Application\Services\KontaktiereFremdBewerterService;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageId;
 use EPA\Domain\FremdBewertung\FremdBewertungsAnfrageRepository;
 use Login\Infrastructure\Web\Service\FrontendUrlService;
-use Swift_Mailer;
-use Swift_Message;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterService
 {
-    private Swift_Mailer $swiftMailer;
+    private Mailer $mailer;
 
     private FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository;
 
     private FrontendUrlService $frontendUrlService;
 
     public function __construct(
-        Swift_Mailer $swiftMailer,
+        MailerInterface                           $mailer,
         FremdBewertungsAnfrageRepository $fremdBewertungsAnfrageRepository,
-        FrontendUrlService $frontendUrlService
+        FrontendUrlService               $frontendUrlService
     ) {
-        $this->swiftMailer = $swiftMailer;
+        $this->mailer = $mailer;
         $this->fremdBewertungsAnfrageRepository = $fremdBewertungsAnfrageRepository;
         $this->frontendUrlService = $frontendUrlService;
     }
@@ -53,12 +54,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
         string $to,
         string $from = "levelup@charite.de"
     ): void {
-        $message = new Swift_Message();
-        $message->setSubject($subject)
-            ->setFrom($from)
-            ->setTo($to)
-            ->setBody($body, 'text/plain');
-        $this->swiftMailer->send($message);
+        $email = new Email();
+        $email->subject($subject)
+            ->from($from)
+            ->to($to)
+            ->text($body);
+        $this->mailer->send($email);
     }
 
     private function sendeKopieAnStudi(
@@ -73,12 +74,12 @@ class VersendeMailAnFremdbewerterService implements KontaktiereFremdBewerterServ
             . "An: $originalTo\n"
             . "Betreff: $subject\n"
             . "Inhalt:\n\n" . $body;
-        $message = new Swift_Message();
-        $message->setSubject($subjectStudi)
-            ->setFrom($from)
-            ->setTo($to)
-            ->setBody($body, 'text/plain');
-        $this->swiftMailer->send($message);
+        $email = new Email();
+        $email->subject($subjectStudi)
+            ->from($from)
+            ->to($to)
+            ->text($body);
+        $this->mailer->send($email);
     }
 
     private function getMailSubject(FremdBewertungAnfrageVerschickenCommand $command): string {
